@@ -89,7 +89,8 @@ class Example
 
 $object    = new Example();
 $data      = array('foo' => 1, 'bar' => 2, 'baz' => 3);
-$factory   = new GeneratedHydrator\Factory\HydratorFactory(new GeneratedHydrator\Configuration());
+$config    = new GeneratedHydrator\Configuration();
+$factory   = new GeneratedHydrator\Factory\HydratorFactory($config);
 $hydrators = array(
     $factory->createProxy('Example'),
     new Zend\Stdlib\Hydrator\ClassMethods(),
