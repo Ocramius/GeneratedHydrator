@@ -34,10 +34,6 @@ use ReflectionProperty;
  */
 class ConstructorTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers \GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\Constructor::__construct
-     * @covers \GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\Constructor::getPropertyAccessorsInitialization
-     */
     public function testGeneratedStructure()
     {
         $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
@@ -60,10 +56,7 @@ class ConstructorTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEmpty($constructor->getParameters());
     }
-
-    /**
-     * @covers \GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\Constructor::__construct
-     */
+    
     public function testGeneratedStructureWithoutAccessors()
     {
         $constructor = new Constructor(new ReflectionClass(__CLASS__), array());
