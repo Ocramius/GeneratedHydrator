@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ProxyManager\\": "src"
+            "GeneratedHydrator\\": "src"
         }
     },
     "extra": {
