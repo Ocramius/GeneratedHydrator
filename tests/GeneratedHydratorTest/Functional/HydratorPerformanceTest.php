@@ -18,11 +18,11 @@
 
 namespace GeneratedHydratorTest\Functional;
 
-use GeneratedHydrator\Generator\ClassGenerator;
-use GeneratedHydrator\Generator\Util\UniqueIdentifierGenerator;
-use GeneratedHydrator\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use GeneratedHydrator\Proxy\HydratorInterface;
-use GeneratedHydrator\ProxyGenerator\HydratorGenerator;
+use ProxyManager\Generator\ClassGenerator;
+use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use ProxyManager\Proxy\HydratorInterface;
+use ProxyManager\ProxyGenerator\HydratorGenerator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -47,7 +47,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
      * @dataProvider getTestedClasses
      *
      * @param object                                $instance
-     * @param \GeneratedHydrator\Proxy\HydratorInterface $hydrator
+     * @param \Zend\Stdlib\Hydrator\HydratorInterface $hydrator
      * @param \ReflectionProperty[]                 $properties
      * @param array                                 $data
      */
@@ -80,7 +80,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
      * @dataProvider getTestedClasses
      *
      * @param object                                $instance
-     * @param \GeneratedHydrator\Proxy\HydratorInterface $hydrator
+     * @param \Zend\Stdlib\Hydrator\HydratorInterface $hydrator
      * @param \ReflectionProperty[]                 $properties
      */
     public function testExtractionPerformance($instance, HydratorInterface $hydrator, array $properties)

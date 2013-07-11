@@ -19,8 +19,8 @@
 namespace GeneratedHydratorTest\Functional;
 
 use PHPUnit_Framework_TestCase;
-use GeneratedHydrator\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use GeneratedHydrator\ProxyGenerator\HydratorGenerator;
+use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use ProxyManager\ProxyGenerator\HydratorGenerator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -29,8 +29,8 @@ use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
 use ReflectionClass;
-use GeneratedHydrator\Generator\ClassGenerator;
-use GeneratedHydrator\Generator\Util\UniqueIdentifierGenerator;
+use ProxyManager\Generator\ClassGenerator;
+use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
 use ReflectionProperty;
 use stdClass;
 
@@ -86,7 +86,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $proxy = $this->generateProxy(new HydratedObject());
 
-        $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
+        $this->setExpectedException('ProxyManager\Exception\DisabledMethodException');
         $proxy->doFoo();
     }
 
@@ -112,7 +112,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
      *
      * @param object $instance
      *
-     * @return \GeneratedHydratorTestAsset\HydratedObject|\GeneratedHydrator\Proxy\HydratorInterface
+     * @return \GeneratedHydratorTestAsset\HydratedObject|\Zend\Stdlib\Hydrator\HydratorInterface
      */
     private function generateProxy($instance)
     {

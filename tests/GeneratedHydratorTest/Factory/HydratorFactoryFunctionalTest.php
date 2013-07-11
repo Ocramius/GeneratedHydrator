@@ -21,9 +21,9 @@ namespace GeneratedHydratorTest\Factory;
 use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
-use GeneratedHydrator\Generator\ClassGenerator;
-use GeneratedHydrator\Generator\Util\UniqueIdentifierGenerator;
-use GeneratedHydrator\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use ProxyManager\Generator\ClassGenerator;
+use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use Zend\Code\Reflection\ClassReflection;
 
 /**
