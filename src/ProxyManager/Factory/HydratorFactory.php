@@ -16,11 +16,11 @@
  * and is licensed under the MIT license.
  */
 
-namespace ProxyManager\Factory;
+namespace GeneratedHydrator\Factory;
 
-use ProxyManager\Configuration;
-use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\ProxyGenerator\HydratorGenerator;
+use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Generator\ClassGenerator;
+use GeneratedHydrator\ProxyGenerator\HydratorGenerator;
 use ReflectionClass;
 
 /**
@@ -32,11 +32,44 @@ use ReflectionClass;
 class HydratorFactory extends AbstractBaseFactory
 {
     /**
+     * @var \GeneratedHydrator\Configuration
+     */
+    protected $configuration;
+
+    /**
+     * @var bool
+     */
+    protected $autoGenerate;
+
+    /**
+     * @var \GeneratedHydrator\Inflector\ClassNameInflectorInterface
+     */
+    protected $inflector;
+
+    /**
+     * Cached generated class names
+     *
+     * @var string[]
+     */
+    protected $generatedClasses = array();
+
+    /**
      * Cached proxy class names
      *
      * @var \Zend\Stdlib\Hydrator\HydratorInterface[]
      */
     private $hydrators = array();
+
+    /**
+     * @param \GeneratedHydrator\Configuration $configuration
+     */
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+        // localizing some properties for performance
+        $this->autoGenerate  = $this->configuration->doesAutoGenerateProxies();
+        $this->inflector     = $this->configuration->getClassNameInflector();
+    }
 
     /**
      * @param string $className

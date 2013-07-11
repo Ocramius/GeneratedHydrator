@@ -16,14 +16,59 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset;
 
 /**
- * Base exception class for the proxy manager
+ * Base test class to play around with pre-existing magic methods
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class ClassWithMagicMethods
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function __set($name, $value)
+    {
+        return array($name => $value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __get($name)
+    {
+        return $name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __isset($name)
+    {
+        return (bool) $name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __unset($name)
+    {
+        return (bool) $name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __sleep()
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __wakeup()
+    {
+    }
 }

@@ -16,14 +16,18 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset;
 
 /**
- * Base exception class for the proxy manager
+ * Base interface used to verify that the proxy generators can actually work with interfaces
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+interface BaseInterface
 {
+    /**
+     * @return mixed
+     */
+    public function publicMethod();
 }

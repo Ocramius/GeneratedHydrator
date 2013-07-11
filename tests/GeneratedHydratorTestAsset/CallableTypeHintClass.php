@@ -16,14 +16,24 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset;
 
 /**
- * Base exception class for the proxy manager
+ * Class with a callable type hint in a method - used to test callable type hint
+ * generation
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class CallableTypeHintClass
 {
+    /**
+     * @param callable $parameter
+     *
+     * @return callable
+     */
+    public function callableTypeHintMethod(callable $parameter)
+    {
+        return $parameter;
+    }
 }

@@ -16,14 +16,14 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset;
 
 /**
- * Base exception class for the proxy manager
+ * Base test asset
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class EmptyClass
 {
 }

@@ -16,14 +16,26 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset;
 
 /**
- * Base exception class for the proxy manager
+ * Base test class to catch instantiations of lazy loading objects
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class LazyLoadingMock
 {
+    /**
+     * @var mixed
+     */
+    public $initializer;
+
+    /**
+     * @param mixed $initializer
+     */
+    public function __construct($initializer)
+    {
+        $this->initializer = $initializer;
+    }
 }

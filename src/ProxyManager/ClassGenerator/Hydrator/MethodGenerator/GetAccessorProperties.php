@@ -16,14 +16,39 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator;
+
+use GeneratedHydrator\Generator\MethodGenerator;
+use Zend\Code\Generator\PropertyGenerator;
 
 /**
- * Base exception class for the proxy manager
+ * Method generator for the `getAccessorProperties` method of a hydrator proxy
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class GetAccessorProperties extends MethodGenerator
 {
+    /**
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyAccessors
+     */
+    public function __construct(array $propertyAccessors)
+    {
+        parent::__construct('getAccessorProperties');
+        $this->setDocblock("{@inheritDoc}");
+
+        $body = 'return array(';
+
+        foreach ($propertyAccessors as $propertyAccessor) {
+            $body .= "\n    "
+                . var_export($propertyAccessor->getOriginalProperty()->getName(), true)
+                . ' => $this->'
+                . $propertyAccessor->getName()
+                . ',';
+        }
+
+        $body .= "\n);";
+
+        $this->setBody($body);
+    }
 }

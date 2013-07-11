@@ -2,8 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use ProxyManager\Configuration;
-use ProxyManager\Factory\HydratorFactory;
+use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Factory\HydratorFactory;
 
 class Foo
 {

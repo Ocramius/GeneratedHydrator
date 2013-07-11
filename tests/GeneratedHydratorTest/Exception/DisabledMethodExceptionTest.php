@@ -16,14 +16,26 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTest\Exception;
+
+use PHPUnit_Framework_TestCase;
+use GeneratedHydrator\Exception\DisabledMethodException;
 
 /**
- * Base exception class for the proxy manager
+ * Tests for {@see \GeneratedHydrator\Exception\DisabledMethodException}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class DisabledMethodExceptionTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \GeneratedHydrator\Exception\DisabledMethodException::disabledMethod
+     */
+    public function testProxyDirectoryNotFound()
+    {
+        $exception = DisabledMethodException::disabledMethod('foo::bar');
+
+        $this->assertSame('Method "foo::bar" is forcefully disabled', $exception->getMessage());
+    }
 }

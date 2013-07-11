@@ -16,14 +16,31 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTest\ProxyGenerator\Hydrator\MethodGenerator;
+
+use PHPUnit_Framework_TestCase;
+use GeneratedHydrator\ProxyGenerator\Hydrator\MethodGenerator\DisabledMethod;
 
 /**
- * Base exception class for the proxy manager
+ * Tests for {@see \GeneratedHydrator\ProxyGenerator\Hydrator\MethodGenerator\DisabledMethod}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
+ *
+ * @covers \GeneratedHydrator\ProxyGenerator\Hydrator\MethodGenerator\DisabledMethod
  */
-interface ExceptionInterface
+class DisabledMethodTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \GeneratedHydrator\ProxyGenerator\Hydrator\MethodGenerator\DisabledMethod::generate
+     */
+    public function testGeneratedStructure()
+    {
+        $disabledMethod = new DisabledMethod('foo');
+
+        $this->assertStringMatchesFormat(
+            '%athrow \\GeneratedHydrator\\Exception\\DisabledMethodException::disabledMethod(__METHOD__);%a',
+            $disabledMethod->generate()
+        );
+    }
 }

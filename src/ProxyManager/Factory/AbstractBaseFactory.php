@@ -16,9 +16,9 @@
  * and is licensed under the MIT license.
  */
 
-namespace ProxyManager\Factory;
+namespace GeneratedHydrator\Factory;
 
-use ProxyManager\Configuration;
+use GeneratedHydrator\Configuration;
 
 /**
  * Base factory common logic
@@ -28,36 +28,4 @@ use ProxyManager\Configuration;
  */
 abstract class AbstractBaseFactory
 {
-    /**
-     * @var \ProxyManager\Configuration
-     */
-    protected $configuration;
-
-    /**
-     * @var bool
-     */
-    protected $autoGenerate;
-
-    /**
-     * @var \ProxyManager\Inflector\ClassNameInflectorInterface
-     */
-    protected $inflector;
-
-    /**
-     * Cached generated class names
-     *
-     * @var string[]
-     */
-    protected $generatedClasses = array();
-
-    /**
-     * @param \ProxyManager\Configuration $configuration
-     */
-    public function __construct(Configuration $configuration)
-    {
-        $this->configuration = $configuration;
-        // localizing some properties for performance
-        $this->autoGenerate  = $this->configuration->doesAutoGenerateProxies();
-        $this->inflector     = $this->configuration->getClassNameInflector();
-    }
 }

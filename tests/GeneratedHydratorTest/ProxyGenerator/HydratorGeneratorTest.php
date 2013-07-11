@@ -16,14 +16,36 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTest\ProxyGenerator;
+
+use GeneratedHydrator\ProxyGenerator\HydratorGenerator;
 
 /**
- * Base exception class for the proxy manager
+ * Tests for {@see \GeneratedHydrator\ProxyGenerator\HydratorGenerator}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
+ *
+ * @covers \GeneratedHydrator\ProxyGenerator\HydratorGenerator
  */
-interface ExceptionInterface
+class HydratorGeneratorTest extends AbstractProxyGeneratorTest
 {
+    /**
+     * {@inheritDoc}
+     */
+    protected function getProxyGenerator()
+    {
+        return new HydratorGenerator();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getExpectedImplementedInterfaces()
+    {
+        return array(
+            'GeneratedHydrator\\Proxy\\HydratorInterface',
+            'Zend\\Stdlib\\Hydrator\\HydratorInterface'
+        );
+    }
 }

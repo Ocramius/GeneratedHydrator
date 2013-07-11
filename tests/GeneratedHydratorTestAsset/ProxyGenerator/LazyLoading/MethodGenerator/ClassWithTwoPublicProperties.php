@@ -16,14 +16,23 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset\ProxyGenerator\LazyLoading\MethodGenerator;
 
 /**
- * Base exception class for the proxy manager
+ * Test asset with 2 public properties
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class ClassWithTwoPublicProperties
 {
+    /**
+     * @var mixed
+     */
+    public $bar;
+
+    /**
+     * @var mixed
+     */
+    public $baz;
 }

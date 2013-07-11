@@ -16,14 +16,26 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTest\Exception;
+
+use PHPUnit_Framework_TestCase;
+use GeneratedHydrator\Exception\InvalidProxyDirectoryException;
 
 /**
- * Base exception class for the proxy manager
+ * Tests for {@see \GeneratedHydrator\Exception\InvalidProxyDirectoryException}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class InvalidProxyDirectoryExceptionTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \GeneratedHydrator\Exception\InvalidProxyDirectoryException::proxyDirectoryNotFound
+     */
+    public function testProxyDirectoryNotFound()
+    {
+        $exception = InvalidProxyDirectoryException::proxyDirectoryNotFound('foo/bar');
+
+        $this->assertSame('Provided directory "foo/bar" does not exist', $exception->getMessage());
+    }
 }

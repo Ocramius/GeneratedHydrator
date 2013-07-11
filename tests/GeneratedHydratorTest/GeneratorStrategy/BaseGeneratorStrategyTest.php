@@ -16,14 +16,31 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTest\GeneratorStrategy;
+
+use PHPUnit_Framework_TestCase;
+use GeneratedHydrator\GeneratorStrategy\BaseGeneratorStrategy;
+use GeneratedHydrator\Generator\ClassGenerator;
+use GeneratedHydrator\Generator\Util\UniqueIdentifierGenerator;
 
 /**
- * Base exception class for the proxy manager
+ * Tests for {@see \GeneratedHydrator\GeneratorStrategy\BaseGeneratorStrategy}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class BaseGeneratorStrategyTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \GeneratedHydrator\GeneratorStrategy\BaseGeneratorStrategy::generate
+     */
+    public function testGenerate()
+    {
+        $strategy       = new BaseGeneratorStrategy();
+        $className      = UniqueIdentifierGenerator::getIdentifier('Foo');
+        $classGenerator = new ClassGenerator($className);
+        $generated      = $strategy->generate($classGenerator);
+
+        $this->assertGreaterThan(0, strpos($generated, $className));
+    }
 }

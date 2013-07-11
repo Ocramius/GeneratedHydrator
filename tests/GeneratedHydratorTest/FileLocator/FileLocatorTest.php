@@ -16,27 +16,37 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTest\FileLocator;
 
-use BadMethodCallException;
+use PHPUnit_Framework_TestCase;
+use GeneratedHydrator\FileLocator\FileLocator;
 
 /**
- * Exception for forcefully disabled methods
+ * Tests for {@see \GeneratedHydrator\FileLocator\FileLocator}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class DisabledMethodException extends BadMethodCallException implements ExceptionInterface
+class FileLocatorTest extends PHPUnit_Framework_TestCase
 {
-    const NAME = __CLASS__;
+    /**
+     * @covers \GeneratedHydrator\FileLocator\FileLocator::__construct
+     * @covers \GeneratedHydrator\FileLocator\FileLocator::getProxyFileName
+     */
+    public function testGetProxyFileName()
+    {
+        $locator = new FileLocator(__DIR__);
+
+        $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . 'FooBarBaz.php', $locator->getProxyFileName('Foo\\Bar\\Baz'));
+        $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . 'Foo_Bar_Baz.php', $locator->getProxyFileName('Foo_Bar_Baz'));
+    }
 
     /**
-     * @param string $method
-     *
-     * @return self
+     * @covers \GeneratedHydrator\FileLocator\FileLocator::__construct
      */
-    public static function disabledMethod($method)
+    public function testRejectsNonExistingDirectory()
     {
-        return new self(sprintf('Method "%s" is forcefully disabled', (string) $method));
+        $this->setExpectedException('GeneratedHydrator\\Exception\\InvalidProxyDirectoryException');
+        new FileLocator(__DIR__ . '/non-existing');
     }
 }

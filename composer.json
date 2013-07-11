@@ -21,7 +21,9 @@
     ],
     "require": {
         "php":                       ">=5.4",
-        "zendframework/zend-stdlib": "2.*"
+        "zendframework/zend-stdlib": "2.*",
+        "ocramius/proxy-manager":    "0.4.*",
+        "nikic/php-parser":          "0.9.*"
     },
     "require-dev": {
         "phpunit/phpunit":           ">=3.7",

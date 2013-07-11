@@ -16,14 +16,16 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydratorTestAsset;
 
 /**
- * Base exception class for the proxy manager
+ * Base test class to verify that proxies actually modify the array keys of
+ * public properties that keep an array
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class ClassWithPublicArrayProperty
 {
+    public $arrayProperty = array();
 }

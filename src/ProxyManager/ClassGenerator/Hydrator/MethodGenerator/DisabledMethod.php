@@ -16,14 +16,30 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydrator\Exception;
+namespace GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator;
+
+use GeneratedHydrator\Exception\DisabledMethodException;
+use GeneratedHydrator\Generator\MethodGenerator;
 
 /**
- * Base exception class for the proxy manager
+ * Method generator for forcefully disabled methods
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-interface ExceptionInterface
+class DisabledMethod extends MethodGenerator
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function generate()
+    {
+        $this->setBody('throw \\' . DisabledMethodException::NAME . '::disabledMethod(__METHOD__);');
+        $this->setDocblock(
+            "{@inheritDoc}\n\n@internal disabled since this object is not a real proxy\n\n"
+            . "@throws \\GeneratedHydrator\\Exception\\DisabledMethodException"
+        );
+
+        return parent::generate();
+    }
 }
