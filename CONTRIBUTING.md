@@ -11,7 +11,7 @@
 To install the project and run the tests, you need to clone it first:
 
 ```sh
-git clone git://github.com/Ocramius/ProxyManager.git
+git clone git://github.com/Ocramius/GeneratedHydrator.git
 ```
 
 You will then need to run a composer installation:
@@ -32,4 +32,3 @@ The PHPUnit version to be used is the one installed as a dev- dependency via com
 
 Accepted coverage for new contributions is 80%. Any contribution not satisfying this requirement 
 won't be merged.
-

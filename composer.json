@@ -1,16 +1,16 @@
 {
-    "name":              "ocramius/proxy-manager",
-    "description":       "A library providing utilities to generate, instantiate and generally operate with Object Proxies",
+    "name":              "ocramius/generated-hydrator",
+    "description":       "An Object Hydrator that allows very fast array to object to array conversion",
     "type":              "library",
     "license":           "MIT",
-    "homepage":          "https://github.com/Ocramius/ProxyManager",
+    "homepage":          "https://github.com/Ocramius/GeneratedHydrator",
     "minimum-stability": "dev",
     "keywords":          [
-        "proxy",
-        "proxy pattern",
-        "service proxies",
-        "lazy loading",
-        "aop"
+        "hydrator",
+        "performance",
+        "array conversion",
+        "object conversion",
+        "serializer"
     ],
     "authors": [
         {
@@ -20,18 +20,14 @@
         }
     ],
     "require": {
-        "php":                     ">=5.3.3",
-        "zendframework/zend-code": "2.*"
+        "php":                       ">=5.4",
+        "zendframework/zend-stdlib": "2.*"
     },
     "require-dev": {
         "phpunit/phpunit":           ">=3.7",
         "phpmd/phpmd":               "1.4.*",
         "squizlabs/php_codesniffer": "1.4.*",
-        "zendframework/zend-stdlib": "2.*",
         "satooshi/php-coveralls":    "~0.6"
-    },
-    "suggest": {
-        "zendframework/zend-stdlib": "To use the hydrator proxy"
     },
     "autoload": {
         "psr-0": {
@@ -40,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.5.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     }
 }
