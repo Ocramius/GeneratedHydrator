@@ -11,8 +11,8 @@
     backupGlobals="false"
     syntaxCheck="true"
 >
-    <testsuite name="ProxyManager tests">
-        <directory>./tests/ProxyManagerTest</directory>
+    <testsuite name="GeneratedHydrator tests">
+        <directory>./tests/GeneratedHydratorTest</directory>
     </testsuite>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
