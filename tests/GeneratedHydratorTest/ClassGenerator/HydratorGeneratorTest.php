@@ -61,7 +61,6 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
         $this->assertSame($generatedClassName, $generatedReflection->getName());
 
         foreach ($this->getExpectedImplementedInterfaces() as $interface) {
-            var_dump($interface);
             $this->assertTrue($generatedReflection->implementsInterface($interface));
         }
     }
