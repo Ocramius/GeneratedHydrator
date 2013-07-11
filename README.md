@@ -123,3 +123,8 @@ As you can see, the generated hydrator is 20 times faster than `Zend\Stdlib\Hydr
 and `Zend\Stdlib\Hydrator\ArraySerializable`, and more than 90 times faster than
 `Zend\Stdlib\Hydrator\ClassMethods`.
 
+
+## Contributing
+
+Please read the [CONTRIBUTING.md](https://github.com/Ocramius/GeneratedHydrator/blob/master/CONTRIBUTING.md) contents
+if you wish to help out!
