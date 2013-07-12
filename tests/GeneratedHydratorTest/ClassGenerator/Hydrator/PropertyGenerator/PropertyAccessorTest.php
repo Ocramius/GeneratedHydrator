@@ -41,8 +41,8 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
     {
         $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
 
-        $accessor1 = new PropertyAccessor($property);
-        $accessor2 = new PropertyAccessor($property);
+        $accessor1 = new PropertyAccessor($property, 'foo');
+        $accessor2 = new PropertyAccessor($property, 'foo');
 
         $this->assertNotSame($accessor1, $accessor2);
     }
@@ -55,7 +55,7 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
     {
         $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
 
-        $accessor = new PropertyAccessor($property);
+        $accessor = new PropertyAccessor($property, 'foo');
 
         $this->assertSame($property, $accessor->getOriginalProperty());
     }
@@ -67,8 +67,8 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
     {
         $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
 
-        $accessor = new PropertyAccessor($property);
+        $accessor = new PropertyAccessor($property, 'Foo');
 
-        $this->assertStringMatchesFormat('publicPropertyAccessor%s', $accessor->getName());
+        $this->assertStringMatchesFormat('publicPropertyFoo%s', $accessor->getName());
     }
 }

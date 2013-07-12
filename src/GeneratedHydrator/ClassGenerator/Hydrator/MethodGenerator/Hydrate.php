@@ -32,9 +32,9 @@ class Hydrate extends MethodGenerator
 {
     /**
      * @param \ReflectionProperty[]                                                      $accessibleProperties
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyAccessors
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyWriters
      */
-    public function __construct(array $accessibleProperties, array $propertyAccessors)
+    public function __construct(array $accessibleProperties, array $propertyWriters)
     {
         parent::__construct('hydrate');
         $this->setDocblock("{@inheritDoc}");
@@ -51,10 +51,10 @@ class Hydrate extends MethodGenerator
                 . "];\n";
         }
 
-        foreach ($propertyAccessors as $propertyAccessor) {
+        foreach ($propertyWriters as $propertyAccessor) {
             $body .= '$this->'
                 . $propertyAccessor->getName()
-                . '->setValue($object, $data['
+                . '->__invoke($object, $data['
                 . var_export($propertyAccessor->getOriginalProperty()->getName(), true)
                 . "]);\n";
         }

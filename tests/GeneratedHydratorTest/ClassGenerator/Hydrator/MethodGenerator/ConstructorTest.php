@@ -49,9 +49,9 @@ class ConstructorTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('__construct', $constructor->getName());
         $this->assertSame(
-            "\$reflectionClass = new \\ReflectionClass(" . var_export(__CLASS__, true) . ");\n\n"
-            . "\$this->foo = \$reflectionClass->getProperty('publicProperty');\n\n"
-            . "\$this->foo->setAccessible(true);\n",
+            "\$this->foo = \\Closure::bind(function (\$object, \$value) {\n"
+            . "    \$object->publicProperty = \$value;\n"
+            . "}, null, 'GeneratedHydratorTestAsset\\\\BaseClass');",
             $constructor->getBody()
         );
         $this->assertEmpty($constructor->getParameters());

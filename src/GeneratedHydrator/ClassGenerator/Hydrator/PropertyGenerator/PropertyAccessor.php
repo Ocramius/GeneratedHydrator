@@ -38,13 +38,14 @@ class PropertyAccessor extends PropertyGenerator
 
     /**
      * @param \ReflectionProperty $accessedProperty
+     * @param string              $nameSuffix
      */
-    public function __construct(ReflectionProperty $accessedProperty)
+    public function __construct(ReflectionProperty $accessedProperty, $nameSuffix)
     {
         $this->accessedProperty = $accessedProperty;
         $originalName           = $this->accessedProperty->getName();
 
-        parent::__construct(UniqueIdentifierGenerator::getIdentifier($originalName . 'Accessor'));
+        parent::__construct(UniqueIdentifierGenerator::getIdentifier($originalName . $nameSuffix));
         $this->setVisibility(self::VISIBILITY_PRIVATE);
         $this->setDocblock("@var \\ReflectionProperty used to access {@see parent::$originalName}");
     }

@@ -31,43 +31,28 @@ use Zend\Code\Generator\PropertyGenerator;
 class Constructor extends MethodGenerator
 {
     /**
-     * @param \ReflectionClass                                                           $originalClass
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyAccessors
+     * @param \ReflectionClass                                                                $originalClass
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyWriters
      */
-    public function __construct(ReflectionClass $originalClass, array $propertyAccessors)
+    public function __construct(ReflectionClass $originalClass, array $propertyWriters)
     {
         parent::__construct('__construct');
 
         $this->setDocblock($originalClass->hasMethod('__construct') ? '{@inheritDoc}' : 'Constructor.');
 
-        if (! empty($propertyAccessors)) {
-            $this->setBody($this->getPropertyAccessorsInitialization($originalClass, $propertyAccessors));
-        }
-    }
+        $bodyParts = array();
 
-    /**
-     * Generates access interceptors initialization code
-     *
-     * @param \ReflectionClass                                                           $originalClass
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyAccessors
-     *
-     * @return string
-     */
-    private function getPropertyAccessorsInitialization(ReflectionClass $originalClass, array $propertyAccessors)
-    {
-        $reflectionInit   = '$reflectionClass = new \ReflectionClass('
-            . var_export($originalClass->getName(), true) . ');';
-        $propertiesInit   = '';
-        $propertiesAccess = '';
+        foreach ($propertyWriters as $propertyWriter) {
+            $accessorName     = $propertyWriter->getName();
+            $originalProperty = $propertyWriter->getOriginalProperty();
+            $className        = $originalProperty->getDeclaringClass()->getName();
+            $property         = $originalProperty->getName();
 
-        foreach ($propertyAccessors as $propertyAccessor) {
-            $accessorName = $propertyAccessor->getName();
-
-            $propertiesInit .= '$this->' . $accessorName . ' = $reflectionClass->getProperty('
-                . var_export($propertyAccessor->getOriginalProperty()->getName(), true) . ");\n";
-            $propertiesAccess .= '$this->' . $propertyAccessor->getName() . "->setAccessible(true);\n";
+            $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
+                . "    \$object->" . $property . " = \$value;\n"
+                . "}, null, " . var_export($className, true) . ");";
         }
 
-        return $reflectionInit . "\n\n" . $propertiesInit . "\n" . $propertiesAccess;
+        $this->setBody(implode("\n", $bodyParts));
     }
 }
