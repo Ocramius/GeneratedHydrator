@@ -48,7 +48,7 @@ class Constructor extends MethodGenerator
             $className        = $originalProperty->getDeclaringClass()->getName();
             $property         = $originalProperty->getName();
 
-            $bodyParts .= "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
+            $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
                 . "    \$object->" . $property . " = \$value;\n"
                 . "}, null, " . var_export($className, true) . ");";
         }
