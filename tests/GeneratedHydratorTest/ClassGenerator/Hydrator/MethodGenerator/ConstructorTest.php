@@ -56,7 +56,7 @@ class ConstructorTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEmpty($constructor->getParameters());
     }
-    
+
     public function testGeneratedStructureWithoutAccessors()
     {
         $constructor = new Constructor(new ReflectionClass(__CLASS__), array());
