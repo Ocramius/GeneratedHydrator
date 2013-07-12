@@ -32,44 +32,15 @@ class Constructor extends MethodGenerator
 {
     /**
      * @param \ReflectionClass                                                                $originalClass
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyReaders
      * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyWriters
      */
-    public function __construct(ReflectionClass $originalClass, array $propertyReaders, array $propertyWriters)
+    public function __construct(ReflectionClass $originalClass, array $propertyWriters)
     {
         parent::__construct('__construct');
 
         $this->setDocblock($originalClass->hasMethod('__construct') ? '{@inheritDoc}' : 'Constructor.');
 
-        if (! empty($propertyReaders) && ! empty($propertyWriters)) {
-            $this->setBody(
-                $this->getPropertyAccessorsInitialization($propertyReaders, $propertyWriters)
-            );
-        }
-    }
-
-    /**
-     * Generates access interceptors initialization code
-     *
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyReaders
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyWriters
-     *
-     * @return string
-     */
-    private function getPropertyAccessorsInitialization(array $propertyReaders, array $propertyWriters)
-    {
-        $body = '';
-
-        foreach ($propertyReaders as $propertyReader) {
-            $accessorName     = $propertyReader->getName();
-            $originalProperty = $propertyReader->getOriginalProperty();
-            $className        = $originalProperty->getDeclaringClass()->getName();
-            $property         = $originalProperty->getName();
-
-            $body .= "\n\$this->" . $accessorName . " = \\Closure::bind(function (\$object) {\n"
-                . "    return \$object->" . $property . ";\n"
-                . "}, null, " . var_export($className, true) . ");";
-        }
+        $bodyParts = array();
 
         foreach ($propertyWriters as $propertyWriter) {
             $accessorName     = $propertyWriter->getName();
@@ -77,11 +48,11 @@ class Constructor extends MethodGenerator
             $className        = $originalProperty->getDeclaringClass()->getName();
             $property         = $originalProperty->getName();
 
-            $body .= "\n\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
+            $bodyParts .= "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
                 . "    \$object->" . $property . " = \$value;\n"
                 . "}, null, " . var_export($className, true) . ");";
         }
 
-        return $body;
+        $this->setBody(implode("\n", $bodyParts));
     }
 }

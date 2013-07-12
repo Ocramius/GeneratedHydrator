@@ -107,21 +107,16 @@ class HydratorGenerator implements ClassGeneratorInterface
         $accessibleFlag       = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED;
         $accessibleProperties = $originalClass->getProperties($accessibleFlag);
         $inaccessibleProps    = $originalClass->getProperties(ReflectionProperty::IS_PRIVATE);
-        $propertyReaders      = array();
         $propertyWriters      = array();
 
         foreach ($inaccessibleProps as $inaccessibleProp) {
-            $propertyName = $inaccessibleProp->getName();
-
-            $propertyReaders[$propertyName] = new PropertyAccessor($inaccessibleProp, 'Reader');
-            $propertyWriters[$propertyName] = new PropertyAccessor($inaccessibleProp, 'Writer');
+            $propertyWriters[$inaccessibleProp->getName()] = new PropertyAccessor($inaccessibleProp, 'Writer');
         }
 
-        $classGenerator->addProperties($propertyReaders);
         $classGenerator->addProperties($propertyWriters);
 
-        $classGenerator->addMethodFromGenerator(new Constructor($originalClass, $propertyReaders, $propertyWriters));
-        $classGenerator->addMethodFromGenerator(new Hydrate($accessibleProperties, $propertyReaders, $propertyWriters));
-        $classGenerator->addMethodFromGenerator(new Extract($accessibleProperties, $propertyReaders, $propertyWriters));
+        $classGenerator->addMethodFromGenerator(new Constructor($originalClass, $propertyWriters));
+        $classGenerator->addMethodFromGenerator(new Hydrate($accessibleProperties, $propertyWriters));
+        $classGenerator->addMethodFromGenerator(new Extract($accessibleProperties, $propertyWriters));
     }
 }
