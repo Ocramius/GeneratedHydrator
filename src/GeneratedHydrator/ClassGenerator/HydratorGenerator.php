@@ -123,7 +123,5 @@ class HydratorGenerator implements ClassGeneratorInterface
         $classGenerator->addMethodFromGenerator(new Constructor($originalClass, $propertyReaders, $propertyWriters));
         $classGenerator->addMethodFromGenerator(new Hydrate($accessibleProperties, $propertyReaders, $propertyWriters));
         $classGenerator->addMethodFromGenerator(new Extract($accessibleProperties, $propertyReaders, $propertyWriters));
-        //$classGenerator->addMethodFromGenerator(new GetAccessorProperties($propertyAccessors));
-        //$classGenerator->addMethodFromGenerator(new SetAccessorProperties($propertyAccessors));
     }
 }

@@ -31,43 +31,57 @@ use Zend\Code\Generator\PropertyGenerator;
 class Constructor extends MethodGenerator
 {
     /**
-     * @param \ReflectionClass                                                           $originalClass
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyAccessors
+     * @param \ReflectionClass                                                                $originalClass
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyReaders
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyWriters
      */
-    public function __construct(ReflectionClass $originalClass, array $propertyAccessors)
+    public function __construct(ReflectionClass $originalClass, array $propertyReaders, array $propertyWriters)
     {
         parent::__construct('__construct');
 
         $this->setDocblock($originalClass->hasMethod('__construct') ? '{@inheritDoc}' : 'Constructor.');
 
-        if (! empty($propertyAccessors)) {
-            $this->setBody($this->getPropertyAccessorsInitialization($originalClass, $propertyAccessors));
+        if (! empty($propertyReaders) && ! empty($propertyWriters)) {
+            $this->setBody(
+                $this->getPropertyAccessorsInitialization($propertyReaders, $propertyWriters)
+            );
         }
     }
 
     /**
      * Generates access interceptors initialization code
      *
-     * @param \ReflectionClass                                                           $originalClass
-     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyAccessors
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyReaders
+     * @param \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor[] $propertyWriters
      *
      * @return string
      */
-    private function getPropertyAccessorsInitialization(ReflectionClass $originalClass, array $propertyAccessors)
+    private function getPropertyAccessorsInitialization(array $propertyReaders, array $propertyWriters)
     {
-        $reflectionInit   = '$reflectionClass = new \ReflectionClass('
-            . var_export($originalClass->getName(), true) . ');';
-        $propertiesInit   = '';
-        $propertiesAccess = '';
+        $body = '';
 
-        foreach ($propertyAccessors as $propertyAccessor) {
-            $accessorName = $propertyAccessor->getName();
+        foreach ($propertyReaders as $propertyReader) {
+            $accessorName     = $propertyReader->getName();
+            $originalProperty = $propertyReader->getOriginalProperty();
+            $className        = $originalProperty->getDeclaringClass()->getName();
+            $property         = $originalProperty->getName();
 
-            $propertiesInit .= '$this->' . $accessorName . ' = $reflectionClass->getProperty('
-                . var_export($propertyAccessor->getOriginalProperty()->getName(), true) . ");\n";
-            $propertiesAccess .= '$this->' . $propertyAccessor->getName() . "->setAccessible(true);\n";
+            $body .= "\n\$this->" . $accessorName . " = \\Closure::bind(function (\$object) {\n"
+                . "    return \$object->" . $property . ";\n"
+                . "}, null, " . var_export($className, true) . ");";
         }
 
-        return $reflectionInit . "\n\n" . $propertiesInit . "\n" . $propertiesAccess;
+        foreach ($propertyWriters as $propertyWriter) {
+            $accessorName     = $propertyWriter->getName();
+            $originalProperty = $propertyWriter->getOriginalProperty();
+            $className        = $originalProperty->getDeclaringClass()->getName();
+            $property         = $originalProperty->getName();
+
+            $body .= "\n\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
+                . "    \$object->" . $property . " = \$value;\n"
+                . "}, null, " . var_export($className, true) . ");";
+        }
+
+        return $body;
     }
 }
