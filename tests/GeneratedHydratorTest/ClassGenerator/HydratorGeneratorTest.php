@@ -19,6 +19,7 @@
 namespace GeneratedHydratorTest\ClassGenerator;
 
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\ClassGenerator\PhpParserClassGenerator;
 use ProxyManager\Generator\ClassGenerator;
 use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
 use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
@@ -43,7 +44,7 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
     {
         $generator          = new HydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('AbstractProxyGeneratorTest');
-        $generatedClass     = new ClassGenerator($generatedClassName);
+        $generatedClass     = new PhpParserClassGenerator($generatedClassName);
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
 

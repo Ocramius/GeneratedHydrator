@@ -18,6 +18,7 @@
 
 namespace GeneratedHydratorTest\Functional;
 
+use GeneratedHydrator\ClassGenerator\PhpParserClassGenerator;
 use PHPUnit_Framework_TestCase;
 use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use ProxyManager\ProxyGenerator\HydratorGenerator;
@@ -119,7 +120,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $generator          = new HydratorGenerator();
-        $generatedClass     = new ClassGenerator($generatedClassName);
+        $generatedClass     = new PhpParserClassGenerator($generatedClassName);
         $strategy           = new EvaluatingGeneratorStrategy();
         $reflection         = new ReflectionClass($parentClassName);
 
