@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php":                       ">=5.3.3",
+        "php":                       ">=5.4",
         "zendframework/zend-stdlib": "2.*",
         "ocramius/proxy-manager":    "0.4.*",
         "nikic/php-parser":          "0.9.*"

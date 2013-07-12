@@ -104,20 +104,19 @@ class HydratorGenerator implements ClassGeneratorInterface
         $classGenerator->addMethodFromGenerator(new DisabledMagicMethod($originalClass, '__isset', array('name')));
         $classGenerator->addMethodFromGenerator(new DisabledMagicMethod($originalClass, '__unset', array('name')));
 
-        $accessibleFlag         = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED;
-        $accessibleProperties   = $originalClass->getProperties($accessibleFlag);
-        $inaccessibleProps      = $originalClass->getProperties(ReflectionProperty::IS_PRIVATE);
-        $propertyAccessors      = array();
+        $accessibleFlag       = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED;
+        $accessibleProperties = $originalClass->getProperties($accessibleFlag);
+        $inaccessibleProps    = $originalClass->getProperties(ReflectionProperty::IS_PRIVATE);
+        $propertyWriters      = array();
 
         foreach ($inaccessibleProps as $inaccessibleProp) {
-            $propertyAccessors[] = new PropertyAccessor($inaccessibleProp);
+            $propertyWriters[$inaccessibleProp->getName()] = new PropertyAccessor($inaccessibleProp, 'Writer');
         }
 
-        $classGenerator->addProperties($propertyAccessors);
-        $classGenerator->addMethodFromGenerator(new Constructor($originalClass, $propertyAccessors));
-        $classGenerator->addMethodFromGenerator(new Hydrate($accessibleProperties, $propertyAccessors));
-        $classGenerator->addMethodFromGenerator(new Extract($accessibleProperties, $propertyAccessors));
-        $classGenerator->addMethodFromGenerator(new GetAccessorProperties($propertyAccessors));
-        $classGenerator->addMethodFromGenerator(new SetAccessorProperties($propertyAccessors));
+        $classGenerator->addProperties($propertyWriters);
+
+        $classGenerator->addMethodFromGenerator(new Constructor($originalClass, $propertyWriters));
+        $classGenerator->addMethodFromGenerator(new Hydrate($accessibleProperties, $propertyWriters));
+        $classGenerator->addMethodFromGenerator(new Extract($accessibleProperties, $propertyWriters));
     }
 }
