@@ -18,6 +18,7 @@
 
 namespace GeneratedHydrator\Factory;
 
+use GeneratedHydrator\ClassGenerator\PhpParserClassGenerator;
 use GeneratedHydrator\Configuration;
 use ProxyManager\Generator\ClassGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
@@ -86,7 +87,8 @@ class HydratorFactory extends AbstractBaseFactory
         $proxyClassName = $this->inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
 
         if ($this->autoGenerate && ! class_exists($proxyClassName)) {
-            $classGenerator = new ClassGenerator($proxyClassName);
+            //$classGenerator = new ClassGenerator($proxyClassName);
+            $classGenerator = new PhpParserClassGenerator($proxyClassName);
             $generator      = new HydratorGenerator();
 
             $generator->generate(new ReflectionClass($realClassName), $classGenerator);
