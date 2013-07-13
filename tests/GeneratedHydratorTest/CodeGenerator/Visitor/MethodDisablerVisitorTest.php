@@ -14,17 +14,40 @@ use PHPUnit_Framework_TestCase;
  */
 class MethodDisablerVisitorTest extends PHPUnit_Framework_TestCase
 {
-    public function testDisablesMethodWhenFiltering()
+    public function testDisablesMethod()
     {
-        $visitor = new MethodDisablerVisitor(
-            function () {
-                return true;
-            }
-        );
-
         $method = new PHPParser_Node_Stmt_ClassMethod('test');
+        $filter = $this->getMock('stdClass', array('__invoke'));
+
+        $filter->expects($this->once())->method('__invoke')->with($method)->will($this->returnValue(true));
+
+        $visitor = new MethodDisablerVisitor($filter);
 
         $this->assertSame($method, $visitor->enterNode($method));
         $this->assertInstanceOf('PHPParser_Node_Stmt_Throw', reset($method->stmts));
+    }
+
+    public function testSkipsOnFailedFiltering()
+    {
+        $method = new PHPParser_Node_Stmt_ClassMethod('test');
+        $filter = $this->getMock('stdClass', array('__invoke'));
+
+        $filter->expects($this->once())->method('__invoke')->with($method)->will($this->returnValue(false));
+
+        $visitor = new MethodDisablerVisitor($filter);
+
+        $this->assertSame(null, $visitor->enterNode($method));
+    }
+
+    public function testSkipsOnNodeTypeMismatch()
+    {
+        $class  = new PHPParser_Node_Stmt_Class('test');
+        $filter = $this->getMock('stdClass', array('__invoke'));
+
+        $filter->expects($this->never())->method('__invoke');
+
+        $visitor = new MethodDisablerVisitor($filter);
+
+        $this->assertSame(null, $visitor->enterNode($class));
     }
 }
