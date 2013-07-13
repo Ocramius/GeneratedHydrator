@@ -19,10 +19,9 @@ class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
 {
     public function testRenamesNodesOnMatchingClass()
     {
-        $reflectionClass = new ReflectionClass(__CLASS__);
-        $visitor         = new ClassRenamerVisitor($reflectionClass, 'Foo\\Bar\\Baz');
-        $class           = new PHPParser_Node_Stmt_Class('ClassRenamerVisitorTest');
-        $namespace       = new PHPParser_Node_Stmt_Namespace(
+        $visitor   = new ClassRenamerVisitor(new ReflectionClass(__CLASS__), 'Foo\\Bar\\Baz');
+        $class     = new PHPParser_Node_Stmt_Class('ClassRenamerVisitorTest');
+        $namespace = new PHPParser_Node_Stmt_Namespace(
             new PHPParser_Node_Name(array('GeneratedHydratorTest', 'CodeGenerator', 'Visitor'))
         );
 
@@ -31,17 +30,69 @@ class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
         $visitor->leaveNode($class);
         $visitor->leaveNode($namespace);
 
-        $this->assertSame(array('Foo', 'Bar'), $namespace->name->parts);
         $this->assertSame('Baz', $class->name);
+        $this->assertSame(array('Foo', 'Bar'), $namespace->name->parts);
     }
 
     public function testIgnoresNodesOnNonMatchingClass()
     {
-        $this->markTestIncomplete();
+        $visitor   = new ClassRenamerVisitor(new ReflectionClass(__CLASS__), 'Foo\\Bar\\Baz');
+        $class     = new PHPParser_Node_Stmt_Class('Wrong');
+        $namespace = new PHPParser_Node_Stmt_Namespace(
+            new PHPParser_Node_Name(array('GeneratedHydratorTest', 'CodeGenerator', 'Visitor'))
+        );
+
+        $this->assertSame($namespace, $visitor->enterNode($namespace));
+        $this->assertNull($visitor->enterNode($class));
+        $visitor->leaveNode($class);
+        $visitor->leaveNode($namespace);
+
+        $this->assertSame('Wrong', $class->name);
+        $this->assertSame(array('GeneratedHydratorTest', 'CodeGenerator', 'Visitor'), $namespace->name->parts);
     }
 
-    public function testIgnoresNodesOnNonMatchingVisitor()
+    public function testIgnoresNodesOnNonMatchingNamespace()
     {
-        $this->markTestIncomplete();
+        $visitor   = new ClassRenamerVisitor(new ReflectionClass(__CLASS__), 'Foo\\Bar\\Baz');
+        $class     = new PHPParser_Node_Stmt_Class('ClassRenamerVisitorTest');
+        $namespace = new PHPParser_Node_Stmt_Namespace(
+            new PHPParser_Node_Name(array('Wrong', 'Namespace', 'Here'))
+        );
+
+        $this->assertSame($namespace, $visitor->enterNode($namespace));
+        $this->assertNull($visitor->enterNode($class));
+        $visitor->leaveNode($class);
+        $visitor->leaveNode($namespace);
+
+        $this->assertSame('ClassRenamerVisitorTest', $class->name);
+        $this->assertSame(array('Wrong', 'Namespace', 'Here'), $namespace->name->parts);
+    }
+
+    public function testMatchOnEmptyNamespace()
+    {
+        $visitor   = new ClassRenamerVisitor(new ReflectionClass('stdClass'), 'Baz');
+        $class     = new PHPParser_Node_Stmt_Class('stdClass');
+
+        $this->assertSame($class, $visitor->enterNode($class));
+        $visitor->leaveNode($class);
+
+        $this->assertSame('Baz', $class->name);
+    }
+
+    public function testMismatchOnEmptyNamespace()
+    {
+        $visitor   = new ClassRenamerVisitor(new ReflectionClass('stdClass'), 'Baz');
+        $class     = new PHPParser_Node_Stmt_Class('stdClass');
+        $namespace = new PHPParser_Node_Stmt_Namespace(
+            new PHPParser_Node_Name(array('Wrong', 'Namespace', 'Here'))
+        );
+
+        $this->assertSame($namespace, $visitor->enterNode($namespace));
+        $this->assertNull($visitor->enterNode($class));
+        $visitor->leaveNode($class);
+        $visitor->leaveNode($namespace);
+
+        $this->assertSame('stdClass', $class->name);
+        $this->assertSame(array('Wrong', 'Namespace', 'Here'), $namespace->name->parts);
     }
 }

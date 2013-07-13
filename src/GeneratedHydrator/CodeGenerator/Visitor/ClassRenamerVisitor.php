@@ -50,7 +50,10 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
             return $this->currentNamespace = $node;
         }
 
-        if ($node instanceof PHPParser_Node_Stmt_Class && $this->namespaceMatches()) {
+        if ($node instanceof PHPParser_Node_Stmt_Class
+            && $this->namespaceMatches()
+            && ($this->reflectedClass->getShortName() === $node->name)
+        ) {
             $node->name = $this->newName;
 
             // @todo too simplistic (assumes single class per namespace right now)
@@ -73,7 +76,7 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
 
     private function namespaceMatches()
     {
-        $currentNamespace = is_array($this->currentNamespace->name->parts)
+        $currentNamespace = ($this->currentNamespace && is_array($this->currentNamespace->name->parts))
             ? implode('\\', $this->currentNamespace->name->parts)
             : '';
 
