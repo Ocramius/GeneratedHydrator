@@ -34,6 +34,6 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
 
         $prettyPrinter = new \PHPParser_PrettyPrinter_Default();
 
-        die(var_dump($prettyPrinter->prettyPrint(array($modified))));
+        die($prettyPrinter->prettyPrint(array($modified)));
     }
 }
