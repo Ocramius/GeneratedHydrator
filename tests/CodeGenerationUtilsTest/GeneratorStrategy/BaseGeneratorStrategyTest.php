@@ -42,4 +42,25 @@ class BaseGeneratorStrategyTest extends PHPUnit_Framework_TestCase
 
         $this->assertGreaterThan(0, strpos($generated, $className));
     }
+
+    /**
+     * @covers \CodeGenerationUtils\GeneratorStrategy\BaseGeneratorStrategy::setPrettyPrinter
+     * @covers \CodeGenerationUtils\GeneratorStrategy\BaseGeneratorStrategy::getPrettyPrinter
+     */
+    public function testSetPrettyPrinter()
+    {
+        $strategy = new BaseGeneratorStrategy();
+
+        $prettyPrinter = $this->getMock('PHPParser_PrettyPrinterAbstract');
+
+        $prettyPrinter
+            ->expects($this->once())
+            ->method('prettyPrint')
+            ->with(array('bar'))
+            ->will($this->returnValue('foo'));
+
+        $strategy->setPrettyPrinter($prettyPrinter);
+
+        $this->assertSame('foo', $strategy->generate(array('bar')));
+    }
 }
