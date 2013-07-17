@@ -51,12 +51,20 @@ class ClassFQCNResolverVisitor extends PHPParser_NodeVisitorAbstract
      *
      * @throws Exception\UnexpectedValueException in case no class could be resolved
      */
-    public function getFQCN()
+    public function getName()
     {
         if (! $this->class) {
             throw new UnexpectedValueException('No class discovered');
         }
 
-        return trim(($this->namespace ? $this->namespace->name->toString() : '') . '\\' . $this->class->name, '\\');
+        return $this->class->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace ? $this->namespace->name->toString() : '';
     }
 }

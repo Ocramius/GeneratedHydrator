@@ -19,7 +19,9 @@
 namespace CodeGenerationUtils\GeneratorStrategy;
 
 use CodeGenerationUtils\FileLocator\FileLocatorInterface;
+use CodeGenerationUtils\Visitor\ClassFQCNResolverVisitor;
 use PHPParser_Node_Stmt_Class;
+use PHPParser_NodeTraverser;
 use PHPParser_NodeVisitor_NameResolver;
 use Zend\Code\Generator\ClassGenerator;
 
@@ -39,11 +41,23 @@ class FileWriterGeneratorStrategy implements GeneratorStrategyInterface
     protected $fileLocator;
 
     /**
+     * @var \PHPParser_NodeTraverserInterface
+     */
+    private $traverser;
+
+    private $visitor;
+
+
+    /**
      * @param \CodeGenerationUtils\FileLocator\FileLocatorInterface $fileLocator
      */
     public function __construct(FileLocatorInterface $fileLocator)
     {
         $this->fileLocator = $fileLocator;
+        $this->traverser   = new PHPParser_NodeTraverser();
+        $this->visitor     = new ClassFQCNResolverVisitor();
+
+        $this->traverser->addVisitor($this->visitor);
     }
 
     /**
@@ -53,18 +67,11 @@ class FileWriterGeneratorStrategy implements GeneratorStrategyInterface
      */
     public function generate(array $ast)
     {
+        $this->traverser->traverse($ast);
+
         $generatedCode = parent::generate($ast);
-
-        foreach ($ast as $node) {
-            if ($node instanceof PHPParser_Node_Stmt_Class) {
-                
-                break;
-            }
-        }
-
-        $className     = trim($classGenerator->getNamespaceName(), '\\')
-            . '\\' . trim($classGenerator->getName(), '\\');
-        $generatedCode = $classGenerator->generate();
+        $className     = trim($this->visitor->getNamespace(), '\\')
+            . '\\' . trim($this->visitor->getName(), '\\');
         $fileName      = $this->fileLocator->getProxyFileName($className);
         $tmpFileName   = $fileName . '.' . uniqid('', true);
 
