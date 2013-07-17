@@ -16,16 +16,22 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
-
-use PHPUnit_Framework_TestCase;
+namespace CodeGenerationUtils\FileLocator;
 
 /**
- * Base test for proxy generators
+ * Basic autoloader utilities required to work with proxy files
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+interface FileLocatorInterface
 {
+    /**
+     * Retrieves the file name for the given proxy
+     *
+     * @param $className
+     *
+     * @return mixed
+     */
+    public function getProxyFileName($className);
 }

@@ -30,7 +30,7 @@ use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
 use ReflectionClass;
 use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionProperty;
 use stdClass;
 

@@ -22,7 +22,7 @@ use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
 use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use Zend\Code\Reflection\ClassReflection;
 

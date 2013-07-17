@@ -16,16 +16,14 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
-
-use PHPUnit_Framework_TestCase;
+namespace CodeGenerationUtils\Exception;
 
 /**
- * Base test for proxy generators
+ * Base exception class for the proxy manager
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+interface ExceptionInterface
 {
 }

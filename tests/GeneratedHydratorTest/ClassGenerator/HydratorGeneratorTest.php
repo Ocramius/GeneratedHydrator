@@ -20,7 +20,7 @@ namespace GeneratedHydratorTest\ClassGenerator;
 
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use ReflectionClass;
 

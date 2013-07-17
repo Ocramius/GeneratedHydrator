@@ -16,16 +16,23 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
+namespace CodeGenerationUtils\GeneratorStrategy;
 
-use PHPUnit_Framework_TestCase;
+use Zend\Code\Generator\ClassGenerator;
 
 /**
- * Base test for proxy generators
+ * Generator strategy that generates the class body
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+class BaseGeneratorStrategy implements GeneratorStrategyInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function generate(ClassGenerator $classGenerator)
+    {
+        return $classGenerator->generate();
+    }
 }

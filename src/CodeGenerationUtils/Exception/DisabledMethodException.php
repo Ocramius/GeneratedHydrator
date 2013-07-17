@@ -16,16 +16,27 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
+namespace CodeGenerationUtils\Exception;
 
-use PHPUnit_Framework_TestCase;
+use BadMethodCallException;
 
 /**
- * Base test for proxy generators
+ * Exception for forcefully disabled methods
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+class DisabledMethodException extends BadMethodCallException implements ExceptionInterface
 {
+    const NAME = __CLASS__;
+
+    /**
+     * @param string $method
+     *
+     * @return self
+     */
+    public static function disabledMethod($method)
+    {
+        return new self(sprintf('Method "%s" is forcefully disabled', (string) $method));
+    }
 }

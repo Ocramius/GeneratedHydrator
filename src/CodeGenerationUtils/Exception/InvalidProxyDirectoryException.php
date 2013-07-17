@@ -16,16 +16,25 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
+namespace CodeGenerationUtils\Exception;
 
-use PHPUnit_Framework_TestCase;
+use InvalidArgumentException;
 
 /**
- * Base test for proxy generators
+ * Exception for invalid directories
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+class InvalidProxyDirectoryException extends InvalidArgumentException implements ExceptionInterface
 {
+    /**
+     * @param string $directory
+     *
+     * @return self
+     */
+    public static function proxyDirectoryNotFound($directory)
+    {
+        return new self(sprintf('Provided directory "%s" does not exist', (string) $directory));
+    }
 }

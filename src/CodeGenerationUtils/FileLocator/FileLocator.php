@@ -16,16 +16,42 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
+namespace CodeGenerationUtils\FileLocator;
 
-use PHPUnit_Framework_TestCase;
+use CodeGenerationUtils\Exception\InvalidProxyDirectoryException;
 
 /**
- * Base test for proxy generators
+ * {@inheritDoc}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+class FileLocator implements FileLocatorInterface
 {
+    /**
+     * @var string
+     */
+    protected $proxiesDirectory;
+
+    /**
+     * @param string $proxiesDirectory
+     *
+     * @throws \CodeGenerationUtils\Exception\InvalidProxyDirectoryException
+     */
+    public function __construct($proxiesDirectory)
+    {
+        $this->proxiesDirectory = realpath($proxiesDirectory);
+
+        if (false === $this->proxiesDirectory) {
+            throw InvalidProxyDirectoryException::proxyDirectoryNotFound($proxiesDirectory);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getProxyFileName($className)
+    {
+        return $this->proxiesDirectory . DIRECTORY_SEPARATOR . str_replace('\\', '', $className) . '.php';
+    }
 }

@@ -10,7 +10,7 @@ use PHPParser_Node_Stmt_Class;
 use PHPParser_Node_Stmt_Namespace;
 use PHPParser_Parser;
 use PHPUnit_Framework_TestCase;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionClass;
 
 /**

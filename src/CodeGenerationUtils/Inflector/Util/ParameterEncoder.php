@@ -16,16 +16,26 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
-
-use PHPUnit_Framework_TestCase;
+namespace CodeGenerationUtils\Inflector\Util;
 
 /**
- * Base test for proxy generators
+ * Encodes parameters into a class-name safe string
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+class ParameterEncoder
 {
+    /**
+     * Converts the given parameters into a set of characters that are safe to
+     * use in a class name
+     *
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function encodeParameters(array $parameters)
+    {
+        return strtr(base64_encode(serialize($parameters)), '+/=', '†‡•');
+    }
 }

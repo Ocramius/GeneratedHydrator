@@ -21,7 +21,7 @@ namespace GeneratedHydratorTest\Factory;
 use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Factory\HydratorFactory;
 use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}

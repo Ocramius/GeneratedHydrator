@@ -19,7 +19,7 @@
 namespace GeneratedHydratorTest\Functional;
 
 use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use ProxyManager\Proxy\HydratorInterface;
 use ProxyManager\ProxyGenerator\HydratorGenerator;

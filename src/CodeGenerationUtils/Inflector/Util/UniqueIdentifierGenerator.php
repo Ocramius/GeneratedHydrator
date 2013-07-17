@@ -16,16 +16,38 @@
  * and is licensed under the MIT license.
  */
 
-namespace GeneratedHydratorTest\ClassGenerator;
-
-use PHPUnit_Framework_TestCase;
+namespace CodeGenerationUtils\Inflector\Util;
 
 /**
- * Base test for proxy generators
+ * Utility class capable of generating unique
+ * valid class/property/method identifiers
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractClassGeneratorTest extends PHPUnit_Framework_TestCase
+abstract class UniqueIdentifierGenerator
 {
+    const VALID_IDENTIFIER_FORMAT = '/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]+$/';
+    const DEFAULT_IDENTIFIER = 'g';
+
+    /**
+     * Generates a valid unique identifier from the given name
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function getIdentifier($name)
+    {
+        return str_replace(
+            '.',
+            '',
+            uniqid(
+                preg_match(static::VALID_IDENTIFIER_FORMAT, $name)
+                ? $name
+                : static::DEFAULT_IDENTIFIER,
+                true
+            )
+        );
+    }
 }
