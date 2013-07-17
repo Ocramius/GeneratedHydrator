@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneratedHydrator\CodeGenerator\Visitor;
+namespace CodeGenerationUtils\Visitor;
 
 use PHPParser_Node;
 use PHPParser_NodeVisitorAbstract;

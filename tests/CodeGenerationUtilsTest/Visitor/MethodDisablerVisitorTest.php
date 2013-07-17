@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneratedHydratorTest\CodeGenerator\Visitor;
+namespace CodeGenerationUtilsTest\Visitor;
 
-use GeneratedHydrator\CodeGenerator\Visitor\MethodDisablerVisitor;
+use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
 use PHPParser_Node_Name;
 use PHPParser_Node_Stmt_Class;
 use PHPParser_Node_Stmt_ClassMethod;

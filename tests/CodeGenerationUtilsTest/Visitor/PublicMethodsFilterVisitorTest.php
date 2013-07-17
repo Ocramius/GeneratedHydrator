@@ -1,18 +1,13 @@
 <?php
 
-namespace GeneratedHydratorTest\CodeGenerator\Visitor;
+namespace CodeGenerationUtilsTest\Visitor;
 
-use GeneratedHydrator\CodeGenerator\Visitor\ClassClonerVisitor;
-use GeneratedHydrator\CodeGenerator\Visitor\ClassRenamerVisitor;
-use GeneratedHydrator\CodeGenerator\Visitor\PublicMethodsFilterVisitor;
-use PHPParser_Builder_Class;
+use CodeGenerationUtils\Visitor\PublicMethodsFilterVisitor;
 use PHPParser_Node;
 use PHPParser_Node_Name;
 use PHPParser_Node_Stmt_Class;
 use PHPParser_Node_Stmt_Namespace;
-use PHPParser_NodeTraverser;
 use PHPUnit_Framework_TestCase;
-use ReflectionClass;
 
 /**
  * @group CodeGeneration

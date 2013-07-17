@@ -1,6 +1,6 @@
 <?php
 
-namespace GeneratedHydrator\CodeGenerator\Visitor\Hydrator;
+namespace GeneratedHydrator\CodeGenerator\Visitor;
 
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use PHPParser_Lexer;

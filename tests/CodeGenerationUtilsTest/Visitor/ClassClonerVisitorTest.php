@@ -1,8 +1,8 @@
 <?php
 
-namespace GeneratedHydratorTest\CodeGenerator\Visitor;
+namespace CodeGenerationUtilsTest\Visitor;
 
-use GeneratedHydrator\CodeGenerator\Visitor\ClassClonerVisitor;
+use CodeGenerationUtils\Visitor\ClassClonerVisitor;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
