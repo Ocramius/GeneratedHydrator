@@ -18,10 +18,12 @@
 
 namespace CodeGenerationUtilsTest\GeneratorStrategy;
 
-use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
-use ProxyManager\Generator\ClassGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use PHPParser_Node_Name;
+use PHPParser_Node_Stmt_Class;
+use PHPParser_Node_Stmt_Namespace;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy}
@@ -40,9 +42,8 @@ class FileWriterGeneratorStrategyTest extends PHPUnit_Framework_TestCase
         $locator   = $this->getMock('CodeGenerationUtils\\FileLocator\\FileLocatorInterface');
         $generator = new FileWriterGeneratorStrategy($locator);
         $tmpFile   = sys_get_temp_dir() . '/FileWriterGeneratorStrategyTest' . uniqid() . '.php';
-        $namespace = 'Foo';
         $className = UniqueIdentifierGenerator::getIdentifier('Bar');
-        $fqcn      = $namespace . '\\' . $className;
+        $fqcn      = 'Foo\\' . $className;
 
         $locator
             ->expects($this->any())
@@ -50,7 +51,11 @@ class FileWriterGeneratorStrategyTest extends PHPUnit_Framework_TestCase
             ->with($fqcn)
             ->will($this->returnValue($tmpFile));
 
-        $body = $generator->generate(new ClassGenerator($fqcn));
+        $namespace        = new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name('Foo'));
+        $class            = new PHPParser_Node_Stmt_Class($className);
+        $namespace->stmts = array($class);
+
+        $body = $generator->generate(array($namespace));
 
         $this->assertGreaterThan(0, strpos($body, $className));
         $this->assertFalse(class_exists($fqcn, false));

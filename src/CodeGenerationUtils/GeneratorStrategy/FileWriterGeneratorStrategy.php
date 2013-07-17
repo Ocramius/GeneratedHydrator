@@ -22,7 +22,6 @@ use CodeGenerationUtils\FileLocator\FileLocatorInterface;
 use CodeGenerationUtils\Visitor\ClassFQCNResolverVisitor;
 use PHPParser_Node_Stmt_Class;
 use PHPParser_NodeTraverser;
-use PHPParser_NodeVisitor_NameResolver;
 use Zend\Code\Generator\ClassGenerator;
 
 /**
@@ -33,7 +32,7 @@ use Zend\Code\Generator\ClassGenerator;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class FileWriterGeneratorStrategy implements GeneratorStrategyInterface
+class FileWriterGeneratorStrategy extends BaseGeneratorStrategy
 {
     /**
      * @var \CodeGenerationUtils\FileLocator\FileLocatorInterface
@@ -70,8 +69,7 @@ class FileWriterGeneratorStrategy implements GeneratorStrategyInterface
         $this->traverser->traverse($ast);
 
         $generatedCode = parent::generate($ast);
-        $className     = trim($this->visitor->getNamespace(), '\\')
-            . '\\' . trim($this->visitor->getName(), '\\');
+        $className     = trim($this->visitor->getNamespace() . '\\' . $this->visitor->getName(), '\\');
         $fileName      = $this->fileLocator->getProxyFileName($className);
         $tmpFileName   = $fileName . '.' . uniqid('', true);
 

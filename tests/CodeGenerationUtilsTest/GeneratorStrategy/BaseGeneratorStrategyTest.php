@@ -18,10 +18,10 @@
 
 namespace CodeGenerationUtilsTest\GeneratorStrategy;
 
-use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\GeneratorStrategy\BaseGeneratorStrategy;
-use ProxyManager\Generator\ClassGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use PHPParser_Node_Stmt_Class;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \CodeGenerationUtils\GeneratorStrategy\BaseGeneratorStrategy}
@@ -38,8 +38,7 @@ class BaseGeneratorStrategyTest extends PHPUnit_Framework_TestCase
     {
         $strategy       = new BaseGeneratorStrategy();
         $className      = UniqueIdentifierGenerator::getIdentifier('Foo');
-        $classGenerator = new ClassGenerator($className);
-        $generated      = $strategy->generate($classGenerator);
+        $generated      = $strategy->generate(array(new PHPParser_Node_Stmt_Class($className)));
 
         $this->assertGreaterThan(0, strpos($generated, $className));
     }
