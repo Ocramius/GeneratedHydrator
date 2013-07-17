@@ -33,7 +33,8 @@
     },
     "autoload": {
         "psr-0": {
-            "GeneratedHydrator\\": "src"
+            "GeneratedHydrator\\": "src",
+            "CodeGenerationUtils\\": "src"
         }
     },
     "extra": {
