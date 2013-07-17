@@ -19,7 +19,7 @@ class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
         $visitor   = new ClassRenamerVisitor(new ReflectionClass(__CLASS__), 'Foo\\Bar\\Baz');
         $class     = new PHPParser_Node_Stmt_Class('ClassRenamerVisitorTest');
         $namespace = new PHPParser_Node_Stmt_Namespace(
-            new PHPParser_Node_Name(array('GeneratedHydratorTest', 'CodeGenerator', 'Visitor'))
+            new PHPParser_Node_Name(array('CodeGenerationUtilsTest', 'Visitor'))
         );
 
         $this->assertSame($namespace, $visitor->enterNode($namespace));
@@ -36,7 +36,7 @@ class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
         $visitor   = new ClassRenamerVisitor(new ReflectionClass(__CLASS__), 'Foo\\Bar\\Baz');
         $class     = new PHPParser_Node_Stmt_Class('Wrong');
         $namespace = new PHPParser_Node_Stmt_Namespace(
-            new PHPParser_Node_Name(array('GeneratedHydratorTest', 'CodeGenerator', 'Visitor'))
+            new PHPParser_Node_Name(array('CodeGenerationUtilsTest', 'Visitor'))
         );
 
         $this->assertSame($namespace, $visitor->enterNode($namespace));
@@ -45,7 +45,7 @@ class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
         $visitor->leaveNode($namespace);
 
         $this->assertSame('Wrong', $class->name);
-        $this->assertSame(array('GeneratedHydratorTest', 'CodeGenerator', 'Visitor'), $namespace->name->parts);
+        $this->assertSame(array('CodeGenerationUtilsTest', 'Visitor'), $namespace->name->parts);
     }
 
     public function testIgnoresNodesOnNonMatchingNamespace()
