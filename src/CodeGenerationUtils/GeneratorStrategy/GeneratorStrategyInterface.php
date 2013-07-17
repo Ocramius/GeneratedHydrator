@@ -29,11 +29,11 @@ use Zend\Code\Generator\ClassGenerator;
 interface GeneratorStrategyInterface
 {
     /**
-     * Generate the provided class
+     * Generate the provided AST as a class
      *
-     * @param ClassGenerator $classGenerator
+     * @param \PHPParser_Node[] $ast
      *
      * @return string the class body
      */
-    public function generate(ClassGenerator $classGenerator);
+    public function generate(array $ast);
 }

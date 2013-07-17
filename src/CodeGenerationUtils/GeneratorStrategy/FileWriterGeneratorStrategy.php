@@ -19,6 +19,8 @@
 namespace CodeGenerationUtils\GeneratorStrategy;
 
 use CodeGenerationUtils\FileLocator\FileLocatorInterface;
+use PHPParser_Node_Stmt_Class;
+use PHPParser_NodeVisitor_NameResolver;
 use Zend\Code\Generator\ClassGenerator;
 
 /**
@@ -49,8 +51,17 @@ class FileWriterGeneratorStrategy implements GeneratorStrategyInterface
      *
      * {@inheritDoc}
      */
-    public function generate(ClassGenerator $classGenerator)
+    public function generate(array $ast)
     {
+        $generatedCode = parent::generate($ast);
+
+        foreach ($ast as $node) {
+            if ($node instanceof PHPParser_Node_Stmt_Class) {
+                
+                break;
+            }
+        }
+
         $className     = trim($classGenerator->getNamespaceName(), '\\')
             . '\\' . trim($classGenerator->getName(), '\\');
         $generatedCode = $classGenerator->generate();

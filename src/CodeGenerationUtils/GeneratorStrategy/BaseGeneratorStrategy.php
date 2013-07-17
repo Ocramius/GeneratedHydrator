@@ -18,6 +18,8 @@
 
 namespace CodeGenerationUtils\GeneratorStrategy;
 
+use PHPParser_PrettyPrinter_Default;
+use PHPParser_PrettyPrinterAbstract;
 use Zend\Code\Generator\ClassGenerator;
 
 /**
@@ -29,10 +31,31 @@ use Zend\Code\Generator\ClassGenerator;
 class BaseGeneratorStrategy implements GeneratorStrategyInterface
 {
     /**
+     * @var \PHPParser_PrettyPrinterAbstract|null
+     */
+    private $prettyPrinter;
+
+    /**
      * {@inheritDoc}
      */
-    public function generate(ClassGenerator $classGenerator)
+    public function generate(array $ast)
     {
-        return $classGenerator->generate();
+        return $this->getPrettyPrinter()->prettyPrint($ast);
+    }
+
+    /**
+     * @param PHPParser_PrettyPrinterAbstract $prettyPrinter
+     */
+    public function setPrettyPrinter(PHPParser_PrettyPrinterAbstract $prettyPrinter)
+    {
+        $this->prettyPrinter = $prettyPrinter;
+    }
+
+    /**
+     * @return PHPParser_PrettyPrinterAbstract
+     */
+    protected function getPrettyPrinter()
+    {
+        return $this->prettyPrinter ?: $this->prettyPrinter = new PHPParser_PrettyPrinter_Default();
     }
 }

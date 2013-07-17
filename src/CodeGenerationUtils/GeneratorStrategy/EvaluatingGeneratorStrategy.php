@@ -26,7 +26,7 @@ use Zend\Code\Generator\ClassGenerator;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class EvaluatingGeneratorStrategy implements GeneratorStrategyInterface
+class EvaluatingGeneratorStrategy extends BaseGeneratorStrategy
 {
     /**
      * @var bool flag indicating whether {@see eval} can be used
@@ -46,9 +46,9 @@ class EvaluatingGeneratorStrategy implements GeneratorStrategyInterface
      *
      * {@inheritDoc}
      */
-    public function generate(ClassGenerator $classGenerator)
+    public function generate(array $ast)
     {
-        $code = $classGenerator->generate();
+        $code = parent::generate($ast);
 
         if (! $this->canEval) {
             $fileName = sys_get_temp_dir() . '/EvaluatingGeneratorStrategy.php.tmp.' . uniqid('', true);
