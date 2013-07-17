@@ -10,7 +10,7 @@ use PHPParser_Node_Stmt_Namespace;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @group CodeGeneration
+ * @covers \CodeGenerationUtils\Visitor\MethodDisablerVisitor
  */
 class MethodDisablerVisitorTest extends PHPUnit_Framework_TestCase
 {

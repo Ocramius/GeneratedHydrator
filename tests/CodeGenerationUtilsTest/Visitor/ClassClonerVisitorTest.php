@@ -7,7 +7,7 @@ use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
 /**
- * @group CodeGeneration
+ * @covers \CodeGenerationUtils\Visitor\ClassClonerVisitor
  */
 class ClassClonerVisitorTest extends PHPUnit_Framework_TestCase
 {

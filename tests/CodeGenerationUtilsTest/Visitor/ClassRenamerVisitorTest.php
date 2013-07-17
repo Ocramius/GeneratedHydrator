@@ -10,7 +10,7 @@ use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
 /**
- * @group CodeGeneration
+ * @covers \CodeGenerationUtils\Visitor\ClassRenamerVisitor
  */
 class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
 {
