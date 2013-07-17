@@ -22,7 +22,7 @@ use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 
 /**
- * Tests for {@see \CodeGenerationUtilsTest\Inflector\Util\UniqueIdentifierGenerator}
+ * Tests for {@see \CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
@@ -32,7 +32,7 @@ class UniqueIdentifierGeneratorTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider getBaseIdentifierNames
      *
-     * @covers \CodeGenerationUtilsTest\Inflector\Util\UniqueIdentifierGenerator::getIdentifier
+     * @covers \CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator::getIdentifier
      */
     public function testGeneratesUniqueIdentifiers($name)
     {
@@ -45,7 +45,7 @@ class UniqueIdentifierGeneratorTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider getBaseIdentifierNames
      *
-     * @covers \CodeGenerationUtilsTest\Inflector\Util\UniqueIdentifierGenerator::getIdentifier
+     * @covers \CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator::getIdentifier
      */
     public function testGeneratesValidIdentifiers($name)
     {
