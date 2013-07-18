@@ -20,6 +20,8 @@ use ReflectionProperty;
 class ClassBuilder extends \PHPParser_BuilderAbstract
 {
     /**
+     * @param \ReflectionClass $reflectionClass
+     *
      * @return PHPParser_Node[]
      */
     public function fromReflection(ReflectionClass $reflectionClass)
@@ -56,6 +58,11 @@ class ClassBuilder extends \PHPParser_BuilderAbstract
         throw new \BadMethodCallException('Disabled');
     }
 
+    /**
+     * @param ReflectionProperty $reflectionProperty
+     *
+     * @return \PHPParser_Node_Stmt_Property
+     */
     protected function buildProperty(ReflectionProperty $reflectionProperty)
     {
         $propertyBuilder = new PHPParser_Builder_Property($reflectionProperty->getName());
@@ -85,6 +92,11 @@ class ClassBuilder extends \PHPParser_BuilderAbstract
         return $propertyBuilder->getNode();
     }
 
+    /**
+     * @param ReflectionMethod $reflectionMethod
+     *
+     * @return \PHPParser_Node_Stmt_ClassMethod
+     */
     protected function buildMethod(ReflectionMethod $reflectionMethod)
     {
         $methodBuilder = new PHPParser_Builder_Method($reflectionMethod->getName());
@@ -123,9 +135,14 @@ class ClassBuilder extends \PHPParser_BuilderAbstract
 
         // @todo should parse method body if possible (skipped for now)
 
-        return $this->getNode();
+        return $methodBuilder->getNode();
     }
 
+    /**
+     * @param ReflectionParameter $reflectionParameter
+     *
+     * @return \PHPParser_Node_Param
+     */
     protected function buildParameter(ReflectionParameter $reflectionParameter)
     {
         $parameterBuilder = new PHPParser_Builder_Param($reflectionParameter->getName());
