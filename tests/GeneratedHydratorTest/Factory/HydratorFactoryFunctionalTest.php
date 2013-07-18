@@ -23,6 +23,7 @@ use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use ProxyManager\Generator\ClassGenerator;
 use Zend\Code\Reflection\ClassReflection;
 
 /**
