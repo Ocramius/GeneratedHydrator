@@ -18,15 +18,15 @@
 
 namespace GeneratedHydrator\ClassGenerator;
 
-use ProxyManager\Generator\MethodGenerator;
-use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\DisabledMagicMethod;
-use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\GetAccessorProperties;
-use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\SetAccessorProperties;
-use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
+use CodeGenerationUtils\Visitor\ClassClonerVisitor;
 use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\Constructor;
+use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\DisabledMagicMethod;
 use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\DisabledMethod;
 use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\Extract;
 use GeneratedHydrator\ClassGenerator\Hydrator\MethodGenerator\Hydrate;
+use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
+use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
+use ProxyManager\Generator\MethodGenerator;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
@@ -42,17 +42,22 @@ use Zend\Code\Reflection\MethodReflection;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorGenerator implements ClassGeneratorInterface
+class HydratorGenerator
 {
     /**
      * {@inheritDoc}
      */
-    public function generate(ReflectionClass $originalClass, ClassGenerator $classGenerator)
+    public function generate(ReflectionClass $originalClass)
     {
-        $interfaces = array(
-            'ProxyManager\\Proxy\\ProxyInterface',
-            'Zend\\Stdlib\\Hydrator\\HydratorInterface',
-        );
+        $cloner = new HydratorMethodsVisitor($originalClass);
+
+        $traverser = new \PHPParser_NodeTraverser();
+
+        $traverser->addVisitor($cloner);
+
+        die(var_dump($traverser->traverse(array())));
+
+        $interfaces = array('Zend\\Stdlib\\Hydrator\\HydratorInterface');
 
         if ($originalClass->isInterface()) {
             $interfaces[] = $originalClass->getName();

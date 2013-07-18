@@ -20,7 +20,7 @@ namespace GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator;
 
 use ReflectionProperty;
 use Zend\Code\Generator\PropertyGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 
 /**
  * Property that contains a {@see \ReflectionProperty} that functions as an accessor

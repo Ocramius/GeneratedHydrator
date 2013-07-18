@@ -80,11 +80,11 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testSetGetClassNameInflector()
     {
         $this->assertInstanceOf(
-            'ProxyManager\\Inflector\\ClassNameInflectorInterface',
+            'CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface',
             $this->configuration->getClassNameInflector()
         );
 
-        $inflector = $this->getMock('ProxyManager\\Inflector\\ClassNameInflectorInterface');
+        $inflector = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
         $this->configuration->setClassNameInflector($inflector);
         $this->assertSame($inflector, $this->configuration->getClassNameInflector());
@@ -98,11 +98,11 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     {
 
         $this->assertInstanceOf(
-            'ProxyManager\\GeneratorStrategy\\GeneratorStrategyInterface',
+            'CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface',
             $this->configuration->getGeneratorStrategy()
         );
 
-        $strategy = $this->getMock('ProxyManager\\GeneratorStrategy\\GeneratorStrategyInterface');
+        $strategy = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
 
         $this->configuration->setGeneratorStrategy($strategy);
         $this->assertSame($strategy, $this->configuration->getGeneratorStrategy());
@@ -127,11 +127,11 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testSetGetProxyAutoloader()
     {
         $this->assertInstanceOf(
-            'ProxyManager\\Autoloader\\AutoloaderInterface',
+            'CodeGenerationUtils\\Autoloader\\AutoloaderInterface',
             $this->configuration->getProxyAutoloader()
         );
 
-        $autoloader = $this->getMock('ProxyManager\\Autoloader\\AutoloaderInterface');
+        $autoloader = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
         $this->configuration->setProxyAutoloader($autoloader);
         $this->assertSame($autoloader, $this->configuration->getProxyAutoloader());

@@ -42,7 +42,7 @@ class HydratorFactory extends AbstractBaseFactory
     protected $autoGenerate;
 
     /**
-     * @var \ProxyManager\Inflector\ClassNameInflectorInterface
+     * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface
      */
     protected $inflector;
 

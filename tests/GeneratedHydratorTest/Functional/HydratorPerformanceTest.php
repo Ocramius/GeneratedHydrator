@@ -20,9 +20,9 @@ namespace GeneratedHydratorTest\Functional;
 
 use ProxyManager\Generator\ClassGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use ProxyManager\Proxy\HydratorInterface;
-use ProxyManager\ProxyGenerator\HydratorGenerator;
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use Zend\Stdlib\Hydrator\HydratorInterface;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;

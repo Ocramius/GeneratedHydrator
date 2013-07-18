@@ -19,8 +19,8 @@
 namespace GeneratedHydratorTest\Functional;
 
 use PHPUnit_Framework_TestCase;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use ProxyManager\ProxyGenerator\HydratorGenerator;
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -86,7 +86,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $proxy = $this->generateProxy(new HydratedObject());
 
-        $this->setExpectedException('ProxyManager\Exception\DisabledMethodException');
+        $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
         $proxy->doFoo();
     }
 

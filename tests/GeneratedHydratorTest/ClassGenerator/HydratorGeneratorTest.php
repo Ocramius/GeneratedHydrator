@@ -21,7 +21,7 @@ namespace GeneratedHydratorTest\ClassGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use ProxyManager\Generator\ClassGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use ReflectionClass;
 
 /**
@@ -84,9 +84,6 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
      */
     protected function getExpectedImplementedInterfaces()
     {
-        return array(
-            'ProxyManager\\Proxy\\ProxyInterface',
-            'Zend\\Stdlib\\Hydrator\\HydratorInterface'
-        );
+        return array('Zend\\Stdlib\\Hydrator\\HydratorInterface');
     }
 }
