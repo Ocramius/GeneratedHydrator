@@ -18,8 +18,6 @@
 
 namespace CodeGenerationUtils\GeneratorStrategy;
 
-use Zend\Code\Generator\ClassGenerator;
-
 /**
  * Generator strategy that produces the code and evaluates it at runtime
  *

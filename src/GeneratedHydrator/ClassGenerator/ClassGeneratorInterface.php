@@ -19,7 +19,6 @@
 namespace GeneratedHydrator\ClassGenerator;
 
 use ReflectionClass;
-use Zend\Code\Generator\ClassGenerator;
 
 /**
  * Base interface for proxy generators - describes how a proxy generator should use
@@ -33,10 +32,9 @@ interface ClassGeneratorInterface
     /**
      * Apply modifications to the provided $classGenerator to proxy logic from $originalClass
      *
-     * @param \ReflectionClass                    $originalClass
-     * @param \Zend\Code\Generator\ClassGenerator $classGenerator
+     * @param \ReflectionClass $originalClass
      *
-     * @return void
+     * @return \PHPParser_Node[]
      */
-    public function generate(ReflectionClass $originalClass, ClassGenerator $classGenerator);
+    public function generate(ReflectionClass $originalClass);
 }

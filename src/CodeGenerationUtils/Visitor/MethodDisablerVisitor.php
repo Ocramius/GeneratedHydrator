@@ -16,12 +16,16 @@ class MethodDisablerVisitor extends PHPParser_NodeVisitorAbstract
         $this->filter = $filter;
     }
 
-    public function enterNode(PHPParser_Node $node)
+    public function leaveNode(PHPParser_Node $node)
     {
         $filter = $this->filter;
 
-        if (! $node instanceof \PHPParser_Node_Stmt_ClassMethod || ! $filter($node)) {
+        if (! $node instanceof \PHPParser_Node_Stmt_ClassMethod || null === ($filterResult = $filter($node))) {
             return null;
+        }
+
+        if (false === $filterResult) {
+            return false;
         }
 
         $node->stmts = array(

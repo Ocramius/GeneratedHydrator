@@ -18,10 +18,9 @@
 
 namespace GeneratedHydratorTest\Factory;
 
-use PHPUnit_Framework_TestCase;
-use GeneratedHydrator\Factory\HydratorFactory;
-use ProxyManager\Generator\ClassGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use GeneratedHydrator\Factory\HydratorFactory;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -110,13 +109,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $generator
             ->expects($this->once())
             ->method('generate')
-            ->with(
-                $this->callback(
-                    function (ClassGenerator $targetClass) use ($proxyClassName) {
-                        return $targetClass->getName() === $proxyClassName;
-                    }
-                )
-            );
+            ->with($this->isType('array'));
 
         // simulate autoloading
         $autoloader

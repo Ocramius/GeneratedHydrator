@@ -20,7 +20,6 @@ namespace CodeGenerationUtils\GeneratorStrategy;
 
 use PHPParser_PrettyPrinter_Default;
 use PHPParser_PrettyPrinterAbstract;
-use Zend\Code\Generator\ClassGenerator;
 
 /**
  * Generator strategy that generates the class body

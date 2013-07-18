@@ -18,10 +18,11 @@
 
 namespace GeneratedHydratorTest\ClassGenerator;
 
+use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use ProxyManager\Generator\ClassGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use PHPParser_NodeTraverser;
 use ReflectionClass;
 
 /**
@@ -43,12 +44,12 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
     {
         $generator          = new HydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('AbstractProxyGeneratorTest');
-        $generatedClass     = new ClassGenerator($generatedClassName);
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
+        $traverser          = new PHPParser_NodeTraverser();
 
-        $generator->generate($originalClass, $generatedClass);
-        $generatorStrategy->generate($generatedClass);
+        $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $generatedClassName));
+        $generatorStrategy->generate($traverser->traverse($generator->generate($originalClass)));
 
         $generatedReflection = new ReflectionClass($generatedClassName);
 

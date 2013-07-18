@@ -18,9 +18,10 @@
 
 namespace GeneratedHydrator\Factory;
 
+use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
-use ProxyManager\Generator\ClassGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use PHPParser_NodeTraverser;
 use ReflectionClass;
 
 /**
@@ -86,11 +87,14 @@ class HydratorFactory extends AbstractBaseFactory
         $proxyClassName = $this->inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
 
         if ($this->autoGenerate && ! class_exists($proxyClassName)) {
-            $classGenerator = new ClassGenerator($proxyClassName);
-            $generator      = new HydratorGenerator();
+            $generator     = new HydratorGenerator();
+            $originalClass = new ReflectionClass($realClassName);
+            $generatedAst  = $generator->generate($originalClass);
+            $traverser     = new PHPParser_NodeTraverser();
 
-            $generator->generate(new ReflectionClass($realClassName), $classGenerator);
-            $this->configuration->getGeneratorStrategy()->generate($classGenerator);
+            $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $proxyClassName));
+
+            $this->configuration->getGeneratorStrategy()->generate($traverser->traverse($generatedAst));
             $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);
         }
 

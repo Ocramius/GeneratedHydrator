@@ -18,8 +18,6 @@
 
 namespace CodeGenerationUtils\GeneratorStrategy;
 
-use Zend\Code\Generator\ClassGenerator;
-
 /**
  * Generator strategy interface - defines basic behavior of class generators
  *

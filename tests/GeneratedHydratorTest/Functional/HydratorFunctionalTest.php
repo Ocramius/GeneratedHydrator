@@ -18,6 +18,8 @@
 
 namespace GeneratedHydratorTest\Functional;
 
+use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Factory\HydratorFactory;
 use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
@@ -118,23 +120,15 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
-        $generator          = new HydratorGenerator();
-        $generatedClass     = new ClassGenerator($generatedClassName);
-        $strategy           = new EvaluatingGeneratorStrategy();
-        $reflection         = new ReflectionClass($parentClassName);
+        $config             = new Configuration();
+        $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
-        $generator->generate(new ReflectionClass($parentClassName), $generatedClass);
-        $strategy->generate($generatedClass);
+        $inflector->expects($this->any())->method('getProxyClassName')->will($this->returnValue($generatedClassName));
+        $config->setClassNameInflector($inflector);
+        $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
-        $privateProperties = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
-        $accessors         = array();
+        $factory = new HydratorFactory($config);
 
-        foreach ($privateProperties as $privateProperty) {
-            $privateProperty->setAccessible(true);
-
-            $accessors[$privateProperty->getName()] = $privateProperty;
-        }
-
-        return new $generatedClassName($accessors);
+        return $factory->createProxy($parentClassName);
     }
 }

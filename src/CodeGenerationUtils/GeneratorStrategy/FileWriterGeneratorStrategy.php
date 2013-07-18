@@ -22,7 +22,6 @@ use CodeGenerationUtils\FileLocator\FileLocatorInterface;
 use CodeGenerationUtils\Visitor\ClassFQCNResolverVisitor;
 use PHPParser_Node_Stmt_Class;
 use PHPParser_NodeTraverser;
-use Zend\Code\Generator\ClassGenerator;
 
 /**
  * Generator strategy that writes the generated classes to disk while generating them
