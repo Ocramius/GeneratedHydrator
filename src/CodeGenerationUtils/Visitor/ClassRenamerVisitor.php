@@ -33,6 +33,11 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
     private $currentNamespace;
 
     /**
+     * @var bool flag indicating whether entering the last node caused a replacement
+     */
+    private $replacedInNamespace = false;
+
+    /**
      * @param ReflectionClass $reflectedClass
      * @param string          $newFQCN
      */
@@ -42,6 +47,13 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
         $fqcnParts            = explode('\\', $newFQCN);
         $this->newNamespace   = implode('\\', array_slice($fqcnParts, 0, -1));
         $this->newName        = end($fqcnParts);
+    }
+
+    public function beforeTraverse(array $nodes)
+    {
+        // reset state
+        $this->currentNamespace    = null;
+        $this->replacedInNamespace = false;
     }
 
     public function enterNode(PHPParser_Node $node)
@@ -58,7 +70,7 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
 
             // @todo too simplistic (assumes single class per namespace right now)
             if ($this->currentNamespace) {
-                $this->currentNamespace->name->parts = $this->newNamespace ? explode('\\', $this->newNamespace) : null;
+                $this->replacedInNamespace = true;
             }
 
             return $node;
@@ -70,7 +82,20 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
     public function leaveNode(PHPParser_Node $node)
     {
         if ($node instanceof PHPParser_Node_Stmt_Namespace) {
-            $this->currentNamespace = null;
+            $namespace                 = $this->currentNamespace;
+            $replacedInNamespace       = $this->replacedInNamespace;
+            $this->currentNamespace    = null;
+            $this->replacedInNamespace = false;
+
+            if ($namespace && $replacedInNamespace) {
+                if (! $this->newNamespace) {
+                    return $namespace->stmts;
+                }
+
+                $namespace->name->parts = explode('\\', $this->newNamespace);
+
+                return $namespace;
+            }
         }
     }
 

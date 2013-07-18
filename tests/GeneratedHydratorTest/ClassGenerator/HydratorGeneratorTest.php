@@ -56,6 +56,7 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
         if ($originalClass->isInterface()) {
             $this->assertTrue($generatedReflection->implementsInterface($className));
         } else {
+            $this->assertInstanceOf('ReflectionClass', $generatedReflection->getParentClass());
             $this->assertSame($originalClass->getName(), $generatedReflection->getParentClass()->getName());
         }
 
