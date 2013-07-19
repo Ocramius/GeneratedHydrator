@@ -87,7 +87,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     public function testDisabledMethod()
     {
         $this->markTestIncomplete('Methods have to be disabled - currently only removing them');
-        
+
         $proxy = $this->generateProxy(new HydratedObject());
 
         $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
