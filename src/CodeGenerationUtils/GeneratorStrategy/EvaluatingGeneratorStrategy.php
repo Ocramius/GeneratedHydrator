@@ -48,9 +48,6 @@ class EvaluatingGeneratorStrategy extends BaseGeneratorStrategy
     {
         $code = parent::generate($ast);
 
-        //$code = str_replace("\"\0*\0protectedProperty\"", "'\\0*\\0protectedProperty'", $code);
-        //$code = str_replace("\"\0*\0privateProperty\"", "'\\0*\\0privateProperty'", $code);
-
         if (! $this->canEval) {
             $fileName = sys_get_temp_dir() . '/EvaluatingGeneratorStrategy.php.tmp.' . uniqid('', true);
 
