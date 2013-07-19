@@ -19,6 +19,8 @@
 namespace GeneratedHydrator\ClassGenerator;
 
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
+use CodeGenerationUtils\Visitor\ClassExtensionVisitor;
+use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
@@ -63,6 +65,10 @@ class HydratorGenerator implements ClassGeneratorInterface
         $implementor = new PHPParser_NodeTraverser();
 
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
+        $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
+        $implementor->addVisitor(
+            new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Stdlib\\Hydrator\\HydratorInterface'))
+        );
 
         return $implementor->traverse($ast);
 

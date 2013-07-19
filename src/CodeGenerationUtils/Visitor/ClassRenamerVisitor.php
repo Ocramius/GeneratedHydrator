@@ -4,6 +4,7 @@ namespace CodeGenerationUtils\Visitor;
 
 use PHPParser_Lexer_Emulative;
 use PHPParser_Node;
+use PHPParser_Node_Name;
 use PHPParser_Node_Stmt_Class;
 use PHPParser_Node_Stmt_Namespace;
 use PHPParser_NodeVisitorAbstract;
@@ -33,9 +34,9 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
     private $currentNamespace;
 
     /**
-     * @var bool flag indicating whether entering the last node caused a replacement
+     * @var PHPParser_Node_Stmt_Class|null the currently detected class in this namespace
      */
-    private $replacedInNamespace = false;
+    private $replacedInNamespace;
 
     /**
      * @param ReflectionClass $reflectedClass
@@ -53,13 +54,34 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
     {
         // reset state
         $this->currentNamespace    = null;
-        $this->replacedInNamespace = false;
+        $this->replacedInNamespace = null;
     }
 
     public function enterNode(PHPParser_Node $node)
     {
         if ($node instanceof PHPParser_Node_Stmt_Namespace) {
             return $this->currentNamespace = $node;
+        }
+    }
+
+    public function leaveNode(PHPParser_Node $node)
+    {
+        if ($node instanceof PHPParser_Node_Stmt_Namespace) {
+            $namespace                 = $this->currentNamespace;
+            $replacedInNamespace       = $this->replacedInNamespace;
+            $this->currentNamespace    = null;
+            $this->replacedInNamespace = null;
+
+            if ($namespace && $replacedInNamespace) {
+                if (! $this->newNamespace) {
+                    // @todo what happens to other classes in here?
+                    return array($replacedInNamespace);
+                }
+
+                $namespace->name->parts = explode('\\', $this->newNamespace);
+
+                return $namespace;
+            }
         }
 
         if ($node instanceof PHPParser_Node_Stmt_Class
@@ -70,32 +92,13 @@ class ClassRenamerVisitor extends PHPParser_NodeVisitorAbstract
 
             // @todo too simplistic (assumes single class per namespace right now)
             if ($this->currentNamespace) {
-                $this->replacedInNamespace = true;
+                $this->replacedInNamespace = $node;
+            } elseif ($this->newNamespace) {
+                // wrap in namespace if no previous namespace exists
+                return new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name($this->newNamespace), array($node));
             }
 
             return $node;
-        }
-
-        return null;
-    }
-
-    public function leaveNode(PHPParser_Node $node)
-    {
-        if ($node instanceof PHPParser_Node_Stmt_Namespace) {
-            $namespace                 = $this->currentNamespace;
-            $replacedInNamespace       = $this->replacedInNamespace;
-            $this->currentNamespace    = null;
-            $this->replacedInNamespace = false;
-
-            if ($namespace && $replacedInNamespace) {
-                if (! $this->newNamespace) {
-                    return $namespace->stmts;
-                }
-
-                $namespace->name->parts = explode('\\', $this->newNamespace);
-
-                return $namespace;
-            }
         }
     }
 
