@@ -18,8 +18,9 @@
 
 namespace GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator;
 
+use PHPParser_Node_Stmt_Class;
+use PHPParser_Node_Stmt_Property;
 use ReflectionProperty;
-use Zend\Code\Generator\PropertyGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 
 /**
@@ -29,7 +30,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class PropertyAccessor extends PropertyGenerator
+class PropertyAccessor extends PHPParser_Node_Stmt_Property
 {
     /**
      * @var \ReflectionProperty
@@ -44,10 +45,12 @@ class PropertyAccessor extends PropertyGenerator
     {
         $this->accessedProperty = $accessedProperty;
         $originalName           = $this->accessedProperty->getName();
+        $name                   = UniqueIdentifierGenerator::getIdentifier($originalName . $nameSuffix);
 
-        parent::__construct(UniqueIdentifierGenerator::getIdentifier($originalName . $nameSuffix));
-        $this->setVisibility(self::VISIBILITY_PRIVATE);
-        $this->setDocblock("@var \\ReflectionProperty used to access {@see parent::$originalName}");
+        parent::__construct(
+            PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE,
+            array(new \PHPParser_Node_Stmt_PropertyProperty($name))
+        );
     }
 
     /**

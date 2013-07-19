@@ -69,7 +69,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         $bodyParts = array();
 
         foreach ($this->propertyWriters as $propertyWriter) {
-            $accessorName     = $propertyWriter->getName();
+            $accessorName     = $propertyWriter->props[0]->name;
             $originalProperty = $propertyWriter->getOriginalProperty();
             $className        = $originalProperty->getDeclaringClass()->getName();
             $property         = $originalProperty->getName();
@@ -104,7 +104,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
         foreach ($this->propertyWriters as $propertyWriter) {
             $body .= '$this->'
-                . $propertyWriter->getName()
+                . $propertyWriter->props[0]->name
                 . '->__invoke($object, $data['
                 . var_export($propertyWriter->getOriginalProperty()->getName(), true)
                 . "]);\n";
