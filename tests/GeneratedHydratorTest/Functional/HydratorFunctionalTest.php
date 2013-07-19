@@ -123,7 +123,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $config             = new Configuration();
         $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
-        $inflector->expects($this->any())->method('getProxyClassName')->will($this->returnValue($generatedClassName));
+        $inflector->expects($this->any())->method('getProxyClassName')->with($parentClassName)->will($this->returnValue($generatedClassName));
+        $inflector->expects($this->any())->method('getUserClassName')->with($parentClassName)->will($this->returnValue($parentClassName));
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 

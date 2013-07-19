@@ -30,6 +30,7 @@ class ClassRenamerVisitorTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('Baz', $class->name);
         $this->assertSame(array('Foo', 'Bar'), $namespace->name->parts);
+        $this->assertSame(array($class), $namespace->stmts);
     }
 
     public function testIgnoresNodesOnNonMatchingClass()
