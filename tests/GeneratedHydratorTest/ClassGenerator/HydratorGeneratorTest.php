@@ -77,7 +77,6 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
             array('GeneratedHydratorTestAsset\\ClassWithMagicMethods'),
             array('GeneratedHydratorTestAsset\\ClassWithByRefMagicMethods'),
             array('GeneratedHydratorTestAsset\\ClassWithMixedProperties'),
-            //array('GeneratedHydratorTestAsset\\BaseInterface'),
         );
     }
 
