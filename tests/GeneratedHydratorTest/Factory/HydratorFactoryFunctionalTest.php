@@ -18,17 +18,15 @@
 
 namespace GeneratedHydratorTest\Factory;
 
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
-use PHPParser_NodeTraverser;
-use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
-use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use ProxyManager\Generator\ClassGenerator;
+use PHPParser_NodeTraverser;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use Zend\Code\Reflection\ClassReflection;
 
 /**
  * Integration tests for {@see \GeneratedHydrator\Factory\HydratorFactory}

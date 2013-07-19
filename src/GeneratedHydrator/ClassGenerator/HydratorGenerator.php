@@ -25,7 +25,6 @@ use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
 use PHPParser_NodeTraverser;
-use ProxyManager\Generator\MethodGenerator;
 use ReflectionClass;
 
 /**

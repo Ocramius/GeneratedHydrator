@@ -18,11 +18,10 @@
 
 namespace GeneratedHydratorTest\Functional;
 
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
-use PHPUnit_Framework_TestCase;
-use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -30,10 +29,8 @@ use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use ProxyManager\Generator\ClassGenerator;
-use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use ReflectionProperty;
 use stdClass;
 
 /**
