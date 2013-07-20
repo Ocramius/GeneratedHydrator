@@ -19,7 +19,7 @@
 namespace CodeGenerationUtils\Inflector;
 
 /**
- * Interface for a proxy- to user-class and user- to proxy-class name inflector
+ * Interface for a proxy- to user- class and user- to proxy- class name inflector
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT

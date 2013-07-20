@@ -25,12 +25,12 @@ use PHPParser_NodeTraverser;
 use ReflectionClass;
 
 /**
- * Factory responsible of producing hydrator proxies
+ * Factory responsible of producing hydrators
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorFactory extends AbstractBaseFactory
+class HydratorFactory
 {
     /**
      * @var \GeneratedHydrator\Configuration

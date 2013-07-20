@@ -51,11 +51,9 @@ class FileWriterGeneratorStrategyTest extends PHPUnit_Framework_TestCase
             ->with($fqcn)
             ->will($this->returnValue($tmpFile));
 
-        $namespace        = new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name('Foo'));
-        $class            = new PHPParser_Node_Stmt_Class($className);
-        $namespace->stmts = array($class);
-
-        $body = $generator->generate(array($namespace));
+        $class     = new PHPParser_Node_Stmt_Class($className);
+        $namespace = new PHPParser_Node_Stmt_Namespace(new PHPParser_Node_Name('Foo'), array($class));
+        $body      = $generator->generate(array($namespace));
 
         $this->assertGreaterThan(0, strpos($body, $className));
         $this->assertFalse(class_exists($fqcn, false));

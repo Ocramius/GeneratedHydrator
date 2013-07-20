@@ -60,7 +60,7 @@ class HydratorGenerator implements ClassGeneratorInterface
 
         $ast = $cleaner->traverse($ast);
 
-        // step 2: implement new methods
+        // step 2: implement new methods and interfaces, extend original class
         $implementor = new PHPParser_NodeTraverser();
 
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
@@ -70,19 +70,5 @@ class HydratorGenerator implements ClassGeneratorInterface
         );
 
         return $implementor->traverse($ast);
-
-        // @todo add interfaces and parent class
-
-        /*
-        $interfaces = array('Zend\\Stdlib\\Hydrator\\HydratorInterface');
-
-        if ($originalClass->isInterface()) {
-            $interfaces[] = $originalClass->getName();
-        } else {
-            $classGenerator->setExtendedClass($originalClass->getName());
-        }
-
-        $classGenerator->setImplementedInterfaces($interfaces);
-        */
     }
 }

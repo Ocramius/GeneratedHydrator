@@ -23,6 +23,7 @@ use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use PHPParser_NodeTraverser;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
 /**
@@ -33,7 +34,7 @@ use ReflectionClass;
  *
  * @covers \GeneratedHydrator\ClassGenerator\HydratorGenerator
  */
-class HydratorGeneratorTest extends AbstractClassGeneratorTest
+class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider getTestedImplementations

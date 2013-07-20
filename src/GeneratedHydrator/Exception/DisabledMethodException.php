@@ -28,8 +28,6 @@ use BadMethodCallException;
  */
 class DisabledMethodException extends BadMethodCallException implements ExceptionInterface
 {
-    const NAME = __CLASS__;
-
     /**
      * @param string $method
      *

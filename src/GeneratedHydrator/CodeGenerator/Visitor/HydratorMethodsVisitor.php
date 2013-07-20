@@ -13,6 +13,12 @@ use PHPParser_Parser;
 use ReflectionClass;
 use ReflectionProperty;
 
+/**
+ * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
+ *
+ * @author Marco Pivetta <ocramius@gmail.com>
+ * @license MIT
+ */
 class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 {
     /**
@@ -41,15 +47,17 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
             &  ~ReflectionProperty::IS_STATIC
         );
 
-
-        // @todo over-simplified for testing
         foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
             $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
         }
-
     }
 
-    public function enterNode(PHPParser_Node $node)
+    /**
+     * @param PHPParser_Node $node
+     *
+     * @return null|PHPParser_Node_Stmt_Class|void
+     */
+    public function leaveNode(PHPParser_Node $node)
     {
         if (! $node instanceof PHPParser_Node_Stmt_Class) {
             return null;
@@ -62,7 +70,10 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         return $node;
     }
 
-    private function replaceConstructor(PHPParser_Node_Stmt_ClassMethod $method = null)
+    /**
+     * @param PHPParser_Node_Stmt_ClassMethod $method
+     */
+    private function replaceConstructor(PHPParser_Node_Stmt_ClassMethod $method)
     {
         $method->params = array();
 
@@ -84,7 +95,10 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         $method->stmts = $parser->parse('<?php ' . implode("\n", $bodyParts));
     }
 
-    private function replaceHydrate(PHPParser_Node_Stmt_ClassMethod $method = null)
+    /**
+     * @param PHPParser_Node_Stmt_ClassMethod $method
+     */
+    private function replaceHydrate(PHPParser_Node_Stmt_ClassMethod $method)
     {
         $method->params = array(
             new PHPParser_Node_Param('data', null, 'array'),
@@ -117,7 +131,10 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         $method->stmts = $parser->parse('<?php ' . $body);
     }
 
-    private function replaceExtract(PHPParser_Node_Stmt_ClassMethod $method = null)
+    /**
+     * @param PHPParser_Node_Stmt_ClassMethod $method
+     */
+    private function replaceExtract(PHPParser_Node_Stmt_ClassMethod $method)
     {
         $parser = new PHPParser_Parser(new PHPParser_Lexer());
 
@@ -169,6 +186,14 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
     }
 
+    /**
+     * Finds or creates a class method (and eventually attaches it to the class itself)
+     *
+     * @param PHPParser_Node_Stmt_Class $class
+     * @param string                    $name  name of the method
+     *
+     * @return PHPParser_Node_Stmt_ClassMethod
+     */
     private function findOrCreateMethod(PHPParser_Node_Stmt_Class $class, $name)
     {
         $foundMethods = array_filter(

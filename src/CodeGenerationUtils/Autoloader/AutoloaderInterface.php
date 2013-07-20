@@ -19,7 +19,7 @@
 namespace CodeGenerationUtils\Autoloader;
 
 /**
- * Basic autoloader utilities required to work with proxy files
+ * Basic autoloader utilities required to work with generated classes
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT

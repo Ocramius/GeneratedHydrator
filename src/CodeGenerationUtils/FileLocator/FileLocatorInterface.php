@@ -19,7 +19,7 @@
 namespace CodeGenerationUtils\FileLocator;
 
 /**
- * Basic autoloader utilities required to work with proxy files
+ * File locator - enables discovering files where generated classes are located
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
