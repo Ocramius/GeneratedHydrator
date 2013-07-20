@@ -18,13 +18,13 @@
 
 namespace GeneratedHydrator;
 
-use ProxyManager\Autoloader\AutoloaderInterface;
-use ProxyManager\Autoloader\Autoloader;
-use ProxyManager\FileLocator\FileLocator;
-use ProxyManager\GeneratorStrategy\FileWriterGeneratorStrategy;
-use ProxyManager\GeneratorStrategy\GeneratorStrategyInterface;
-use ProxyManager\Inflector\ClassNameInflectorInterface;
-use ProxyManager\Inflector\ClassNameInflector;
+use CodeGenerationUtils\Autoloader\AutoloaderInterface;
+use CodeGenerationUtils\Autoloader\Autoloader;
+use CodeGenerationUtils\FileLocator\FileLocator;
+use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
+use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
+use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
+use CodeGenerationUtils\Inflector\ClassNameInflector;
 
 /**
  * Base configuration class for the proxy manager - serves as micro disposable DIC/facade
@@ -52,7 +52,7 @@ class Configuration
     protected $proxiesNamespace = self::DEFAULT_PROXY_NAMESPACE;
 
     /**
-     * @var \ProxyManager\GeneratorStrategy\GeneratorStrategyInterface|null
+     * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null
      */
     protected $generatorStrategy;
 
@@ -62,7 +62,7 @@ class Configuration
     protected $proxyAutoloader;
 
     /**
-     * @var \ProxyManager\Inflector\ClassNameInflectorInterface|null
+     * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
      */
     protected $classNameInflector;
 
@@ -83,7 +83,7 @@ class Configuration
     }
 
     /**
-     * @param \ProxyManager\Autoloader\AutoloaderInterface $proxyAutoloader
+     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $proxyAutoloader
      */
     public function setProxyAutoloader(AutoloaderInterface $proxyAutoloader)
     {
@@ -91,7 +91,7 @@ class Configuration
     }
 
     /**
-     * @return \ProxyManager\Autoloader\AutoloaderInterface
+     * @return \CodeGenerationUtils\Autoloader\AutoloaderInterface
      */
     public function getProxyAutoloader()
     {
@@ -142,7 +142,7 @@ class Configuration
     }
 
     /**
-     * @param \ProxyManager\GeneratorStrategy\GeneratorStrategyInterface $generatorStrategy
+     * @param \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface $generatorStrategy
      */
     public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy)
     {
@@ -150,7 +150,7 @@ class Configuration
     }
 
     /**
-     * @return \ProxyManager\GeneratorStrategy\GeneratorStrategyInterface
+     * @return \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface
      */
     public function getGeneratorStrategy()
     {
@@ -162,7 +162,7 @@ class Configuration
     }
 
     /**
-     * @param \ProxyManager\Inflector\ClassNameInflectorInterface $classNameInflector
+     * @param \CodeGenerationUtils\Inflector\ClassNameInflectorInterface $classNameInflector
      */
     public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector)
     {
@@ -170,7 +170,7 @@ class Configuration
     }
 
     /**
-     * @return \ProxyManager\Inflector\ClassNameInflectorInterface
+     * @return \CodeGenerationUtils\Inflector\ClassNameInflectorInterface
      */
     public function getClassNameInflector()
     {

@@ -18,10 +18,12 @@
 
 namespace GeneratedHydratorTest\ClassGenerator;
 
+use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use PHPParser_NodeTraverser;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
 /**
@@ -32,7 +34,7 @@ use ReflectionClass;
  *
  * @covers \GeneratedHydrator\ClassGenerator\HydratorGenerator
  */
-class HydratorGeneratorTest extends AbstractClassGeneratorTest
+class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider getTestedImplementations
@@ -43,18 +45,19 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
     {
         $generator          = new HydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('AbstractProxyGeneratorTest');
-        $generatedClass     = new ClassGenerator($generatedClassName);
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
+        $traverser          = new PHPParser_NodeTraverser();
 
-        $generator->generate($originalClass, $generatedClass);
-        $generatorStrategy->generate($generatedClass);
+        $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $generatedClassName));
+        $generatorStrategy->generate($traverser->traverse($generator->generate($originalClass)));
 
         $generatedReflection = new ReflectionClass($generatedClassName);
 
         if ($originalClass->isInterface()) {
             $this->assertTrue($generatedReflection->implementsInterface($className));
         } else {
+            $this->assertInstanceOf('ReflectionClass', $generatedReflection->getParentClass());
             $this->assertSame($originalClass->getName(), $generatedReflection->getParentClass()->getName());
         }
 
@@ -75,7 +78,6 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
             array('GeneratedHydratorTestAsset\\ClassWithMagicMethods'),
             array('GeneratedHydratorTestAsset\\ClassWithByRefMagicMethods'),
             array('GeneratedHydratorTestAsset\\ClassWithMixedProperties'),
-            array('GeneratedHydratorTestAsset\\BaseInterface'),
         );
     }
 
@@ -84,9 +86,6 @@ class HydratorGeneratorTest extends AbstractClassGeneratorTest
      */
     protected function getExpectedImplementedInterfaces()
     {
-        return array(
-            'ProxyManager\\Proxy\\ProxyInterface',
-            'Zend\\Stdlib\\Hydrator\\HydratorInterface'
-        );
+        return array('Zend\\Stdlib\\Hydrator\\HydratorInterface');
     }
 }

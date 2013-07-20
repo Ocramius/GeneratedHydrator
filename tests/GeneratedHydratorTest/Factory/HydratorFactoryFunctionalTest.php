@@ -18,13 +18,15 @@
 
 namespace GeneratedHydratorTest\Factory;
 
-use PHPUnit_Framework_TestCase;
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
+use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
-use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use Zend\Code\Reflection\ClassReflection;
+use PHPParser_NodeTraverser;
+use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 
 /**
  * Integration tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -56,20 +58,23 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->config  = new Configuration();
-        $this->factory = new HydratorFactory($this->config);
-
-        $generator                = new EvaluatingGeneratorStrategy();
+        $this->config             = new Configuration();
+        $this->factory            = new HydratorFactory($this->config);
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
-        $proxiedClass             = ClassGenerator::fromReflection(
-            new ClassReflection('GeneratedHydratorTestAsset\\ClassWithMixedProperties')
-        );
+        $generatorStrategy        = new EvaluatingGeneratorStrategy();
+        $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\\ClassWithMixedProperties');
+        $generator                = new ClassBuilder();
+        $traverser                = new PHPParser_NodeTraverser();
+        $renamer                  = new ClassRenamerVisitor($reflection, $this->generatedClassName);
 
-        $proxiedClass->setName($this->generatedClassName);
-        $proxiedClass->setNamespaceName(null);
-        $generator->generate($proxiedClass); // evaluating the generated class
+        $traverser->addVisitor($renamer);
 
-        $this->config->setGeneratorStrategy($generator);
+        // evaluating the generated class
+        //die(var_dump($traverser->traverse($generator->fromReflection($reflection))));
+        $ast = $traverser->traverse($generator->fromReflection($reflection));
+        $generatorStrategy->generate($ast);
+
+        $this->config->setGeneratorStrategy($generatorStrategy);
     }
 
     /**

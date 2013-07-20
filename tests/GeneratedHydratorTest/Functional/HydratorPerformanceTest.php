@@ -18,11 +18,11 @@
 
 namespace GeneratedHydratorTest\Functional;
 
-use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use ProxyManager\Proxy\HydratorInterface;
-use ProxyManager\ProxyGenerator\HydratorGenerator;
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -32,6 +32,7 @@ use GeneratedHydratorTestAsset\HydratedObject;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ProxyGenerator\LazyLoadingValueHolderGenerator} produced objects
@@ -150,19 +151,31 @@ class HydratorPerformanceTest extends BasePerformanceTest
      */
     private function generateHydrator($object)
     {
-        $generatedClassName   = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
-        $generator            = new HydratorGenerator();
-        $generatedClass       = new ClassGenerator($generatedClassName);
-        $strategy             = new EvaluatingGeneratorStrategy();
-        $reflection           = new ReflectionClass($object);
-        $reflectionProperties = $reflection->getProperties();
-        $properties           = array();
-        $accessors            = array();
+        $parentClassName    = get_class($object);
+        $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
+        $config             = new Configuration();
+        $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
+        $reflection         = new ReflectionClass($object);
+        $properties         = array();
+        $accessors          = array();
 
-        $generator->generate($reflection, $generatedClass);
-        $strategy->generate($generatedClass);
+        $inflector
+            ->expects($this->any())
+            ->method('getProxyClassName')
+            ->with($parentClassName)
+            ->will($this->returnValue($generatedClassName));
+        $inflector
+            ->expects($this->any())
+            ->method('getUserClassName')
+            ->with($parentClassName)
+            ->will($this->returnValue($parentClassName));
 
-        foreach ($reflectionProperties as $reflectionProperty) {
+        $config->setClassNameInflector($inflector);
+        $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
+
+        $factory = new HydratorFactory($config);
+
+        foreach ($reflection->getProperties() as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);
 
             $properties[$reflectionProperty->getName()] = $reflectionProperty;
@@ -173,7 +186,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
         }
 
         return array(
-            'hydrator'   => new $generatedClassName($accessors),
+            'hydrator'   => $factory->createProxy($parentClassName),
             'properties' => $properties,
         );
     }

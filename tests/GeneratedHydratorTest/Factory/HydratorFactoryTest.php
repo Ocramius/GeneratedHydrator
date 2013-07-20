@@ -18,10 +18,9 @@
 
 namespace GeneratedHydratorTest\Factory;
 
-use PHPUnit_Framework_TestCase;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Factory\HydratorFactory;
-use ProxyManager\Generator\ClassGenerator;
-use ProxyManager\Generator\Util\UniqueIdentifierGenerator;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -47,7 +46,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->config    = $this->getMock('GeneratedHydrator\\Configuration');
-        $this->inflector = $this->getMock('ProxyManager\\Inflector\\ClassNameInflectorInterface');
+        $this->inflector = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
         $this
             ->config
             ->expects($this->any())
@@ -100,8 +99,8 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     {
         $className      = UniqueIdentifierGenerator::getIdentifier('foo');
         $proxyClassName = UniqueIdentifierGenerator::getIdentifier('bar');
-        $generator      = $this->getMock('ProxyManager\\GeneratorStrategy\\GeneratorStrategyInterface');
-        $autoloader     = $this->getMock('ProxyManager\\Autoloader\\AutoloaderInterface');
+        $generator      = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
+        $autoloader     = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
         $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(true));
         $this->config->expects($this->any())->method('getGeneratorStrategy')->will($this->returnValue($generator));
@@ -110,13 +109,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $generator
             ->expects($this->once())
             ->method('generate')
-            ->with(
-                $this->callback(
-                    function (ClassGenerator $targetClass) use ($proxyClassName) {
-                        return $targetClass->getName() === $proxyClassName;
-                    }
-                )
-            );
+            ->with($this->isType('array'));
 
         // simulate autoloading
         $autoloader

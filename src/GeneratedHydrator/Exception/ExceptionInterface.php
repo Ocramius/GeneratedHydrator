@@ -19,7 +19,7 @@
 namespace GeneratedHydrator\Exception;
 
 /**
- * Base exception class for the proxy manager
+ * Base exception class for the generated hydrator manager
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
