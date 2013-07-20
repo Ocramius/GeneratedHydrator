@@ -26,6 +26,7 @@ use PHPParser_Node;
 use PHPParser_Node_Const;
 use PHPParser_Node_Expr_ConstFetch;
 use PHPParser_Node_Name;
+use PHPParser_Node_Name_FullyQualified;
 use PHPParser_Node_Stmt_Class;
 use PHPParser_Node_Stmt_ClassConst;
 use PHPParser_Node_Stmt_Namespace;
@@ -53,6 +54,18 @@ class ClassBuilder extends PHPParser_BuilderAbstract
     {
         $class = new PHPParser_Node_Stmt_Class($reflectionClass->getShortName());
         $stmts = array($class);
+
+        if ($parentClass = $reflectionClass->getParentClass()) {
+            $class->extends = new PHPParser_Node_Name_FullyQualified($parentClass->getName());
+        }
+
+        $interfaces = array();
+
+        foreach ($reflectionClass->getInterfaces() as $reflectionInterface) {
+            $interfaces[] = new PHPParser_Node_Name_FullyQualified($reflectionInterface->getName());
+        }
+
+        $class->implements = $interfaces;
 
         foreach ($reflectionClass->getConstants() as $constant => $value) {
             $class->stmts[] = new PHPParser_Node_Stmt_ClassConst(
