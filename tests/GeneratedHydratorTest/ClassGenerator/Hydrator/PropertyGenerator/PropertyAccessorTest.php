@@ -69,6 +69,6 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
 
         $accessor = new PropertyAccessor($property, 'Foo');
 
-        $this->assertStringMatchesFormat('publicPropertyFoo%s', $accessor->getName());
+        $this->assertStringMatchesFormat('publicPropertyFoo%s', $accessor->props[0]->name);
     }
 }
