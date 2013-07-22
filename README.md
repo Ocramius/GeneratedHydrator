@@ -44,7 +44,7 @@ class Example
 $config  = new Configuration();
 $factory = new Factory($config);
 
-$hydrator = $factory->createProxy('Foo');
+$hydrator = $factory->createProxy('Example');
 
 $object = new Example();
 
