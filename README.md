@@ -30,7 +30,6 @@ Here's an example of how you can create and use a hydrator created by GeneratedH
 <?php
 
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory as Factory;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -41,12 +40,10 @@ class Example
     protected $baz = 3;
 }
 
-$config  = new Configuration();
-$factory = new Factory($config);
-
-$hydrator = $factory->createProxy('Example');
-
-$object = new Example();
+$config        = new Configuration('Example');
+$hydratorClass = $config->createFactory()->getHydratorClass();
+$hydrator      = new $hydratorClass();
+$object        = new Example();
 
 var_dump($hydrator->extract($object)); // array('foo' => 1, 'bar' => 2, 'baz' => 3)
 $hydrator->hydrate(
@@ -87,12 +84,12 @@ class Example
     }
 }
 
-$object    = new Example();
-$data      = array('foo' => 1, 'bar' => 2, 'baz' => 3);
-$config    = new GeneratedHydrator\Configuration();
-$factory   = new GeneratedHydrator\Factory\HydratorFactory($config);
-$hydrators = array(
-    $factory->createProxy('Example'),
+$object        = new Example();
+$data          = array('foo' => 1, 'bar' => 2, 'baz' => 3);
+$config        = new GeneratedHydrator\Configuration('Example');
+$hydratorClass = $config->createFactory()->getHydratorClass();
+$hydrators     = array(
+    new $hydratorClass(),
     new Zend\Stdlib\Hydrator\ClassMethods(),
     new Zend\Stdlib\Hydrator\Reflection(),
     new Zend\Stdlib\Hydrator\ArraySerializable(),
