@@ -70,7 +70,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $hydrator->hydrate($data, $instance);
         }
 
-        $proxy = $this->endCapturing('Proxy hydration: ' . $iterations . ' "' . $className . '": %fms / %fKb');
+        $proxy = $this->endCapturing('Generated hydration: ' . $iterations . ' "' . $className . '": %fms / %fKb');
 
         $this->compareProfile($base, $proxy);
     }
@@ -102,7 +102,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $hydrator->extract($instance);
         }
 
-        $proxy = $this->endCapturing('Proxy extraction: ' . $iterations . ' "' . $className . '": %fms / %fKb');
+        $proxy = $this->endCapturing('Generated extraction: ' . $iterations . ' "' . $className . '": %fms / %fKb');
 
         $this->compareProfile($base, $proxy);
     }

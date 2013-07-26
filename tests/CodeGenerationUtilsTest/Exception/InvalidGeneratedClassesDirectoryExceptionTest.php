@@ -27,12 +27,12 @@ use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class InvalidProxyDirectoryExceptionTest extends PHPUnit_Framework_TestCase
+class InvalidGeneratedClassesDirectoryExceptionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @covers \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound
      */
-    public function testProxyDirectoryNotFound()
+    public function testGeneratedClassesDirectoryNotFound()
     {
         $exception = InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound('foo/bar');
 

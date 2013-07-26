@@ -33,7 +33,7 @@ use ReflectionClass;
 use stdClass;
 
 /**
- * Tests for {@see \GeneratedHydrator\ProxyGenerator\HydratedObject} produced objects
+ * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
