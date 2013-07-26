@@ -99,8 +99,8 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
     public function getClassNames()
     {
         return array(
-            array('Foo', 'ProxyNS\\' . ClassNameInflectorInterface::PROXY_MARKER . '\\Foo\\%s'),
-            array('Foo\\Bar', 'ProxyNS\\' . ClassNameInflectorInterface::PROXY_MARKER . '\\Foo\\Bar\\%s'),
+            array('Foo', 'ProxyNS\\' . ClassNameInflectorInterface::GENERATED_CLASS_MARKER . '\\Foo\\%s'),
+            array('Foo\\Bar', 'ProxyNS\\' . ClassNameInflectorInterface::GENERATED_CLASS_MARKER . '\\Foo\\Bar\\%s'),
         );
     }
 }

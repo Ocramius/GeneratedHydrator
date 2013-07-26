@@ -29,7 +29,7 @@ interface ClassNameInflectorInterface
     /**
      * Marker for proxy classes - classes containing this marker are considered proxies
      */
-    const PROXY_MARKER = '__PM__';
+    const GENERATED_CLASS_MARKER = '__PM__';
 
     /**
      * Retrieve the class name of a user-defined class

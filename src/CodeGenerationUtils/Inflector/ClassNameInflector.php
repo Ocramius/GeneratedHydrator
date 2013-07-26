@@ -54,7 +54,7 @@ class ClassNameInflector implements ClassNameInflectorInterface
     public function __construct($proxyNamespace)
     {
         $this->proxyNamespace    = (string) $proxyNamespace;
-        $this->proxyMarker       = '\\' . static::PROXY_MARKER . '\\';
+        $this->proxyMarker       = '\\' . static::GENERATED_CLASS_MARKER . '\\';
         $this->proxyMarkerLength = strlen($this->proxyMarker);
         $this->parameterEncoder  = new ParameterEncoder();
     }
