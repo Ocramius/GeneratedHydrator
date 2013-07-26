@@ -56,8 +56,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::doesAutoGenerateProxies
-     * @covers \GeneratedHydrator\Configuration::setAutoGenerateProxies
+     * @covers \GeneratedHydrator\Configuration::createFactory
      */
     public function testCreateFactory()
     {
