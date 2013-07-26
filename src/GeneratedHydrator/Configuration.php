@@ -35,7 +35,7 @@ use CodeGenerationUtils\Inflector\ClassNameInflector;
  */
 class Configuration
 {
-    const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedProxy';
+    const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
 
     /**
      * @var string

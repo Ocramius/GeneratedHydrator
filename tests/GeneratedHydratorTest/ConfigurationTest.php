@@ -85,7 +85,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testGetSetProxiesNamespace()
     {
         $this->assertSame(
-            'GeneratedHydratorGeneratedProxy',
+            'GeneratedHydratorGeneratedClass',
             $this->configuration->getGeneratedClassesNamespace(),
             'Default setting check for BC'
         );
