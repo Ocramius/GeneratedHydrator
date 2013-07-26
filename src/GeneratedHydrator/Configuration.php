@@ -35,7 +35,7 @@ use CodeGenerationUtils\Inflector\ClassNameInflector;
  */
 class Configuration
 {
-    const DEFAULT_PROXY_NAMESPACE = 'GeneratedHydratorGeneratedProxy';
+    const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedProxy';
 
     /**
      * @var string
@@ -55,7 +55,7 @@ class Configuration
     /**
      * @var string
      */
-    protected $proxiesNamespace = self::DEFAULT_PROXY_NAMESPACE;
+    protected $proxiesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
     /**
      * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null
