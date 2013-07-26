@@ -79,19 +79,19 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getProxiesNamespace
-     * @covers \GeneratedHydrator\Configuration::setProxiesNamespace
+     * @covers \GeneratedHydrator\Configuration::getGeneratedClassesNamespace
+     * @covers \GeneratedHydrator\Configuration::setGeneratedClassesNamespace
      */
     public function testGetSetProxiesNamespace()
     {
         $this->assertSame(
             'GeneratedHydratorGeneratedProxy',
-            $this->configuration->getProxiesNamespace(),
+            $this->configuration->getGeneratedClassesNamespace(),
             'Default setting check for BC'
         );
 
-        $this->configuration->setProxiesNamespace('foo');
-        $this->assertSame('foo', $this->configuration->getProxiesNamespace());
+        $this->configuration->setGeneratedClassesNamespace('foo');
+        $this->assertSame('foo', $this->configuration->getGeneratedClassesNamespace());
     }
 
     /**

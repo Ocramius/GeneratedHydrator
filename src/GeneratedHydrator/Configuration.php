@@ -146,7 +146,7 @@ class Configuration
     /**
      * @param string $proxiesNamespace
      */
-    public function setProxiesNamespace($proxiesNamespace)
+    public function setGeneratedClassesNamespace($proxiesNamespace)
     {
         $this->proxiesNamespace = $proxiesNamespace;
     }
@@ -154,7 +154,7 @@ class Configuration
     /**
      * @return string
      */
-    public function getProxiesNamespace()
+    public function getGeneratedClassesNamespace()
     {
         return $this->proxiesNamespace;
     }
@@ -213,7 +213,7 @@ class Configuration
     public function getClassNameInflector()
     {
         if (null === $this->classNameInflector) {
-            $this->classNameInflector = new ClassNameInflector($this->getProxiesNamespace());
+            $this->classNameInflector = new ClassNameInflector($this->getGeneratedClassesNamespace());
         }
 
         return $this->classNameInflector;
