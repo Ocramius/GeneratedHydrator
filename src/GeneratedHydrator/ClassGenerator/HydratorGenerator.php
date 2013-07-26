@@ -36,7 +36,7 @@ use ReflectionClass;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorGenerator implements ClassGeneratorInterface
+class HydratorGenerator
 {
     /**
      * {@inheritDoc}
