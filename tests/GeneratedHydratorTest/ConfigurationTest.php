@@ -46,6 +46,15 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      * @covers \GeneratedHydrator\Configuration::doesAutoGenerateProxies
      * @covers \GeneratedHydrator\Configuration::setAutoGenerateProxies
      */
+    public function testCreateFactory()
+    {
+        $this->assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
+    }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::doesAutoGenerateProxies
+     * @covers \GeneratedHydrator\Configuration::setAutoGenerateProxies
+     */
     public function testGetSetAutoGenerateProxies()
     {
         $this->assertTrue($this->configuration->doesAutoGenerateProxies(), 'Default setting check for BC');

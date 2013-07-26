@@ -18,6 +18,7 @@
 
 namespace GeneratedHydrator;
 
+use GeneratedHydrator\Factory\HydratorFactory;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\Autoloader\Autoloader;
 use CodeGenerationUtils\FileLocator\FileLocator;
@@ -65,6 +66,14 @@ class Configuration
      * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
      */
     protected $classNameInflector;
+
+    /**
+     * @return \GeneratedHydrator\Factory\HydratorFactory
+     */
+    public function createFactory()
+    {
+        return new HydratorFactory($this);
+    }
 
     /**
      * @param bool $autoGenerateProxies
