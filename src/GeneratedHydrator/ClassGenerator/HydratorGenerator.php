@@ -39,7 +39,12 @@ use ReflectionClass;
 class HydratorGenerator
 {
     /**
-     * {@inheritDoc}
+     * Generates an AST of {@see \PHPParser_Node[]} out of a given reflection class
+     * and a map of properties to be used to
+     *
+     * @param \ReflectionClass $originalClass
+     *
+     * @return \PHPParser_Node[]
      */
     public function generate(ReflectionClass $originalClass)
     {
