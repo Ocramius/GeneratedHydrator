@@ -123,7 +123,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         $inflector
             ->expects($this->any())
-            ->method('getProxyClassName')
+            ->method('getGeneratedClassName')
             ->with($parentClassName)
             ->will($this->returnValue($generatedClassName));
         $inflector

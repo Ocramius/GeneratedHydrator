@@ -35,61 +35,61 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
      *
      * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::__construct
      * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getUserClassName
-     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getProxyClassName
-     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::isProxyClassName
+     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getGeneratedClassName
+     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::isGeneratedClassName
      */
     public function testInflector($realClassName, $proxyClassName)
     {
         $inflector = new ClassNameInflector('ProxyNS');
 
-        $this->assertFalse($inflector->isProxyClassName($realClassName));
-        $this->assertTrue($inflector->isProxyClassName($proxyClassName));
+        $this->assertFalse($inflector->isGeneratedClassName($realClassName));
+        $this->assertTrue($inflector->isGeneratedClassName($proxyClassName));
         $this->assertStringMatchesFormat($realClassName, $inflector->getUserClassName($realClassName));
-        $this->assertStringMatchesFormat($proxyClassName, $inflector->getProxyClassName($proxyClassName));
-        $this->assertStringMatchesFormat($proxyClassName, $inflector->getProxyClassName($realClassName));
+        $this->assertStringMatchesFormat($proxyClassName, $inflector->getGeneratedClassName($proxyClassName));
+        $this->assertStringMatchesFormat($proxyClassName, $inflector->getGeneratedClassName($realClassName));
         $this->assertStringMatchesFormat($realClassName, $inflector->getUserClassName($proxyClassName));
     }
 
     /**
-     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getProxyClassName
+     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getGeneratedClassName
      */
     public function testGeneratesSameClassNameWithSameParameters()
     {
         $inflector = new ClassNameInflector('ProxyNS');
 
-        $this->assertSame($inflector->getProxyClassName('Foo\\Bar'), $inflector->getProxyClassName('Foo\\Bar'));
+        $this->assertSame($inflector->getGeneratedClassName('Foo\\Bar'), $inflector->getGeneratedClassName('Foo\\Bar'));
         $this->assertSame(
-            $inflector->getProxyClassName('Foo\\Bar', array('baz' => 'tab')),
-            $inflector->getProxyClassName('Foo\\Bar', array('baz' => 'tab'))
+            $inflector->getGeneratedClassName('Foo\\Bar', array('baz' => 'tab')),
+            $inflector->getGeneratedClassName('Foo\\Bar', array('baz' => 'tab'))
         );
         $this->assertSame(
-            $inflector->getProxyClassName('Foo\\Bar', array('tab' => 'baz')),
-            $inflector->getProxyClassName('Foo\\Bar', array('tab' => 'baz'))
+            $inflector->getGeneratedClassName('Foo\\Bar', array('tab' => 'baz')),
+            $inflector->getGeneratedClassName('Foo\\Bar', array('tab' => 'baz'))
         );
     }
 
     /**
-     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getProxyClassName
+     * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getGeneratedClassName
      */
     public function testGeneratesDifferentClassNameWithDifferentParameters()
     {
         $inflector = new ClassNameInflector('ProxyNS');
 
         $this->assertNotSame(
-            $inflector->getProxyClassName('Foo\\Bar'),
-            $inflector->getProxyClassName('Foo\\Bar', array('foo' => 'bar'))
+            $inflector->getGeneratedClassName('Foo\\Bar'),
+            $inflector->getGeneratedClassName('Foo\\Bar', array('foo' => 'bar'))
         );
         $this->assertNotSame(
-            $inflector->getProxyClassName('Foo\\Bar', array('baz' => 'tab')),
-            $inflector->getProxyClassName('Foo\\Bar', array('tab' => 'baz'))
+            $inflector->getGeneratedClassName('Foo\\Bar', array('baz' => 'tab')),
+            $inflector->getGeneratedClassName('Foo\\Bar', array('tab' => 'baz'))
         );
         $this->assertNotSame(
-            $inflector->getProxyClassName('Foo\\Bar', array('foo' => 'bar', 'tab' => 'baz')),
-            $inflector->getProxyClassName('Foo\\Bar', array('foo' => 'bar'))
+            $inflector->getGeneratedClassName('Foo\\Bar', array('foo' => 'bar', 'tab' => 'baz')),
+            $inflector->getGeneratedClassName('Foo\\Bar', array('foo' => 'bar'))
         );
         $this->assertNotSame(
-            $inflector->getProxyClassName('Foo\\Bar', array('foo' => 'bar', 'tab' => 'baz')),
-            $inflector->getProxyClassName('Foo\\Bar', array('tab' => 'baz', 'foo' => 'bar'))
+            $inflector->getGeneratedClassName('Foo\\Bar', array('foo' => 'bar', 'tab' => 'baz')),
+            $inflector->getGeneratedClassName('Foo\\Bar', array('tab' => 'baz', 'foo' => 'bar'))
         );
     }
 

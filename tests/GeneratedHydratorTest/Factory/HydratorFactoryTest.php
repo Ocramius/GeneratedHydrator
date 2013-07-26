@@ -80,7 +80,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $this
             ->inflector
             ->expects($this->once())
-            ->method('getProxyClassName')
+            ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will($this->returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
 
@@ -133,7 +133,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $this
             ->inflector
             ->expects($this->once())
-            ->method('getProxyClassName')
+            ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will($this->returnValue($proxyClassName));
 

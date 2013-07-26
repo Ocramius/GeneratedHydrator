@@ -54,7 +54,7 @@ class HydratorFactory
     {
         $inflector      = $this->configuration->getClassNameInflector();
         $realClassName  = $inflector->getUserClassName($this->configuration->getHydratedClassName());
-        $proxyClassName = $inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
+        $proxyClassName = $inflector->getGeneratedClassName($realClassName, array('factory' => get_class($this)));
 
         if (! class_exists($proxyClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = new HydratorGenerator();

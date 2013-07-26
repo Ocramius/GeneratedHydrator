@@ -78,7 +78,7 @@ class ClassNameInflector implements ClassNameInflectorInterface
     /**
      * {@inheritDoc}
      */
-    public function getProxyClassName($className, array $options = array())
+    public function getGeneratedClassName($className, array $options = array())
     {
         return $this->proxyNamespace
             . $this->proxyMarker
@@ -89,7 +89,7 @@ class ClassNameInflector implements ClassNameInflectorInterface
     /**
      * {@inheritDoc}
      */
-    public function isProxyClassName($className)
+    public function isGeneratedClassName($className)
     {
         return false !== strrpos($className, $this->proxyMarker);
     }

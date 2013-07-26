@@ -48,7 +48,7 @@ interface ClassNameInflectorInterface
      *
      * @return mixed
      */
-    public function getProxyClassName($className, array $options = array());
+    public function getGeneratedClassName($className, array $options = array());
 
     /**
      * Retrieve whether the provided class name is a proxy
@@ -57,5 +57,5 @@ interface ClassNameInflectorInterface
      *
      * @return bool
      */
-    public function isProxyClassName($className);
+    public function isGeneratedClassName($className);
 }

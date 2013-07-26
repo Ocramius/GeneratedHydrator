@@ -54,7 +54,7 @@ class Autoloader implements AutoloaderInterface
      */
     public function __invoke($className)
     {
-        if (class_exists($className, false) || ! $this->classNameInflector->isProxyClassName($className)) {
+        if (class_exists($className, false) || ! $this->classNameInflector->isGeneratedClassName($className)) {
             return false;
         }
 

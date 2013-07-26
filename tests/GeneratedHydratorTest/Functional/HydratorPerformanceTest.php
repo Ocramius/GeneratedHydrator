@@ -159,7 +159,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
 
         $inflector
             ->expects($this->any())
-            ->method('getProxyClassName')
+            ->method('getGeneratedClassName')
             ->with($parentClassName)
             ->will($this->returnValue($generatedClassName));
         $inflector

@@ -65,7 +65,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         $this
             ->classNameInflector
             ->expects($this->once())
-            ->method('isProxyClassName')
+            ->method('isGeneratedClassName')
             ->with($className)
             ->will($this->returnValue(false));
 
@@ -81,7 +81,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         $this
             ->classNameInflector
             ->expects($this->once())
-            ->method('isProxyClassName')
+            ->method('isGeneratedClassName')
             ->with($className)
             ->will($this->returnValue(true));
         $this
@@ -116,7 +116,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         $this
             ->classNameInflector
             ->expects($this->once())
-            ->method('isProxyClassName')
+            ->method('isGeneratedClassName')
             ->with($fqcn)
             ->will($this->returnValue(true));
         $this
