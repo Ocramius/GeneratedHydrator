@@ -18,7 +18,7 @@
 
 namespace CodeGenerationUtils\FileLocator;
 
-use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException as InvalidDirectory;
 
 /**
  * {@inheritDoc}
@@ -31,19 +31,19 @@ class FileLocator implements FileLocatorInterface
     /**
      * @var string
      */
-    protected $proxiesDirectory;
+    protected $generatedClassesDirectory;
 
     /**
-     * @param string $proxiesDirectory
+     * @param string $generatedClassesDirectory
      *
      * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
-    public function __construct($proxiesDirectory)
+    public function __construct($generatedClassesDirectory)
     {
-        $this->proxiesDirectory = realpath($proxiesDirectory);
+        $this->generatedClassesDirectory = realpath($generatedClassesDirectory);
 
-        if (false === $this->proxiesDirectory) {
-            throw InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound($proxiesDirectory);
+        if (false === $this->generatedClassesDirectory) {
+            throw InvalidDirectory::generatedClassesDirectoryNotFound($generatedClassesDirectory);
         }
     }
 
@@ -52,6 +52,6 @@ class FileLocator implements FileLocatorInterface
      */
     public function getGeneratedClassFileName($className)
     {
-        return $this->proxiesDirectory . DIRECTORY_SEPARATOR . str_replace('\\', '', $className) . '.php';
+        return $this->generatedClassesDirectory . DIRECTORY_SEPARATOR . str_replace('\\', '', $className) . '.php';
     }
 }

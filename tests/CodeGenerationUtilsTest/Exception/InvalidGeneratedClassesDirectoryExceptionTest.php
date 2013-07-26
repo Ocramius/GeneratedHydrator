@@ -30,7 +30,7 @@ use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 class InvalidGeneratedClassesDirectoryExceptionTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound
+     * @covers \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
     public function testGeneratedClassesDirectoryNotFound()
     {

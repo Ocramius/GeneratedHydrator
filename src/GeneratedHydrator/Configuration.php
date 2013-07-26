@@ -50,12 +50,12 @@ class Configuration
     /**
      * @var string|null
      */
-    protected $proxiesTargetDir;
+    protected $generatedClassesTargetDir;
 
     /**
      * @var string
      */
-    protected $proxiesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
+    protected $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
     /**
      * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null
@@ -144,11 +144,11 @@ class Configuration
     }
 
     /**
-     * @param string $proxiesNamespace
+     * @param string $generatedClassesNamespace
      */
-    public function setGeneratedClassesNamespace($proxiesNamespace)
+    public function setGeneratedClassesNamespace($generatedClassesNamespace)
     {
-        $this->proxiesNamespace = $proxiesNamespace;
+        $this->generatedClassesNamespace = $generatedClassesNamespace;
     }
 
     /**
@@ -156,15 +156,15 @@ class Configuration
      */
     public function getGeneratedClassesNamespace()
     {
-        return $this->proxiesNamespace;
+        return $this->generatedClassesNamespace;
     }
 
     /**
-     * @param string $proxiesTargetDir
+     * @param string $generatedClassesTargetDir
      */
-    public function setGeneratedClassesTargetDir($proxiesTargetDir)
+    public function setGeneratedClassesTargetDir($generatedClassesTargetDir)
     {
-        $this->proxiesTargetDir = (string) $proxiesTargetDir;
+        $this->generatedClassesTargetDir = (string) $generatedClassesTargetDir;
     }
 
     /**
@@ -172,11 +172,11 @@ class Configuration
      */
     public function getGeneratedClassesTargetDir()
     {
-        if (null === $this->proxiesTargetDir) {
-            $this->proxiesTargetDir = sys_get_temp_dir();
+        if (null === $this->generatedClassesTargetDir) {
+            $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
-        return $this->proxiesTargetDir;
+        return $this->generatedClassesTargetDir;
     }
 
     /**
@@ -193,7 +193,9 @@ class Configuration
     public function getGeneratorStrategy()
     {
         if (null === $this->generatorStrategy) {
-            $this->generatorStrategy = new FileWriterGeneratorStrategy(new FileLocator($this->getGeneratedClassesTargetDir()));
+            $this->generatorStrategy = new FileWriterGeneratorStrategy(
+                new FileLocator($this->getGeneratedClassesTargetDir())
+            );
         }
 
         return $this->generatorStrategy;
