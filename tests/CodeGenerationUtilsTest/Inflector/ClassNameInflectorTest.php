@@ -40,7 +40,7 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
      */
     public function testInflector($realClassName, $proxyClassName)
     {
-        $inflector = new ClassNameInflector('ProxyNS');
+        $inflector = new ClassNameInflector('GeneratedClassNS');
 
         $this->assertFalse($inflector->isGeneratedClassName($realClassName));
         $this->assertTrue($inflector->isGeneratedClassName($proxyClassName));
@@ -55,7 +55,7 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
      */
     public function testGeneratesSameClassNameWithSameParameters()
     {
-        $inflector = new ClassNameInflector('ProxyNS');
+        $inflector = new ClassNameInflector('GeneratedClassNS');
 
         $this->assertSame($inflector->getGeneratedClassName('Foo\\Bar'), $inflector->getGeneratedClassName('Foo\\Bar'));
         $this->assertSame(
@@ -73,7 +73,7 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
      */
     public function testGeneratesDifferentClassNameWithDifferentParameters()
     {
-        $inflector = new ClassNameInflector('ProxyNS');
+        $inflector = new ClassNameInflector('GeneratedClassNS');
 
         $this->assertNotSame(
             $inflector->getGeneratedClassName('Foo\\Bar'),
@@ -99,8 +99,14 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
     public function getClassNames()
     {
         return array(
-            array('Foo', 'ProxyNS\\' . ClassNameInflectorInterface::GENERATED_CLASS_MARKER . '\\Foo\\%s'),
-            array('Foo\\Bar', 'ProxyNS\\' . ClassNameInflectorInterface::GENERATED_CLASS_MARKER . '\\Foo\\Bar\\%s'),
+            array(
+                'Foo',
+                'GeneratedClassNS\\' . ClassNameInflectorInterface::GENERATED_CLASS_MARKER . '\\Foo\\%s'
+            ),
+            array(
+                'Foo\\Bar',
+                'GeneratedClassNS\\' . ClassNameInflectorInterface::GENERATED_CLASS_MARKER . '\\Foo\\Bar\\%s'
+            ),
         );
     }
 }
