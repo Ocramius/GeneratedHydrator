@@ -33,11 +33,6 @@ use ReflectionClass;
 class HydratorFactory
 {
     /**
-     * @var \GeneratedHydrator\Configuration
-     */
-    protected $configuration;
-
-    /**
      * @var bool
      */
     protected $autoGenerate;
@@ -46,6 +41,16 @@ class HydratorFactory
      * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface
      */
     protected $inflector;
+
+    /**
+     * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface
+     */
+    protected $generatorStrategy;
+
+    /**
+     * @var \CodeGenerationUtils\Autoloader\AutoloaderInterface
+     */
+    protected $proxyAutoloader;
 
     /**
      * Cached generated class names
@@ -66,10 +71,11 @@ class HydratorFactory
      */
     public function __construct(Configuration $configuration)
     {
-        $this->configuration = $configuration;
-        // localizing some properties for performance
-        $this->autoGenerate  = $this->configuration->doesAutoGenerateProxies();
-        $this->inflector     = $this->configuration->getClassNameInflector();
+        // localizing properties to guarantee immutability
+        $this->autoGenerate      = $configuration->doesAutoGenerateProxies();
+        $this->inflector         = $configuration->getClassNameInflector();
+        $this->generatorStrategy = $configuration->getGeneratorStrategy();
+        $this->proxyAutoloader   = $configuration->getProxyAutoloader();
     }
 
     /**
@@ -94,8 +100,8 @@ class HydratorFactory
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $proxyClassName));
 
-            $this->configuration->getGeneratorStrategy()->generate($traverser->traverse($generatedAst));
-            $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);
+            $this->generatorStrategy->generate($traverser->traverse($generatedAst));
+            $this->proxyAutoloader->__invoke($proxyClassName);
         }
 
         return $this->hydrators[$className] = new $proxyClassName();
