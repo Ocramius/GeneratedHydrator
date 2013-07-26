@@ -130,7 +130,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $properties  = $definitions['properties'];
             $values      = array();
 
-            foreach ($properties as $name => $property) {
+            foreach (array_keys($properties) as $name) {
                 $values[$name] = $name;
             }
 
@@ -181,10 +181,10 @@ class HydratorPerformanceTest extends BasePerformanceTest
             }
         }
 
-        $proxyClass = $config->createFactory()->getHydratorClass();
+        $generatedClass = $config->createFactory()->getHydratorClass();
 
         return array(
-            'hydrator'   => new $proxyClass,
+            'hydrator'   => new $generatedClass,
             'properties' => $properties,
         );
     }

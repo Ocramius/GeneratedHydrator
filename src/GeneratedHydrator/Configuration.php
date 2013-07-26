@@ -28,7 +28,7 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
 
 /**
- * Base configuration class for the proxy manager - serves as micro disposable DIC/facade
+ * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
@@ -65,7 +65,7 @@ class Configuration
     /**
      * @var callable|null
      */
-    protected $proxyAutoloader;
+    protected $generatedClassesAutoloader;
 
     /**
      * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
@@ -121,11 +121,11 @@ class Configuration
     }
 
     /**
-     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $proxyAutoloader
+     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $generatedClassesAutoloader
      */
-    public function setGeneratedClassAutoloader(AutoloaderInterface $proxyAutoloader)
+    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader)
     {
-        $this->proxyAutoloader = $proxyAutoloader;
+        $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
 
     /**
@@ -133,14 +133,14 @@ class Configuration
      */
     public function getGeneratedClassAutoloader()
     {
-        if (null === $this->proxyAutoloader) {
-            $this->proxyAutoloader = new Autoloader(
+        if (null === $this->generatedClassesAutoloader) {
+            $this->generatedClassesAutoloader = new Autoloader(
                 new FileLocator($this->getGeneratedClassesTargetDir()),
                 $this->getClassNameInflector()
             );
         }
 
-        return $this->proxyAutoloader;
+        return $this->generatedClassesAutoloader;
     }
 
     /**

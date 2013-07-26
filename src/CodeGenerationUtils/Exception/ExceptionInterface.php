@@ -19,7 +19,7 @@
 namespace CodeGenerationUtils\Exception;
 
 /**
- * Base exception class for the proxy manager
+ * Base exception class for the code generator component
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT

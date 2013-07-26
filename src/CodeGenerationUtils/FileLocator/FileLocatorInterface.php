@@ -27,7 +27,7 @@ namespace CodeGenerationUtils\FileLocator;
 interface FileLocatorInterface
 {
     /**
-     * Retrieves the file name for the given proxy
+     * Retrieves the file name for the given generated class FQCN
      *
      * @param $className
      *

@@ -38,16 +38,16 @@ class ClassNameInflectorTest extends PHPUnit_Framework_TestCase
      * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::getGeneratedClassName
      * @covers \CodeGenerationUtils\Inflector\ClassNameInflector::isGeneratedClassName
      */
-    public function testInflector($realClassName, $proxyClassName)
+    public function testInflector($realClassName, $generatedClassName)
     {
         $inflector = new ClassNameInflector('GeneratedClassNS');
 
         $this->assertFalse($inflector->isGeneratedClassName($realClassName));
-        $this->assertTrue($inflector->isGeneratedClassName($proxyClassName));
+        $this->assertTrue($inflector->isGeneratedClassName($generatedClassName));
         $this->assertStringMatchesFormat($realClassName, $inflector->getUserClassName($realClassName));
-        $this->assertStringMatchesFormat($proxyClassName, $inflector->getGeneratedClassName($proxyClassName));
-        $this->assertStringMatchesFormat($proxyClassName, $inflector->getGeneratedClassName($realClassName));
-        $this->assertStringMatchesFormat($realClassName, $inflector->getUserClassName($proxyClassName));
+        $this->assertStringMatchesFormat($generatedClassName, $inflector->getGeneratedClassName($generatedClassName));
+        $this->assertStringMatchesFormat($generatedClassName, $inflector->getGeneratedClassName($realClassName));
+        $this->assertStringMatchesFormat($realClassName, $inflector->getUserClassName($generatedClassName));
     }
 
     /**

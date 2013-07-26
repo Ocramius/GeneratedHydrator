@@ -84,12 +84,10 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will($this->returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
 
-        $factory    = new HydratorFactory($this->config);
-        /* @var $proxy \Zend\Stdlib\Hydrator\HydratorInterface */
-        $proxyClass = $factory->getHydratorClass();
-        $proxy      = new $proxyClass;
+        $factory        = new HydratorFactory($this->config);
+        $generatedClass = $factory->getHydratorClass();
 
-        $this->assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', $proxy);
+        $this->assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', new $generatedClass);
     }
 
     /**
@@ -103,7 +101,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     public function testWillTryAutoGeneration()
     {
         $className      = UniqueIdentifierGenerator::getIdentifier('foo');
-        $proxyClassName = UniqueIdentifierGenerator::getIdentifier('bar');
+        $generatedClassName = UniqueIdentifierGenerator::getIdentifier('bar');
         $generator      = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
         $autoloader     = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
@@ -121,11 +119,11 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $autoloader
             ->expects($this->once())
             ->method('__invoke')
-            ->with($proxyClassName)
+            ->with($generatedClassName)
             ->will(
                 $this->returnCallback(
-                    function () use ($proxyClassName) {
-                        eval('class ' . $proxyClassName . ' {}');
+                    function () use ($generatedClassName) {
+                        eval('class ' . $generatedClassName . ' {}');
                     }
                 )
             );
@@ -135,7 +133,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
-            ->will($this->returnValue($proxyClassName));
+            ->will($this->returnValue($generatedClassName));
 
         $this
             ->inflector
@@ -144,11 +142,10 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->with($className)
             ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
-        $factory    = new HydratorFactory($this->config);
+        $factory        = new HydratorFactory($this->config);
         /* @var $proxy \GeneratedHydratorTestAsset\LazyLoadingMock */
-        $proxyClass = $factory->getHydratorClass();
-        $proxy      = new $proxyClass;
+        $generatedClass = $factory->getHydratorClass();
 
-        $this->assertInstanceOf($proxyClassName, $proxy);
+        $this->assertInstanceOf($generatedClassName, new $generatedClass);
     }
 }

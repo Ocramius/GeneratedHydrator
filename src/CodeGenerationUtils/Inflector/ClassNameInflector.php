@@ -31,17 +31,17 @@ class ClassNameInflector implements ClassNameInflectorInterface
     /**
      * @var string
      */
-    protected $proxyNamespace;
+    protected $generatedClassesNamespace;
 
     /**
      * @var int
      */
-    private $proxyMarkerLength;
+    private $generatedClassMarkerLength;
 
     /**
      * @var string
      */
-    private $proxyMarker;
+    private $generatedClassMarker;
 
     /**
      * @var \CodeGenerationUtils\Inflector\Util\ParameterEncoder
@@ -49,14 +49,14 @@ class ClassNameInflector implements ClassNameInflectorInterface
     private $parameterEncoder;
 
     /**
-     * @param string $proxyNamespace
+     * @param string $generatedClassesNamespace
      */
-    public function __construct($proxyNamespace)
+    public function __construct($generatedClassesNamespace)
     {
-        $this->proxyNamespace    = (string) $proxyNamespace;
-        $this->proxyMarker       = '\\' . static::GENERATED_CLASS_MARKER . '\\';
-        $this->proxyMarkerLength = strlen($this->proxyMarker);
-        $this->parameterEncoder  = new ParameterEncoder();
+        $this->generatedClassesNamespace  = (string) $generatedClassesNamespace;
+        $this->generatedClassMarker       = '\\' . static::GENERATED_CLASS_MARKER . '\\';
+        $this->generatedClassMarkerLength = strlen($this->generatedClassMarker);
+        $this->parameterEncoder           = new ParameterEncoder();
     }
 
     /**
@@ -64,14 +64,14 @@ class ClassNameInflector implements ClassNameInflectorInterface
      */
     public function getUserClassName($className)
     {
-        if (false === $position = strrpos($className, $this->proxyMarker)) {
+        if (false === $position = strrpos($className, $this->generatedClassMarker)) {
             return $className;
         }
 
         return substr(
             $className,
-            $this->proxyMarkerLength + $position,
-            strrpos($className, '\\') - ($position + $this->proxyMarkerLength)
+            $this->generatedClassMarkerLength + $position,
+            strrpos($className, '\\') - ($position + $this->generatedClassMarkerLength)
         );
     }
 
@@ -80,8 +80,8 @@ class ClassNameInflector implements ClassNameInflectorInterface
      */
     public function getGeneratedClassName($className, array $options = array())
     {
-        return $this->proxyNamespace
-            . $this->proxyMarker
+        return $this->generatedClassesNamespace
+            . $this->generatedClassMarker
             . $this->getUserClassName($className)
             . '\\' . $this->parameterEncoder->encodeParameters($options);
     }
@@ -91,6 +91,6 @@ class ClassNameInflector implements ClassNameInflectorInterface
      */
     public function isGeneratedClassName($className)
     {
-        return false !== strrpos($className, $this->proxyMarker);
+        return false !== strrpos($className, $this->generatedClassMarker);
     }
 }

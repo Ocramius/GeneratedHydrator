@@ -135,8 +135,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
-        $proxyClass = $config->createFactory()->getHydratorClass();
+        $generatedClass = $config->createFactory()->getHydratorClass();
 
-        return new $proxyClass;
+        return new $generatedClass;
     }
 }
