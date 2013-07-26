@@ -135,7 +135,7 @@ class Configuration
     {
         if (null === $this->proxyAutoloader) {
             $this->proxyAutoloader = new Autoloader(
-                new FileLocator($this->getProxiesTargetDir()),
+                new FileLocator($this->getGeneratedClassesTargetDir()),
                 $this->getClassNameInflector()
             );
         }
@@ -162,7 +162,7 @@ class Configuration
     /**
      * @param string $proxiesTargetDir
      */
-    public function setProxiesTargetDir($proxiesTargetDir)
+    public function setGeneratedClassesTargetDir($proxiesTargetDir)
     {
         $this->proxiesTargetDir = (string) $proxiesTargetDir;
     }
@@ -170,7 +170,7 @@ class Configuration
     /**
      * @return null|string
      */
-    public function getProxiesTargetDir()
+    public function getGeneratedClassesTargetDir()
     {
         if (null === $this->proxiesTargetDir) {
             $this->proxiesTargetDir = sys_get_temp_dir();
@@ -193,7 +193,7 @@ class Configuration
     public function getGeneratorStrategy()
     {
         if (null === $this->generatorStrategy) {
-            $this->generatorStrategy = new FileWriterGeneratorStrategy(new FileLocator($this->getProxiesTargetDir()));
+            $this->generatorStrategy = new FileWriterGeneratorStrategy(new FileLocator($this->getGeneratedClassesTargetDir()));
         }
 
         return $this->generatorStrategy;

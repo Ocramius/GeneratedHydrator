@@ -130,15 +130,15 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getProxiesTargetDir
-     * @covers \GeneratedHydrator\Configuration::setProxiesTargetDir
+     * @covers \GeneratedHydrator\Configuration::getGeneratedClassesTargetDir
+     * @covers \GeneratedHydrator\Configuration::setGeneratedClassesTargetDir
      */
     public function testSetGetProxiesTargetDir()
     {
-        $this->assertTrue(is_dir($this->configuration->getProxiesTargetDir()));
+        $this->assertTrue(is_dir($this->configuration->getGeneratedClassesTargetDir()));
 
-        $this->configuration->setProxiesTargetDir(__DIR__);
-        $this->assertSame(__DIR__, $this->configuration->getProxiesTargetDir());
+        $this->configuration->setGeneratedClassesTargetDir(__DIR__);
+        $this->assertSame(__DIR__, $this->configuration->getGeneratedClassesTargetDir());
     }
 
     /**
