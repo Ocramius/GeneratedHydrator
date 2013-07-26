@@ -62,7 +62,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      * {@inheritDoc}
      *
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::getProxyClass
+     * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
     public function testWillSkipAutoGeneration()
     {
@@ -86,7 +86,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
 
         $factory    = new HydratorFactory($this->config);
         /* @var $proxy \Zend\Stdlib\Hydrator\HydratorInterface */
-        $proxyClass = $factory->getProxyClass();
+        $proxyClass = $factory->getHydratorClass();
         $proxy      = new $proxyClass;
 
         $this->assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', $proxy);
@@ -96,7 +96,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      * {@inheritDoc}
      *
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::getProxyClass
+     * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      *
      * NOTE: serious mocking going on in here (a class is generated on-the-fly) - careful
      */
@@ -146,7 +146,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
 
         $factory    = new HydratorFactory($this->config);
         /* @var $proxy \GeneratedHydratorTestAsset\LazyLoadingMock */
-        $proxyClass = $factory->getProxyClass();
+        $proxyClass = $factory->getHydratorClass();
         $proxy      = new $proxyClass;
 
         $this->assertInstanceOf($proxyClassName, $proxy);

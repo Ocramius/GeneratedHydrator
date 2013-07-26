@@ -44,7 +44,7 @@ use stdClass;
 class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider getProxyClasses
+     * @dataProvider getHydratorClasses
      *
      * @param object $instance
      */
@@ -94,7 +94,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getProxyClasses()
+    public function getHydratorClasses()
     {
         return array(
             array(new stdClass()),
@@ -137,7 +137,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
         $factory = new HydratorFactory($config);
-        $proxy   = $factory->getProxyClass($parentClassName);
+        $proxy   = $factory->getHydratorClass($parentClassName);
 
         return new $proxy;
     }

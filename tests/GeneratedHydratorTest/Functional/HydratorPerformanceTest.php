@@ -185,7 +185,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
             }
         }
 
-        $proxy = $factory->getProxyClass();
+        $proxy = $factory->getHydratorClass();
 
         return array(
             'hydrator'   => new $proxy,

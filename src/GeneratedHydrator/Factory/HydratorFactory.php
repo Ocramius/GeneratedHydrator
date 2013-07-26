@@ -50,7 +50,7 @@ class HydratorFactory
      *
      * @return string
      */
-    public function getProxyClass()
+    public function getHydratorClass()
     {
         $inflector      = $this->configuration->getClassNameInflector();
         $realClassName  = $inflector->getUserClassName($this->configuration->getHydratedClassName());
