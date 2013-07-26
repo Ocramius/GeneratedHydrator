@@ -20,9 +20,7 @@ namespace GeneratedHydratorTest\Functional;
 
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -173,8 +171,6 @@ class HydratorPerformanceTest extends BasePerformanceTest
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
-        $factory = new HydratorFactory($config);
-
         foreach ($reflection->getProperties() as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);
 
@@ -185,10 +181,10 @@ class HydratorPerformanceTest extends BasePerformanceTest
             }
         }
 
-        $proxy = $factory->getHydratorClass();
+        $proxyClass = $config->createFactory()->getHydratorClass();
 
         return array(
-            'hydrator'   => new $proxy,
+            'hydrator'   => new $proxyClass,
             'properties' => $properties,
         );
     }

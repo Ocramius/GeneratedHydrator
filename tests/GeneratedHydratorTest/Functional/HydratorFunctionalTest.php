@@ -21,7 +21,6 @@ namespace GeneratedHydratorTest\Functional;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -136,9 +135,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
-        $factory = new HydratorFactory($config);
-        $proxy   = $factory->getHydratorClass($parentClassName);
+        $proxyClass = $config->createFactory()->getHydratorClass();
 
-        return new $proxy;
+        return new $proxyClass;
     }
 }

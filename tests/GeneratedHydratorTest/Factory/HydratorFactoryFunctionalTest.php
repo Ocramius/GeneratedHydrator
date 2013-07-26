@@ -23,7 +23,6 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory;
 use PHPParser_NodeTraverser;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
@@ -38,11 +37,6 @@ use ReflectionClass;
  */
 class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \GeneratedHydrator\Factory\HydratorFactory
-     */
-    protected $factory;
-
     /**
      * @var \GeneratedHydrator\Configuration
      */
@@ -60,7 +54,6 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);
-        $this->factory            = new HydratorFactory($this->config);
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
         $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\\ClassWithMixedProperties');
         $generator                = new ClassBuilder();
@@ -83,7 +76,7 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
      */
     public function testWillGenerateValidProxy()
     {
-        $proxy = $this->factory->getHydratorClass();
+        $proxy = $this->config->createFactory()->getHydratorClass();
 
         $this->assertInstanceOf('Zend\\Stdlib\\Hydrator\\HydratorInterface', new $proxy);
     }
