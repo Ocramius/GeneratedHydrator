@@ -26,14 +26,14 @@ use InvalidArgumentException;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class InvalidProxyDirectoryException extends InvalidArgumentException implements ExceptionInterface
+class InvalidGeneratedClassesDirectoryException extends InvalidArgumentException implements ExceptionInterface
 {
     /**
      * @param string $directory
      *
-     * @return self
+     * @return InvalidGeneratedClassesDirectoryException
      */
-    public static function proxyDirectoryNotFound($directory)
+    public static function generatedClassesDirectoryNotFound($directory)
     {
         return new self(sprintf('Provided directory "%s" does not exist', (string) $directory));
     }

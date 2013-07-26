@@ -74,7 +74,7 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillGenerateValidProxy()
+    public function testWillGenerateValidClass()
     {
         $proxy = $this->config->createFactory()->getHydratorClass();
 

@@ -18,7 +18,7 @@
 
 namespace CodeGenerationUtils\FileLocator;
 
-use CodeGenerationUtils\Exception\InvalidProxyDirectoryException;
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 
 /**
  * {@inheritDoc}
@@ -36,14 +36,14 @@ class FileLocator implements FileLocatorInterface
     /**
      * @param string $proxiesDirectory
      *
-     * @throws \CodeGenerationUtils\Exception\InvalidProxyDirectoryException
+     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
     public function __construct($proxiesDirectory)
     {
         $this->proxiesDirectory = realpath($proxiesDirectory);
 
         if (false === $this->proxiesDirectory) {
-            throw InvalidProxyDirectoryException::proxyDirectoryNotFound($proxiesDirectory);
+            throw InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound($proxiesDirectory);
         }
     }
 

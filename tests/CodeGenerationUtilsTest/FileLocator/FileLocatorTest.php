@@ -52,7 +52,7 @@ class FileLocatorTest extends PHPUnit_Framework_TestCase
      */
     public function testRejectsNonExistingDirectory()
     {
-        $this->setExpectedException('CodeGenerationUtils\\Exception\\InvalidProxyDirectoryException');
+        $this->setExpectedException('CodeGenerationUtils\\Exception\\InvalidGeneratedClassesDirectoryException');
         new FileLocator(__DIR__ . '/non-existing');
     }
 }

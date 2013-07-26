@@ -33,7 +33,7 @@ use stdClass;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * Tests for {@see \GeneratedHydrator\ProxyGenerator\LazyLoadingValueHolderGenerator} produced objects
+ * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT

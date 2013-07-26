@@ -19,10 +19,10 @@
 namespace CodeGenerationUtilsTest\Exception;
 
 use PHPUnit_Framework_TestCase;
-use CodeGenerationUtils\Exception\InvalidProxyDirectoryException;
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 
 /**
- * Tests for {@see \CodeGenerationUtils\Exception\InvalidProxyDirectoryException}
+ * Tests for {@see \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
@@ -30,11 +30,11 @@ use CodeGenerationUtils\Exception\InvalidProxyDirectoryException;
 class InvalidProxyDirectoryExceptionTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \CodeGenerationUtils\Exception\InvalidProxyDirectoryException::proxyDirectoryNotFound
+     * @covers \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound
      */
     public function testProxyDirectoryNotFound()
     {
-        $exception = InvalidProxyDirectoryException::proxyDirectoryNotFound('foo/bar');
+        $exception = InvalidGeneratedClassesDirectoryException::generatedClassesDirectoryNotFound('foo/bar');
 
         $this->assertSame('Provided directory "foo/bar" does not exist', $exception->getMessage());
     }

@@ -44,7 +44,7 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
     public function testGeneratesValidCode($className)
     {
         $generator          = new HydratorGenerator();
-        $generatedClassName = UniqueIdentifierGenerator::getIdentifier('AbstractProxyGeneratorTest');
+        $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
         $traverser          = new PHPParser_NodeTraverser();

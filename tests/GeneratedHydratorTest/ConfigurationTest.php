@@ -145,7 +145,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      * @covers \GeneratedHydrator\Configuration::getGeneratedClassAutoloader
      * @covers \GeneratedHydrator\Configuration::setGeneratedClassAutoloader
      */
-    public function testSetGetProxyAutoloader()
+    public function testSetGetGeneratedClassAutoloader()
     {
         $this->assertInstanceOf(
             'CodeGenerationUtils\\Autoloader\\AutoloaderInterface',

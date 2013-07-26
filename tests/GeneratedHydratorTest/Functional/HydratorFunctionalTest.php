@@ -62,7 +62,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             $newData[$propertyName]     = $property->getName() . '__new__value';
         }
 
-        $proxy = $this->generateProxy($instance);
+        $proxy = $this->generateHydrator($instance);
 
         $this->assertSame($initialData, $proxy->extract($instance));
         $this->assertSame($instance, $proxy->hydrate($newData, $instance));
@@ -84,7 +84,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete('Methods have to be disabled - currently only removing them');
 
-        $proxy = $this->generateProxy(new HydratedObject());
+        $proxy = $this->generateHydrator(new HydratedObject());
 
         $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
         $proxy->doFoo();
@@ -114,7 +114,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
      *
      * @return \GeneratedHydratorTestAsset\HydratedObject|\Zend\Stdlib\Hydrator\HydratorInterface
      */
-    private function generateProxy($instance)
+    private function generateHydrator($instance)
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
