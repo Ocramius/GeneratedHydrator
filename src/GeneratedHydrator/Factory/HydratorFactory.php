@@ -33,93 +33,30 @@ use ReflectionClass;
 class HydratorFactory
 {
     /**
-     * @var string
+     * @var \GeneratedHydrator\Configuration
      */
-    protected $hydratedClassName;
-
-    /**
-     * @var bool
-     */
-    protected $autoGenerate;
-
-    /**
-     * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface
-     */
-    protected $inflector;
-
-    /**
-     * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface
-     */
-    protected $generatorStrategy;
-
-    /**
-     * @var \CodeGenerationUtils\Autoloader\AutoloaderInterface
-     */
-    protected $proxyAutoloader;
-
-    /**
-     * Cached generated class names
-     *
-     * @var string[]
-     */
-    protected $generatedClasses = array();
-
-    /**
-     * Cached proxy class names
-     *
-     * @var \Zend\Stdlib\Hydrator\HydratorInterface[]
-     */
-    private $hydrators = array();
+    private $configuration;
 
     /**
      * @param \GeneratedHydrator\Configuration $configuration
      */
     public function __construct(Configuration $configuration)
     {
-        // localizing properties to guarantee immutability
-        // @todo can simply clone?
-        $this->autoGenerate      = $configuration->doesAutoGenerateProxies();
-        $this->inflector         = $configuration->getClassNameInflector();
-        $this->generatorStrategy = $configuration->getGeneratorStrategy();
-        $this->proxyAutoloader   = $configuration->getProxyAutoloader();
-        $this->hydratedClassName = $configuration->getHydratedClassName();
-    }
-
-    public function getProxyClass()
-    {
-        $realClassName  = $this->inflector->getUserClassName($this->hydratedClassName);
-        $proxyClassName = $this->inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
-
-        if ($this->autoGenerate && ! class_exists($proxyClassName)) {
-            $generator     = new HydratorGenerator();
-            $originalClass = new ReflectionClass($realClassName);
-            $generatedAst  = $generator->generate($originalClass);
-            $traverser     = new PHPParser_NodeTraverser();
-
-            $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $proxyClassName));
-
-            $this->generatorStrategy->generate($traverser->traverse($generatedAst));
-            $this->proxyAutoloader->__invoke($proxyClassName);
-        }
-
-        return $proxyClassName;
+        $this->configuration = clone $configuration;
     }
 
     /**
-     * @param string $className
+     * Retrieves the generated proxy class
      *
-     * @return \Zend\Stdlib\Hydrator\HydratorInterface
+     * @return string
      */
-    public function createProxy($className)
+    public function getProxyClass()
     {
-        if (isset($this->hydrators[$className])) {
-            return $this->hydrators[$className];
-        }
+        $inflector      = $this->configuration->getClassNameInflector();
+        $realClassName  = $inflector->getUserClassName($this->configuration->getHydratedClassName());
+        $proxyClassName = $inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
 
-        $realClassName  = $this->inflector->getUserClassName($className);
-        $proxyClassName = $this->inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
-
-        if ($this->autoGenerate && ! class_exists($proxyClassName)) {
+        if (! class_exists($proxyClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = new HydratorGenerator();
             $originalClass = new ReflectionClass($realClassName);
             $generatedAst  = $generator->generate($originalClass);
@@ -127,10 +64,10 @@ class HydratorFactory
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $proxyClassName));
 
-            $this->generatorStrategy->generate($traverser->traverse($generatedAst));
-            $this->proxyAutoloader->__invoke($proxyClassName);
+            $this->configuration->getGeneratorStrategy()->generate($traverser->traverse($generatedAst));
+            $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);
         }
 
-        return $this->hydrators[$className] = new $proxyClassName();
+        return $proxyClassName;
     }
 }

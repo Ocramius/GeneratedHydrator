@@ -96,7 +96,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      * {@inheritDoc}
      *
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::createProxy
+     * @covers \GeneratedHydrator\Factory\HydratorFactory::getProxyClass
      *
      * NOTE: serious mocking going on in here (a class is generated on-the-fly) - careful
      */

@@ -153,7 +153,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
     {
         $parentClassName    = get_class($object);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
-        $config             = new Configuration();
+        $config             = new Configuration($parentClassName);
         $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
         $reflection         = new ReflectionClass($object);
         $properties         = array();
@@ -185,8 +185,10 @@ class HydratorPerformanceTest extends BasePerformanceTest
             }
         }
 
+        $proxy = $factory->getProxyClass();
+
         return array(
-            'hydrator'   => $factory->createProxy($parentClassName),
+            'hydrator'   => new $proxy,
             'properties' => $properties,
         );
     }
