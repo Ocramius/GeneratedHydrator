@@ -31,14 +31,14 @@ class FileLocatorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @covers \CodeGenerationUtils\FileLocator\FileLocator::__construct
-     * @covers \CodeGenerationUtils\FileLocator\FileLocator::getProxyFileName
+     * @covers \CodeGenerationUtils\FileLocator\FileLocator::getGeneratedClassFileName
      */
     public function testGetProxyFileName()
     {
         $locator = new FileLocator(__DIR__);
 
-        $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . 'FooBarBaz.php', $locator->getProxyFileName('Foo\\Bar\\Baz'));
-        $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . 'Foo_Bar_Baz.php', $locator->getProxyFileName('Foo_Bar_Baz'));
+        $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . 'FooBarBaz.php', $locator->getGeneratedClassFileName('Foo\\Bar\\Baz'));
+        $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . 'Foo_Bar_Baz.php', $locator->getGeneratedClassFileName('Foo_Bar_Baz'));
     }
 
     /**

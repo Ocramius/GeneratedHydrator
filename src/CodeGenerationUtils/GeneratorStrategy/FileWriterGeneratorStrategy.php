@@ -69,7 +69,7 @@ class FileWriterGeneratorStrategy extends BaseGeneratorStrategy
 
         $generatedCode = parent::generate($ast);
         $className     = trim($this->visitor->getNamespace() . '\\' . $this->visitor->getName(), '\\');
-        $fileName      = $this->fileLocator->getProxyFileName($className);
+        $fileName      = $this->fileLocator->getGeneratedClassFileName($className);
         $tmpFileName   = $fileName . '.' . uniqid('', true);
 
         // renaming files is necessary to avoid race conditions when the same file is written multiple times

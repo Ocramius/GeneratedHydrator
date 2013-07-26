@@ -33,5 +33,5 @@ interface FileLocatorInterface
      *
      * @return mixed
      */
-    public function getProxyFileName($className);
+    public function getGeneratedClassFileName($className);
 }

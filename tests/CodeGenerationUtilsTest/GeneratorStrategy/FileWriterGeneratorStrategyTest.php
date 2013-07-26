@@ -47,7 +47,7 @@ class FileWriterGeneratorStrategyTest extends PHPUnit_Framework_TestCase
 
         $locator
             ->expects($this->any())
-            ->method('getProxyFileName')
+            ->method('getGeneratedClassFileName')
             ->with($fqcn)
             ->will($this->returnValue($tmpFile));
 

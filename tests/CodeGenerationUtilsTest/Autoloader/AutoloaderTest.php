@@ -87,7 +87,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         $this
             ->fileLocator
             ->expects($this->once())
-            ->method('getProxyFileName')
+            ->method('getGeneratedClassFileName')
             ->will($this->returnValue(__DIR__ . '/non-existing'));
 
         $this->assertFalse($this->autoloader->__invoke($className));
@@ -122,7 +122,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         $this
             ->fileLocator
             ->expects($this->once())
-            ->method('getProxyFileName')
+            ->method('getGeneratedClassFileName')
             ->will($this->returnValue($fileName));
 
         $this->assertTrue($this->autoloader->__invoke($fqcn));

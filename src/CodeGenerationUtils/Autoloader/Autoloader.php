@@ -58,7 +58,7 @@ class Autoloader implements AutoloaderInterface
             return false;
         }
 
-        $file = $this->fileLocator->getProxyFileName($className);
+        $file = $this->fileLocator->getGeneratedClassFileName($className);
 
         if (! file_exists($file)) {
             return false;
