@@ -123,7 +123,7 @@ class Configuration
     /**
      * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $proxyAutoloader
      */
-    public function setProxyAutoloader(AutoloaderInterface $proxyAutoloader)
+    public function setGeneratedClassAutoloader(AutoloaderInterface $proxyAutoloader)
     {
         $this->proxyAutoloader = $proxyAutoloader;
     }
@@ -131,7 +131,7 @@ class Configuration
     /**
      * @return \CodeGenerationUtils\Autoloader\AutoloaderInterface
      */
-    public function getProxyAutoloader()
+    public function getGeneratedClassAutoloader()
     {
         if (null === $this->proxyAutoloader) {
             $this->proxyAutoloader = new Autoloader(

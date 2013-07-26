@@ -142,19 +142,19 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getProxyAutoloader
-     * @covers \GeneratedHydrator\Configuration::setProxyAutoloader
+     * @covers \GeneratedHydrator\Configuration::getGeneratedClassAutoloader
+     * @covers \GeneratedHydrator\Configuration::setGeneratedClassAutoloader
      */
     public function testSetGetProxyAutoloader()
     {
         $this->assertInstanceOf(
             'CodeGenerationUtils\\Autoloader\\AutoloaderInterface',
-            $this->configuration->getProxyAutoloader()
+            $this->configuration->getGeneratedClassAutoloader()
         );
 
         $autoloader = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
-        $this->configuration->setProxyAutoloader($autoloader);
-        $this->assertSame($autoloader, $this->configuration->getProxyAutoloader());
+        $this->configuration->setGeneratedClassAutoloader($autoloader);
+        $this->assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
     }
 }

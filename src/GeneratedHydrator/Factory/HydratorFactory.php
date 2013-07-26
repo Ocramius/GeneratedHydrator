@@ -65,7 +65,7 @@ class HydratorFactory
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $proxyClassName));
 
             $this->configuration->getGeneratorStrategy()->generate($traverser->traverse($generatedAst));
-            $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);
+            $this->configuration->getGeneratedClassAutoloader()->__invoke($proxyClassName);
         }
 
         return $proxyClassName;
