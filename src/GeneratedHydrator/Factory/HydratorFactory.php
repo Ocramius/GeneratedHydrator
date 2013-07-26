@@ -33,6 +33,11 @@ use ReflectionClass;
 class HydratorFactory
 {
     /**
+     * @var string
+     */
+    protected $hydratedClassName;
+
+    /**
      * @var bool
      */
     protected $autoGenerate;
@@ -72,10 +77,32 @@ class HydratorFactory
     public function __construct(Configuration $configuration)
     {
         // localizing properties to guarantee immutability
+        // @todo can simply clone?
         $this->autoGenerate      = $configuration->doesAutoGenerateProxies();
         $this->inflector         = $configuration->getClassNameInflector();
         $this->generatorStrategy = $configuration->getGeneratorStrategy();
         $this->proxyAutoloader   = $configuration->getProxyAutoloader();
+        $this->hydratedClassName = $configuration->getHydratedClassName();
+    }
+
+    public function getProxyClass()
+    {
+        $realClassName  = $this->inflector->getUserClassName($this->hydratedClassName);
+        $proxyClassName = $this->inflector->getProxyClassName($realClassName, array('factory' => get_class($this)));
+
+        if ($this->autoGenerate && ! class_exists($proxyClassName)) {
+            $generator     = new HydratorGenerator();
+            $originalClass = new ReflectionClass($realClassName);
+            $generatedAst  = $generator->generate($originalClass);
+            $traverser     = new PHPParser_NodeTraverser();
+
+            $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $proxyClassName));
+
+            $this->generatorStrategy->generate($traverser->traverse($generatedAst));
+            $this->proxyAutoloader->__invoke($proxyClassName);
+        }
+
+        return $proxyClassName;
     }
 
     /**

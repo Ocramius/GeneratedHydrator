@@ -119,7 +119,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
-        $config             = new Configuration();
+        $config             = new Configuration($parentClassName);
         $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
         $inflector

@@ -38,6 +38,11 @@ class Configuration
     const DEFAULT_PROXY_NAMESPACE = 'GeneratedHydratorGeneratedProxy';
 
     /**
+     * @var string
+     */
+    protected $hydratedClassName = true;
+
+    /**
      * @var bool
      */
     protected $autoGenerateProxies = true;
@@ -68,11 +73,35 @@ class Configuration
     protected $classNameInflector;
 
     /**
+     * @param string $hydratedClassName
+     */
+    public function __construct($hydratedClassName)
+    {
+        $this->setHydratedClassName($hydratedClassName);
+    }
+
+    /**
      * @return \GeneratedHydrator\Factory\HydratorFactory
      */
     public function createFactory()
     {
         return new HydratorFactory($this);
+    }
+
+    /**
+     * @param string $hydratedClassName
+     */
+    public function setHydratedClassName($hydratedClassName)
+    {
+        $this->hydratedClassName = (string) $hydratedClassName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHydratedClassName()
+    {
+        return $this->hydratedClassName;
     }
 
     /**

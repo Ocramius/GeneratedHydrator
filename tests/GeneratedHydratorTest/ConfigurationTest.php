@@ -36,10 +36,23 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     /**
      * {@inheritDoc}
+     *
+     * @covers \GeneratedHydrator\Configuration::__construct
      */
     public function setUp()
     {
-        $this->configuration = new Configuration();
+        $this->configuration = new Configuration('test');
+    }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::setHydratedClassName
+     * @covers \GeneratedHydrator\Configuration::getHydratedClassName
+     */
+    public function testGetSetHydratedClassName()
+    {
+        $this->assertSame('test', $this->configuration->getHydratedClassName());
+        $this->configuration->setHydratedClassName('bar');
+        $this->assertSame('bar', $this->configuration->getHydratedClassName());
     }
 
     /**

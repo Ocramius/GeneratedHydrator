@@ -45,8 +45,12 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->config    = $this->getMock('GeneratedHydrator\\Configuration');
         $this->inflector = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
+        $this->config    = $this
+            ->getMockBuilder('GeneratedHydrator\\Configuration')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this
             ->config
             ->expects($this->any())
@@ -58,12 +62,13 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      * {@inheritDoc}
      *
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::createProxy
+     * @covers \GeneratedHydrator\Factory\HydratorFactory::getProxyClass
      */
     public function testWillSkipAutoGeneration()
     {
         $className = UniqueIdentifierGenerator::getIdentifier('foo');
 
+        $this->config->expects($this->any())->method('getHydratedClassName')->will($this->returnValue($className));
         $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(false));
         $this
             ->inflector
@@ -79,12 +84,12 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will($this->returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
 
-        $factory = new HydratorFactory($this->config);
+        $factory    = new HydratorFactory($this->config);
         /* @var $proxy \Zend\Stdlib\Hydrator\HydratorInterface */
-        $proxy   = $factory->createProxy($className);
+        $proxyClass = $factory->getProxyClass();
+        $proxy      = new $proxyClass;
 
         $this->assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', $proxy);
-        $this->assertSame($proxy, $factory->createProxy($className), 'Generated proxies are cached');
     }
 
     /**
@@ -102,6 +107,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $generator      = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
         $autoloader     = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
+        $this->config->expects($this->any())->method('getHydratedClassName')->will($this->returnValue($className));
         $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(true));
         $this->config->expects($this->any())->method('getGeneratorStrategy')->will($this->returnValue($generator));
         $this->config->expects($this->any())->method('getProxyAutoloader')->will($this->returnValue($autoloader));
@@ -138,9 +144,10 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->with($className)
             ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
-        $factory = new HydratorFactory($this->config);
+        $factory    = new HydratorFactory($this->config);
         /* @var $proxy \GeneratedHydratorTestAsset\LazyLoadingMock */
-        $proxy   = $factory->createProxy($className);
+        $proxyClass = $factory->getProxyClass();
+        $proxy      = new $proxyClass;
 
         $this->assertInstanceOf($proxyClassName, $proxy);
     }
