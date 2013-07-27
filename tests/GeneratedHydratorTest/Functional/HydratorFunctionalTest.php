@@ -62,10 +62,10 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             $newData[$propertyName]     = $property->getName() . '__new__value';
         }
 
-        $proxy = $this->generateHydrator($instance);
+        $generatedClass = $this->generateHydrator($instance);
 
-        $this->assertSame($initialData, $proxy->extract($instance));
-        $this->assertSame($instance, $proxy->hydrate($newData, $instance));
+        $this->assertSame($initialData, $generatedClass->extract($instance));
+        $this->assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
         $inspectionData = array();
 
@@ -77,17 +77,17 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertSame($inspectionData, $newData);
-        $this->assertSame($inspectionData, $proxy->extract($instance));
+        $this->assertSame($inspectionData, $generatedClass->extract($instance));
     }
 
     public function testDisabledMethod()
     {
         $this->markTestIncomplete('Methods have to be disabled - currently only removing them');
 
-        $proxy = $this->generateHydrator(new HydratedObject());
+        $generatedClass = $this->generateHydrator(new HydratedObject());
 
         $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
-        $proxy->doFoo();
+        $generatedClass->doFoo();
     }
 
     /**
@@ -108,7 +108,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Generates a proxy for the given class name, and retrieves its class name
+     * Generates a hydrator for the given class name, and retrieves its class name
      *
      * @param object $instance
      *

@@ -19,7 +19,7 @@
 namespace GeneratedHydratorTestAsset;
 
 /**
- * Test class used to verify that proxy-manager respects magic getters with a byref return value
+ * Test class used to verify that the generated hydrator respects magic getters with a byref return value
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT

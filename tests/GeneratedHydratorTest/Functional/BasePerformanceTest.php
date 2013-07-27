@@ -83,12 +83,12 @@ abstract class BasePerformanceTest extends PHPUnit_Framework_TestCase
      * Display comparison between two profiles
      *
      * @param array $baseProfile
-     * @param array $proxyProfile
+     * @param array $generatedClassProfile
      */
-    protected function compareProfile(array $baseProfile, array $proxyProfile)
+    protected function compareProfile(array $baseProfile, array $generatedClassProfile)
     {
-        $timeOverhead   = ($proxyProfile['time'] / $baseProfile['time']) * 100;
-        $memoryOverhead = ($proxyProfile['memory'] / $baseProfile['memory']) * 100;
+        $timeOverhead   = ($generatedClassProfile['time'] / $baseProfile['time']) * 100;
+        $memoryOverhead = ($generatedClassProfile['memory'] / $baseProfile['memory']) * 100;
 
         echo sprintf('Comparison time / memory: %f%% / %f%%', $timeOverhead, $memoryOverhead) . "\n\n";
     }

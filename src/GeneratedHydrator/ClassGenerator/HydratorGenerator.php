@@ -28,7 +28,7 @@ use PHPParser_NodeTraverser;
 use ReflectionClass;
 
 /**
- * Generator for proxies being a hydrator - {@see \Zend\Stdlib\Hydrator\HydratorInterface}
+ * Generator for highly performing {@see \Zend\Stdlib\Hydrator\HydratorInterface}
  * for objects
  *
  * {@inheritDoc}

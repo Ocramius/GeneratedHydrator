@@ -19,7 +19,7 @@
 namespace GeneratedHydratorTestAsset;
 
 /**
- * Base test class to verify that proxies actually modify the array keys of
+ * Base test class to verify that class generation will actually modify the array keys of
  * public properties that keep an array
  *
  * @author Marco Pivetta <ocramius@gmail.com>

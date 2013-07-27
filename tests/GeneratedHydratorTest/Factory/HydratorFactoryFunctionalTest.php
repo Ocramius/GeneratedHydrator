@@ -76,8 +76,8 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
      */
     public function testWillGenerateValidClass()
     {
-        $proxy = $this->config->createFactory()->getHydratorClass();
+        $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-        $this->assertInstanceOf('Zend\\Stdlib\\Hydrator\\HydratorInterface', new $proxy);
+        $this->assertInstanceOf('Zend\\Stdlib\\Hydrator\\HydratorInterface', new $generatedClass);
     }
 }

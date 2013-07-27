@@ -70,9 +70,11 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $hydrator->hydrate($data, $instance);
         }
 
-        $proxy = $this->endCapturing('Generated hydration: ' . $iterations . ' "' . $className . '": %fms / %fKb');
+        $generatedClass = $this->endCapturing(
+            'Generated hydration: ' . $iterations . ' "' . $className . '": %fms / %fKb'
+        );
 
-        $this->compareProfile($base, $proxy);
+        $this->compareProfile($base, $generatedClass);
     }
 
     /**
@@ -102,9 +104,11 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $hydrator->extract($instance);
         }
 
-        $proxy = $this->endCapturing('Generated extraction: ' . $iterations . ' "' . $className . '": %fms / %fKb');
+        $generatedClass = $this->endCapturing(
+            'Generated extraction: ' . $iterations . ' "' . $className . '": %fms / %fKb'
+        );
 
-        $this->compareProfile($base, $proxy);
+        $this->compareProfile($base, $generatedClass);
     }
 
     /**
@@ -141,7 +145,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
     }
 
     /**
-     * Generates a proxy for the given class name, and retrieves an instance of it
+     * Generates a hydrator for the given class name, and retrieves an instance of it
      *
      * @param object $object
      *

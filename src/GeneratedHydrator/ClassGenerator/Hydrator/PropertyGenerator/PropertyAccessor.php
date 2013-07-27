@@ -24,7 +24,7 @@ use ReflectionProperty;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 
 /**
- * Property that contains a {@see \ReflectionProperty} that functions as an accessor
+ * Property node that contains a {@see \ReflectionProperty} that functions as an accessor
  * for inaccessible proxied object's properties.
  *
  * @author Marco Pivetta <ocramius@gmail.com>

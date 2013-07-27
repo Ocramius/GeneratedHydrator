@@ -147,7 +147,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
         $factory        = new HydratorFactory($this->config);
-        /* @var $proxy \GeneratedHydratorTestAsset\LazyLoadingMock */
+        /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */
         $generatedClass = $factory->getHydratorClass();
 
         $this->assertInstanceOf($generatedClassName, new $generatedClass);
