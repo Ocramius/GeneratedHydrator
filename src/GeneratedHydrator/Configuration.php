@@ -18,6 +18,7 @@
 
 namespace GeneratedHydrator;
 
+use GeneratedHydrator\Factory\HydratorFactory;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\Autoloader\Autoloader;
 use CodeGenerationUtils\FileLocator\FileLocator;
@@ -27,14 +28,19 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
 
 /**
- * Base configuration class for the proxy manager - serves as micro disposable DIC/facade
+ * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
 class Configuration
 {
-    const DEFAULT_PROXY_NAMESPACE = 'GeneratedHydratorGeneratedProxy';
+    const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
+
+    /**
+     * @var string
+     */
+    protected $hydratedClassName = true;
 
     /**
      * @var bool
@@ -44,12 +50,12 @@ class Configuration
     /**
      * @var string|null
      */
-    protected $proxiesTargetDir;
+    protected $generatedClassesTargetDir;
 
     /**
      * @var string
      */
-    protected $proxiesNamespace = self::DEFAULT_PROXY_NAMESPACE;
+    protected $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
     /**
      * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null
@@ -59,12 +65,44 @@ class Configuration
     /**
      * @var callable|null
      */
-    protected $proxyAutoloader;
+    protected $generatedClassesAutoloader;
 
     /**
      * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
      */
     protected $classNameInflector;
+
+    /**
+     * @param string $hydratedClassName
+     */
+    public function __construct($hydratedClassName)
+    {
+        $this->setHydratedClassName($hydratedClassName);
+    }
+
+    /**
+     * @return \GeneratedHydrator\Factory\HydratorFactory
+     */
+    public function createFactory()
+    {
+        return new HydratorFactory($this);
+    }
+
+    /**
+     * @param string $hydratedClassName
+     */
+    public function setHydratedClassName($hydratedClassName)
+    {
+        $this->hydratedClassName = (string) $hydratedClassName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHydratedClassName()
+    {
+        return $this->hydratedClassName;
+    }
 
     /**
      * @param bool $autoGenerateProxies
@@ -83,62 +121,62 @@ class Configuration
     }
 
     /**
-     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $proxyAutoloader
+     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $generatedClassesAutoloader
      */
-    public function setProxyAutoloader(AutoloaderInterface $proxyAutoloader)
+    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader)
     {
-        $this->proxyAutoloader = $proxyAutoloader;
+        $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
 
     /**
      * @return \CodeGenerationUtils\Autoloader\AutoloaderInterface
      */
-    public function getProxyAutoloader()
+    public function getGeneratedClassAutoloader()
     {
-        if (null === $this->proxyAutoloader) {
-            $this->proxyAutoloader = new Autoloader(
-                new FileLocator($this->getProxiesTargetDir()),
+        if (null === $this->generatedClassesAutoloader) {
+            $this->generatedClassesAutoloader = new Autoloader(
+                new FileLocator($this->getGeneratedClassesTargetDir()),
                 $this->getClassNameInflector()
             );
         }
 
-        return $this->proxyAutoloader;
+        return $this->generatedClassesAutoloader;
     }
 
     /**
-     * @param string $proxiesNamespace
+     * @param string $generatedClassesNamespace
      */
-    public function setProxiesNamespace($proxiesNamespace)
+    public function setGeneratedClassesNamespace($generatedClassesNamespace)
     {
-        $this->proxiesNamespace = $proxiesNamespace;
+        $this->generatedClassesNamespace = $generatedClassesNamespace;
     }
 
     /**
      * @return string
      */
-    public function getProxiesNamespace()
+    public function getGeneratedClassesNamespace()
     {
-        return $this->proxiesNamespace;
+        return $this->generatedClassesNamespace;
     }
 
     /**
-     * @param string $proxiesTargetDir
+     * @param string $generatedClassesTargetDir
      */
-    public function setProxiesTargetDir($proxiesTargetDir)
+    public function setGeneratedClassesTargetDir($generatedClassesTargetDir)
     {
-        $this->proxiesTargetDir = (string) $proxiesTargetDir;
+        $this->generatedClassesTargetDir = (string) $generatedClassesTargetDir;
     }
 
     /**
      * @return null|string
      */
-    public function getProxiesTargetDir()
+    public function getGeneratedClassesTargetDir()
     {
-        if (null === $this->proxiesTargetDir) {
-            $this->proxiesTargetDir = sys_get_temp_dir();
+        if (null === $this->generatedClassesTargetDir) {
+            $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
-        return $this->proxiesTargetDir;
+        return $this->generatedClassesTargetDir;
     }
 
     /**
@@ -155,7 +193,9 @@ class Configuration
     public function getGeneratorStrategy()
     {
         if (null === $this->generatorStrategy) {
-            $this->generatorStrategy = new FileWriterGeneratorStrategy(new FileLocator($this->getProxiesTargetDir()));
+            $this->generatorStrategy = new FileWriterGeneratorStrategy(
+                new FileLocator($this->getGeneratedClassesTargetDir())
+            );
         }
 
         return $this->generatorStrategy;
@@ -175,7 +215,7 @@ class Configuration
     public function getClassNameInflector()
     {
         if (null === $this->classNameInflector) {
-            $this->classNameInflector = new ClassNameInflector($this->getProxiesNamespace());
+            $this->classNameInflector = new ClassNameInflector($this->getGeneratedClassesNamespace());
         }
 
         return $this->classNameInflector;

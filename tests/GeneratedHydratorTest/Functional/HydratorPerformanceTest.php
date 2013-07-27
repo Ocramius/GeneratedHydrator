@@ -20,9 +20,7 @@ namespace GeneratedHydratorTest\Functional;
 
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -35,7 +33,7 @@ use stdClass;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * Tests for {@see \GeneratedHydrator\ProxyGenerator\LazyLoadingValueHolderGenerator} produced objects
+ * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
@@ -72,9 +70,11 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $hydrator->hydrate($data, $instance);
         }
 
-        $proxy = $this->endCapturing('Proxy hydration: ' . $iterations . ' "' . $className . '": %fms / %fKb');
+        $generatedClass = $this->endCapturing(
+            'Generated hydration: ' . $iterations . ' "' . $className . '": %fms / %fKb'
+        );
 
-        $this->compareProfile($base, $proxy);
+        $this->compareProfile($base, $generatedClass);
     }
 
     /**
@@ -104,9 +104,11 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $hydrator->extract($instance);
         }
 
-        $proxy = $this->endCapturing('Proxy extraction: ' . $iterations . ' "' . $className . '": %fms / %fKb');
+        $generatedClass = $this->endCapturing(
+            'Generated extraction: ' . $iterations . ' "' . $className . '": %fms / %fKb'
+        );
 
-        $this->compareProfile($base, $proxy);
+        $this->compareProfile($base, $generatedClass);
     }
 
     /**
@@ -132,7 +134,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
             $properties  = $definitions['properties'];
             $values      = array();
 
-            foreach ($properties as $name => $property) {
+            foreach (array_keys($properties) as $name) {
                 $values[$name] = $name;
             }
 
@@ -143,7 +145,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
     }
 
     /**
-     * Generates a proxy for the given class name, and retrieves an instance of it
+     * Generates a hydrator for the given class name, and retrieves an instance of it
      *
      * @param object $object
      *
@@ -153,7 +155,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
     {
         $parentClassName    = get_class($object);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
-        $config             = new Configuration();
+        $config             = new Configuration($parentClassName);
         $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
         $reflection         = new ReflectionClass($object);
         $properties         = array();
@@ -161,7 +163,7 @@ class HydratorPerformanceTest extends BasePerformanceTest
 
         $inflector
             ->expects($this->any())
-            ->method('getProxyClassName')
+            ->method('getGeneratedClassName')
             ->with($parentClassName)
             ->will($this->returnValue($generatedClassName));
         $inflector
@@ -173,8 +175,6 @@ class HydratorPerformanceTest extends BasePerformanceTest
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
-        $factory = new HydratorFactory($config);
-
         foreach ($reflection->getProperties() as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);
 
@@ -185,8 +185,10 @@ class HydratorPerformanceTest extends BasePerformanceTest
             }
         }
 
+        $generatedClass = $config->createFactory()->getHydratorClass();
+
         return array(
-            'hydrator'   => $factory->createProxy($parentClassName),
+            'hydrator'   => new $generatedClass,
             'properties' => $properties,
         );
     }

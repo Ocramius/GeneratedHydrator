@@ -105,7 +105,6 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
             new PHPParser_Node_Param('object'),
         );
 
-        // @todo check this...
         $body = '';
 
         foreach ($this->accessibleProperties as $accessibleProperty) {

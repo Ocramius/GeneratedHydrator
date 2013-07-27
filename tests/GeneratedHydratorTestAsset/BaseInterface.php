@@ -19,7 +19,7 @@
 namespace GeneratedHydratorTestAsset;
 
 /**
- * Base interface used to verify that the proxy generators can actually work with interfaces
+ * Base interface used to verify that the class generators can actually work with interfaces
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT

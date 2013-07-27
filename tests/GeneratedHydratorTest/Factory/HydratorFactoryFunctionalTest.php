@@ -23,7 +23,6 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory;
 use PHPParser_NodeTraverser;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
@@ -39,11 +38,6 @@ use ReflectionClass;
 class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \GeneratedHydrator\Factory\HydratorFactory
-     */
-    protected $factory;
-
-    /**
      * @var \GeneratedHydrator\Configuration
      */
     protected $config;
@@ -58,9 +52,8 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->config             = new Configuration();
-        $this->factory            = new HydratorFactory($this->config);
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
+        $this->config             = new Configuration($this->generatedClassName);
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
         $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\\ClassWithMixedProperties');
         $generator                = new ClassBuilder();
@@ -79,26 +72,12 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::createProxy
+     * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillGenerateValidProxy()
+    public function testWillGenerateValidClass()
     {
-        $this->assertInstanceOf(
-            'Zend\\Stdlib\\Hydrator\\HydratorInterface',
-            $this->factory->createProxy($this->generatedClassName)
-        );
-    }
+        $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-    /**
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
-     * @covers \GeneratedHydrator\Factory\HydratorFactory::createProxy
-     */
-    public function testWillCacheProxyInstancesProxy()
-    {
-        $this->assertSame(
-            $this->factory->createProxy($this->generatedClassName),
-            $this->factory->createProxy($this->generatedClassName),
-            'Hydrator instances are cached'
-        );
+        $this->assertInstanceOf('Zend\\Stdlib\\Hydrator\\HydratorInterface', new $generatedClass);
     }
 }
