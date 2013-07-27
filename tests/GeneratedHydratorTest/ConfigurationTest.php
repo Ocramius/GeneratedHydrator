@@ -36,10 +36,31 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
 
     /**
      * {@inheritDoc}
+     *
+     * @covers \GeneratedHydrator\Configuration::__construct
      */
     public function setUp()
     {
-        $this->configuration = new Configuration();
+        $this->configuration = new Configuration('test');
+    }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::setHydratedClassName
+     * @covers \GeneratedHydrator\Configuration::getHydratedClassName
+     */
+    public function testGetSetHydratedClassName()
+    {
+        $this->assertSame('test', $this->configuration->getHydratedClassName());
+        $this->configuration->setHydratedClassName('bar');
+        $this->assertSame('bar', $this->configuration->getHydratedClassName());
+    }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::createFactory
+     */
+    public function testCreateFactory()
+    {
+        $this->assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
     }
 
     /**
@@ -58,19 +79,19 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getProxiesNamespace
-     * @covers \GeneratedHydrator\Configuration::setProxiesNamespace
+     * @covers \GeneratedHydrator\Configuration::getGeneratedClassesNamespace
+     * @covers \GeneratedHydrator\Configuration::setGeneratedClassesNamespace
      */
     public function testGetSetProxiesNamespace()
     {
         $this->assertSame(
-            'GeneratedHydratorGeneratedProxy',
-            $this->configuration->getProxiesNamespace(),
+            'GeneratedHydratorGeneratedClass',
+            $this->configuration->getGeneratedClassesNamespace(),
             'Default setting check for BC'
         );
 
-        $this->configuration->setProxiesNamespace('foo');
-        $this->assertSame('foo', $this->configuration->getProxiesNamespace());
+        $this->configuration->setGeneratedClassesNamespace('foo');
+        $this->assertSame('foo', $this->configuration->getGeneratedClassesNamespace());
     }
 
     /**
@@ -109,31 +130,31 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getProxiesTargetDir
-     * @covers \GeneratedHydrator\Configuration::setProxiesTargetDir
+     * @covers \GeneratedHydrator\Configuration::getGeneratedClassesTargetDir
+     * @covers \GeneratedHydrator\Configuration::setGeneratedClassesTargetDir
      */
     public function testSetGetProxiesTargetDir()
     {
-        $this->assertTrue(is_dir($this->configuration->getProxiesTargetDir()));
+        $this->assertTrue(is_dir($this->configuration->getGeneratedClassesTargetDir()));
 
-        $this->configuration->setProxiesTargetDir(__DIR__);
-        $this->assertSame(__DIR__, $this->configuration->getProxiesTargetDir());
+        $this->configuration->setGeneratedClassesTargetDir(__DIR__);
+        $this->assertSame(__DIR__, $this->configuration->getGeneratedClassesTargetDir());
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getProxyAutoloader
-     * @covers \GeneratedHydrator\Configuration::setProxyAutoloader
+     * @covers \GeneratedHydrator\Configuration::getGeneratedClassAutoloader
+     * @covers \GeneratedHydrator\Configuration::setGeneratedClassAutoloader
      */
-    public function testSetGetProxyAutoloader()
+    public function testSetGetGeneratedClassAutoloader()
     {
         $this->assertInstanceOf(
             'CodeGenerationUtils\\Autoloader\\AutoloaderInterface',
-            $this->configuration->getProxyAutoloader()
+            $this->configuration->getGeneratedClassAutoloader()
         );
 
         $autoloader = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
-        $this->configuration->setProxyAutoloader($autoloader);
-        $this->assertSame($autoloader, $this->configuration->getProxyAutoloader());
+        $this->configuration->setGeneratedClassAutoloader($autoloader);
+        $this->assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
     }
 }

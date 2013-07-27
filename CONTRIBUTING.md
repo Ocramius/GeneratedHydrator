@@ -17,7 +17,7 @@ git clone git://github.com/Ocramius/GeneratedHydrator.git
 You will then need to run a composer installation:
 
 ```sh
-cd ProxyManager
+cd GeneratedHydrator
 curl -s https://getcomposer.org/installer | php
 php composer.phar update
 ```

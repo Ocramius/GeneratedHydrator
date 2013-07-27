@@ -28,7 +28,7 @@ use PHPParser_NodeTraverser;
 use ReflectionClass;
 
 /**
- * Generator for proxies being a hydrator - {@see \Zend\Stdlib\Hydrator\HydratorInterface}
+ * Generator for highly performing {@see \Zend\Stdlib\Hydrator\HydratorInterface}
  * for objects
  *
  * {@inheritDoc}
@@ -36,10 +36,15 @@ use ReflectionClass;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorGenerator implements ClassGeneratorInterface
+class HydratorGenerator
 {
     /**
-     * {@inheritDoc}
+     * Generates an AST of {@see \PHPParser_Node[]} out of a given reflection class
+     * and a map of properties to be used to
+     *
+     * @param \ReflectionClass $originalClass
+     *
+     * @return \PHPParser_Node[]
      */
     public function generate(ReflectionClass $originalClass)
     {

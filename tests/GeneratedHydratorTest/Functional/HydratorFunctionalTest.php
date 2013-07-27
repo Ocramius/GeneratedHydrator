@@ -21,7 +21,6 @@ namespace GeneratedHydratorTest\Functional;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -34,7 +33,7 @@ use ReflectionClass;
 use stdClass;
 
 /**
- * Tests for {@see \GeneratedHydrator\ProxyGenerator\HydratedObject} produced objects
+ * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
@@ -44,7 +43,7 @@ use stdClass;
 class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider getProxyClasses
+     * @dataProvider getHydratorClasses
      *
      * @param object $instance
      */
@@ -63,10 +62,10 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             $newData[$propertyName]     = $property->getName() . '__new__value';
         }
 
-        $proxy = $this->generateProxy($instance);
+        $generatedClass = $this->generateHydrator($instance);
 
-        $this->assertSame($initialData, $proxy->extract($instance));
-        $this->assertSame($instance, $proxy->hydrate($newData, $instance));
+        $this->assertSame($initialData, $generatedClass->extract($instance));
+        $this->assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
         $inspectionData = array();
 
@@ -78,23 +77,23 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertSame($inspectionData, $newData);
-        $this->assertSame($inspectionData, $proxy->extract($instance));
+        $this->assertSame($inspectionData, $generatedClass->extract($instance));
     }
 
     public function testDisabledMethod()
     {
         $this->markTestIncomplete('Methods have to be disabled - currently only removing them');
 
-        $proxy = $this->generateProxy(new HydratedObject());
+        $generatedClass = $this->generateHydrator(new HydratedObject());
 
         $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
-        $proxy->doFoo();
+        $generatedClass->doFoo();
     }
 
     /**
      * @return array
      */
-    public function getProxyClasses()
+    public function getHydratorClasses()
     {
         return array(
             array(new stdClass()),
@@ -109,22 +108,22 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Generates a proxy for the given class name, and retrieves its class name
+     * Generates a hydrator for the given class name, and retrieves its class name
      *
      * @param object $instance
      *
      * @return \GeneratedHydratorTestAsset\HydratedObject|\Zend\Stdlib\Hydrator\HydratorInterface
      */
-    private function generateProxy($instance)
+    private function generateHydrator($instance)
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
-        $config             = new Configuration();
+        $config             = new Configuration($parentClassName);
         $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
         $inflector
             ->expects($this->any())
-            ->method('getProxyClassName')
+            ->method('getGeneratedClassName')
             ->with($parentClassName)
             ->will($this->returnValue($generatedClassName));
         $inflector
@@ -136,8 +135,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());
 
-        $factory = new HydratorFactory($config);
+        $generatedClass = $config->createFactory()->getHydratorClass();
 
-        return $factory->createProxy($parentClassName);
+        return new $generatedClass;
     }
 }
