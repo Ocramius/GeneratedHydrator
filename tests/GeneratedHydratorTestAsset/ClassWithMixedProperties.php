@@ -187,6 +187,4 @@ class ClassWithMixedProperties
     {
         return $this->publicProperty2;
     }
-
-    
 }
