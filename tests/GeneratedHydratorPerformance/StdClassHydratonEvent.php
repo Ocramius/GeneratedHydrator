@@ -27,7 +27,7 @@ use stdClass;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class StdClassHydratonEvent extends AbstractHydratorPerformanceEvent
+class StdClassHydratonEvent extends AbstractHydratorPerformanceAthleticEvent
 {
     /**
      * {@inheritDoc}

@@ -39,7 +39,7 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-abstract class AbstractHydratorPerformanceEvent extends AthleticEvent
+abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
 {
     /**
      * @var \Zend\Stdlib\Hydrator\HydratorInterface
