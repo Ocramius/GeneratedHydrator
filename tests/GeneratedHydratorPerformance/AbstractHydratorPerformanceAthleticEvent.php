@@ -21,15 +21,8 @@ namespace GeneratedHydratorPerformance;
 use Athletic\AthleticEvent;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\Configuration;
-use GeneratedHydratorTestAsset\BaseClass;
-use GeneratedHydratorTestAsset\ClassWithMixedProperties;
-use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
-use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
-use GeneratedHydratorTestAsset\ClassWithPublicProperties;
-use GeneratedHydratorTestAsset\HydratedObject;
 use ReflectionClass;
 use ReflectionProperty;
-use stdClass;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
