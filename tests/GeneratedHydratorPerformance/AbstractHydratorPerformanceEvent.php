@@ -33,14 +33,13 @@ use stdClass;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
+ * Base performance test for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
+ * objects
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
- *
- * @group Performance
  */
-class HydrationPerformanceEvent extends AthleticEvent
+abstract class AbstractHydratorPerformanceEvent extends AthleticEvent
 {
     /**
      * @var \Zend\Stdlib\Hydrator\HydratorInterface
@@ -63,12 +62,18 @@ class HydrationPerformanceEvent extends AthleticEvent
     protected $hydrationData;
 
     /**
+     * Method responsible for testing the object to test against
+     *
+     * @return object
+     */
+    abstract protected function getHydratedObject();
+
+    /**
      * {@inheritDoc}
      */
     public function setUp()
     {
-        // @todo need to compare other hydrators too - data providers anybody?
-        $this->hydratedObject       = new stdClass();
+        $this->hydratedObject       = $this->getHydratedObject();
         $this->hydrator             = $this->generateHydrator($this->hydratedObject);
         $this->reflectionProperties = $this->generateReflectionProperties($this->hydratedObject);
         $this->hydrationData        = $this->generateHydrationData($this->hydratedObject);
