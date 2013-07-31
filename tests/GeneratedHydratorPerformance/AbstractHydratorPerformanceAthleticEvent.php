@@ -119,15 +119,6 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      * @iterations 20000
      * @group hydration
      */
-    public function objectPropertyHydrate()
-    {
-        //$data = $this->objectPropertyHydrator->hydrate($this->hydrationData, $this->hydratedObject);
-    }
-
-    /**
-     * @iterations 20000
-     * @group hydration
-     */
     public function classMethodsHydrate()
     {
         $data = $this->classMethodsHydrator->hydrate($this->hydrationData, $this->hydratedObject);
@@ -135,7 +126,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
 
     /**
      * @iterations 20000
-     * @group extraction
+     * @group hydration
      */
     public function reflectionPropertiesHydrate()
     {
