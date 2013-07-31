@@ -23,7 +23,11 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use ReflectionProperty;
+use Zend\Stdlib\Hydrator\ArraySerializable;
+use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Stdlib\Hydrator\ObjectProperty;
+use Zend\Stdlib\Hydrator\Reflection;
 
 /**
  * Base performance test for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
@@ -55,6 +59,21 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     protected $hydrationData;
 
     /**
+     * @var \Zend\Stdlib\Hydrator\ObjectProperty
+     */
+    protected $objectPropertyHydrator;
+
+    /**
+     * @var \Zend\Stdlib\Hydrator\ClassMethods
+     */
+    protected $classMethodsHydrator;
+
+    /**
+     * @var \Zend\Stdlib\Hydrator\Reflection
+     */
+    protected $reflectionHydrator;
+
+    /**
      * Method responsible for testing the object to test against
      *
      * @return object
@@ -66,10 +85,13 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      */
     public function setUp()
     {
-        $this->hydratedObject       = $this->getHydratedObject();
-        $this->hydrator             = $this->generateHydrator($this->hydratedObject);
-        $this->reflectionProperties = $this->generateReflectionProperties($this->hydratedObject);
-        $this->hydrationData        = $this->generateHydrationData($this->hydratedObject);
+        $this->hydratedObject            = $this->getHydratedObject();
+        $this->hydrator                  = $this->generateHydrator($this->hydratedObject);
+        $this->reflectionProperties      = $this->generateReflectionProperties($this->hydratedObject);
+        $this->hydrationData             = $this->generateHydrationData($this->hydratedObject);
+        $this->objectPropertyHydrator    = new ObjectProperty();
+        $this->classMethodsHydrator      = new ClassMethods(false);
+        $this->reflectionHydrator        = new Reflection(false);
     }
 
     /**
@@ -77,7 +99,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      * @baseline
      * @group hydration
      */
-    public function directReflectionHydration()
+    public function reflectionHydrate()
     {
         foreach ($this->reflectionProperties as $name => $property) {
             $property->setValue($this->hydratedObject, $name);
@@ -88,9 +110,36 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      * @iterations 20000
      * @group hydration
      */
-    public function generatedHydratorHydration()
+    public function generatedHydratorHydrate()
     {
         $this->hydrator->hydrate($this->hydrationData, $this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group hydration
+     */
+    public function objectPropertyHydrate()
+    {
+        //$data = $this->objectPropertyHydrator->hydrate($this->hydrationData, $this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group hydration
+     */
+    public function classMethodsHydrate()
+    {
+        $data = $this->classMethodsHydrator->hydrate($this->hydrationData, $this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group extraction
+     */
+    public function reflectionPropertiesHydrate()
+    {
+        $data = $this->reflectionHydrator->hydrate($this->hydrationData, $this->hydratedObject);
     }
 
     /**
@@ -98,7 +147,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      * @baseline
      * @group extraction
      */
-    public function directReflectionExtraction()
+    public function reflectionExtract()
     {
         $data = array();
 
@@ -111,9 +160,36 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      * @iterations 20000
      * @group extraction
      */
-    public function generatedHydratorExtraction()
+    public function generatedHydratorExtract()
     {
         $data = $this->hydrator->extract($this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group extraction
+     */
+    public function objectPropertyExtract()
+    {
+        $data = $this->objectPropertyHydrator->extract($this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group extraction
+     */
+    public function classMethodsExtract()
+    {
+        $data = $this->classMethodsHydrator->extract($this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group extraction
+     */
+    public function reflectionPropertiesExtract()
+    {
+        $data = $this->reflectionHydrator->extract($this->hydratedObject);
     }
 
     /**
