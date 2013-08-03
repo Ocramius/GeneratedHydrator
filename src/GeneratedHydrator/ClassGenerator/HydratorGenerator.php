@@ -22,7 +22,6 @@ use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassExtensionVisitor;
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
-use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
 use PHPParser_NodeTraverser;
 use ReflectionClass;
