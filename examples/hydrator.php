@@ -16,7 +16,8 @@ $hydratorClass = $config->createFactory()->getHydratorClass();
 $hydrator      = new $hydratorClass();
 $foo           = new Foo();
 
-var_dump('Extracted data:', $hydrator->extract($foo)); // array('foo' => 1, 'bar' => 2, 'baz' => 3);
+echo "Extracted data:\n";
+var_export($hydrator->extract($foo)); // array('foo' => 1, 'bar' => 2, 'baz' => 3);
 
 $hydrator->hydrate(
     array(
@@ -27,4 +28,5 @@ $hydrator->hydrate(
     $foo
 );
 
-var_dump('Object hydrated with new data:', $foo); // the object with the new properties set
+echo "Object hydrated with new data:\n";
+var_export($foo);
