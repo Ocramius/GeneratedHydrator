@@ -9,6 +9,21 @@ class Foo
     private $foo   = 1;
     protected $bar = 2;
     public $baz    = 3;
+
+    public function getFoo()
+    {
+        return $this->foo;
+    }
+
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
+    public function getBaz()
+    {
+        return $this->baz;
+    }
 }
 
 $config        = new Configuration('Foo');
@@ -16,8 +31,12 @@ $hydratorClass = $config->createFactory()->getHydratorClass();
 $hydrator      = new $hydratorClass();
 $foo           = new Foo();
 
+$data = $hydrator->extract($foo);
+
 echo "Extracted data:\n";
-var_export($hydrator->extract($foo)); // array('foo' => 1, 'bar' => 2, 'baz' => 3);
+echo "foo: " . $data['foo']; // 1
+echo "bar: " . $data['bar']; // 2
+echo "baz: " . $data['baz']; // 3
 
 $hydrator->hydrate(
     array(
@@ -29,4 +48,6 @@ $hydrator->hydrate(
 );
 
 echo "Object hydrated with new data:\n";
-var_export($foo);
+echo "foo: " . $foo->getFoo() . "\n"; // 4
+echo "bar: " . $foo->getBar() . "\n"; // 5
+echo "baz: " . $foo->getBaz() . "\n"; // 6
