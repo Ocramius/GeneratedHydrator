@@ -23,7 +23,6 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use ReflectionProperty;
-use Zend\Stdlib\Hydrator\ArraySerializable;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\ObjectProperty;
