@@ -42,10 +42,11 @@ class HydratorGenerator
      * and a map of properties to be used to
      *
      * @param \ReflectionClass $originalClass
+     * @param array $options
      *
      * @return \PHPParser_Node[]
      */
-    public function generate(ReflectionClass $originalClass, $options = array())
+    public function generate(ReflectionClass $originalClass, array $options = array())
     {
         $builder   = new ClassBuilder();
 
