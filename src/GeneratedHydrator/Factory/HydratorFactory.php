@@ -50,7 +50,7 @@ class HydratorFactory
      *
      * @return string
      */
-    public function getHydratorClass()
+    public function getHydratorClass($options = array())
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
@@ -59,7 +59,7 @@ class HydratorFactory
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = new HydratorGenerator();
             $originalClass = new ReflectionClass($realClassName);
-            $generatedAst  = $generator->generate($originalClass);
+            $generatedAst  = $generator->generate($originalClass, $options);
             $traverser     = new PHPParser_NodeTraverser();
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $hydratorClassName));
