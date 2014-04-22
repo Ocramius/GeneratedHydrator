@@ -48,9 +48,11 @@ class HydratorFactory
     /**
      * Retrieves the generated hydrator FQCN
      *
+     * @param array $options
+     *
      * @return string
      */
-    public function getHydratorClass($options = array())
+    public function getHydratorClass(array $options = array())
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
