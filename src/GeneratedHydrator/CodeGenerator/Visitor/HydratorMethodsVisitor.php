@@ -22,6 +22,12 @@ use ReflectionProperty;
 class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 {
     /**
+		 * When an array of keys is supplied for this option only properties of
+		 * supplied keys will be used
+		 */
+		const OPTION_ALLOWED_PROPERTIES = 'allowedProperties';
+
+    /**
      * @var ReflectionClass
      */
     private $reflectedClass;
@@ -38,8 +44,9 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
     /**
      * @param ReflectionClass $reflectedClass
+     * @param array $options
      */
-    public function __construct(ReflectionClass $reflectedClass, $options = array())
+    public function __construct(ReflectionClass $reflectedClass, array $options = array())
     {
         $this->reflectedClass       = $reflectedClass;
         $this->accessibleProperties = $this->reflectedClass->getProperties(
@@ -47,10 +54,10 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
             &  ~ReflectionProperty::IS_STATIC
         );
 
-        if (isset($options['allowProperties'])) {
-            foreach ($this->accessibleProperties as $k => $reflProp) {
-                if (! in_array($reflProp->getName(), $options['allowProperties'])) {
-                    unset($this->accessibleProperties[$k]);
+        if (isset($options[self::OPTION_ALLOWED_PROPERTIES])) {
+            foreach ($this->accessibleProperties as $key => $reflProp) {
+                if (! in_array($reflProp->getName(), $options[self::OPTION_ALLOWED_PROPERTIES])) {
+                    unset($this->accessibleProperties[$key]);
                 }
             }
         }
