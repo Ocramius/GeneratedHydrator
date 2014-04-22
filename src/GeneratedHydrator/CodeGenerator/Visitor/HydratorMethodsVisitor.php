@@ -39,13 +39,21 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
     /**
      * @param ReflectionClass $reflectedClass
      */
-    public function __construct(ReflectionClass $reflectedClass)
+    public function __construct(ReflectionClass $reflectedClass, $options = array())
     {
         $this->reflectedClass       = $reflectedClass;
         $this->accessibleProperties = $this->reflectedClass->getProperties(
             (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC)
             &  ~ReflectionProperty::IS_STATIC
         );
+
+        if (isset($options['allowProperties'])) {
+            foreach ($this->accessibleProperties as $k => $reflProp) {
+                if ( !in_array($reflProp->getName(), $options['allowProperties'])) {
+                    unset($this->accessibleProperties[$k]);
+								}
+            }
+				}
 
         foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
             $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
@@ -108,7 +116,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         $body = '';
 
         foreach ($this->accessibleProperties as $accessibleProperty) {
-            $body .= 'if(isset($data['.var_export($accessibleProperty->getName(), true).'])) $object->'
+            $body .= '$object->'
                 . $accessibleProperty->getName()
                 . ' = $data['
                 . var_export($accessibleProperty->getName(), true)
