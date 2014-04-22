@@ -49,7 +49,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
         if (isset($options['allowProperties'])) {
             foreach ($this->accessibleProperties as $k => $reflProp) {
-                if ( !in_array($reflProp->getName(), $options['allowProperties'])) {
+                if (! in_array($reflProp->getName(), $options['allowProperties'])) {
                     unset($this->accessibleProperties[$k]);
                 }
             }
