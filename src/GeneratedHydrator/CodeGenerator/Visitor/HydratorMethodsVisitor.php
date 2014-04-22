@@ -108,7 +108,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         $body = '';
 
         foreach ($this->accessibleProperties as $accessibleProperty) {
-            $body .= '$object->'
+            $body .= 'if(isset($data['.var_export($accessibleProperty->getName(), true).'])) $object->'
                 . $accessibleProperty->getName()
                 . ' = $data['
                 . var_export($accessibleProperty->getName(), true)
