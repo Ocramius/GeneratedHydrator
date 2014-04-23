@@ -48,7 +48,15 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass, array $options = array())
     {
-        $this->reflectedClass       = $reflectedClass;
+        $this->reflectedClass = $reflectedClass;
+        $this->makeAccessibleProperties();
+        $this->makePropertyWriters();
+    }
+
+    /**
+     * Initialize $accessibleProperties with option OPTION_ALLOWED_PROPERTIES check
+     */
+    private function makeAccessibleProperties() {
         $this->accessibleProperties = $this->reflectedClass->getProperties(
             (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC)
             &  ~ReflectionProperty::IS_STATIC
@@ -61,7 +69,12 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
                 }
             }
         }
+    }
 
+    /**
+     * Initialize $propertyWriters with option OPTION_ALLOWED_PROPERTIES check
+     */
+    private function makePropertyWriters() {
         foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
             $name = $reflProp->getName();
             if (! in_array($name, $options[self::OPTION_ALLOWED_PROPERTIES])) {
