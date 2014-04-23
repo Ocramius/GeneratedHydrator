@@ -22,10 +22,10 @@ use ReflectionProperty;
 class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 {
     /**
-		 * When an array of keys is supplied for this option only properties of
-		 * supplied keys will be used
-		 */
-		const OPTION_ALLOWED_PROPERTIES = 'allowedProperties';
+     * When an array of keys is supplied for this option only properties of
+     * supplied keys will be used
+     */
+    const OPTION_ALLOWED_PROPERTIES = 'allowedProperties';
 
     /**
      * @var ReflectionClass
