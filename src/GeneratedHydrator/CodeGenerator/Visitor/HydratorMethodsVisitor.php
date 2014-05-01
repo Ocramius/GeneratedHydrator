@@ -42,12 +42,9 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
     public function __construct(ReflectionClass $reflectedClass)
     {
         $this->reflectedClass       = $reflectedClass;
-        $this->accessibleProperties = $this->reflectedClass->getProperties(
-            (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC)
-            &  ~ReflectionProperty::IS_STATIC
-        );
+        $this->accessibleProperties = $this->getProtectedProperties($reflectedClass);
 
-        foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
+        foreach ($this->getPrivateProperties($reflectedClass) as $property) {
             $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
         }
     }
@@ -209,5 +206,39 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         }
 
         return $method;
+    }
+
+    /**
+     * Retrieve instance public/protected properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getProtectedProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
+            }
+        );
+    }
+
+    /**
+     * Retrieve instance private properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getPrivateProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return $property->isPrivate() && ! $property->isStatic();
+            }
+        );
     }
 }
