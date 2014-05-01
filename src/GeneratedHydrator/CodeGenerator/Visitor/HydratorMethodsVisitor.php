@@ -41,13 +41,28 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
-        $this->reflectedClass       = $reflectedClass;
-        $this->accessibleProperties = $this->reflectedClass->getProperties(
-            (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC)
-            &  ~ReflectionProperty::IS_STATIC
+        $this->reflectedClass = $reflectedClass;
+        $instanceProperties   = array_filter(
+            $this->reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return ! $property->isStatic();
+            }
+        );
+        $this->accessibleProperties = array_filter(
+            $instanceProperties,
+            function (ReflectionProperty $property) {
+                return $property->isProtected() || $property->isPublic();
+            }
+        );
+        /* @var $privateProperties \ReflectionProperty[] */
+        $privateProperties = array_filter(
+            $instanceProperties,
+            function (ReflectionProperty $property) {
+                return $property->isPrivate();
+            }
         );
 
-        foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
+        foreach ($privateProperties as $property) {
             $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
         }
     }
