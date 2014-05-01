@@ -42,10 +42,11 @@ class HydratorGenerator
      * and a map of properties to be used to
      *
      * @param \ReflectionClass $originalClass
+     * @param array $options
      *
      * @return \PHPParser_Node[]
      */
-    public function generate(ReflectionClass $originalClass)
+    public function generate(ReflectionClass $originalClass, array $options = array())
     {
         $builder   = new ClassBuilder();
 
@@ -67,7 +68,7 @@ class HydratorGenerator
         // step 2: implement new methods and interfaces, extend original class
         $implementor = new PHPParser_NodeTraverser();
 
-        $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
+        $implementor->addVisitor(new HydratorMethodsVisitor($originalClass, $options));
         $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
         $implementor->addVisitor(
             new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Stdlib\\Hydrator\\HydratorInterface'))

@@ -22,6 +22,12 @@ use ReflectionProperty;
 class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 {
     /**
+     * When an array of keys is supplied for this option only properties of
+     * supplied keys will be used
+     */
+    const OPTION_ALLOWED_PROPERTIES = 'allowedProperties';
+
+    /**
      * @var ReflectionClass
      */
     private $reflectedClass;
@@ -38,17 +44,49 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
     /**
      * @param ReflectionClass $reflectedClass
+     * @param array $options
      */
-    public function __construct(ReflectionClass $reflectedClass)
+    public function __construct(ReflectionClass $reflectedClass, array $options = array())
     {
         $this->reflectedClass       = $reflectedClass;
+        $this->makeAccessibleProperties();
+        $this->makePropertyWriters();
+    }
+
+    /**
+     * Initialize $accessibleProperties with option OPTION_ALLOWED_PROPERTIES check
+     */
+    private function makeAccessibleProperties()
+    {
         $this->accessibleProperties = $this->reflectedClass->getProperties(
             (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC)
             &  ~ReflectionProperty::IS_STATIC
         );
 
+        if (isset($options[self::OPTION_ALLOWED_PROPERTIES])) {
+            foreach ($this->accessibleProperties as $key => $reflProp) {
+                if (! in_array($reflProp->getName(), $options[self::OPTION_ALLOWED_PROPERTIES])) {
+                    unset($this->accessibleProperties[$key]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Initialize $propertyWriters with option OPTION_ALLOWED_PROPERTIES check
+     */
+    private function makePropertyWriters()
+    {
         foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
-            $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
+            $name = $reflProp->getName();
+            
+            if (isset($options[self::OPTION_ALLOWED_PROPERTIES]) {
+                if (! in_array($name, $options[self::OPTION_ALLOWED_PROPERTIES])) {
+                    $this->propertyWriters[$name] = new PropertyAccessor($property, 'Writer');
+                }
+            } else {
+                $this->propertyWriters[$name] = new PropertyAccessor($property, 'Writer');
+            }
         }
     }
 
