@@ -56,6 +56,10 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $newData     = array();
 
         foreach ($properties as $property) {
+            if ($property->isStatic()) {
+                continue;
+            }
+
             $propertyName = $property->getName();
 
             $property->setAccessible(true);
@@ -71,6 +75,10 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $inspectionData = array();
 
         foreach ($properties as $property) {
+            if ($property->isStatic()) {
+                continue;
+            }
+
             $propertyName = $property->getName();
 
             $property->setAccessible(true);
