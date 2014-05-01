@@ -111,7 +111,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
                     if ($assignment instanceof \PHPParser_Node_Expr_Assign) {
                         $var = $assignment->var;
 
-                        if  ($var instanceof \PHPParser_Node_Expr_PropertyFetch
+                        if ($var instanceof \PHPParser_Node_Expr_PropertyFetch
                             && preg_match('/(.*)Writer[a-zA-Z0-9]+/', $assignment->var->name, $matches)
                         ) {
                             if (! isset($lookupProperties[$matches[1]])) {
@@ -153,7 +153,6 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
             . 'protected static $baz; public static $tab; private $taz; }';
 
         eval($staticClassCode);
-
 
         return [
             [$className, $parser->parse('<?php ' . $classCode)[0], ['bar', 'baz', 'tab', 'tar', 'taw', 'tam']],
