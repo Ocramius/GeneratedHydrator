@@ -37,6 +37,13 @@
             "GeneratedHydrator\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-0": {
+            "GeneratedHydratorPerformance\\": "tests",
+            "GeneratedHydratorTest\\":        "tests",
+            "GeneratedHydratorTestAsset\\":   "tests"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"

@@ -13,7 +13,7 @@ before_script:
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/logs/clover.xml --exclude-group Functional
   - ./vendor/bin/phpunit --group=Functional
-  - php -n ./vendor/bin/athletic -p ./tests/GeneratedHydratorPerformance/ -b ./tests/Bootstrap.php -f GroupedFormatter
+  - php -n ./vendor/bin/athletic -p ./tests/GeneratedHydratorPerformance/ -f GroupedFormatter
   - ./vendor/bin/phpcs --standard=PSR2 ./src/ ./tests/
 
 after_script:
