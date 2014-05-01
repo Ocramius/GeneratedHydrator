@@ -41,28 +41,10 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
-        $this->reflectedClass = $reflectedClass;
-        $instanceProperties   = array_filter(
-            $this->reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
-                return ! $property->isStatic();
-            }
-        );
-        $this->accessibleProperties = array_filter(
-            $instanceProperties,
-            function (ReflectionProperty $property) {
-                return $property->isProtected() || $property->isPublic();
-            }
-        );
-        /* @var $privateProperties \ReflectionProperty[] */
-        $privateProperties = array_filter(
-            $instanceProperties,
-            function (ReflectionProperty $property) {
-                return $property->isPrivate();
-            }
-        );
+        $this->reflectedClass       = $reflectedClass;
+        $this->accessibleProperties = $this->getProtectedProperties($reflectedClass);
 
-        foreach ($privateProperties as $property) {
+        foreach ($this->getPrivateProperties($reflectedClass) as $property) {
             $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
         }
     }
@@ -224,5 +206,39 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         }
 
         return $method;
+    }
+
+    /**
+     * Retrieve instance public/protected properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getProtectedProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
+            }
+        );
+    }
+
+    /**
+     * Retrieve instance private properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getPrivateProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return $property->isPrivate() && ! $property->isStatic();
+            }
+        );
     }
 }
