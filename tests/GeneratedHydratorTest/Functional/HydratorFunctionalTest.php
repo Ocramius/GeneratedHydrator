@@ -26,6 +26,7 @@ use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
+use GeneratedHydratorTestAsset\ClassWithStaticProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
 use PHPUnit_Framework_TestCase;
@@ -104,6 +105,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             array(new ClassWithProtectedProperties()),
             array(new ClassWithPrivateProperties()),
             array(new ClassWithMixedProperties()),
+            array(new ClassWithStaticProperties()),
         );
     }
 
