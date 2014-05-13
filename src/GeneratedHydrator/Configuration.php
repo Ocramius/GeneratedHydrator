@@ -21,6 +21,8 @@ declare(strict_types=1);
 namespace GeneratedHydrator;
 
 use GeneratedHydrator\Factory\HydratorFactory;
+use GeneratedHydrator\ClassGenerator\HydratorGeneratorFactory;
+use GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\Autoloader\Autoloader;
 use CodeGenerationUtils\FileLocator\FileLocator;
@@ -73,6 +75,11 @@ class Configuration
      * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
      */
     protected $classNameInflector;
+
+    /**
+     * @var \GeneratedHydrator\ClassGenerator\Hydrator\HydratorGeneratorFactoryInterface|null
+     */
+    protected $hydratorGeneratorFactory;
 
     /**
      * @param string $hydratedClassName
@@ -225,5 +232,25 @@ class Configuration
         }
 
         return $this->classNameInflector;
+    }
+
+    /**
+     * @param \GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface $hydratorGeneratorFactory
+     */
+    public function setHydratorGeneratorFactory(HydratorGeneratorFactoryInterface $hydratorGeneratorFactory)
+    {
+        $this->hydratorGeneratorFactory = $hydratorGeneratorFactory;
+    }
+
+    /**
+     * @return \GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface
+     */
+    public function getHydratorGeneratorFactory()
+    {
+        if (null === $this->hydratorGeneratorFactory) {
+            $this->hydratorGeneratorFactory = new HydratorGeneratorFactory();
+        }
+
+        return $this->hydratorGeneratorFactory;
     }
 }

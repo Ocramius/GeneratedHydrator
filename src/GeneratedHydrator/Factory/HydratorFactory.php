@@ -61,10 +61,11 @@ class HydratorFactory
         $hydratorClassName = $inflector->getGeneratedClassName($realClassName, array('factory' => get_class($this)));
 
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
-            $generator     = new HydratorGenerator();
-            $originalClass = new ReflectionClass($realClassName);
-            $generatedAst  = $generator->generate($originalClass);
-            $traverser     = new NodeTraverser();
+            $generatorFactory = $this->configuration->getHydratorGeneratorFactory();
+            $generator        = $generatorFactory->createHydratorGenerator();
+            $originalClass    = new ReflectionClass($realClassName);
+            $generatedAst     = $generator->generate($originalClass);
+            $traverser        = new NodeTraverser();
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $hydratorClassName));
 
