@@ -35,7 +35,7 @@ use ReflectionClass;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorGenerator
+class HydratorGenerator implements HydratorGeneratorInterface
 {
     /**
      * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
