@@ -44,24 +44,20 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
     /**
      * @param ReflectionClass $reflectedClass
-     * @param array $options
      */
     public function __construct(ReflectionClass $reflectedClass, array $options = array())
     {
         $this->reflectedClass       = $reflectedClass;
-        $this->makeAccessibleProperties();
-        $this->makePropertyWriters();
+        $this->makeAccessibleProperties($options);
+        $this->makePropertyWriters($options);
     }
 
     /**
      * Initialize $accessibleProperties with option OPTION_ALLOWED_PROPERTIES check
      */
-    private function makeAccessibleProperties()
+    private function makeAccessibleProperties($options)
     {
-        $this->accessibleProperties = $this->reflectedClass->getProperties(
-            (ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PUBLIC)
-            &  ~ReflectionProperty::IS_STATIC
-        );
+        $this->accessibleProperties = $this->getProtectedProperties($this->reflectedClass);
 
         if (isset($options[self::OPTION_ALLOWED_PROPERTIES])) {
             foreach ($this->accessibleProperties as $key => $reflProp) {
@@ -75,13 +71,13 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
     /**
      * Initialize $propertyWriters with option OPTION_ALLOWED_PROPERTIES check
      */
-    private function makePropertyWriters()
+    private function makePropertyWriters($options)
     {
-        foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
-            $name = $reflProp->getName();
-            
+        foreach ($this->getPrivateProperties($this->reflectedClass) as $property) {
+            $name = $property->getName();
+
             if (isset($options[self::OPTION_ALLOWED_PROPERTIES])) {
-                if (! in_array($name, $options[self::OPTION_ALLOWED_PROPERTIES])) {
+                if (in_array($name, $options[self::OPTION_ALLOWED_PROPERTIES])) {
                     $this->propertyWriters[$name] = new PropertyAccessor($property, 'Writer');
                 }
             } else {
@@ -247,5 +243,39 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         }
 
         return $method;
+    }
+
+    /**
+     * Retrieve instance public/protected properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getProtectedProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
+            }
+        );
+    }
+
+    /**
+     * Retrieve instance private properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getPrivateProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return $property->isPrivate() && ! $property->isStatic();
+            }
+        );
     }
 }
