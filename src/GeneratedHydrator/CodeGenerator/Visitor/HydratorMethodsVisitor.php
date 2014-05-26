@@ -80,7 +80,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         foreach ($reflectedClass->getProperties(ReflectionProperty::IS_PRIVATE) as $property) {
             $name = $reflProp->getName();
             
-            if (isset($options[self::OPTION_ALLOWED_PROPERTIES]) {
+            if (isset($options[self::OPTION_ALLOWED_PROPERTIES])) {
                 if (! in_array($name, $options[self::OPTION_ALLOWED_PROPERTIES])) {
                     $this->propertyWriters[$name] = new PropertyAccessor($property, 'Writer');
                 }
