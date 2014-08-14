@@ -64,30 +64,40 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillSkipAutoGeneration()
+    public function testWillSkipAutoGenerationButStillAutoloadAnExistingGeneratedHydrator()
     {
         $className = UniqueIdentifierGenerator::getIdentifier('foo');
+        $hydratorClassName = 'GeneratedHydratorTestAsset\\EmptyClass';
 
+        $autoloader = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
+        $autoloader
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($hydratorClassName);
         $this->config->expects($this->any())->method('getHydratedClassName')->will($this->returnValue($className));
         $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(false));
+        $this
+            ->config
+            ->expects($this->any())
+            ->method('getGeneratedClassAutoloader')
+            ->will($this->returnValue($autoloader));
         $this
             ->inflector
             ->expects($this->any())
             ->method('getUserClassName')
             ->with($className)
             ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
-
         $this
             ->inflector
             ->expects($this->once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
-            ->will($this->returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
+            ->will($this->returnValue($hydratorClassName));
 
         $factory        = new HydratorFactory($this->config);
         $generatedClass = $factory->getHydratorClass();
 
-        $this->assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', new $generatedClass);
+        $this->assertInstanceOf($hydratorClassName, new $generatedClass);
     }
 
     /**
