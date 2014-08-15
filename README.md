@@ -182,7 +182,8 @@ When complete, all of the hydrators you need will be available in `/path/to/targ
 
 ### Making the autoloader aware of them
 
-Using your pre-generated hydrators is as simple as adding the generation target directory to your `composer.json`.
+Using your pre-generated hydrators is as simple as adding the generation target
+directory to your `composer.json`:
 
 ```json
 {
