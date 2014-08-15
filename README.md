@@ -176,8 +176,9 @@ foreach ($classes as $class) {
 }
 ```
 
-Just add all the classes for which you need hydrators to the `$classes` array, and have your deployment process run
-this script. When complete, all of the hydrators you need will be available in `/path/to/target-dir`.
+Just add all the classes for which you need hydrators to the `$classes` array,
+and have your deployment process run this script.
+When complete, all of the hydrators you need will be available in `/path/to/target-dir`.
 
 ### Making the autoloader aware of them
 
