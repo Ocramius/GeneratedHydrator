@@ -164,12 +164,9 @@ There is no built-in way to bulk-generate all required hydrators, so you will ne
 Here is a simple snippet you can use to accomplish this:
 
 ```php
-<?php
+require '/path/to/vendor/autoload.php'; // composer autoloader
 
-// Composer's autoloader
-require '/path/to/vendor/autoload.php';
-
-// Array of fully-qualified class names for which your application requires hydrators to be generated.
+// classes for which we want to pre-generate the hydrators
 $classes = [
     \My\Namespace\ClassOne::class,
     \My\Namespace\ClassTwo::class,
