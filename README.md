@@ -187,7 +187,7 @@ Just add all the classes for which you need hydrators to the `$classes` array,
 and have your deployment process run this script.
 When complete, all of the hydrators you need will be available in `/path/to/target-dir`.
 
-### Making the autoloader aware of them
+### Making the autoloader aware of your hydrators
 
 Using your pre-generated hydrators is as simple as adding the generation target
 directory to your `composer.json`:
@@ -202,10 +202,10 @@ directory to your `composer.json`:
 }
 ```
 
-After generating your hydrators, have your deployment script run `composer dump-autoload` to regenerate the
-`/path/to/vendor/composer/autoload_classmap.php` file. Now, the next time your application tries to get an
-instance of a generated hydrator, the `HydratorFactory` will see that the class already exists and will use
-it instead of generating a new one.
+After generating your hydrators, have your deployment script run `composer dump-autoload`
+to regenerate your autoloader.
+From now on, `GeneratedHydrator` will skip code generation and I/O if a generated class already
+exists.
 
 ## Contributing
 
