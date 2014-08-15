@@ -144,6 +144,65 @@ class Baz extends Foo
 
 This will be solved in milestone [1.1.0](https://github.com/Ocramius/GeneratedHydrator/issues?milestone=3)
 
+## Tuning for Production
+
+By default, GeneratedHydrator will generate hydrators on every new request. While this is relatively fast, you can
+achieve even better performance by pre-generating your hydrators and telling your application to use them instead of
+generating new ones. Avoiding regeneration involves (a) pre-generating your hydrators, and (b) ensuring that your
+autoloader is aware of them. The instructions that follow assume you are using Composer.
+
+### Pre-generating your hydrators
+
+There is no built-in way to bulk-generate all required hydrators, so you will need to do so on your own. Here is a
+simple snippet you can use to accomplish this:
+
+```php
+<?php
+
+// Composer's autoloader
+require '/path/to/vendor/autoload.php';
+
+// Array of fully-qualified class names for which your application requires hydrators to be generated.
+$classes = [
+    'My\Namespace\ClassOne',
+    'My\Namespace\ClassTwo',
+    'My\Namespace\ClassThree'
+];
+
+foreach ($classes as $class) {
+    $config = new \GeneratedHydrator\Configuration($class);
+    $config->setGeneratedClassesTargetDir('/path/to/target-dir');
+    $config->createFactory()->getHydratorClass();
+}
+```
+
+Just add all the classes for which you need hydrators to the `$classes` array, and have your deployment process run
+this script. When complete, all of the hydrators you need will be available in `/path/to/target-dir`.
+
+### Making the autoloader aware of them
+
+Using your pre-generated hydrators is as simple as adding the generation target directory to your `composer.json`.
+
+```json
+// composer.json
+{
+    ...
+
+    "autoload": {
+        "classmap": [
+            "/path/to/target-dir"
+        ]
+    }
+
+    ...
+}
+```
+
+After generating your hydrators, have your deployment script run `composer dump-autoload` to regenerate the
+`/path/to/vendor/composer/autoload_classmap.php` file. Now, the next time your application tries to get an
+instance of a generated hydrator, the `HydratorFactory` will see that the class already exists and will use
+it instead of generating a new one.
+
 ## Contributing
 
 Please read the [CONTRIBUTING.md](https://github.com/Ocramius/GeneratedHydrator/blob/master/CONTRIBUTING.md) contents
