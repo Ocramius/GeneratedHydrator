@@ -207,6 +207,21 @@ to regenerate your autoloader.
 From now on, `GeneratedHydrator` will skip code generation and I/O if a generated class already
 exists.
 
+### Fallback autoloader
+
+Alternatively, `GeneratedHydrator` comes with a built-in autoloader that you can register
+on your own. This simplifies deployment, but is a bit slower:
+
+```php
+$config = new \GeneratedHydrator\Configuration(\My\Namespace\ClassOne::class);
+
+spl_autoload_register($config->getGeneratedClassAutoloader());
+
+// now simply use your hydrator, and if possible, code generation will be skipped:
+$hydratorName = $config->createFactory()->getHydratorClass();
+$hydrator     = new $hydratorName();
+```
+
 ## Contributing
 
 Please read the [CONTRIBUTING.md](https://github.com/Ocramius/GeneratedHydrator/blob/master/CONTRIBUTING.md) contents
