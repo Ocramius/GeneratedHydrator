@@ -164,9 +164,9 @@ require '/path/to/vendor/autoload.php';
 
 // Array of fully-qualified class names for which your application requires hydrators to be generated.
 $classes = [
-    'My\Namespace\ClassOne',
-    'My\Namespace\ClassTwo',
-    'My\Namespace\ClassThree'
+    \My\Namespace\ClassOne::class,
+    \My\Namespace\ClassTwo::class,
+    \My\Namespace\ClassThree::class,
 ];
 
 foreach ($classes as $class) {
