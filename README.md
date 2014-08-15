@@ -175,6 +175,7 @@ $classes = [
 
 foreach ($classes as $class) {
     $config = new \GeneratedHydrator\Configuration($class);
+
     $config->setGeneratedClassesTargetDir('/path/to/target-dir');
     $config->createFactory()->getHydratorClass();
 }
