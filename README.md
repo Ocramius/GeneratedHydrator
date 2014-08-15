@@ -146,15 +146,22 @@ This will be solved in milestone [1.1.0](https://github.com/Ocramius/GeneratedHy
 
 ## Tuning for Production
 
-By default, GeneratedHydrator will generate hydrators on every new request. While this is relatively fast, you can
-achieve even better performance by pre-generating your hydrators and telling your application to use them instead of
-generating new ones. Avoiding regeneration involves (a) pre-generating your hydrators, and (b) ensuring that your
-autoloader is aware of them. The instructions that follow assume you are using Composer.
+By default, GeneratedHydrator will generate hydrators on every new request.
+While this is relatively fast, it will cause I/O operations, and you can
+achieve even better performance by pre-generating your hydrators and telling
+your application to autoload them instead of generating new ones at each run.
+
+Avoiding regeneration involves:
+
+ 1. pre-generating your hydrators
+ 2. ensuring that your autoloader is aware of them
+
+The instructions that follow assume you are using Composer.
 
 ### Pre-generating your hydrators
 
-There is no built-in way to bulk-generate all required hydrators, so you will need to do so on your own. Here is a
-simple snippet you can use to accomplish this:
+There is no built-in way to bulk-generate all required hydrators, so you will need to do so on your own.
+Here is a simple snippet you can use to accomplish this:
 
 ```php
 <?php
