@@ -160,7 +160,9 @@ The instructions that follow assume you are using Composer.
 
 ### Pre-generating your hydrators
 
-There is no built-in way to bulk-generate all required hydrators, so you will need to do so on your own.
+There is no built-in way to bulk-generate all required hydrators, so you will need
+to do so on your own.
+
 Here is a simple snippet you can use to accomplish this:
 
 ```php
