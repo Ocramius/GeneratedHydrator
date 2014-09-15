@@ -50,9 +50,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param PhpParser\Node $node
+     * @param Node $node
      *
-     * @return null|PhpParser\Node\Stmt\Class_|void
+     * @return null|Class_|void
      */
     public function leaveNode(Node $node)
     {
@@ -68,7 +68,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param PhpParser\Node\Stmt\ClassMethod $method
+     * @param ClassMethod $method
      */
     private function replaceConstructor(ClassMethod $method)
     {
@@ -93,7 +93,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param PhpParser\Node\Stmt\ClassMethod $method
+     * @param ClassMethod $method
      */
     private function replaceHydrate(ClassMethod $method)
     {
@@ -128,7 +128,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param PhpParser\Node\Stmt\ClassMethod $method
+     * @param ClassMethod $method
      */
     private function replaceExtract(ClassMethod $method)
     {
@@ -185,10 +185,10 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     /**
      * Finds or creates a class method (and eventually attaches it to the class itself)
      *
-     * @param PhpParser\Node\Stmt\Class_ $class
+     * @param Class_ $class
      * @param string                    $name  name of the method
      *
-     * @return PhpParser\Node\Stmt\ClassMethod
+     * @return ClassMethod
      */
     private function findOrCreateMethod(Class_ $class, $name)
     {
