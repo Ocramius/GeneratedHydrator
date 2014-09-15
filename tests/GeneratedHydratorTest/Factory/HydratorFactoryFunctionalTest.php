@@ -23,7 +23,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
-use PHPParser_NodeTraverser;
+use PhpParser\NodeTraverser;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
@@ -57,7 +57,7 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
         $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\\ClassWithMixedProperties');
         $generator                = new ClassBuilder();
-        $traverser                = new PHPParser_NodeTraverser();
+        $traverser                = new NodeTraverser();
         $renamer                  = new ClassRenamerVisitor($reflection, $this->generatedClassName);
 
         $traverser->addVisitor($renamer);

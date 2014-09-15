@@ -23,7 +23,7 @@ use CodeGenerationUtils\Visitor\ClassExtensionVisitor;
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
-use PHPParser_NodeTraverser;
+use PhpParser\NodeTraverser;
 use ReflectionClass;
 
 /**
@@ -38,12 +38,12 @@ use ReflectionClass;
 class HydratorGenerator
 {
     /**
-     * Generates an AST of {@see \PHPParser_Node[]} out of a given reflection class
+     * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
      * and a map of properties to be used to
      *
      * @param \ReflectionClass $originalClass
      *
-     * @return \PHPParser_Node[]
+     * @return \PhpParser\Node[]
      */
     public function generate(ReflectionClass $originalClass)
     {
@@ -52,7 +52,7 @@ class HydratorGenerator
         $ast = $builder->fromReflection($originalClass);
 
         // step 1: remove methods that are not used
-        $cleaner = new PHPParser_NodeTraverser();
+        $cleaner = new NodeTraverser();
 
         $cleaner->addVisitor(
             new MethodDisablerVisitor(
@@ -65,7 +65,7 @@ class HydratorGenerator
         $ast = $cleaner->traverse($ast);
 
         // step 2: implement new methods and interfaces, extend original class
-        $implementor = new PHPParser_NodeTraverser();
+        $implementor = new NodeTraverser();
 
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
         $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
