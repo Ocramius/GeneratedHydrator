@@ -18,8 +18,9 @@
 
 namespace GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator;
 
-use PHPParser_Node_Stmt_Class;
-use PHPParser_Node_Stmt_Property;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Property;
+use PhpParser\Node\Stmt\PropertyProperty;
 use ReflectionProperty;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 
@@ -30,7 +31,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class PropertyAccessor extends PHPParser_Node_Stmt_Property
+class PropertyAccessor extends Property
 {
     /**
      * @var \ReflectionProperty
@@ -48,8 +49,8 @@ class PropertyAccessor extends PHPParser_Node_Stmt_Property
         $name                   = UniqueIdentifierGenerator::getIdentifier($originalName . $nameSuffix);
 
         parent::__construct(
-            PHPParser_Node_Stmt_Class::MODIFIER_PRIVATE,
-            array(new \PHPParser_Node_Stmt_PropertyProperty($name))
+            Class_::MODIFIER_PRIVATE,
+            array(new PropertyProperty($name))
         );
     }
 

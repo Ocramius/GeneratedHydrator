@@ -22,8 +22,8 @@
     "require": {
         "php":                           "~5.4",
         "zendframework/zend-stdlib":     "2.*",
-        "nikic/php-parser":              "0.9.*",
-        "ocramius/code-generator-utils": "0.2.*"
+        "nikic/php-parser":              "1.0.*",
+        "ocramius/code-generator-utils": "0.3.*"
     },
     "require-dev": {
         "phpunit/phpunit":           "~4.0",

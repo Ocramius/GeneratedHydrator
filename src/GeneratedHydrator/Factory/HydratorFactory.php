@@ -21,7 +21,7 @@ namespace GeneratedHydrator\Factory;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use PHPParser_NodeTraverser;
+use PhpParser\NodeTraverser;
 use ReflectionClass;
 
 /**
@@ -60,7 +60,7 @@ class HydratorFactory
             $generator     = new HydratorGenerator();
             $originalClass = new ReflectionClass($realClassName);
             $generatedAst  = $generator->generate($originalClass);
-            $traverser     = new PHPParser_NodeTraverser();
+            $traverser     = new NodeTraverser();
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $hydratorClassName));
 

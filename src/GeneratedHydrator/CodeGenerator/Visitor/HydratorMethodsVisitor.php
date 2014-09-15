@@ -3,13 +3,13 @@
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
-use PHPParser_Lexer;
-use PHPParser_Node;
-use PHPParser_Node_Param;
-use PHPParser_Node_Stmt_Class;
-use PHPParser_Node_Stmt_ClassMethod;
-use PHPParser_NodeVisitorAbstract;
-use PHPParser_Parser;
+use PhpParser\Lexer;
+use PhpParser\Node;
+use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\NodeVisitorAbstract;
+use PhpParser\Parser;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -19,7 +19,7 @@ use ReflectionProperty;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
+class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
     /**
      * @var ReflectionClass
@@ -50,13 +50,13 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
     }
 
     /**
-     * @param PHPParser_Node $node
+     * @param PhpParser\Node $node
      *
-     * @return null|PHPParser_Node_Stmt_Class|void
+     * @return null|PhpParser\Node\Stmt\Class_|void
      */
-    public function leaveNode(PHPParser_Node $node)
+    public function leaveNode(Node $node)
     {
-        if (! $node instanceof PHPParser_Node_Stmt_Class) {
+        if (! $node instanceof Class_) {
             return null;
         }
 
@@ -68,9 +68,9 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
     }
 
     /**
-     * @param PHPParser_Node_Stmt_ClassMethod $method
+     * @param PhpParser\Node\Stmt\ClassMethod $method
      */
-    private function replaceConstructor(PHPParser_Node_Stmt_ClassMethod $method)
+    private function replaceConstructor(ClassMethod $method)
     {
         $method->params = array();
 
@@ -87,19 +87,19 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
                 . "}, null, " . var_export($className, true) . ");";
         }
 
-        $parser = new PHPParser_Parser(new PHPParser_Lexer());
+        $parser = new Parser(new Lexer());
 
         $method->stmts = $parser->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**
-     * @param PHPParser_Node_Stmt_ClassMethod $method
+     * @param PhpParser\Node\Stmt\ClassMethod $method
      */
-    private function replaceHydrate(PHPParser_Node_Stmt_ClassMethod $method)
+    private function replaceHydrate(ClassMethod $method)
     {
         $method->params = array(
-            new PHPParser_Node_Param('data', null, 'array'),
-            new PHPParser_Node_Param('object'),
+            new Param('data', null, 'array'),
+            new Param('object'),
         );
 
         $body = '';
@@ -122,19 +122,19 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
 
         $body .= "\nreturn \$object;";
 
-        $parser = new PHPParser_Parser(new PHPParser_Lexer());
+        $parser = new Parser(new Lexer());
 
         $method->stmts = $parser->parse('<?php ' . $body);
     }
 
     /**
-     * @param PHPParser_Node_Stmt_ClassMethod $method
+     * @param PhpParser\Node\Stmt\ClassMethod $method
      */
-    private function replaceExtract(PHPParser_Node_Stmt_ClassMethod $method)
+    private function replaceExtract(ClassMethod $method)
     {
-        $parser = new PHPParser_Parser(new PHPParser_Lexer());
+        $parser = new Parser(new Lexer());
 
-        $method->params = array(new PHPParser_Node_Param('object'));
+        $method->params = array(new Param('object'));
 
         if (empty($this->accessibleProperties) && empty($this->propertyWriters)) {
             // no properties to hydrate
@@ -185,16 +185,16 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
     /**
      * Finds or creates a class method (and eventually attaches it to the class itself)
      *
-     * @param PHPParser_Node_Stmt_Class $class
+     * @param PhpParser\Node\Stmt\Class_ $class
      * @param string                    $name  name of the method
      *
-     * @return PHPParser_Node_Stmt_ClassMethod
+     * @return PhpParser\Node\Stmt\ClassMethod
      */
-    private function findOrCreateMethod(PHPParser_Node_Stmt_Class $class, $name)
+    private function findOrCreateMethod(Class_ $class, $name)
     {
         $foundMethods = array_filter(
             $class->getMethods(),
-            function (PHPParser_Node_Stmt_ClassMethod $method) use ($name) {
+            function (ClassMethod $method) use ($name) {
                 return $name === $method->name;
             }
         );
@@ -202,7 +202,7 @@ class HydratorMethodsVisitor extends PHPParser_NodeVisitorAbstract
         $method = reset($foundMethods);
 
         if (!$method) {
-            $class->stmts[] = $method = new PHPParser_Node_Stmt_ClassMethod($name);
+            $class->stmts[] = $method = new ClassMethod($name);
         }
 
         return $method;
