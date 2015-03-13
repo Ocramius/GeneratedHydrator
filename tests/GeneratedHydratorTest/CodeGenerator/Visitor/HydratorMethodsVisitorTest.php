@@ -43,15 +43,15 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider classAstProvider
      *
-     * @param string                    $className
-     * @param PhpParser\Node\Stmt\Class_ $classNode
-     * @param string[]                  $properties
+     * @param string   $className
+     * @param Class_   $classNode
+     * @param string[] $properties
      */
     public function testBasicCodeGeneration($className, Class_ $classNode, array $properties)
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
-        /* @var $modifiedAst PhpParser\Node\Stmt\Class_ */
+        /* @var $modifiedAst Class_ */
         $modifiedNode = $visitor->leaveNode($classNode);
 
         $this->assertMethodExistence('hydrate', $modifiedNode);
@@ -63,8 +63,8 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     /**
      * Verifies that a method was correctly added to by the visitor
      *
-     * @param string                    $methodName
-     * @param PhpParser\Node\Stmt\Class_ $class
+     * @param string $methodName
+     * @param Class_ $class
      */
     private function assertMethodExistence($methodName, Class_ $class)
     {
@@ -85,8 +85,8 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     /**
      * Verifies that the given properties and only the given properties are added to the hydrator logic
      *
-     * @param PhpParser\Node\Stmt\Class_ $class
-     * @param array                     $properties
+     * @param Class_ $class
+     * @param array  $properties
      */
     private function assertContainsPropertyAccessors(Class_ $class, array $properties)
     {
