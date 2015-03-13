@@ -85,8 +85,8 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     /**
      * Verifies that the given properties and only the given properties are added to the hydrator logic
      *
-     * @param Class_ $class
-     * @param array  $properties
+     * @param Class_   $class
+     * @param string[] $properties
      */
     private function assertContainsPropertyAccessors(Class_ $class, array $properties)
     {
