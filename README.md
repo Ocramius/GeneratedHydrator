@@ -9,7 +9,7 @@ to arrays.
 
 ## What does this thing do?
 
-A [hydrator](http://framework.zend.com/manual/2.1/en/modules/zend.stdlib.hydrator.html) is an object capable of
+A [hydrator](http://framework.zend.com/manual/current/en/modules/zend.stdlib.hydrator.html) is an object capable of
 extracting data from other objects, or filling them with data.
 
 A hydrator performs following operations:
