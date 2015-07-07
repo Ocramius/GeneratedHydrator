@@ -164,7 +164,7 @@ class Configuration
      */
     public function setGeneratedClassesTargetDir($generatedClassesTargetDir)
     {
-        $this->generatedClassesTargetDir = (string) $generatedClassesTargetDir;
+        $this->generatedClassesTargetDir = $generatedClassesTargetDir;
     }
 
     /**
@@ -176,7 +176,7 @@ class Configuration
             $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
-        return $this->generatedClassesTargetDir;
+        return (string) $this->generatedClassesTargetDir;
     }
 
     /**
