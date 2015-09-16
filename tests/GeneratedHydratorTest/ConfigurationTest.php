@@ -156,4 +156,21 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->configuration->setGeneratedClassAutoloader($autoloader);
         self::assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
     }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::getHydratorGeneratorFactory
+     * @covers \GeneratedHydrator\Configuration::setHydratorGeneratorFactory
+     */
+    public function testSetGetHydratorGeneratorFactory()
+    {
+        $this->assertInstanceOf(
+            'GeneratedHydrator\\ClassGenerator\\HydratorGeneratorFactoryInterface',
+            $this->configuration->getHydratorGeneratorFactory()
+        );
+
+        $factory = $this->getMock('GeneratedHydrator\\ClassGenerator\\HydratorGeneratorFactoryInterface');
+
+        $this->configuration->setHydratorGeneratorFactory($factory);
+        $this->assertSame($factory, $this->configuration->getHydratorGeneratorFactory());
+    }
 }
