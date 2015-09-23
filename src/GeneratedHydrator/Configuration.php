@@ -73,6 +73,11 @@ class Configuration
     protected $classNameInflector;
 
     /**
+     * @var \PhpParser\NodeVisitor[]
+     */
+    protected $customVisitors = [];
+
+    /**
      * @param string $hydratedClassName
      */
     public function __construct($hydratedClassName)
@@ -219,5 +224,21 @@ class Configuration
         }
 
         return $this->classNameInflector;
+    }
+
+    /**
+     * @param \PhpParser\NodeVisitor[] $visitors
+     */
+    public function setCustomVisitors(array $customVisitors)
+    {
+        $this->customVisitors = $customVisitors;
+    }
+
+    /**
+     * @return \PhpParser\NodeVisitor[]
+     */
+    public function getCustomVisitors()
+    {
+        return $this->customVisitors;
     }
 }
