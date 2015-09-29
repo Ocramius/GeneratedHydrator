@@ -157,4 +157,27 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->configuration->setGeneratedClassAutoloader($autoloader);
         $this->assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
     }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::getCustomVisitors
+     * @covers \GeneratedHydrator\Configuration::setCustomVisitors
+     */
+    public function testSetGetCustomVisitors()
+    {
+        $this->assertCount(0, $this->configuration->getCustomVisitors());
+
+        $visitors = [$this->getMock('PhpParser\NodeVisitor')];
+
+        $this->configuration->setCustomVisitors($visitors);
+        $this->assertSame($visitors, $this->configuration->getCustomVisitors());
+    }
+
+    /**
+     * @covers \GeneratedHydrator\Configuration::setCustomVisitors
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetInvalidCustomVisitor()
+    {
+        $this->configuration->setCustomVisitors([new \StdClass()]);
+    }
 }
