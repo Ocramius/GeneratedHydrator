@@ -26,6 +26,7 @@ use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
+use PhpParser\NodeVisitor;
 
 /**
  * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
@@ -231,6 +232,12 @@ class Configuration
      */
     public function setCustomVisitors(array $customVisitors)
     {
+        foreach ($customVisitors as $visitor) {
+            if (!($visitor instanceof NodeVisitor)) {
+                throw new \InvalidArgumentException('Custom visitor must implement \\PhpParser\\NodeVisitor');
+            }
+        }
+
         $this->customVisitors = $customVisitors;
     }
 
