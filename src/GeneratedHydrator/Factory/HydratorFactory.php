@@ -64,6 +64,10 @@ class HydratorFactory
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $hydratorClassName));
 
+            foreach ($this->configuration->getCustomVisitors() as $visitor) {
+                $traverser->addVisitor($visitor);
+            }
+
             $this->configuration->getGeneratorStrategy()->generate($traverser->traverse($generatedAst));
             $this->configuration->getGeneratedClassAutoloader()->__invoke($hydratorClassName);
         }

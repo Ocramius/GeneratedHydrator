@@ -108,6 +108,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $this->config->expects($this->any())->method('getHydratedClassName')->will($this->returnValue($className));
         $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(true));
         $this->config->expects($this->any())->method('getGeneratorStrategy')->will($this->returnValue($generator));
+        $this->config->expects($this->any())->method('getCustomVisitors')->will($this->returnValue([]));
         $this
             ->config
             ->expects($this->any())
