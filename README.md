@@ -9,7 +9,7 @@ to arrays.
 
 ## What does this thing do?
 
-A [hydrator](http://framework.zend.com/manual/2.1/en/modules/zend.stdlib.hydrator.html) is an object capable of
+A [hydrator](http://framework.zend.com/manual/current/en/modules/zend.stdlib.hydrator.html) is an object capable of
 extracting data from other objects, or filling them with data.
 
 A hydrator performs following operations:
@@ -143,6 +143,84 @@ class Baz extends Foo
 ```
 
 This will be solved in milestone [1.1.0](https://github.com/Ocramius/GeneratedHydrator/issues?milestone=3)
+
+## Tuning for Production
+
+By default, GeneratedHydrator will generate hydrators on every new request.
+While this is relatively fast, it will cause I/O operations, and you can
+achieve even better performance by pre-generating your hydrators and telling
+your application to autoload them instead of generating new ones at each run.
+
+Avoiding regeneration involves:
+
+ 1. pre-generating your hydrators
+ 2. ensuring that your autoloader is aware of them
+
+The instructions that follow assume you are using Composer.
+
+### Pre-generating your hydrators
+
+There is no built-in way to bulk-generate all required hydrators, so you will need
+to do so on your own.
+
+Here is a simple snippet you can use to accomplish this:
+
+```php
+require '/path/to/vendor/autoload.php'; // composer autoloader
+
+// classes for which we want to pre-generate the hydrators
+$classes = [
+    \My\Namespace\ClassOne::class,
+    \My\Namespace\ClassTwo::class,
+    \My\Namespace\ClassThree::class,
+];
+
+foreach ($classes as $class) {
+    $config = new \GeneratedHydrator\Configuration($class);
+
+    $config->setGeneratedClassesTargetDir('/path/to/target-dir');
+    $config->createFactory()->getHydratorClass();
+}
+```
+
+Just add all the classes for which you need hydrators to the `$classes` array,
+and have your deployment process run this script.
+When complete, all of the hydrators you need will be available in `/path/to/target-dir`.
+
+### Making the autoloader aware of your hydrators
+
+Using your pre-generated hydrators is as simple as adding the generation target
+directory to your `composer.json`:
+
+```json
+{
+    "autoload": {
+        "classmap": [
+            "/path/to/target-dir"
+        ]
+    }
+}
+```
+
+After generating your hydrators, have your deployment script run `composer dump-autoload`
+to regenerate your autoloader.
+From now on, `GeneratedHydrator` will skip code generation and I/O if a generated class already
+exists.
+
+### Fallback autoloader
+
+Alternatively, `GeneratedHydrator` comes with a built-in autoloader that you can register
+on your own. This simplifies deployment, but is a bit slower:
+
+```php
+$config = new \GeneratedHydrator\Configuration(\My\Namespace\ClassOne::class);
+
+spl_autoload_register($config->getGeneratedClassAutoloader());
+
+// now simply use your hydrator, and if possible, code generation will be skipped:
+$hydratorName = $config->createFactory()->getHydratorClass();
+$hydrator     = new $hydratorName();
+```
 
 ## Contributing
 

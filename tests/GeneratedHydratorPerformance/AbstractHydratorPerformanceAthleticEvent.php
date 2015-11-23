@@ -24,9 +24,7 @@ use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use ReflectionProperty;
 use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\ObjectProperty;
-use Zend\Stdlib\Hydrator\Reflection;
 
 /**
  * Base performance test for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
@@ -124,7 +122,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      */
     public function reflectionExtract()
     {
-        $data = array();
+        $data = [];
 
         foreach ($this->reflectionProperties as $name => $property) {
             $data[$name] = $property->getValue($this->hydratedObject);
@@ -184,7 +182,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     private function generateReflectionProperties($object)
     {
         $reflection = new ReflectionClass($object);
-        $properties = array();
+        $properties = [];
 
         foreach ($reflection->getProperties() as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);
@@ -203,7 +201,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     private function generateHydrationData($object)
     {
         $reflection = new ReflectionClass($object);
-        $data       = array();
+        $data       = [];
 
         foreach ($reflection->getProperties() as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);

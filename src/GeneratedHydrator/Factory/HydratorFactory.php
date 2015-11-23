@@ -21,7 +21,7 @@ namespace GeneratedHydrator\Factory;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use PHPParser_NodeTraverser;
+use PhpParser\NodeTraverser;
 use ReflectionClass;
 
 /**
@@ -48,9 +48,11 @@ class HydratorFactory
     /**
      * Retrieves the generated hydrator FQCN
      *
+     * @param array $options
+     *
      * @return string
      */
-    public function getHydratorClass()
+    public function getHydratorClass(array $options = [])
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
@@ -59,8 +61,8 @@ class HydratorFactory
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = new HydratorGenerator();
             $originalClass = new ReflectionClass($realClassName);
-            $generatedAst  = $generator->generate($originalClass);
-            $traverser     = new PHPParser_NodeTraverser();
+            $generatedAst  = $generator->generate($originalClass, $options);
+            $traverser     = new NodeTraverser();
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $hydratorClassName));
 
