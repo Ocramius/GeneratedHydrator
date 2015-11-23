@@ -2,6 +2,7 @@
 
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
+use GeneratedHydrator\ClassGenerator\AllowedPropertiesOption;
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use PhpParser\Lexer;
 use PhpParser\Node;
@@ -22,20 +23,9 @@ use ReflectionProperty;
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
     /**
-     * When this option is passed, only the properties in the given array are
-     * hydrated and extracted.
-     */
-    const OPTION_ALLOWED_PROPERTIES = 'allowedProperties';
-
-    /**
      * @var array Holds configuration for the object properties.
      */
     private $allowedProperties;
-
-    /**
-     * @var ReflectionClass
-     */
-    private $reflectedClass;
 
     /**
      * @var ReflectionProperty[]
@@ -47,107 +37,33 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @var PropertyAccessor[]
      */
-    private $propertyWriters = array();
+    private $propertyWriters = [];
+
+    /**
+     * This flag is being used to determine if protected properties get their
+     * data from an array or directly from the object itself
+     *
+     * @var bool
+     */
+    private $hasPrivatePropertiesWhichNeedExtracting = false;
 
     /**
      * @param ReflectionClass $reflectedClass
      */
-    public function __construct(ReflectionClass $reflectedClass, array $options = [])
+    public function __construct(array $accessibleProperties, array $propertyWriters, AllowedPropertiesOption $option)
     {
-        $this->reflectedClass       = $reflectedClass;
-        $this->accessibleProperties = $this->getAccessibleProperties($reflectedClass);
-        $this->allowedProperties    = $this->expandAllowedProperties($options);
+        $this->propertyWriters = $propertyWriters;
+        $this->accessibleProperties = $accessibleProperties;
+        $this->allowedProperties = $option->getAllowedProperties();
 
-        foreach ($this->getPrivateProperties($reflectedClass) as $property) {
-            $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
-        }
-    }
+        foreach ($this->propertyWriters as $propertyWriter) {
+            $allowedPropertyExtract = $this->allowedProperties[$propertyWriter->getOriginalProperty()->name]['extract'];
 
-    /**
-     * Returns an array with properties as keys and hydrate/extract information
-     * as values.
-     *
-     * @param type $allowedProperties
-     */
-    private function expandAllowedProperties($options)
-    {
-        $allowedProperties = [];
-        $propertyNames = array_map(function($prop) {
-            return $prop->name;
-        }, $this->reflectedClass->getProperties());
-
-        if (! isset($options[static::OPTION_ALLOWED_PROPERTIES])) {
-            foreach ($propertyNames as $propertyName) {
-                $allowedProperties[$propertyName] = [
-                    'extract' => true,
-                    'hydrate' => true
-                ];
-            }
-
-            return $allowedProperties;
-        }
-
-        if (! is_array($options[static::OPTION_ALLOWED_PROPERTIES])) {
-            throw new \InvalidArgumentException(sprintf('OPTION_ALLOWED_PROPERTIES is given but it\'s value is of type %s which should be an array.', gettype($options[static::OPTION_ALLOWED_PROPERTIES])));
-        }
-
-        foreach ($options[static::OPTION_ALLOWED_PROPERTIES] as $k => $v) {
-            // simple format
-            if (is_int($k)) {
-                if (! is_string($v)) {
-                    throw new \InvalidArgumentException(sprintf('Invalid value of type %s found on index %s, expected a string.', gettype($v), $k));
-                }
-
-                if (in_array($v, array_keys($allowedProperties))) {
-                    throw new \InvalidArgumentException(sprintf('Property "%s" was supplied in simple and advanced format, only one is allowed.', $v));
-                }
-
-                $allowedProperties[$v] = [
-                    'extract' => true,
-                    'hydrate' => true
-                ];
-
-                continue;
-            }
-
-            // advanced format
-            if (is_string($k)) {
-                if (! is_array($v)) {
-                    throw new \InvalidArgumentException(sprintf('Property "%s" was supplied as key, but the value is of type %s and an array was expected.', $k, gettype($v)));
-                }
-
-                if (in_array($k, $allowedProperties)) {
-                    throw new \InvalidArgumentException(sprintf('Property "%s" was supplied in simple and advanced format, only one is allowed.', $v));
-                }
-
-                $validateOptionConfigurationKey = function($property, $array, $key) {
-                    if (! isset($array[$key])) {
-                        throw new \InvalidArgumentException(sprintf('Property "%s" is missing key "%s".', $property, $key));
-                    }
-
-                    if (! in_array($array[$key], [true, false, 'optional'])) {
-                        throw new \InvalidArgumentException(sprintf('Property "%s" has an invalid value for key "$s".', $property, $key));
-                    }
-                };
-
-                $validateOptionConfigurationKey($k, $v, 'extract');
-                $validateOptionConfigurationKey($k, $v, 'hydrate');
-
-                $allowedProperties[$k] = $v;
+            if (in_array($allowedPropertyExtract, [true, 'optional'])) {
+                $this->hasPrivatePropertiesWhichNeedExtracting = true;
+                break;
             }
         }
-
-        // Disable all properties which are not specified in the allowedProperties
-        foreach ($propertyNames as $propertyName) {
-            if (! in_array($propertyName, array_keys($allowedProperties))) {
-                $allowedProperties[$propertyName] = [
-                    'extract' => false,
-                    'hydrate' => false
-                ];
-            }
-        }
-
-        return $allowedProperties;
     }
 
     /**
@@ -210,8 +126,10 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $replaceWithOption = function($option, $assignment, $keyName) {
             if ($option === true) {
                 return $assignment;
-            } elseif ($option === 'optional') {
-                return 'if (isset($data[' . $keyName . "])) {\n"
+            }
+
+            if ($option === 'optional') {
+                return 'if (isset($data[' . $keyName . ']) OR array_key_exists(' . $keyName . ", \$data)) {\n"
                     . $assignment
                     . "}\n";
             }
@@ -222,7 +140,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $keyName = var_export($accessibleProperty->getName(), true);
             $option = $this->allowedProperties[$propertyName]['hydrate'];
 
-            if ($option === false) {
+            if (false === $option) {
                 continue;
             }
 
@@ -240,7 +158,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $keyName = var_export($propertyWriter->getOriginalProperty()->getName(), true);
             $option = $this->allowedProperties[$propertyWriter->getOriginalProperty()->name]['hydrate'];
 
-            if ($option === false) {
+            if (false === $option) {
                 continue;
             }
 
@@ -279,16 +197,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body = '';
 
-        // This flag is being used to determine if protected properties get their
-        // data from an array or directly from the object itself
-        $hasPrivatePropertiesWhichNeedExtract = false;
-        foreach ($this->propertyWriters as $p) {
-            if (in_array($this->allowedProperties[$p->getOriginalProperty()->name]['extract'], [true, 'optional'])) {
-                $hasPrivatePropertiesWhichNeedExtract = true;
-            }
-        }
-
-        if ($hasPrivatePropertiesWhichNeedExtract) {
+        if ($this->hasPrivatePropertiesWhichNeedExtracting) {
             $body = "\$data = (array) \$object;\n\n";
         }
 
@@ -298,7 +207,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         foreach ($this->accessibleProperties as $accessibleProperty) {
             $propertyName = $accessibleProperty->getName();
 
-            if (! $hasPrivatePropertiesWhichNeedExtract || ! $accessibleProperty->isProtected()) {
+            if (! $this->hasPrivatePropertiesWhichNeedExtracting || ! $accessibleProperty->isProtected()) {
                 $propertyData = '$object->' . $propertyName;
             } else {
                 $propertyData = '$data["\\0*\\0' . $propertyName . '"]';
@@ -322,9 +231,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
 
         // None of the extract properties are optional
-        if (count(array_filter($this->allowedProperties, function($conf) {
+        if (! array_filter($this->allowedProperties, function($conf) {
             return $conf['extract'] === 'optional';
-        })) === 0) {
+        })) {
             $body .= 'return array(';
             foreach ($assignments as $propertyName => $a) {
                 if ($this->allowedProperties[$propertyName]['extract'] === true) {
@@ -351,7 +260,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $propertyName = $accessibleProperty->getName();
 
             if ($this->allowedProperties[$propertyName]['extract'] === 'optional') {
-                if (! $hasPrivatePropertiesWhichNeedExtract || ! $accessibleProperty->isProtected()) {
+                if (! $this->hasPrivatePropertiesWhichNeedExtracting || ! $accessibleProperty->isProtected()) {
                     $propertyData = '$object->' . $propertyName;
                 } else {
                     $propertyData = '$data["\\0*\\0' . $propertyName . '"]';
@@ -408,39 +317,5 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
 
         return $method;
-    }
-
-    /**
-     * Retrieve instance public/protected properties
-     *
-     * @param ReflectionClass $reflectedClass
-     *
-     * @return ReflectionProperty[]
-     */
-    private function getAccessibleProperties(ReflectionClass $reflectedClass)
-    {
-        return array_filter(
-            $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
-                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
-            }
-        );
-    }
-
-    /**
-     * Retrieve instance private properties
-     *
-     * @param ReflectionClass $reflectedClass
-     *
-     * @return ReflectionProperty[]
-     */
-    private function getPrivateProperties(ReflectionClass $reflectedClass)
-    {
-        return array_filter(
-            $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
-                return $property->isPrivate() && ! $property->isStatic();
-            }
-        );
     }
 }
