@@ -48,18 +48,23 @@ class HydratorFactory
     /**
      * Retrieves the generated hydrator FQCN
      *
+     * @param array $options
+     *
      * @return string
      */
-    public function getHydratorClass()
+    public function getHydratorClass(array $options = [])
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
-        $hydratorClassName = $inflector->getGeneratedClassName($realClassName, array('factory' => get_class($this)));
+        $hydratorClassName = $inflector->getGeneratedClassName($realClassName, [
+            'factory' => get_class($this),
+            'options' => $options
+        ]);
 
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = new HydratorGenerator();
             $originalClass = new ReflectionClass($realClassName);
-            $generatedAst  = $generator->generate($originalClass);
+            $generatedAst  = $generator->generate($originalClass, $options);
             $traverser     = new NodeTraverser();
 
             $traverser->addVisitor(new ClassRenamerVisitor($originalClass, $hydratorClassName));

@@ -2,6 +2,7 @@
 
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
+use GeneratedHydrator\ClassGenerator\AllowedPropertiesOption;
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use PhpParser\Lexer;
 use PhpParser\Node;
@@ -22,9 +23,9 @@ use ReflectionProperty;
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
     /**
-     * @var ReflectionClass
+     * @var array Holds configuration for the object properties.
      */
-    private $reflectedClass;
+    private $allowedProperties;
 
     /**
      * @var ReflectionProperty[]
@@ -32,20 +33,36 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     private $accessibleProperties;
 
     /**
+     * This variable only holds private properties.
+     *
      * @var PropertyAccessor[]
      */
-    private $propertyWriters = array();
+    private $propertyWriters = [];
+
+    /**
+     * This flag is being used to determine if protected properties get their
+     * data from an array or directly from the object itself
+     *
+     * @var bool
+     */
+    private $hasPrivatePropertiesWhichNeedExtracting = false;
 
     /**
      * @param ReflectionClass $reflectedClass
      */
-    public function __construct(ReflectionClass $reflectedClass)
+    public function __construct(array $accessibleProperties, array $propertyWriters, AllowedPropertiesOption $option)
     {
-        $this->reflectedClass       = $reflectedClass;
-        $this->accessibleProperties = $this->getProtectedProperties($reflectedClass);
+        $this->propertyWriters = $propertyWriters;
+        $this->accessibleProperties = $accessibleProperties;
+        $this->allowedProperties = $option->getAllowedProperties();
 
-        foreach ($this->getPrivateProperties($reflectedClass) as $property) {
-            $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
+        foreach ($this->propertyWriters as $propertyWriter) {
+            $allowedPropertyExtract = $this->allowedProperties[$propertyWriter->getOriginalProperty()->name]['extract'];
+
+            if (in_array($allowedPropertyExtract, [true, 'optional'])) {
+                $this->hasPrivatePropertiesWhichNeedExtracting = true;
+                break;
+            }
         }
     }
 
@@ -80,11 +97,13 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $accessorName     = $propertyWriter->props[0]->name;
             $originalProperty = $propertyWriter->getOriginalProperty();
             $className        = $originalProperty->getDeclaringClass()->getName();
-            $property         = $originalProperty->getName();
+            $propertyName     = $originalProperty->getName();
 
-            $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
-                . "    \$object->" . $property . " = \$value;\n"
-                . "}, null, " . var_export($className, true) . ");";
+            if (in_array($this->allowedProperties[$propertyName]['hydrate'], [true, 'optional'])) {
+                $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
+                    . "    \$object->" . $propertyName . " = \$value;\n"
+                    . "}, null, " . var_export($className, true) . ");";
+            }
         }
 
         $parser = new Parser(new Lexer());
@@ -104,20 +123,52 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body = '';
 
+        $replaceWithOption = function($option, $assignment, $keyName) {
+            if ($option === true) {
+                return $assignment;
+            }
+
+            if ($option === 'optional') {
+                return 'if (isset($data[' . $keyName . ']) OR array_key_exists(' . $keyName . ", \$data)) {\n"
+                    . $assignment
+                    . "}\n";
+            }
+        };
+
         foreach ($this->accessibleProperties as $accessibleProperty) {
-            $body .= '$object->'
-                . $accessibleProperty->getName()
+            $propertyName = $accessibleProperty->getName();
+            $keyName = var_export($accessibleProperty->getName(), true);
+            $option = $this->allowedProperties[$propertyName]['hydrate'];
+
+            if (false === $option) {
+                continue;
+            }
+
+            $assignment = '$object->'
+                . $propertyName
                 . ' = $data['
-                . var_export($accessibleProperty->getName(), true)
+                . $keyName
                 . "];\n";
+
+            $body .= $replaceWithOption($option, $assignment, $keyName);
         }
 
         foreach ($this->propertyWriters as $propertyWriter) {
-            $body .= '$this->'
-                . $propertyWriter->props[0]->name
+            $propertyWriterName = $propertyWriter->props[0]->name;
+            $keyName = var_export($propertyWriter->getOriginalProperty()->getName(), true);
+            $option = $this->allowedProperties[$propertyWriter->getOriginalProperty()->name]['hydrate'];
+
+            if (false === $option) {
+                continue;
+            }
+
+            $assignment = '$this->'
+                . $propertyWriterName
                 . '->__invoke($object, $data['
-                . var_export($propertyWriter->getOriginalProperty()->getName(), true)
+                . $keyName
                 . "]);\n";
+
+            $body .= $replaceWithOption($option, $assignment, $keyName);
         }
 
         $body .= "\nreturn \$object;";
@@ -137,7 +188,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $method->params = array(new Param('object'));
 
         if (empty($this->accessibleProperties) && empty($this->propertyWriters)) {
-            // no properties to hydrate
+            // the object does not have any properties
 
             $method->stmts = $parser->parse('<?php return array();');
 
@@ -146,29 +197,32 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body = '';
 
-        if (! empty($this->propertyWriters)) {
+        if ($this->hasPrivatePropertiesWhichNeedExtracting) {
             $body = "\$data = (array) \$object;\n\n";
         }
 
-        $body .= 'return array(';
+        // Make code for the properties which can be assigned right away in the array
+        $assignments = [];
 
         foreach ($this->accessibleProperties as $accessibleProperty) {
-            if (empty($this->propertyWriters) || ! $accessibleProperty->isProtected()) {
-                $body .= "\n    "
-                    . var_export($accessibleProperty->getName(), true)
-                    . ' => $object->' . $accessibleProperty->getName() . ',';
+            $propertyName = $accessibleProperty->getName();
+
+            if (! $this->hasPrivatePropertiesWhichNeedExtracting || ! $accessibleProperty->isProtected()) {
+                $propertyData = '$object->' . $propertyName;
             } else {
-                $body .= "\n    "
-                    . var_export($accessibleProperty->getName(), true)
-                    . ' => $data["\\0*\\0' . $accessibleProperty->getName() . '"],';
+                $propertyData = '$data["\\0*\\0' . $propertyName . '"]';
             }
+
+            $assignments[$propertyName] = "\n    "
+                . var_export($propertyName, true)
+                . ' => ' . $propertyData . ',';
         }
 
         foreach ($this->propertyWriters as $propertyWriter) {
             $property     = $propertyWriter->getOriginalProperty();
             $propertyName = $property->getName();
 
-            $body .= "\n    "
+            $assignments[$propertyName] = "\n    "
                 . var_export($propertyName, true)
                 . ' => $data["'
                 . '\\0' . $property->getDeclaringClass()->getName()
@@ -176,10 +230,67 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 . '"],';
         }
 
-        $body .= "\n);";
+        // None of the extract properties are optional
+        if (! array_filter($this->allowedProperties, function($conf) {
+            return $conf['extract'] === 'optional';
+        })) {
+            $body .= 'return array(';
+            foreach ($assignments as $propertyName => $a) {
+                if ($this->allowedProperties[$propertyName]['extract'] === true) {
+                    $body .= $a;
+                }
+            }
+            $body .= "\n);";
+
+            $method->stmts = $parser->parse('<?php ' . $body);
+
+            return;
+        }
+
+        // Has extract properties which are optional
+        $body .= '$ret = array(';
+        foreach ($assignments as $propertyName => $a) {
+            if ($this->allowedProperties[$propertyName]['extract'] === true) {
+                $body .= $a;
+            }
+        }
+        $body .= "\n);\n";
+
+        foreach ($this->accessibleProperties as $accessibleProperty) {
+            $propertyName = $accessibleProperty->getName();
+
+            if ($this->allowedProperties[$propertyName]['extract'] === 'optional') {
+                if (! $this->hasPrivatePropertiesWhichNeedExtracting || ! $accessibleProperty->isProtected()) {
+                    $propertyData = '$object->' . $propertyName;
+                } else {
+                    $propertyData = '$data["\\0*\\0' . $propertyName . '"]';
+                }
+
+                $body .= 'if (isset(' . $propertyData . ")) {\n"
+                    . '    $ret[' . var_export($propertyName, true) . '] = ' . $propertyData . ";\n"
+                    . "}\n";
+            }
+        }
+
+        foreach ($this->propertyWriters as $propertyWriter) {
+            $property     = $propertyWriter->getOriginalProperty();
+            $propertyName = $property->getName();
+
+            if ($this->allowedProperties[$propertyName]['extract'] === 'optional') {
+                $propertyData = '$data["'
+                    . '\\0' . $property->getDeclaringClass()->getName()
+                    . '\\0' . $propertyName
+                    . '"]';
+
+                $body .= 'if (isset(' . $propertyData . ")) {\n"
+                    . '    $ret[' . var_export($propertyName, true) . '] = ' . $propertyData . ";\n"
+                    . "}\n";
+            }
+        }
+
+        $body .= "\nreturn \$ret;";
 
         $method->stmts = $parser->parse('<?php ' . $body);
-
     }
 
     /**
@@ -206,39 +317,5 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
 
         return $method;
-    }
-
-    /**
-     * Retrieve instance public/protected properties
-     *
-     * @param ReflectionClass $reflectedClass
-     *
-     * @return ReflectionProperty[]
-     */
-    private function getProtectedProperties(ReflectionClass $reflectedClass)
-    {
-        return array_filter(
-            $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
-                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
-            }
-        );
-    }
-
-    /**
-     * Retrieve instance private properties
-     *
-     * @param ReflectionClass $reflectedClass
-     *
-     * @return ReflectionProperty[]
-     */
-    private function getPrivateProperties(ReflectionClass $reflectedClass)
-    {
-        return array_filter(
-            $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
-                return $property->isPrivate() && ! $property->isStatic();
-            }
-        );
     }
 }

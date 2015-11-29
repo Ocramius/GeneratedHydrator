@@ -22,9 +22,11 @@ use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassExtensionVisitor;
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
+use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
+use ReflectionProperty;
 
 /**
  * Generator for highly performing {@see \Zend\Stdlib\Hydrator\HydratorInterface}
@@ -42,10 +44,11 @@ class HydratorGenerator
      * and a map of properties to be used to
      *
      * @param \ReflectionClass $originalClass
+     * @param array $options
      *
      * @return \PhpParser\Node[]
      */
-    public function generate(ReflectionClass $originalClass)
+    public function generate(ReflectionClass $originalClass, array $options = [])
     {
         $builder   = new ClassBuilder();
 
@@ -67,12 +70,62 @@ class HydratorGenerator
         // step 2: implement new methods and interfaces, extend original class
         $implementor = new NodeTraverser();
 
-        $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
+        // prepare information which can be used by visitors
+        $accessibleProperties = $this->getAccessibleProperties($originalClass);
+        $propertyWriters = $this->getPropertyWriters($originalClass);
+        $allowedPropertiesOption = new AllowedPropertiesOption($originalClass, $options);
+
+        $implementor->addVisitor(new HydratorMethodsVisitor($accessibleProperties, $propertyWriters, $allowedPropertiesOption));
         $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
         $implementor->addVisitor(
             new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Stdlib\\Hydrator\\HydratorInterface'))
         );
 
         return $implementor->traverse($ast);
+    }
+
+    /**
+     * Retrieve instance public/protected properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getAccessibleProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
+            }
+        );
+    }
+
+    /**
+     * Retrieve instance private properties
+     *
+     * @param ReflectionClass $reflectedClass
+     *
+     * @return ReflectionProperty[]
+     */
+    private function getPrivateProperties(ReflectionClass $reflectedClass)
+    {
+        return array_filter(
+            $reflectedClass->getProperties(),
+            function (ReflectionProperty $property) {
+                return $property->isPrivate() && ! $property->isStatic();
+            }
+        );
+    }
+
+    private function getPropertyWriters(ReflectionClass $reflectedClass)
+    {
+        $propertyWriters = [];
+
+        foreach ($this->getPrivateProperties($reflectedClass) as $property) {
+            $propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
+        }
+
+        return $propertyWriters;
     }
 }
