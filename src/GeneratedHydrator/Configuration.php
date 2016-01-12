@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator;
 
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorFactory;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface;
@@ -77,9 +79,9 @@ class Configuration
     protected $classNameInflector;
 
     /**
-     * @var \GeneratedHydrator\ClassGenerator\Hydrator\HydratorGeneratorFactoryInterface|null
+     * @var \GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface|null
      */
-    protected $hydratorGeneratorFactory;
+    protected $hydratorGenerator;
 
     /**
      * @param string $hydratedClassName
@@ -235,22 +237,22 @@ class Configuration
     }
 
     /**
-     * @param \GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface $hydratorGeneratorFactory
+     * @param HydratorGeneratorInterface $hydratorGenerator
      */
-    public function setHydratorGeneratorFactory(HydratorGeneratorFactoryInterface $hydratorGeneratorFactory)
+    public function setHydratorGenerator(HydratorGeneratorInterface $hydratorGenerator)
     {
-        $this->hydratorGeneratorFactory = $hydratorGeneratorFactory;
+        $this->hydratorGenerator = $hydratorGenerator;
     }
 
     /**
-     * @return \GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface
+     * @return HydratorGeneratorInterface
      */
-    public function getHydratorGeneratorFactory()
+    public function getHydratorGenerator()
     {
-        if (null === $this->hydratorGeneratorFactory) {
-            $this->hydratorGeneratorFactory = new HydratorGeneratorFactory();
+        if (null === $this->hydratorGenerator) {
+            $this->hydratorGenerator = new HydratorGenerator();
         }
 
-        return $this->hydratorGeneratorFactory;
+        return $this->hydratorGenerator;
     }
 }

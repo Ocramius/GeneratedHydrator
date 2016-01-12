@@ -23,6 +23,7 @@ namespace GeneratedHydratorTest;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
+use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Configuration;
 
@@ -158,19 +159,17 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \GeneratedHydrator\Configuration::getHydratorGeneratorFactory
-     * @covers \GeneratedHydrator\Configuration::setHydratorGeneratorFactory
+     * @covers \GeneratedHydrator\Configuration::getHydratorGenerator
+     * @covers \GeneratedHydrator\Configuration::setHydratorGenerator
      */
-    public function testSetGetHydratorGeneratorFactory()
+    public function testSetGetHydratorGenerator()
     {
-        $this->assertInstanceOf(
-            'GeneratedHydrator\\ClassGenerator\\HydratorGeneratorFactoryInterface',
-            $this->configuration->getHydratorGeneratorFactory()
-        );
+        self::assertInstanceOf(HydratorGeneratorInterface::class, $this->configuration->getHydratorGenerator());
 
-        $factory = $this->getMock('GeneratedHydrator\\ClassGenerator\\HydratorGeneratorFactoryInterface');
+        /* @var $generator HydratorGeneratorInterface */
+        $generator = $this->getMock(HydratorGeneratorInterface::class);
 
-        $this->configuration->setHydratorGeneratorFactory($factory);
-        $this->assertSame($factory, $this->configuration->getHydratorGeneratorFactory());
+        $this->configuration->setHydratorGenerator($generator);
+        self::assertSame($generator, $this->configuration->getHydratorGenerator());
     }
 }
