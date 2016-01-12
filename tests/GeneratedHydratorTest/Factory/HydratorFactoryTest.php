@@ -55,7 +55,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
 
         $this
             ->config
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getClassNameInflector')
             ->will($this->returnValue($this->inflector));
     }
@@ -70,11 +70,11 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     {
         $className = UniqueIdentifierGenerator::getIdentifier('foo');
 
-        $this->config->expects($this->any())->method('getHydratedClassName')->will($this->returnValue($className));
-        $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(false));
+        $this->config->expects(self::any())->method('getHydratedClassName')->will($this->returnValue($className));
+        $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will($this->returnValue(false));
         $this
             ->inflector
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getUserClassName')
             ->with($className)
             ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
@@ -107,12 +107,12 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $generator      = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
         $autoloader     = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
-        $this->config->expects($this->any())->method('getHydratedClassName')->will($this->returnValue($className));
-        $this->config->expects($this->any())->method('doesAutoGenerateProxies')->will($this->returnValue(true));
-        $this->config->expects($this->any())->method('getGeneratorStrategy')->will($this->returnValue($generator));
+        $this->config->expects(self::any())->method('getHydratedClassName')->will($this->returnValue($className));
+        $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will($this->returnValue(true));
+        $this->config->expects(self::any())->method('getGeneratorStrategy')->will($this->returnValue($generator));
         $this
             ->config
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getGeneratedClassAutoloader')
             ->will($this->returnValue($autoloader));
 

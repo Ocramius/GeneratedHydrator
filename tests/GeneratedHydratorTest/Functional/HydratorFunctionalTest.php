@@ -135,12 +135,12 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
         $inflector
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getGeneratedClassName')
             ->with($parentClassName)
             ->will($this->returnValue($generatedClassName));
         $inflector
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getUserClassName')
             ->with($parentClassName)
             ->will($this->returnValue($parentClassName));
