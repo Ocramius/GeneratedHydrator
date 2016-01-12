@@ -193,6 +193,8 @@ class Configuration
 
     /**
      * @return \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface
+     *
+     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratorStrategy() : GeneratorStrategyInterface
     {

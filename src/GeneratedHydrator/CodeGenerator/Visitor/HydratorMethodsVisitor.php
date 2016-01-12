@@ -103,7 +103,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
             $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
                 . "    \$object->" . $property . " = \$value;\n"
-                . "}, null, " . var_export($className, true) . ");";
+                . '}, null, ' . var_export($className, true) . ');';
         }
 
         $method->stmts = (new ParserFactory)
