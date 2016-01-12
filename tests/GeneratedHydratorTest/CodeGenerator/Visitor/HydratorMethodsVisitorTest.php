@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorTest\CodeGenerator\Visitor;
 
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
