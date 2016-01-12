@@ -120,10 +120,10 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
                         $var = $assignment->var;
 
                         if ($var instanceof PropertyFetch
-                            && preg_match('/(.*)Writer[a-zA-Z0-9]+/', $assignment->var->name, $matches)
+                            && preg_match('/(.*)Writer[a-zA-Z0-9]+/', $var->name, $matches)
                         ) {
                             if (! isset($lookupProperties[$matches[1]])) {
-                                $this->fail(sprintf('Property "%s" should not be hydrated', $matches[1]));
+                                self::fail(sprintf('Property "%s" should not be hydrated', $matches[1]));
                             }
 
                             unset($lookupProperties[$matches[1]]);

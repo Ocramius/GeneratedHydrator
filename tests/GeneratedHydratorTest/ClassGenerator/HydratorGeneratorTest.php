@@ -47,8 +47,10 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
      * @dataProvider getTestedImplementations
      *
      * Verifies that generated code is valid and implements expected interfaces
+     *
+     * @param string $className
      */
-    public function testGeneratesValidCode($className)
+    public function testGeneratesValidCode(string $className)
     {
         $generator          = new HydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');

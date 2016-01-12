@@ -20,6 +20,9 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTest;
 
+use CodeGenerationUtils\Autoloader\AutoloaderInterface;
+use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
+use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Configuration;
 
@@ -102,12 +105,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetClassNameInflector()
     {
-        self::assertInstanceOf(
-            'CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface',
-            $this->configuration->getClassNameInflector()
-        );
+        self::assertInstanceOf(ClassNameInflectorInterface::class, $this->configuration->getClassNameInflector());
 
-        $inflector = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
+        /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
+        $inflector = $this->getMock(ClassNameInflectorInterface::class);
 
         $this->configuration->setClassNameInflector($inflector);
         self::assertSame($inflector, $this->configuration->getClassNameInflector());
@@ -120,12 +121,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testSetGetGeneratorStrategy()
     {
 
-        self::assertInstanceOf(
-            'CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface',
-            $this->configuration->getGeneratorStrategy()
-        );
+        self::assertInstanceOf(GeneratorStrategyInterface::class, $this->configuration->getGeneratorStrategy());
 
-        $strategy = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
+        /* @var $strategy GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject */
+        $strategy = $this->getMock(GeneratorStrategyInterface::class);
 
         $this->configuration->setGeneratorStrategy($strategy);
         self::assertSame($strategy, $this->configuration->getGeneratorStrategy());
@@ -149,12 +148,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetGeneratedClassAutoloader()
     {
-        self::assertInstanceOf(
-            'CodeGenerationUtils\\Autoloader\\AutoloaderInterface',
-            $this->configuration->getGeneratedClassAutoloader()
-        );
+        self::assertInstanceOf(AutoloaderInterface::class, $this->configuration->getGeneratedClassAutoloader());
 
-        $autoloader = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
+        /* @var $autoloader AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject */
+        $autoloader = $this->getMock(AutoloaderInterface::class);
 
         $this->configuration->setGeneratedClassAutoloader($autoloader);
         self::assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());

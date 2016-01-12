@@ -81,7 +81,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
 
         $this
             ->inflector
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will(self::returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
@@ -117,31 +117,31 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->will(self::returnValue($autoloader));
 
         $generator
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('generate')
-            ->with($this->isType('array'));
+            ->with(self::isType('array'));
 
         // simulate autoloading
         $autoloader
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('__invoke')
             ->with($generatedClassName)
-            ->will($this->returnCallback(function () use ($generatedClassName) : bool {
+            ->willReturnCallback(function () use ($generatedClassName) : bool {
                 eval('class ' . $generatedClassName . ' {}');
 
                 return true;
-            }));
+            });
 
         $this
             ->inflector
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will(self::returnValue($generatedClassName));
 
         $this
             ->inflector
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getUserClassName')
             ->with($className)
             ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));

@@ -21,8 +21,10 @@ declare(strict_types=1);
 namespace GeneratedHydratorTest\Functional;
 
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Exception\DisabledMethodException;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -94,11 +96,11 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
     public function testDisabledMethod()
     {
-        $this->markTestIncomplete('Methods have to be disabled - currently only removing them');
+        self::markTestIncomplete('Methods have to be disabled - currently only removing them');
 
         $generatedClass = $this->generateHydrator(new HydratedObject());
 
-        $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
+        $this->setExpectedException(DisabledMethodException::class);
         $generatedClass->doFoo();
     }
 
@@ -132,7 +134,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
-        $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
+        /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
+        $inflector          = $this->getMock(ClassNameInflectorInterface::class);
 
         $inflector
             ->expects(self::any())
