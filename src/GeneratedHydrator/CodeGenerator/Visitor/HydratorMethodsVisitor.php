@@ -192,7 +192,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ClassMethod
      */
-    private function findOrCreateMethod(Class_ $class, $name) : ClassMethod
+    private function findOrCreateMethod(Class_ $class, string $name) : ClassMethod
     {
         $foundMethods = array_filter(
             $class->getMethods(),

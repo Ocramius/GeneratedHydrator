@@ -42,7 +42,7 @@ class PropertyAccessor extends Property
      * @param ReflectionProperty $accessedProperty
      * @param string             $nameSuffix
      */
-    public function __construct(ReflectionProperty $accessedProperty, $nameSuffix)
+    public function __construct(ReflectionProperty $accessedProperty, string $nameSuffix)
     {
         $this->accessedProperty = $accessedProperty;
         $originalName           = $this->accessedProperty->getName();
