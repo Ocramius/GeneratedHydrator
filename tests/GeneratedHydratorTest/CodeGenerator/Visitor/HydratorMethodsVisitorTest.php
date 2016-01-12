@@ -75,7 +75,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
             1,
             array_filter(
                 $members,
-                function (Node $node) use ($methodName) {
+                function (Node $node) use ($methodName) : bool {
                     return $node instanceof ClassMethod
                         && $methodName === $node->name;
                 }
@@ -88,6 +88,8 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      *
      * @param Class_   $class
      * @param string[] $properties
+     *
+     * @return void
      */
     private function assertContainsPropertyAccessors(Class_ $class, array $properties)
     {
@@ -101,7 +103,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
 
                         if ($var instanceof PropertyFetch && is_string($var->name)) {
                             if (! isset($lookupProperties[$var->name])) {
-                                $this->fail(sprintf('Property "%s" should not be hydrated', $var->name));
+                                self::fail(sprintf('Property "%s" should not be hydrated', $var->name));
                             }
 
                             unset($lookupProperties[$var->name]);
@@ -133,7 +135,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
             return;
         }
 
-        $this->fail(sprintf(
+        self::fail(sprintf(
             'Could not match following properties in the generated code: %s',
             var_export(array_flip($lookupProperties), true)
         ));
@@ -142,7 +144,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PhpParser\Node[][]
      */
-    public function classAstProvider()
+    public function classAstProvider() : array
     {
         $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 

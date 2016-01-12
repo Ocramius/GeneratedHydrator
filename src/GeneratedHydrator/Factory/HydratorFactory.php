@@ -49,6 +49,8 @@ class HydratorFactory
      * Retrieves the generated hydrator FQCN
      *
      * @return string
+     *
+     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
     public function getHydratorClass() : string
     {

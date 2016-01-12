@@ -130,6 +130,8 @@ class Configuration
 
     /**
      * @return \CodeGenerationUtils\Autoloader\AutoloaderInterface
+     *
+     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratedClassAutoloader() : AutoloaderInterface
     {

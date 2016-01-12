@@ -32,7 +32,7 @@ class StdClassHydratonEvent extends AbstractHydratorPerformanceAthleticEvent
     /**
      * {@inheritDoc}
      */
-    protected function getHydratedObject()
+    protected function getHydratedObject() : stdClass
     {
         return new stdClass();
     }

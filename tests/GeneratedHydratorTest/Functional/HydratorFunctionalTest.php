@@ -32,6 +32,7 @@ use GeneratedHydratorTestAsset\HydratedObject;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use stdClass;
+use Zend\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
@@ -102,19 +103,19 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getHydratorClasses()
+    public function getHydratorClasses() : array
     {
-        return array(
-            array(new stdClass()),
-            array(new EmptyClass()),
-            array(new HydratedObject()),
-            array(new BaseClass()),
-            array(new ClassWithPublicProperties()),
-            array(new ClassWithProtectedProperties()),
-            array(new ClassWithPrivateProperties()),
-            array(new ClassWithMixedProperties()),
-            array(new ClassWithStaticProperties()),
-        );
+        return [
+            [new stdClass()],
+            [new EmptyClass()],
+            [new HydratedObject()],
+            [new BaseClass()],
+            [new ClassWithPublicProperties()],
+            [new ClassWithProtectedProperties()],
+            [new ClassWithPrivateProperties()],
+            [new ClassWithMixedProperties()],
+            [new ClassWithStaticProperties()],
+        ];
     }
 
     /**
@@ -124,7 +125,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
      *
      * @return \GeneratedHydratorTestAsset\HydratedObject|\Zend\Hydrator\HydratorInterface
      */
-    private function generateHydrator($instance)
+    private function generateHydrator($instance) : HydratorInterface
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');

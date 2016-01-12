@@ -32,7 +32,7 @@ class PublicPropertiesHydrationEvent extends AbstractHydratorPerformanceAthletic
     /**
      * {@inheritDoc}
      */
-    protected function getHydratedObject()
+    protected function getHydratedObject() : ClassWithPublicProperties
     {
         return new ClassWithPublicProperties();
     }

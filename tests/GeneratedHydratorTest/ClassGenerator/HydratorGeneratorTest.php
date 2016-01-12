@@ -22,9 +22,14 @@ use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use GeneratedHydratorTestAsset\BaseClass;
+use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
+use GeneratedHydratorTestAsset\ClassWithMagicMethods;
+use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use PhpParser\NodeTraverser;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
+use Zend\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}
@@ -71,21 +76,21 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getTestedImplementations()
+    public function getTestedImplementations() : array
     {
-        return array(
-            array('GeneratedHydratorTestAsset\\BaseClass'),
-            array('GeneratedHydratorTestAsset\\ClassWithMagicMethods'),
-            array('GeneratedHydratorTestAsset\\ClassWithByRefMagicMethods'),
-            array('GeneratedHydratorTestAsset\\ClassWithMixedProperties'),
-        );
+        return [
+            [BaseClass::class],
+            [ClassWithMagicMethods::class],
+            [ClassWithByRefMagicMethods::class],
+            [ClassWithMixedProperties::class],
+        ];
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function getExpectedImplementedInterfaces()
+    protected function getExpectedImplementedInterfaces() : array
     {
-        return array('Zend\\Hydrator\\HydratorInterface');
+        return [HydratorInterface::class];
     }
 }

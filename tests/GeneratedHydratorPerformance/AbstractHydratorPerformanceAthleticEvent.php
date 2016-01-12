@@ -24,6 +24,7 @@ use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use ReflectionProperty;
 use Zend\Hydrator\ClassMethods;
+use Zend\Hydrator\HydratorInterface;
 use Zend\Hydrator\ObjectProperty;
 
 /**
@@ -67,8 +68,6 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
 
     /**
      * Method responsible for testing the object to test against
-     *
-     * @return object
      */
     abstract protected function getHydratedObject();
 
@@ -163,7 +162,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      *
      * @return \Zend\Hydrator\HydratorInterface
      */
-    private function generateHydrator($object)
+    private function generateHydrator($object) : HydratorInterface
     {
         $config = new Configuration(get_class($object));
 
@@ -179,7 +178,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      *
      * @return \ReflectionProperty[]
      */
-    private function generateReflectionProperties($object)
+    private function generateReflectionProperties($object) : array
     {
         $reflection = new ReflectionClass($object);
         $properties = [];
@@ -198,7 +197,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      *
      * @return mixed[]
      */
-    private function generateHydrationData($object)
+    private function generateHydrationData($object) : array
     {
         $reflection = new ReflectionClass($object);
         $data       = [];
