@@ -21,13 +21,11 @@ declare(strict_types=1);
 namespace GeneratedHydratorTest\CodeGenerator\Visitor;
 
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
-use PhpParser\Lexer;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;

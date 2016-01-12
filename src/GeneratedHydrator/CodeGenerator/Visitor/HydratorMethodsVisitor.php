@@ -21,13 +21,11 @@ declare(strict_types=1);
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
-use PhpParser\Lexer;
 use PhpParser\Node;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use ReflectionClass;
 use ReflectionProperty;

@@ -127,7 +127,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
      *
      * @param object $instance
      *
-     * @return \GeneratedHydratorTestAsset\HydratedObject|\Zend\Hydrator\HydratorInterface
+     * @return HydratorInterface
      */
     private function generateHydrator($instance) : HydratorInterface
     {
