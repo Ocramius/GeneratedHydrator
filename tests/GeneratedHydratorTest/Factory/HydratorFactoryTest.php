@@ -20,7 +20,10 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTest\Factory;
 
+use CodeGenerationUtils\Autoloader\AutoloaderInterface;
+use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Factory\HydratorFactory;
 use PHPUnit_Framework_TestCase;
 
@@ -102,14 +105,15 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testWillTryAutoGeneration()
     {
-        $className      = UniqueIdentifierGenerator::getIdentifier('foo');
+        $className          = UniqueIdentifierGenerator::getIdentifier('foo');
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('bar');
-        $generator      = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
-        $autoloader     = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
+        $generator          = $this->getMock(GeneratorStrategyInterface::class);
+        $autoloader         = $this->getMock(AutoloaderInterface::class);
 
         $this->config->expects(self::any())->method('getHydratedClassName')->will(self::returnValue($className));
         $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will(self::returnValue(true));
         $this->config->expects(self::any())->method('getGeneratorStrategy')->will(self::returnValue($generator));
+        $this->config->expects(self::any())->method('getHydratorGenerator')->willReturn(new HydratorGenerator());
         $this
             ->config
             ->expects(self::any())
