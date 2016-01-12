@@ -52,9 +52,9 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSetHydratedClassName()
     {
-        $this->assertSame('test', $this->configuration->getHydratedClassName());
+        self::assertSame('test', $this->configuration->getHydratedClassName());
         $this->configuration->setHydratedClassName('bar');
-        $this->assertSame('bar', $this->configuration->getHydratedClassName());
+        self::assertSame('bar', $this->configuration->getHydratedClassName());
     }
 
     /**
@@ -62,7 +62,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateFactory()
     {
-        $this->assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
+        self::assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
     }
 
     /**
@@ -71,13 +71,13 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSetAutoGenerateProxies()
     {
-        $this->assertTrue($this->configuration->doesAutoGenerateProxies(), 'Default setting check for BC');
+        self::assertTrue($this->configuration->doesAutoGenerateProxies(), 'Default setting check for BC');
 
         $this->configuration->setAutoGenerateProxies(false);
-        $this->assertFalse($this->configuration->doesAutoGenerateProxies());
+        self::assertFalse($this->configuration->doesAutoGenerateProxies());
 
         $this->configuration->setAutoGenerateProxies(true);
-        $this->assertTrue($this->configuration->doesAutoGenerateProxies());
+        self::assertTrue($this->configuration->doesAutoGenerateProxies());
     }
 
     /**
@@ -86,14 +86,14 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSetProxiesNamespace()
     {
-        $this->assertSame(
+        self::assertSame(
             'GeneratedHydratorGeneratedClass',
             $this->configuration->getGeneratedClassesNamespace(),
             'Default setting check for BC'
         );
 
         $this->configuration->setGeneratedClassesNamespace('foo');
-        $this->assertSame('foo', $this->configuration->getGeneratedClassesNamespace());
+        self::assertSame('foo', $this->configuration->getGeneratedClassesNamespace());
     }
 
     /**
@@ -102,7 +102,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetClassNameInflector()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface',
             $this->configuration->getClassNameInflector()
         );
@@ -110,7 +110,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $inflector = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
 
         $this->configuration->setClassNameInflector($inflector);
-        $this->assertSame($inflector, $this->configuration->getClassNameInflector());
+        self::assertSame($inflector, $this->configuration->getClassNameInflector());
     }
 
     /**
@@ -120,7 +120,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testSetGetGeneratorStrategy()
     {
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface',
             $this->configuration->getGeneratorStrategy()
         );
@@ -128,7 +128,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $strategy = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
 
         $this->configuration->setGeneratorStrategy($strategy);
-        $this->assertSame($strategy, $this->configuration->getGeneratorStrategy());
+        self::assertSame($strategy, $this->configuration->getGeneratorStrategy());
     }
 
     /**
@@ -137,10 +137,10 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetProxiesTargetDir()
     {
-        $this->assertTrue(is_dir($this->configuration->getGeneratedClassesTargetDir()));
+        self::assertTrue(is_dir($this->configuration->getGeneratedClassesTargetDir()));
 
         $this->configuration->setGeneratedClassesTargetDir(__DIR__);
-        $this->assertSame(__DIR__, $this->configuration->getGeneratedClassesTargetDir());
+        self::assertSame(__DIR__, $this->configuration->getGeneratedClassesTargetDir());
     }
 
     /**
@@ -149,7 +149,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testSetGetGeneratedClassAutoloader()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'CodeGenerationUtils\\Autoloader\\AutoloaderInterface',
             $this->configuration->getGeneratedClassAutoloader()
         );
@@ -157,6 +157,6 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         $autoloader = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
         $this->configuration->setGeneratedClassAutoloader($autoloader);
-        $this->assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
+        self::assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
     }
 }

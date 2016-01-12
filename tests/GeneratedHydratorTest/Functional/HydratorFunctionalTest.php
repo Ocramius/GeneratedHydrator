@@ -72,8 +72,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         $generatedClass = $this->generateHydrator($instance);
 
-        $this->assertSame($initialData, $generatedClass->extract($instance));
-        $this->assertSame($instance, $generatedClass->hydrate($newData, $instance));
+        self::assertSame($initialData, $generatedClass->extract($instance));
+        self::assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
         $inspectionData = array();
 
@@ -88,8 +88,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             $inspectionData[$propertyName] = $property->getValue($instance);
         }
 
-        $this->assertSame($inspectionData, $newData);
-        $this->assertSame($inspectionData, $generatedClass->extract($instance));
+        self::assertSame($inspectionData, $newData);
+        self::assertSame($inspectionData, $generatedClass->extract($instance));
     }
 
     public function testDisabledMethod()

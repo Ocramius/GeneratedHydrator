@@ -89,7 +89,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $factory        = new HydratorFactory($this->config);
         $generatedClass = $factory->getHydratorClass();
 
-        $this->assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', new $generatedClass);
+        self::assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', new $generatedClass);
     }
 
     /**
@@ -150,6 +150,6 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */
         $generatedClass = $factory->getHydratorClass();
 
-        $this->assertInstanceOf($generatedClassName, new $generatedClass);
+        self::assertInstanceOf($generatedClassName, new $generatedClass);
     }
 }

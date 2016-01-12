@@ -57,10 +57,10 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
         /* @var $modifiedAst Class_ */
         $modifiedNode = $visitor->leaveNode($classNode);
 
-        $this->assertMethodExistence('hydrate', $modifiedNode);
-        $this->assertMethodExistence('extract', $modifiedNode);
-        $this->assertMethodExistence('__construct', $modifiedNode);
-        $this->assertContainsPropertyAccessors($modifiedNode, $properties);
+        self::assertMethodExistence('hydrate', $modifiedNode);
+        self::assertMethodExistence('extract', $modifiedNode);
+        self::assertMethodExistence('__construct', $modifiedNode);
+        self::assertContainsPropertyAccessors($modifiedNode, $properties);
     }
 
     /**
@@ -73,7 +73,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     {
         $members = $class->stmts;
 
-        $this->assertCount(
+        self::assertCount(
             1,
             array_filter(
                 $members,

@@ -46,7 +46,7 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
         $accessor1 = new PropertyAccessor($property, 'foo');
         $accessor2 = new PropertyAccessor($property, 'foo');
 
-        $this->assertNotSame($accessor1, $accessor2);
+        self::assertNotSame($accessor1, $accessor2);
     }
 
     /**
@@ -59,7 +59,7 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
 
         $accessor = new PropertyAccessor($property, 'foo');
 
-        $this->assertSame($property, $accessor->getOriginalProperty());
+        self::assertSame($property, $accessor->getOriginalProperty());
     }
 
     /**
@@ -71,6 +71,6 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
 
         $accessor = new PropertyAccessor($property, 'Foo');
 
-        $this->assertStringMatchesFormat('publicPropertyFoo%s', $accessor->props[0]->name);
+        self::assertStringMatchesFormat('publicPropertyFoo%s', $accessor->props[0]->name);
     }
 }

@@ -38,6 +38,6 @@ class DisabledMethodExceptionTest extends PHPUnit_Framework_TestCase
     {
         $exception = DisabledMethodException::disabledMethod('foo::bar');
 
-        $this->assertSame('Method "foo::bar" is forcefully disabled', $exception->getMessage());
+        self::assertSame('Method "foo::bar" is forcefully disabled', $exception->getMessage());
     }
 }
