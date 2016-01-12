@@ -28,6 +28,7 @@ use ReflectionProperty;
 use Zend\Hydrator\ClassMethods;
 use Zend\Hydrator\HydratorInterface;
 use Zend\Hydrator\ObjectProperty;
+use Zend\Hydrator\Reflection;
 
 /**
  * Base performance test for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
@@ -89,7 +90,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
         $this->hydrationData             = $this->generateHydrationData($this->hydratedObject);
         $this->objectPropertyHydrator    = new ObjectProperty();
         $this->classMethodsHydrator      = new ClassMethods(false);
-        $this->reflectionHydrator        = new Reflection(false);
+        $this->reflectionHydrator        = new Reflection();
     }
 
     /**
