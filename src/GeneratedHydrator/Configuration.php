@@ -107,9 +107,9 @@ class Configuration
     /**
      * @param bool $autoGenerateProxies
      */
-    public function setAutoGenerateProxies($autoGenerateProxies)
+    public function setAutoGenerateProxies(bool $autoGenerateProxies)
     {
-        $this->autoGenerateProxies = (bool) $autoGenerateProxies;
+        $this->autoGenerateProxies = $autoGenerateProxies;
     }
 
     /**
