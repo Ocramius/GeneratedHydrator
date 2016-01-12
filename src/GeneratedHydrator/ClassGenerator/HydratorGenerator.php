@@ -27,7 +27,7 @@ use PhpParser\NodeTraverser;
 use ReflectionClass;
 
 /**
- * Generator for highly performing {@see \Zend\Stdlib\Hydrator\HydratorInterface}
+ * Generator for highly performing {@see \Zend\Hydrator\HydratorInterface}
  * for objects
  *
  * {@inheritDoc}
@@ -66,7 +66,7 @@ class HydratorGenerator
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
         $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
         $implementor->addVisitor(
-            new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Stdlib\\Hydrator\\HydratorInterface'))
+            new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Hydrator\\HydratorInterface'))
         );
 
         return $implementor->traverse($ast);

@@ -23,8 +23,8 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use ReflectionProperty;
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\ObjectProperty;
+use Zend\Hydrator\ClassMethods;
+use Zend\Hydrator\ObjectProperty;
 
 /**
  * Base performance test for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
@@ -36,7 +36,7 @@ use Zend\Stdlib\Hydrator\ObjectProperty;
 abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
 {
     /**
-     * @var \Zend\Stdlib\Hydrator\HydratorInterface
+     * @var \Zend\Hydrator\HydratorInterface
      */
     protected $hydrator;
 
@@ -56,12 +56,12 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     protected $hydrationData;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\ObjectProperty
+     * @var \Zend\Hydrator\ObjectProperty
      */
     protected $objectPropertyHydrator;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\ClassMethods
+     * @var \Zend\Hydrator\ClassMethods
      */
     protected $classMethodsHydrator;
 
@@ -161,7 +161,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      *
      * @param object $object
      *
-     * @return \Zend\Stdlib\Hydrator\HydratorInterface
+     * @return \Zend\Hydrator\HydratorInterface
      */
     private function generateHydrator($object)
     {

@@ -86,6 +86,6 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
      */
     protected function getExpectedImplementedInterfaces()
     {
-        return array('Zend\\Stdlib\\Hydrator\\HydratorInterface');
+        return array('Zend\\Hydrator\\HydratorInterface');
     }
 }

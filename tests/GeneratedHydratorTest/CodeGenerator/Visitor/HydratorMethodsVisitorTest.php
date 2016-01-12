@@ -48,7 +48,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      * @param Class_   $classNode
      * @param string[] $properties
      */
-    public function testBasicCodeGeneration($className, Class_ $classNode, array $properties)
+    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties)
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
@@ -67,7 +67,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      * @param string $methodName
      * @param Class_ $class
      */
-    private function assertMethodExistence($methodName, Class_ $class)
+    private function assertMethodExistence(string $methodName, Class_ $class)
     {
         $members = $class->stmts;
 
