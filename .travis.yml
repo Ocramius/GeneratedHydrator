@@ -16,4 +16,5 @@ script:
   - ./vendor/bin/phpcs --standard=PSR2 ./src/ ./tests/
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi
