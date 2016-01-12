@@ -45,7 +45,7 @@ class HydratorGenerator
      *
      * @return \PhpParser\Node[]
      */
-    public function generate(ReflectionClass $originalClass)
+    public function generate(ReflectionClass $originalClass) : array
     {
         $builder   = new ClassBuilder();
 
@@ -54,13 +54,9 @@ class HydratorGenerator
         // step 1: remove methods that are not used
         $cleaner = new NodeTraverser();
 
-        $cleaner->addVisitor(
-            new MethodDisablerVisitor(
-                function () {
-                    return false;
-                }
-            )
-        );
+        $cleaner->addVisitor(new MethodDisablerVisitor(function () : bool {
+            return false;
+        }));
 
         $ast = $cleaner->traverse($ast);
 

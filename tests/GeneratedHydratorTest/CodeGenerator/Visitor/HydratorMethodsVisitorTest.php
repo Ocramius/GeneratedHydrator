@@ -26,6 +26,7 @@ use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Parser;
+use PhpParser\ParserFactory;
 use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionClass;
@@ -128,7 +129,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
             }
         }
 
-        if (empty($lookupProperties)) {
+        if (! $lookupProperties) {
             return;
         }
 
@@ -143,7 +144,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      */
     public function classAstProvider()
     {
-        $parser = new Parser(new Lexer());
+        $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 
         $className = UniqueIdentifierGenerator::getIdentifier('Foo');
         $classCode = 'class ' . $className . ' { private $bar; private $baz; protected $tab; '

@@ -10,6 +10,7 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Parser;
+use PhpParser\ParserFactory;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -52,7 +53,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     /**
      * @param Node $node
      *
-     * @return null|Class_|void
+     * @return null|Class_
      */
     public function leaveNode(Node $node)
     {
@@ -87,9 +88,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 . "}, null, " . var_export($className, true) . ");";
         }
 
-        $parser = new Parser(new Lexer());
-
-        $method->stmts = $parser->parse('<?php ' . implode("\n", $bodyParts));
+        $method->stmts = (new ParserFactory)
+            ->create(ParserFactory::ONLY_PHP7)
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**
@@ -122,21 +123,23 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body .= "\nreturn \$object;";
 
-        $parser = new Parser(new Lexer());
-
-        $method->stmts = $parser->parse('<?php ' . $body);
+        $method->stmts = (new ParserFactory())
+            ->create(ParserFactory::ONLY_PHP7)
+            ->parse('<?php ' . $body);
     }
 
     /**
      * @param ClassMethod $method
+     *
+     * @return void
      */
     private function replaceExtract(ClassMethod $method)
     {
-        $parser = new Parser(new Lexer());
+        $parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
 
         $method->params = array(new Param('object'));
 
-        if (empty($this->accessibleProperties) && empty($this->propertyWriters)) {
+        if (! $this->accessibleProperties && ! $this->propertyWriters) {
             // no properties to hydrate
 
             $method->stmts = $parser->parse('<?php return array();');
@@ -146,14 +149,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body = '';
 
-        if (! empty($this->propertyWriters)) {
+        if ($this->propertyWriters) {
             $body = "\$data = (array) \$object;\n\n";
         }
 
         $body .= 'return array(';
 
         foreach ($this->accessibleProperties as $accessibleProperty) {
-            if (empty($this->propertyWriters) || ! $accessibleProperty->isProtected()) {
+            if (! $this->propertyWriters || ! $accessibleProperty->isProtected()) {
                 $body .= "\n    "
                     . var_export($accessibleProperty->getName(), true)
                     . ' => $object->' . $accessibleProperty->getName() . ',';
@@ -179,7 +182,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $body .= "\n);";
 
         $method->stmts = $parser->parse('<?php ' . $body);
-
     }
 
     /**
@@ -190,11 +192,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ClassMethod
      */
-    private function findOrCreateMethod(Class_ $class, $name)
+    private function findOrCreateMethod(Class_ $class, $name) : ClassMethod
     {
         $foundMethods = array_filter(
             $class->getMethods(),
-            function (ClassMethod $method) use ($name) {
+            function (ClassMethod $method) use ($name) : bool {
                 return $name === $method->name;
             }
         );
@@ -215,11 +217,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ReflectionProperty[]
      */
-    private function getProtectedProperties(ReflectionClass $reflectedClass)
+    private function getProtectedProperties(ReflectionClass $reflectedClass) : array
     {
         return array_filter(
             $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
+            function (ReflectionProperty $property) : bool {
                 return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
             }
         );
@@ -232,11 +234,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ReflectionProperty[]
      */
-    private function getPrivateProperties(ReflectionClass $reflectedClass)
+    private function getPrivateProperties(ReflectionClass $reflectedClass) : array
     {
         return array_filter(
             $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
+            function (ReflectionProperty $property) : bool {
                 return $property->isPrivate() && ! $property->isStatic();
             }
         );

@@ -34,13 +34,13 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 class PropertyAccessor extends Property
 {
     /**
-     * @var \ReflectionProperty
+     * @var ReflectionProperty
      */
     protected $accessedProperty;
 
     /**
-     * @param \ReflectionProperty $accessedProperty
-     * @param string              $nameSuffix
+     * @param ReflectionProperty $accessedProperty
+     * @param string             $nameSuffix
      */
     public function __construct(ReflectionProperty $accessedProperty, $nameSuffix)
     {
@@ -55,9 +55,9 @@ class PropertyAccessor extends Property
     }
 
     /**
-     * @return \ReflectionProperty
+     * @return ReflectionProperty
      */
-    public function getOriginalProperty()
+    public function getOriginalProperty() : ReflectionProperty
     {
         return $this->accessedProperty;
     }

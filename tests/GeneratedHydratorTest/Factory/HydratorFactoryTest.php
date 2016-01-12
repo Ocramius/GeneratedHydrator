@@ -124,13 +124,11 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($generatedClassName)
-            ->will(
-                $this->returnCallback(
-                    function () use ($generatedClassName) {
-                        eval('class ' . $generatedClassName . ' {}');
-                    }
-                )
-            );
+            ->will($this->returnCallback(function () use ($generatedClassName) {
+                eval('class ' . $generatedClassName . ' {}');
+
+                return true;
+            }));
 
         $this
             ->inflector
