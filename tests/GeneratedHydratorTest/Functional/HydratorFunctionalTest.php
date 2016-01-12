@@ -138,12 +138,12 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             ->expects(self::any())
             ->method('getGeneratedClassName')
             ->with($parentClassName)
-            ->will($this->returnValue($generatedClassName));
+            ->will(self::returnValue($generatedClassName));
         $inflector
             ->expects(self::any())
             ->method('getUserClassName')
             ->with($parentClassName)
-            ->will($this->returnValue($parentClassName));
+            ->will(self::returnValue($parentClassName));
 
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());

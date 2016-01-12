@@ -57,7 +57,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->config
             ->expects(self::any())
             ->method('getClassNameInflector')
-            ->will($this->returnValue($this->inflector));
+            ->will(self::returnValue($this->inflector));
     }
 
     /**
@@ -70,21 +70,21 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     {
         $className = UniqueIdentifierGenerator::getIdentifier('foo');
 
-        $this->config->expects(self::any())->method('getHydratedClassName')->will($this->returnValue($className));
-        $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will($this->returnValue(false));
+        $this->config->expects(self::any())->method('getHydratedClassName')->will(self::returnValue($className));
+        $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will(self::returnValue(false));
         $this
             ->inflector
             ->expects(self::any())
             ->method('getUserClassName')
             ->with($className)
-            ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
+            ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
         $this
             ->inflector
             ->expects($this->once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
-            ->will($this->returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
+            ->will(self::returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
 
         $factory        = new HydratorFactory($this->config);
         $generatedClass = $factory->getHydratorClass();
@@ -107,14 +107,14 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
         $generator      = $this->getMock('CodeGenerationUtils\\GeneratorStrategy\\GeneratorStrategyInterface');
         $autoloader     = $this->getMock('CodeGenerationUtils\\Autoloader\\AutoloaderInterface');
 
-        $this->config->expects(self::any())->method('getHydratedClassName')->will($this->returnValue($className));
-        $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will($this->returnValue(true));
-        $this->config->expects(self::any())->method('getGeneratorStrategy')->will($this->returnValue($generator));
+        $this->config->expects(self::any())->method('getHydratedClassName')->will(self::returnValue($className));
+        $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will(self::returnValue(true));
+        $this->config->expects(self::any())->method('getGeneratorStrategy')->will(self::returnValue($generator));
         $this
             ->config
             ->expects(self::any())
             ->method('getGeneratedClassAutoloader')
-            ->will($this->returnValue($autoloader));
+            ->will(self::returnValue($autoloader));
 
         $generator
             ->expects($this->once())
@@ -137,14 +137,14 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
-            ->will($this->returnValue($generatedClassName));
+            ->will(self::returnValue($generatedClassName));
 
         $this
             ->inflector
             ->expects($this->once())
             ->method('getUserClassName')
             ->with($className)
-            ->will($this->returnValue('GeneratedHydratorTestAsset\\BaseClass'));
+            ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
         $factory        = new HydratorFactory($this->config);
         /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */
