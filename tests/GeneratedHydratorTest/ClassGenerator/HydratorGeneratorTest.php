@@ -16,15 +16,22 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorTest\ClassGenerator;
 
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use GeneratedHydratorTestAsset\BaseClass;
+use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
+use GeneratedHydratorTestAsset\ClassWithMagicMethods;
+use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use PhpParser\NodeTraverser;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
+use Zend\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}
@@ -40,8 +47,10 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
      * @dataProvider getTestedImplementations
      *
      * Verifies that generated code is valid and implements expected interfaces
+     *
+     * @param string $className
      */
-    public function testGeneratesValidCode($className)
+    public function testGeneratesValidCode(string $className)
     {
         $generator          = new HydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
@@ -55,37 +64,37 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
         $generatedReflection = new ReflectionClass($generatedClassName);
 
         if ($originalClass->isInterface()) {
-            $this->assertTrue($generatedReflection->implementsInterface($className));
+            self::assertTrue($generatedReflection->implementsInterface($className));
         } else {
-            $this->assertInstanceOf('ReflectionClass', $generatedReflection->getParentClass());
-            $this->assertSame($originalClass->getName(), $generatedReflection->getParentClass()->getName());
+            self::assertInstanceOf('ReflectionClass', $generatedReflection->getParentClass());
+            self::assertSame($originalClass->getName(), $generatedReflection->getParentClass()->getName());
         }
 
-        $this->assertSame($generatedClassName, $generatedReflection->getName());
+        self::assertSame($generatedClassName, $generatedReflection->getName());
 
         foreach ($this->getExpectedImplementedInterfaces() as $interface) {
-            $this->assertTrue($generatedReflection->implementsInterface($interface));
+            self::assertTrue($generatedReflection->implementsInterface($interface));
         }
     }
 
     /**
      * @return array
      */
-    public function getTestedImplementations()
+    public function getTestedImplementations() : array
     {
-        return array(
-            array('GeneratedHydratorTestAsset\\BaseClass'),
-            array('GeneratedHydratorTestAsset\\ClassWithMagicMethods'),
-            array('GeneratedHydratorTestAsset\\ClassWithByRefMagicMethods'),
-            array('GeneratedHydratorTestAsset\\ClassWithMixedProperties'),
-        );
+        return [
+            [BaseClass::class],
+            [ClassWithMagicMethods::class],
+            [ClassWithByRefMagicMethods::class],
+            [ClassWithMixedProperties::class],
+        ];
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function getExpectedImplementedInterfaces()
+    protected function getExpectedImplementedInterfaces() : array
     {
-        return array('Zend\\Stdlib\\Hydrator\\HydratorInterface');
+        return [HydratorInterface::class];
     }
 }

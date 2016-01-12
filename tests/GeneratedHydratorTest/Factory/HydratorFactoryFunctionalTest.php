@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorTest\Factory;
 
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
@@ -78,6 +80,6 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-        $this->assertInstanceOf('Zend\\Stdlib\\Hydrator\\HydratorInterface', new $generatedClass);
+        self::assertInstanceOf('Zend\\Hydrator\\HydratorInterface', new $generatedClass);
     }
 }

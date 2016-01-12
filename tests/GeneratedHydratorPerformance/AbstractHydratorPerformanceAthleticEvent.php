@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorPerformance;
 
 use Athletic\AthleticEvent;
@@ -23,8 +25,10 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\Configuration;
 use ReflectionClass;
 use ReflectionProperty;
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\ObjectProperty;
+use Zend\Hydrator\ClassMethods;
+use Zend\Hydrator\HydratorInterface;
+use Zend\Hydrator\ObjectProperty;
+use Zend\Hydrator\Reflection;
 
 /**
  * Base performance test for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
@@ -36,7 +40,7 @@ use Zend\Stdlib\Hydrator\ObjectProperty;
 abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
 {
     /**
-     * @var \Zend\Stdlib\Hydrator\HydratorInterface
+     * @var \Zend\Hydrator\HydratorInterface
      */
     protected $hydrator;
 
@@ -56,19 +60,22 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     protected $hydrationData;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\ObjectProperty
+     * @var \Zend\Hydrator\ObjectProperty
      */
     protected $objectPropertyHydrator;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\ClassMethods
+     * @var \Zend\Hydrator\ClassMethods
      */
     protected $classMethodsHydrator;
 
     /**
+     * @var \Zend\Stdlib\Hydrator\Reflection
+     */
+    protected $reflectionHydrator;
+
+    /**
      * Method responsible for testing the object to test against
-     *
-     * @return object
      */
     abstract protected function getHydratedObject();
 
@@ -83,6 +90,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
         $this->hydrationData             = $this->generateHydrationData($this->hydratedObject);
         $this->objectPropertyHydrator    = new ObjectProperty();
         $this->classMethodsHydrator      = new ClassMethods(false);
+        $this->reflectionHydrator        = new Reflection();
     }
 
     /**
@@ -113,6 +121,15 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     public function classMethodsHydrate()
     {
         $data = $this->classMethodsHydrator->hydrate($this->hydrationData, $this->hydratedObject);
+    }
+
+    /**
+     * @iterations 20000
+     * @group hydration
+     */
+    public function reflectionPropertiesHydrate()
+    {
+        $data = $this->reflectionHydrator->hydrate($this->hydrationData, $this->hydratedObject);
     }
 
     /**
@@ -157,13 +174,22 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     }
 
     /**
+     * @iterations 20000
+     * @group extraction
+     */
+    public function reflectionPropertiesExtract()
+    {
+        $data = $this->reflectionHydrator->extract($this->hydratedObject);
+    }
+
+    /**
      * Generates a hydrator for the given class name, and retrieves an instance of it
      *
      * @param object $object
      *
-     * @return \Zend\Stdlib\Hydrator\HydratorInterface
+     * @return \Zend\Hydrator\HydratorInterface
      */
-    private function generateHydrator($object)
+    private function generateHydrator($object) : HydratorInterface
     {
         $config = new Configuration(get_class($object));
 
@@ -179,7 +205,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      *
      * @return \ReflectionProperty[]
      */
-    private function generateReflectionProperties($object)
+    private function generateReflectionProperties($object) : array
     {
         $reflection = new ReflectionClass($object);
         $properties = [];
@@ -198,7 +224,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
      *
      * @return mixed[]
      */
-    private function generateHydrationData($object)
+    private function generateHydrationData($object) : array
     {
         $reflection = new ReflectionClass($object);
         $data       = [];

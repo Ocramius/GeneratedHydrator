@@ -16,16 +16,17 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorTest\CodeGenerator\Visitor;
 
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
-use PhpParser\Lexer;
 use PhpParser\Node;
 use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Parser;
+use PhpParser\ParserFactory;
 use PHPUnit_Framework_TestCase;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionClass;
@@ -47,17 +48,17 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      * @param Class_   $classNode
      * @param string[] $properties
      */
-    public function testBasicCodeGeneration($className, Class_ $classNode, array $properties)
+    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties)
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
         /* @var $modifiedAst Class_ */
         $modifiedNode = $visitor->leaveNode($classNode);
 
-        $this->assertMethodExistence('hydrate', $modifiedNode);
-        $this->assertMethodExistence('extract', $modifiedNode);
-        $this->assertMethodExistence('__construct', $modifiedNode);
-        $this->assertContainsPropertyAccessors($modifiedNode, $properties);
+        self::assertMethodExistence('hydrate', $modifiedNode);
+        self::assertMethodExistence('extract', $modifiedNode);
+        self::assertMethodExistence('__construct', $modifiedNode);
+        self::assertContainsPropertyAccessors($modifiedNode, $properties);
     }
 
     /**
@@ -66,15 +67,15 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      * @param string $methodName
      * @param Class_ $class
      */
-    private function assertMethodExistence($methodName, Class_ $class)
+    private function assertMethodExistence(string $methodName, Class_ $class)
     {
         $members = $class->stmts;
 
-        $this->assertCount(
+        self::assertCount(
             1,
             array_filter(
                 $members,
-                function (Node $node) use ($methodName) {
+                function (Node $node) use ($methodName) : bool {
                     return $node instanceof ClassMethod
                         && $methodName === $node->name;
                 }
@@ -87,6 +88,8 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
      *
      * @param Class_   $class
      * @param string[] $properties
+     *
+     * @return void
      */
     private function assertContainsPropertyAccessors(Class_ $class, array $properties)
     {
@@ -100,7 +103,7 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
 
                         if ($var instanceof PropertyFetch && is_string($var->name)) {
                             if (! isset($lookupProperties[$var->name])) {
-                                $this->fail(sprintf('Property "%s" should not be hydrated', $var->name));
+                                self::fail(sprintf('Property "%s" should not be hydrated', $var->name));
                             }
 
                             unset($lookupProperties[$var->name]);
@@ -115,10 +118,10 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
                         $var = $assignment->var;
 
                         if ($var instanceof PropertyFetch
-                            && preg_match('/(.*)Writer[a-zA-Z0-9]+/', $assignment->var->name, $matches)
+                            && preg_match('/(.*)Writer[a-zA-Z0-9]+/', $var->name, $matches)
                         ) {
                             if (! isset($lookupProperties[$matches[1]])) {
-                                $this->fail(sprintf('Property "%s" should not be hydrated', $matches[1]));
+                                self::fail(sprintf('Property "%s" should not be hydrated', $matches[1]));
                             }
 
                             unset($lookupProperties[$matches[1]]);
@@ -128,11 +131,11 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
             }
         }
 
-        if (empty($lookupProperties)) {
+        if (! $lookupProperties) {
             return;
         }
 
-        $this->fail(sprintf(
+        self::fail(sprintf(
             'Could not match following properties in the generated code: %s',
             var_export(array_flip($lookupProperties), true)
         ));
@@ -141,9 +144,9 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
     /**
      * @return \PhpParser\Node[][]
      */
-    public function classAstProvider()
+    public function classAstProvider() : array
     {
-        $parser = new Parser(new Lexer());
+        $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 
         $className = UniqueIdentifierGenerator::getIdentifier('Foo');
         $classCode = 'class ' . $className . ' { private $bar; private $baz; protected $tab; '

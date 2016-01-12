@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorPerformance;
 
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
@@ -32,7 +34,7 @@ class MixedPropertiesHydrationEvent extends AbstractHydratorPerformanceAthleticE
     /**
      * {@inheritDoc}
      */
-    protected function getHydratedObject()
+    protected function getHydratedObject() : ClassWithMixedProperties
     {
         return new ClassWithMixedProperties();
     }

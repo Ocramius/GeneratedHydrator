@@ -16,11 +16,15 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorTest\Functional;
 
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Exception\DisabledMethodException;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -32,6 +36,7 @@ use GeneratedHydratorTestAsset\HydratedObject;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use stdClass;
+use Zend\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
@@ -69,8 +74,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         $generatedClass = $this->generateHydrator($instance);
 
-        $this->assertSame($initialData, $generatedClass->extract($instance));
-        $this->assertSame($instance, $generatedClass->hydrate($newData, $instance));
+        self::assertSame($initialData, $generatedClass->extract($instance));
+        self::assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
         $inspectionData = array();
 
@@ -85,36 +90,36 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             $inspectionData[$propertyName] = $property->getValue($instance);
         }
 
-        $this->assertSame($inspectionData, $newData);
-        $this->assertSame($inspectionData, $generatedClass->extract($instance));
+        self::assertSame($inspectionData, $newData);
+        self::assertSame($inspectionData, $generatedClass->extract($instance));
     }
 
     public function testDisabledMethod()
     {
-        $this->markTestIncomplete('Methods have to be disabled - currently only removing them');
+        self::markTestIncomplete('Methods have to be disabled - currently only removing them');
 
         $generatedClass = $this->generateHydrator(new HydratedObject());
 
-        $this->setExpectedException('GeneratedHydrator\Exception\DisabledMethodException');
+        $this->setExpectedException(DisabledMethodException::class);
         $generatedClass->doFoo();
     }
 
     /**
      * @return array
      */
-    public function getHydratorClasses()
+    public function getHydratorClasses() : array
     {
-        return array(
-            array(new stdClass()),
-            array(new EmptyClass()),
-            array(new HydratedObject()),
-            array(new BaseClass()),
-            array(new ClassWithPublicProperties()),
-            array(new ClassWithProtectedProperties()),
-            array(new ClassWithPrivateProperties()),
-            array(new ClassWithMixedProperties()),
-            array(new ClassWithStaticProperties()),
-        );
+        return [
+            [new stdClass()],
+            [new EmptyClass()],
+            [new HydratedObject()],
+            [new BaseClass()],
+            [new ClassWithPublicProperties()],
+            [new ClassWithProtectedProperties()],
+            [new ClassWithPrivateProperties()],
+            [new ClassWithMixedProperties()],
+            [new ClassWithStaticProperties()],
+        ];
     }
 
     /**
@@ -122,25 +127,26 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
      *
      * @param object $instance
      *
-     * @return \GeneratedHydratorTestAsset\HydratedObject|\Zend\Stdlib\Hydrator\HydratorInterface
+     * @return HydratorInterface
      */
-    private function generateHydrator($instance)
+    private function generateHydrator($instance) : HydratorInterface
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
-        $inflector          = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
+        /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
+        $inflector          = $this->getMock(ClassNameInflectorInterface::class);
 
         $inflector
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getGeneratedClassName')
             ->with($parentClassName)
-            ->will($this->returnValue($generatedClassName));
+            ->will(self::returnValue($generatedClassName));
         $inflector
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getUserClassName')
             ->with($parentClassName)
-            ->will($this->returnValue($parentClassName));
+            ->will(self::returnValue($parentClassName));
 
         $config->setClassNameInflector($inflector);
         $config->setGeneratorStrategy(new EvaluatingGeneratorStrategy());

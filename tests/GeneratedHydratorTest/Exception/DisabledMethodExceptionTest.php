@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorTest\Exception;
 
 use PHPUnit_Framework_TestCase;
@@ -36,6 +38,6 @@ class DisabledMethodExceptionTest extends PHPUnit_Framework_TestCase
     {
         $exception = DisabledMethodException::disabledMethod('foo::bar');
 
-        $this->assertSame('Method "foo::bar" is forcefully disabled', $exception->getMessage());
+        self::assertSame('Method "foo::bar" is forcefully disabled', $exception->getMessage());
     }
 }

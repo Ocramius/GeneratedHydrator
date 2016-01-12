@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydrator\ClassGenerator;
 
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
@@ -27,7 +29,7 @@ use PhpParser\NodeTraverser;
 use ReflectionClass;
 
 /**
- * Generator for highly performing {@see \Zend\Stdlib\Hydrator\HydratorInterface}
+ * Generator for highly performing {@see \Zend\Hydrator\HydratorInterface}
  * for objects
  *
  * {@inheritDoc}
@@ -35,7 +37,7 @@ use ReflectionClass;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorGenerator
+class HydratorGenerator implements HydratorGeneratorInterface
 {
     /**
      * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
@@ -45,7 +47,7 @@ class HydratorGenerator
      *
      * @return \PhpParser\Node[]
      */
-    public function generate(ReflectionClass $originalClass)
+    public function generate(ReflectionClass $originalClass) : array
     {
         $builder   = new ClassBuilder();
 
@@ -54,13 +56,9 @@ class HydratorGenerator
         // step 1: remove methods that are not used
         $cleaner = new NodeTraverser();
 
-        $cleaner->addVisitor(
-            new MethodDisablerVisitor(
-                function () {
-                    return false;
-                }
-            )
-        );
+        $cleaner->addVisitor(new MethodDisablerVisitor(function () : bool {
+            return false;
+        }));
 
         $ast = $cleaner->traverse($ast);
 
@@ -70,7 +68,7 @@ class HydratorGenerator
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
         $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
         $implementor->addVisitor(
-            new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Stdlib\\Hydrator\\HydratorInterface'))
+            new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Hydrator\\HydratorInterface'))
         );
 
         return $implementor->traverse($ast);

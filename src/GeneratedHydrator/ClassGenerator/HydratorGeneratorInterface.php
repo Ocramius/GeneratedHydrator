@@ -16,26 +16,24 @@
  * and is licensed under the MIT license.
  */
 
-declare(strict_types=1);
+namespace GeneratedHydrator\ClassGenerator;
 
-namespace GeneratedHydratorPerformance;
-
-use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
+use ReflectionClass;
 
 /**
- * Performance tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced
- * objects
+ * Interface for the hydrator generator
  *
- * @author Marco Pivetta <ocramius@gmail.com>
+ * @author Magnus Nordlander <magnus@fervo.se>
  * @license MIT
  */
-class ProtectedPropertiesHydrationEvent extends AbstractHydratorPerformanceAthleticEvent
+interface HydratorGeneratorInterface
 {
     /**
-     * {@inheritDoc}
+     * Generates an AST of {@see \PHPParser_Node[]} out of a given reflection class
+     *
+     * @param \ReflectionClass $originalClass
+     *
+     * @return \PHPParser_Node[]
      */
-    protected function getHydratedObject() : ClassWithProtectedProperties
-    {
-        return new ClassWithProtectedProperties();
-    }
+    public function generate(ReflectionClass $originalClass);
 }

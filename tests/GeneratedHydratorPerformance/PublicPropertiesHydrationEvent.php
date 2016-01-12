@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorPerformance;
 
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
@@ -32,7 +34,7 @@ class PublicPropertiesHydrationEvent extends AbstractHydratorPerformanceAthletic
     /**
      * {@inheritDoc}
      */
-    protected function getHydratedObject()
+    protected function getHydratedObject() : ClassWithPublicProperties
     {
         return new ClassWithPublicProperties();
     }

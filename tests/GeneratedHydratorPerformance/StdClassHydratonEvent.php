@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorPerformance;
 
 use stdClass;
@@ -32,7 +34,7 @@ class StdClassHydratonEvent extends AbstractHydratorPerformanceAthleticEvent
     /**
      * {@inheritDoc}
      */
-    protected function getHydratedObject()
+    protected function getHydratedObject() : stdClass
     {
         return new stdClass();
     }

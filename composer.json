@@ -20,16 +20,14 @@
         }
     ],
     "require": {
-        "php":                           "~5.4|~7.0",
-        "zendframework/zend-stdlib":     "~2.3",
-        "nikic/php-parser":              "~1.0",
-        "ocramius/code-generator-utils": "0.3.*"
+        "php":                           "~7.0",
+        "nikic/php-parser":              "~2.0",
+        "ocramius/code-generator-utils": "0.4.*",
+        "zendframework/zend-hydrator":   "^2.0"
     },
     "require-dev": {
-        "phpunit/phpunit":           "~4.0",
-        "phpmd/phpmd":               "1.5.*",
-        "squizlabs/php_codesniffer": "1.5.*",
-        "satooshi/php-coveralls":    "~0.6",
+        "phpunit/phpunit":           "~5.0",
+        "squizlabs/php_codesniffer": "~2.0",
         "athletic/athletic":         "~0.1.6"
     },
     "autoload": {
@@ -46,7 +44,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2.x-dev"
+            "dev-master": "2.1.x-dev"
         }
     }
 }

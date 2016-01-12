@@ -16,6 +16,8 @@
  * and is licensed under the MIT license.
  */
 
+declare(strict_types=1);
+
 namespace GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator;
 
 use PhpParser\Node\Stmt\Class_;
@@ -34,15 +36,15 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 class PropertyAccessor extends Property
 {
     /**
-     * @var \ReflectionProperty
+     * @var ReflectionProperty
      */
     protected $accessedProperty;
 
     /**
-     * @param \ReflectionProperty $accessedProperty
-     * @param string              $nameSuffix
+     * @param ReflectionProperty $accessedProperty
+     * @param string             $nameSuffix
      */
-    public function __construct(ReflectionProperty $accessedProperty, $nameSuffix)
+    public function __construct(ReflectionProperty $accessedProperty, string $nameSuffix)
     {
         $this->accessedProperty = $accessedProperty;
         $originalName           = $this->accessedProperty->getName();
@@ -55,9 +57,9 @@ class PropertyAccessor extends Property
     }
 
     /**
-     * @return \ReflectionProperty
+     * @return ReflectionProperty
      */
-    public function getOriginalProperty()
+    public function getOriginalProperty() : ReflectionProperty
     {
         return $this->accessedProperty;
     }

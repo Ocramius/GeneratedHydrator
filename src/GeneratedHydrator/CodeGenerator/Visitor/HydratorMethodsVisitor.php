@@ -1,15 +1,32 @@
 <?php
+/*
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
+ */
+
+declare(strict_types=1);
 
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
-use PhpParser\Lexer;
 use PhpParser\Node;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\Parser;
+use PhpParser\ParserFactory;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -52,7 +69,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     /**
      * @param Node $node
      *
-     * @return null|Class_|void
+     * @return null|Class_
      */
     public function leaveNode(Node $node)
     {
@@ -84,12 +101,12 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
             $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
                 . "    \$object->" . $property . " = \$value;\n"
-                . "}, null, " . var_export($className, true) . ");";
+                . '}, null, ' . var_export($className, true) . ');';
         }
 
-        $parser = new Parser(new Lexer());
-
-        $method->stmts = $parser->parse('<?php ' . implode("\n", $bodyParts));
+        $method->stmts = (new ParserFactory)
+            ->create(ParserFactory::ONLY_PHP7)
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**
@@ -122,21 +139,23 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body .= "\nreturn \$object;";
 
-        $parser = new Parser(new Lexer());
-
-        $method->stmts = $parser->parse('<?php ' . $body);
+        $method->stmts = (new ParserFactory())
+            ->create(ParserFactory::ONLY_PHP7)
+            ->parse('<?php ' . $body);
     }
 
     /**
      * @param ClassMethod $method
+     *
+     * @return void
      */
     private function replaceExtract(ClassMethod $method)
     {
-        $parser = new Parser(new Lexer());
+        $parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
 
         $method->params = array(new Param('object'));
 
-        if (empty($this->accessibleProperties) && empty($this->propertyWriters)) {
+        if (! $this->accessibleProperties && ! $this->propertyWriters) {
             // no properties to hydrate
 
             $method->stmts = $parser->parse('<?php return array();');
@@ -146,14 +165,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $body = '';
 
-        if (! empty($this->propertyWriters)) {
+        if ($this->propertyWriters) {
             $body = "\$data = (array) \$object;\n\n";
         }
 
         $body .= 'return array(';
 
         foreach ($this->accessibleProperties as $accessibleProperty) {
-            if (empty($this->propertyWriters) || ! $accessibleProperty->isProtected()) {
+            if (! $this->propertyWriters || ! $accessibleProperty->isProtected()) {
                 $body .= "\n    "
                     . var_export($accessibleProperty->getName(), true)
                     . ' => $object->' . $accessibleProperty->getName() . ',';
@@ -179,7 +198,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $body .= "\n);";
 
         $method->stmts = $parser->parse('<?php ' . $body);
-
     }
 
     /**
@@ -190,11 +208,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ClassMethod
      */
-    private function findOrCreateMethod(Class_ $class, $name)
+    private function findOrCreateMethod(Class_ $class, string $name) : ClassMethod
     {
         $foundMethods = array_filter(
             $class->getMethods(),
-            function (ClassMethod $method) use ($name) {
+            function (ClassMethod $method) use ($name) : bool {
                 return $name === $method->name;
             }
         );
@@ -215,11 +233,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ReflectionProperty[]
      */
-    private function getProtectedProperties(ReflectionClass $reflectedClass)
+    private function getProtectedProperties(ReflectionClass $reflectedClass) : array
     {
         return array_filter(
             $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
+            function (ReflectionProperty $property) : bool {
                 return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
             }
         );
@@ -232,11 +250,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ReflectionProperty[]
      */
-    private function getPrivateProperties(ReflectionClass $reflectedClass)
+    private function getPrivateProperties(ReflectionClass $reflectedClass) : array
     {
         return array_filter(
             $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) {
+            function (ReflectionProperty $property) : bool {
                 return $property->isPrivate() && ! $property->isStatic();
             }
         );
