@@ -120,30 +120,6 @@ As you can see, the generated hydrator is 20 times faster than `Zend\Hydrator\Re
 and `Zend\Hydrator\ArraySerializable`, and more than 90 times faster than
 `Zend\Hydrator\ClassMethods`.
 
-## Limitations
-
-As of current implementation, GeneratedHydrator will not distinguish between properties from following
-example:
-
-```php
-class Foo
-{
-    private $bar;
-}
-
-class Bar extends Foo
-{
-    private $bar;
-}
-
-class Baz extends Foo
-{
-    private $bar;
-}
-```
-
-This will be solved in milestone [1.1.0](https://github.com/Ocramius/GeneratedHydrator/issues?milestone=3)
-
 ## Tuning for Production
 
 By default, GeneratedHydrator will generate hydrators on every new request.
