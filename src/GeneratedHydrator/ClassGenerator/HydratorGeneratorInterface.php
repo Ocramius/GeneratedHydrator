@@ -29,11 +29,11 @@ use ReflectionClass;
 interface HydratorGeneratorInterface
 {
     /**
-     * Generates an AST of {@see \PHPParser_Node[]} out of a given reflection class
+     * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
      *
      * @param \ReflectionClass $originalClass
      *
-     * @return \PHPParser_Node[]
+     * @return \PhpParser\Node[]
      */
     public function generate(ReflectionClass $originalClass);
 }
