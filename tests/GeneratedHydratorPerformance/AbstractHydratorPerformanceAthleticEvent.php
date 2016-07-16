@@ -24,7 +24,6 @@ use Athletic\AthleticEvent;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydrator\Configuration;
 use ReflectionClass;
-use ReflectionProperty;
 use Zend\Hydrator\ClassMethods;
 use Zend\Hydrator\HydratorInterface;
 use Zend\Hydrator\ObjectProperty;
