@@ -69,7 +69,7 @@ abstract class AbstractHydratorPerformanceAthleticEvent extends AthleticEvent
     protected $classMethodsHydrator;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\Reflection
+     * @var \Zend\Hydrator\Reflection
      */
     protected $reflectionHydrator;
 
