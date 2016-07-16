@@ -50,7 +50,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->inflector = $this->getMock('CodeGenerationUtils\\Inflector\\ClassNameInflectorInterface');
+        $this->inflector = $this->createMock(ClassNameInflectorInterface::class);
         $this->config    = $this
             ->getMockBuilder('GeneratedHydrator\\Configuration')
             ->disableOriginalConstructor()
@@ -107,8 +107,8 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     {
         $className          = UniqueIdentifierGenerator::getIdentifier('foo');
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('bar');
-        $generator          = $this->getMock(GeneratorStrategyInterface::class);
-        $autoloader         = $this->getMock(AutoloaderInterface::class);
+        $generator          = $this->createMock(GeneratorStrategyInterface::class);
+        $autoloader         = $this->createMock(AutoloaderInterface::class);
 
         $this->config->expects(self::any())->method('getHydratedClassName')->will(self::returnValue($className));
         $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will(self::returnValue(true));

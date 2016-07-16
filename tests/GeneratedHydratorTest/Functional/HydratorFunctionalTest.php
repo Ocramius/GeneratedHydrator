@@ -100,7 +100,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         $generatedClass = $this->generateHydrator(new HydratedObject());
 
-        $this->setExpectedException(DisabledMethodException::class);
+        $this->expectException(DisabledMethodException::class);
         $generatedClass->doFoo();
     }
 
@@ -135,7 +135,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
         /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $inflector          = $this->getMock(ClassNameInflectorInterface::class);
+        $inflector          = $this->createMock(ClassNameInflectorInterface::class);
 
         $inflector
             ->expects(self::any())
