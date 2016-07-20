@@ -109,7 +109,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertInstanceOf(ClassNameInflectorInterface::class, $this->configuration->getClassNameInflector());
 
         /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $inflector = $this->getMock(ClassNameInflectorInterface::class);
+        $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $this->configuration->setClassNameInflector($inflector);
         self::assertSame($inflector, $this->configuration->getClassNameInflector());
@@ -125,7 +125,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertInstanceOf(GeneratorStrategyInterface::class, $this->configuration->getGeneratorStrategy());
 
         /* @var $strategy GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $strategy = $this->getMock(GeneratorStrategyInterface::class);
+        $strategy = $this->createMock(GeneratorStrategyInterface::class);
 
         $this->configuration->setGeneratorStrategy($strategy);
         self::assertSame($strategy, $this->configuration->getGeneratorStrategy());
@@ -152,7 +152,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertInstanceOf(AutoloaderInterface::class, $this->configuration->getGeneratedClassAutoloader());
 
         /* @var $autoloader AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $autoloader = $this->getMock(AutoloaderInterface::class);
+        $autoloader = $this->createMock(AutoloaderInterface::class);
 
         $this->configuration->setGeneratedClassAutoloader($autoloader);
         self::assertSame($autoloader, $this->configuration->getGeneratedClassAutoloader());
@@ -167,7 +167,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
         self::assertInstanceOf(HydratorGeneratorInterface::class, $this->configuration->getHydratorGenerator());
 
         /* @var $generator HydratorGeneratorInterface */
-        $generator = $this->getMock(HydratorGeneratorInterface::class);
+        $generator = $this->createMock(HydratorGeneratorInterface::class);
 
         $this->configuration->setHydratorGenerator($generator);
         self::assertSame($generator, $this->configuration->getHydratorGenerator());
