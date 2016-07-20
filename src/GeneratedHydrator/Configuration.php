@@ -23,8 +23,6 @@ namespace GeneratedHydrator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use GeneratedHydrator\Factory\HydratorFactory;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorFactory;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorFactoryInterface;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\Autoloader\Autoloader;
 use CodeGenerationUtils\FileLocator\FileLocator;

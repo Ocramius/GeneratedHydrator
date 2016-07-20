@@ -22,7 +22,6 @@ namespace GeneratedHydrator\Factory;
 
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
 
