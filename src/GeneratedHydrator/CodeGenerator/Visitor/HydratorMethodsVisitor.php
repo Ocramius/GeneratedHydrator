@@ -122,19 +122,23 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $body = '';
 
         foreach ($this->accessibleProperties as $accessibleProperty) {
+            $body .= 'if (isset($data[' . var_export($accessibleProperty->getName(), true) . '])) {' . "\n";
             $body .= '$object->'
                 . $accessibleProperty->getName()
                 . ' = $data['
                 . var_export($accessibleProperty->getName(), true)
                 . "];\n";
+            $body .= "}\n";
         }
 
         foreach ($this->propertyWriters as $propertyWriter) {
+            $body .= 'if (isset($data[' . var_export($propertyWriter->getOriginalProperty()->getName(), true) . '])) {' . "\n";
             $body .= '$this->'
                 . $propertyWriter->props[0]->name
                 . '->__invoke($object, $data['
                 . var_export($propertyWriter->getOriginalProperty()->getName(), true)
                 . "]);\n";
+            $body .= "}\n";
         }
 
         $body .= "\nreturn \$object;";
