@@ -27,6 +27,7 @@ use GeneratedHydrator\Configuration;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
+use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParent;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
@@ -36,6 +37,7 @@ use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use stdClass;
 use Zend\Hydrator\HydratorInterface;
+use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
@@ -55,21 +57,10 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     public function testHydrator($instance)
     {
         $reflection  = new ReflectionClass($instance);
-        $properties  = $reflection->getProperties();
         $initialData = array();
         $newData     = array();
 
-        foreach ($properties as $property) {
-            if ($property->isStatic()) {
-                continue;
-            }
-
-            $propertyName = $property->getName();
-
-            $property->setAccessible(true);
-            $initialData[$propertyName] = $property->getValue($instance);
-            $newData[$propertyName]     = $property->getName() . '__new__value';
-        }
+        $this->recursiveFindInitialData($reflection, $instance, $initialData, $newData);
 
         $generatedClass = $this->generateHydrator($instance);
 
@@ -77,17 +68,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         self::assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
         $inspectionData = array();
-
-        foreach ($properties as $property) {
-            if ($property->isStatic()) {
-                continue;
-            }
-
-            $propertyName = $property->getName();
-
-            $property->setAccessible(true);
-            $inspectionData[$propertyName] = $property->getValue($instance);
-        }
+        $this->recursiveFindInspectionData($reflection, $instance, $inspectionData);
 
         self::assertSame($inspectionData, $newData);
         self::assertSame($inspectionData, $generatedClass->extract($instance));
@@ -106,9 +87,72 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
             [new ClassWithPublicProperties()],
             [new ClassWithProtectedProperties()],
             [new ClassWithPrivateProperties()],
+            [new ClassWithPrivatePropertiesAndParent()],
+            [new ClassWithPrivatePropertiesAndParents()],
             [new ClassWithMixedProperties()],
             [new ClassWithStaticProperties()],
         ];
+    }
+
+    /**
+     * Recursively populate the $initialData and $newData array browsing the
+     * full class hierarchy tree
+     *
+     * Private properties from parent class that are hidden by children will be
+     * dropped from the populated arrays
+     *
+     * @param \ReflectionClass $class
+     * @param object $instance
+     * @param array $initialData
+     * @param array $newData
+     */
+    private function recursiveFindInitialData(\ReflectionClass $class, $instance, array &$initialData, array &$newData)
+    {
+        if ($parentClass = $class->getParentClass()) {
+            $this->recursiveFindInitialData($parentClass, $instance, $initialData, $newData);
+        }
+
+        foreach ($class->getProperties() as $property) {
+            if ($property->isStatic()) {
+                continue;
+            }
+
+            $propertyName = $property->getName();
+
+            $property->setAccessible(true);
+            $initialData[$propertyName] = $property->getValue($instance);
+            $newData[$propertyName]     = $property->getName() . '__new__value';
+        }
+    }
+
+    /**
+     * Recursively populate the $inspectedData array browsing the full class
+     * hierarchy tree
+     *
+     * Private properties from parent class that are hidden by children will be
+     * dropped from the populated arrays
+     *
+     * @param \ReflectionClass $class
+     * @param object $instance
+     * @param array $initialData
+     * @param array $newData
+     */
+    private function recursiveFindInspectionData(\ReflectionClass $class, $instance, array &$inspectionData)
+    {
+        if ($parentClass = $class->getParentClass()) {
+            $this->recursiveFindInspectionData($parentClass, $instance, $inspectionData);
+        }
+
+        foreach ($class->getProperties() as $property) {
+            if ($property->isStatic()) {
+                continue;
+            }
+
+            $propertyName = $property->getName();
+
+            $property->setAccessible(true);
+            $inspectionData[$propertyName] = $property->getValue($instance);
+        }
     }
 
     /**

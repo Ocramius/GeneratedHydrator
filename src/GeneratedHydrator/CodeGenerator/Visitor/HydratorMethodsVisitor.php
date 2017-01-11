@@ -100,7 +100,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $ret = [];
 
         if ($parentClass = $class->getParentClass()) {
-            $ret = $this->recursiveFindProperties($parentClass);
+            $ret = $this->recursiveFindNonStaticProperties($parentClass);
         }
 
         // We cannot filter with NOT static
