@@ -28,6 +28,7 @@ use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
+use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 
 /**
  * Integration tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -57,7 +58,7 @@ class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
-        $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\\ClassWithMixedProperties');
+        $reflection               = new ReflectionClass(ClassWithMixedProperties::class);
         $generator                = new ClassBuilder();
         $traverser                = new NodeTraverser();
         $renamer                  = new ClassRenamerVisitor($reflection, $this->generatedClassName);
