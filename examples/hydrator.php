@@ -34,20 +34,20 @@ $foo           = new Foo();
 $data = $hydrator->extract($foo);
 
 echo "\nExtracted data:\n";
-echo "foo: " . $data['foo'] . "\n"; // 1
-echo "bar: " . $data['bar'] . "\n"; // 2
-echo "baz: " . $data['baz'] . "\n"; // 3
+echo 'foo: ' . $data['foo'] . "\n"; // 1
+echo 'bar: ' . $data['bar'] . "\n"; // 2
+echo 'baz: ' . $data['baz'] . "\n"; // 3
 
 $hydrator->hydrate(
-    array(
+    [
          'foo' => 4,
          'bar' => 5,
-         'baz' => 6
-    ),
+         'baz' => 6,
+    ],
     $foo
 );
 
 echo "\nObject hydrated with new data:\n";
-echo "foo: " . $foo->getFoo() . "\n"; // 4
-echo "bar: " . $foo->getBar() . "\n"; // 5
-echo "baz: " . $foo->getBaz() . "\n"; // 6
+echo 'foo: ' . $foo->getFoo() . "\n"; // 4
+echo 'bar: ' . $foo->getBar() . "\n"; // 5
+echo 'baz: ' . $foo->getBaz() . "\n"; // 6

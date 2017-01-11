@@ -68,7 +68,7 @@ class HydratorGenerator implements HydratorGeneratorInterface
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
         $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
         $implementor->addVisitor(
-            new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Hydrator\\HydratorInterface'))
+            new ClassImplementorVisitor($originalClass->getName(), ['Zend\\Hydrator\\HydratorInterface'])
         );
 
         return $implementor->traverse($ast);
