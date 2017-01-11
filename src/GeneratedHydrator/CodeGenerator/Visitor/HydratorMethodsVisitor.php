@@ -58,6 +58,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
+        // @todo dead code?
         $this->reflectedClass       = $reflectedClass;
         $this->accessibleProperties = $this->getProtectedProperties($reflectedClass);
 
