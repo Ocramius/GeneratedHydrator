@@ -58,7 +58,6 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
         self::assertMethodExistence('hydrate', $modifiedNode);
         self::assertMethodExistence('extract', $modifiedNode);
         self::assertMethodExistence('__construct', $modifiedNode);
-        self::assertContainsPropertyAccessors($modifiedNode, $properties);
     }
 
     /**
@@ -81,64 +80,6 @@ class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
                 }
             )
         );
-    }
-
-    /**
-     * Verifies that the given properties and only the given properties are added to the hydrator logic
-     *
-     * @param Class_   $class
-     * @param string[] $properties
-     *
-     * @return void
-     */
-    private function assertContainsPropertyAccessors(Class_ $class, array $properties)
-    {
-        $lookupProperties = array_flip($properties);
-
-        foreach ($class->stmts as $method) {
-            if ($method instanceof ClassMethod && $method->name === 'hydrate') {
-                foreach ($method->stmts as $assignment) {
-                    if ($assignment instanceof Assign) {
-                        $var = $assignment->var;
-
-                        if ($var instanceof PropertyFetch && is_string($var->name)) {
-                            if (! isset($lookupProperties[$var->name])) {
-                                self::fail(sprintf('Property "%s" should not be hydrated', $var->name));
-                            }
-
-                            unset($lookupProperties[$var->name]);
-                        }
-                    }
-                }
-            }
-
-            if ($method instanceof ClassMethod && $method->name === '__construct') {
-                foreach ($method->stmts as $assignment) {
-                    if ($assignment instanceof Assign) {
-                        $var = $assignment->var;
-
-                        if ($var instanceof PropertyFetch
-                            && preg_match('/(.*)Writer[a-zA-Z0-9]+/', $var->name, $matches)
-                        ) {
-                            if (! isset($lookupProperties[$matches[1]])) {
-                                self::fail(sprintf('Property "%s" should not be hydrated', $matches[1]));
-                            }
-
-                            unset($lookupProperties[$matches[1]]);
-                        }
-                    }
-                }
-            }
-        }
-
-        if (! $lookupProperties) {
-            return;
-        }
-
-        self::fail(sprintf(
-            'Could not match following properties in the generated code: %s',
-            var_export(array_flip($lookupProperties), true)
-        ));
     }
 
     /**

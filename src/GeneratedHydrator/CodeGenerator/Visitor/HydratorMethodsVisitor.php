@@ -20,11 +20,13 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
-use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use PhpParser\Node;
+use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
+use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use ReflectionClass;
@@ -34,6 +36,7 @@ use ReflectionProperty;
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
  *
  * @author Marco Pivetta <ocramius@gmail.com>
+ * @author Pierre Rineau <pierre.rineau@processus.org>
  * @license MIT
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
@@ -44,25 +47,20 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     private $reflectedClass;
 
     /**
-     * @var ReflectionProperty[]
+     * @var string[][]
      */
-    private $accessibleProperties;
-
-    /**
-     * @var PropertyAccessor[]
-     */
-    private $propertyWriters = array();
+    private $classPropertyMap = array();
 
     /**
      * @param ReflectionClass $reflectedClass
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
-        $this->reflectedClass       = $reflectedClass;
-        $this->accessibleProperties = $this->getProtectedProperties($reflectedClass);
+        $this->reflectedClass = $reflectedClass;
 
-        foreach ($this->getPrivateProperties($reflectedClass) as $property) {
-            $this->propertyWriters[$property->getName()] = new PropertyAccessor($property, 'Writer');
+        foreach ($this->recursiveFindNonStaticProperties($reflectedClass) as $property) {
+            $className = $property->getDeclaringClass()->getName();
+            $this->classPropertyMap[$className][] = $property->getName();
         }
     }
 
@@ -73,15 +71,46 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        if (! $node instanceof Class_) {
+        if (!$node instanceof Class_) {
             return null;
         }
+
+        $node->stmts[] = new Property(Class_::MODIFIER_PRIVATE, array(
+            new PropertyProperty('hydrateCallbacks', new Array_()),
+            new PropertyProperty('extractCallbacks', new Array_()),
+        ));
 
         $this->replaceConstructor($this->findOrCreateMethod($node, '__construct'));
         $this->replaceHydrate($this->findOrCreateMethod($node, 'hydrate'));
         $this->replaceExtract($this->findOrCreateMethod($node, 'extract'));
 
         return $node;
+    }
+
+    /**
+     * Find all class properties recursively using class hierarchy without
+     * removing name redefinitions
+     *
+     * @param \ReflectionClass $class
+     *
+     * @return \ReflectionProperty[]
+     */
+    private function recursiveFindNonStaticProperties(\ReflectionClass $class)
+    {
+        $ret = [];
+
+        if ($parentClass = $class->getParentClass()) {
+            $ret = $this->recursiveFindProperties($parentClass);
+        }
+
+        // We cannot filter with NOT static
+        foreach ($class->getProperties() as $property) {
+            if (!$property->isStatic()) {
+                $ret[] = $property;
+            }
+        }
+
+        return $ret;
     }
 
     /**
@@ -93,15 +122,23 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts = array();
 
-        foreach ($this->propertyWriters as $propertyWriter) {
-            $accessorName     = $propertyWriter->props[0]->name;
-            $originalProperty = $propertyWriter->getOriginalProperty();
-            $className        = $originalProperty->getDeclaringClass()->getName();
-            $property         = $originalProperty->getName();
+        foreach ($this->classPropertyMap as $className => $propertyNames) {
 
-            $bodyParts[] = "\$this->" . $accessorName . " = \\Closure::bind(function (\$object, \$value) {\n"
-                . "    \$object->" . $property . " = \$value;\n"
-                . '}, null, ' . var_export($className, true) . ');';
+            // Hydrate closures
+            $bodyParts[] = "\$this->hydrateCallbacks[] = \\Closure::bind(function (\$object, \$values) {";
+            foreach ($propertyNames as $propertyName) {
+                $bodyParts[] = "    if (isset(\$values['" . $propertyName . "'])) {";
+                $bodyParts[] = "        \$object->" . $propertyName . " = \$values['" . $propertyName . "'];";
+                $bodyParts[] = "    }";
+            }
+            $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
+
+            // Extract closures
+            $bodyParts[] = "\$this->extractCallbacks[] = \\Closure::bind(function (\$object, &\$values) {";
+            foreach ($propertyNames as $propertyName) {
+                $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ";";
+            }
+            $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }
 
         $method->stmts = (new ParserFactory)
@@ -119,25 +156,12 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             new Param('object'),
         );
 
-        $body = '';
-
-        foreach ($this->accessibleProperties as $accessibleProperty) {
-            $body .= '$object->'
-                . $accessibleProperty->getName()
-                . ' = $data['
-                . var_export($accessibleProperty->getName(), true)
-                . "];\n";
-        }
-
-        foreach ($this->propertyWriters as $propertyWriter) {
-            $body .= '$this->'
-                . $propertyWriter->props[0]->name
-                . '->__invoke($object, $data['
-                . var_export($propertyWriter->getOriginalProperty()->getName(), true)
-                . "]);\n";
-        }
-
-        $body .= "\nreturn \$object;";
+        $body = <<<EOT
+foreach (\$this->hydrateCallbacks as \$callback) {
+    \$callback->__invoke(\$object, \$data);
+}
+return \$object;
+EOT;
 
         $method->stmts = (new ParserFactory())
             ->create(ParserFactory::ONLY_PHP7)
@@ -151,53 +175,19 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     private function replaceExtract(ClassMethod $method)
     {
-        $parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
-
         $method->params = array(new Param('object'));
 
-        if (! $this->accessibleProperties && ! $this->propertyWriters) {
-            // no properties to hydrate
+        $body = <<<EOT
+\$ret = [];
+foreach (\$this->extractCallbacks as \$callback) {
+    \$callback->__invoke(\$object, \$ret);
+}
+return \$ret;
+EOT;
 
-            $method->stmts = $parser->parse('<?php return array();');
-
-            return;
-        }
-
-        $body = '';
-
-        if ($this->propertyWriters) {
-            $body = "\$data = (array) \$object;\n\n";
-        }
-
-        $body .= 'return array(';
-
-        foreach ($this->accessibleProperties as $accessibleProperty) {
-            if (! $this->propertyWriters || ! $accessibleProperty->isProtected()) {
-                $body .= "\n    "
-                    . var_export($accessibleProperty->getName(), true)
-                    . ' => $object->' . $accessibleProperty->getName() . ',';
-            } else {
-                $body .= "\n    "
-                    . var_export($accessibleProperty->getName(), true)
-                    . ' => $data["\\0*\\0' . $accessibleProperty->getName() . '"],';
-            }
-        }
-
-        foreach ($this->propertyWriters as $propertyWriter) {
-            $property     = $propertyWriter->getOriginalProperty();
-            $propertyName = $property->getName();
-
-            $body .= "\n    "
-                . var_export($propertyName, true)
-                . ' => $data["'
-                . '\\0' . $property->getDeclaringClass()->getName()
-                . '\\0' . $propertyName
-                . '"],';
-        }
-
-        $body .= "\n);";
-
-        $method->stmts = $parser->parse('<?php ' . $body);
+        $method->stmts = (new ParserFactory())
+            ->create(ParserFactory::ONLY_PHP7)
+            ->parse('<?php ' . $body);
     }
 
     /**
@@ -224,39 +214,5 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
 
         return $method;
-    }
-
-    /**
-     * Retrieve instance public/protected properties
-     *
-     * @param ReflectionClass $reflectedClass
-     *
-     * @return ReflectionProperty[]
-     */
-    private function getProtectedProperties(ReflectionClass $reflectedClass) : array
-    {
-        return array_filter(
-            $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) : bool {
-                return ($property->isPublic() || $property->isProtected()) && ! $property->isStatic();
-            }
-        );
-    }
-
-    /**
-     * Retrieve instance private properties
-     *
-     * @param ReflectionClass $reflectedClass
-     *
-     * @return ReflectionProperty[]
-     */
-    private function getPrivateProperties(ReflectionClass $reflectedClass) : array
-    {
-        return array_filter(
-            $reflectedClass->getProperties(),
-            function (ReflectionProperty $property) : bool {
-                return $property->isPrivate() && ! $property->isStatic();
-            }
-        );
     }
 }

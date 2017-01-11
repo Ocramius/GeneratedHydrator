@@ -24,7 +24,6 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
-use GeneratedHydrator\Exception\DisabledMethodException;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
@@ -92,16 +91,6 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         self::assertSame($inspectionData, $newData);
         self::assertSame($inspectionData, $generatedClass->extract($instance));
-    }
-
-    public function testDisabledMethod()
-    {
-        self::markTestIncomplete('Methods have to be disabled - currently only removing them');
-
-        $generatedClass = $this->generateHydrator(new HydratedObject());
-
-        $this->expectException(DisabledMethodException::class);
-        $generatedClass->doFoo();
     }
 
     /**

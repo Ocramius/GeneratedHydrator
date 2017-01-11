@@ -20,12 +20,14 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator\ClassGenerator;
 
-use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
-use CodeGenerationUtils\Visitor\ClassExtensionVisitor;
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
-use CodeGenerationUtils\Visitor\MethodDisablerVisitor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
+use PhpParser\Builder\Param;
+use PhpParser\Node;
 use PhpParser\NodeTraverser;
+use PhpParser\Node\Name;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Namespace_;
 use ReflectionClass;
 
 /**
@@ -35,6 +37,7 @@ use ReflectionClass;
  * {@inheritDoc}
  *
  * @author Marco Pivetta <ocramius@gmail.com>
+ * @author Pierre Rineau <pierre.rineau@makina-corpus.com>
  * @license MIT
  */
 class HydratorGenerator implements HydratorGeneratorInterface
@@ -49,24 +52,15 @@ class HydratorGenerator implements HydratorGeneratorInterface
      */
     public function generate(ReflectionClass $originalClass) : array
     {
-        $builder   = new ClassBuilder();
+        $class = new Class_($originalClass->getShortName());
 
-        $ast = $builder->fromReflection($originalClass);
+        $ast = array($class);
+        if ($namespace = $originalClass->getNamespaceName()) {
+            $ast = array(new Namespace_(new Name(explode('\\', $namespace)), $ast));
+        }
 
-        // step 1: remove methods that are not used
-        $cleaner = new NodeTraverser();
-
-        $cleaner->addVisitor(new MethodDisablerVisitor(function () : bool {
-            return false;
-        }));
-
-        $ast = $cleaner->traverse($ast);
-
-        // step 2: implement new methods and interfaces, extend original class
         $implementor = new NodeTraverser();
-
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
-        $implementor->addVisitor(new ClassExtensionVisitor($originalClass->getName(), $originalClass->getName()));
         $implementor->addVisitor(
             new ClassImplementorVisitor($originalClass->getName(), array('Zend\\Hydrator\\HydratorInterface'))
         );
