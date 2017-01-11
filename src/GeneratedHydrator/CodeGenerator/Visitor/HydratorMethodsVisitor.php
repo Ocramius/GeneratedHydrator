@@ -123,7 +123,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $bodyParts = array();
 
         foreach ($this->classPropertyMap as $className => $propertyNames) {
-
             // Hydrate closures
             $bodyParts[] = "\$this->hydrateCallbacks[] = \\Closure::bind(function (\$object, \$values) {";
             foreach ($propertyNames as $propertyName) {
