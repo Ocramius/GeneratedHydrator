@@ -47,9 +47,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     private $reflectedClass;
 
     /**
+     * @var string[]
+     */
+    private $visiblePropertyMap = array();
+
+    /**
      * @var string[][]
      */
-    private $classPropertyMap = array();
+    private $hiddenPropertyMap = array();
 
     /**
      * @param ReflectionClass $reflectedClass
@@ -59,8 +64,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $this->reflectedClass = $reflectedClass;
 
         foreach ($this->recursiveFindNonStaticProperties($reflectedClass) as $property) {
+
             $className = $property->getDeclaringClass()->getName();
-            $this->classPropertyMap[$className][] = $property->getName();
+
+            if ($property->isPrivate() || $property->isProtected()) {
+                $this->hiddenPropertyMap[$className][] = $property->getName();
+            } else {
+                $this->visiblePropertyMap[] = $property->getName();
+            }
         }
     }
 
@@ -122,7 +133,10 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts = array();
 
-        foreach ($this->classPropertyMap as $className => $propertyNames) {
+        // Create a set of closures that will be called to hydrate the object.
+        // Array of closures in a naturally indexed array, ordered, which will
+        // then be called in order in the hydrate() and extract() methods.
+        foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
             // Hydrate closures
             $bodyParts[] = "\$this->hydrateCallbacks[] = \\Closure::bind(function (\$object, \$values) {";
             foreach ($propertyNames as $propertyName) {
@@ -155,16 +169,20 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             new Param('object'),
         );
 
-        $body = <<<EOT
-foreach (\$this->hydrateCallbacks as \$callback) {
-    \$callback->__invoke(\$object, \$data);
-}
-return \$object;
-EOT;
+        $bodyParts = array();
+        foreach ($this->visiblePropertyMap as $propertyName) {
+            $bodyParts[] = "\$object->" . $propertyName . " = \$data['" . $propertyName . "'];";
+        }
+        $index = 0;
+        foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
+            $bodyParts[] = "\$this->hydrateCallbacks[" . ($index++) . "]->__invoke(\$object, \$data);";
+        }
+
+        $bodyParts[] = "return \$object;";
 
         $method->stmts = (new ParserFactory())
             ->create(ParserFactory::ONLY_PHP7)
-            ->parse('<?php ' . $body);
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**
@@ -176,17 +194,21 @@ EOT;
     {
         $method->params = array(new Param('object'));
 
-        $body = <<<EOT
-\$ret = [];
-foreach (\$this->extractCallbacks as \$callback) {
-    \$callback->__invoke(\$object, \$ret);
-}
-return \$ret;
-EOT;
+        $bodyParts = array();
+        $bodyParts[] = "\$ret = array();";
+        foreach ($this->visiblePropertyMap as $propertyName) {
+            $bodyParts[] = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ";";
+        }
+        $index = 0;
+        foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
+            $bodyParts[] = "\$this->extractCallbacks[" . ($index++) . "]->__invoke(\$object, \$ret);";
+        }
+
+        $bodyParts[] = "return \$ret;";
 
         $method->stmts = (new ParserFactory())
             ->create(ParserFactory::ONLY_PHP7)
-            ->parse('<?php ' . $body);
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**

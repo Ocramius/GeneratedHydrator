@@ -64,14 +64,24 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         $generatedClass = $this->generateHydrator($instance);
 
-        self::assertSame($initialData, $generatedClass->extract($instance));
+        // Hydration and extraction don't guarantee ordering.
+        ksort($initialData);
+        ksort($newData);
+        $extracted = $generatedClass->extract($instance);
+        ksort($extracted);
+
+        self::assertSame($initialData, $extracted);
         self::assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
+        // Same as upper applies
         $inspectionData = array();
         $this->recursiveFindInspectionData($reflection, $instance, $inspectionData);
+        ksort($inspectionData);
+        $extracted = $generatedClass->extract($instance);
+        ksort($extracted);
 
         self::assertSame($inspectionData, $newData);
-        self::assertSame($inspectionData, $generatedClass->extract($instance));
+        self::assertSame($inspectionData, $extracted);
     }
 
     /**
