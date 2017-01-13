@@ -63,13 +63,6 @@ class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
 
         $generatedReflection = new ReflectionClass($generatedClassName);
 
-        if ($originalClass->isInterface()) {
-            self::assertTrue($generatedReflection->implementsInterface($className));
-        } else {
-            self::assertInstanceOf('ReflectionClass', $generatedReflection->getParentClass());
-            self::assertSame($originalClass->getName(), $generatedReflection->getParentClass()->getName());
-        }
-
         self::assertSame($generatedClassName, $generatedReflection->getName());
 
         foreach ($this->getExpectedImplementedInterfaces() as $interface) {
