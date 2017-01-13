@@ -13,6 +13,7 @@ class AllPublicClassHydrationBench extends AbstractHydrationBench
     {
         $this->createHydrator(AllPublicClass::class);
         $this->createData();
+        $this->object = new AllPublicClass();
     }
 
     /**
@@ -21,7 +22,6 @@ class AllPublicClassHydrationBench extends AbstractHydrationBench
      */
     public function benchConsume()
     {
-        $object = new AllPublicClass();
-        $this->hydrator->hydrate($this->data, $object);
+        $this->hydrator->hydrate($this->data, $this->object);
     }
 }

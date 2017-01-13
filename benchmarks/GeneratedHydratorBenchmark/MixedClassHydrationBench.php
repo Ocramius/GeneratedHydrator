@@ -13,6 +13,7 @@ class MixedClassHydrationBench extends AbstractHydrationBench
     {
         $this->createHydrator(MixedClass::class);
         $this->createData();
+        $this->object = new MixedClass();
     }
 
     /**
@@ -21,7 +22,6 @@ class MixedClassHydrationBench extends AbstractHydrationBench
      */
     public function benchConsume()
     {
-        $object = new MixedClass();
-        $this->hydrator->hydrate($this->data, $object);
+        $this->hydrator->hydrate($this->data, $this->object);
     }
 }

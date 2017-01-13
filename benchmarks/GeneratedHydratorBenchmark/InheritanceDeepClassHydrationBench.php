@@ -33,6 +33,7 @@ class InheritanceDeepClassHydrationBench extends AbstractHydrationBench
     {
         $this->createHydrator(InheritanceDeepClass::class);
         $this->createData();
+        $this->object = new InheritanceDeepClass();
     }
 
     /**
@@ -41,7 +42,6 @@ class InheritanceDeepClassHydrationBench extends AbstractHydrationBench
      */
     public function benchConsume()
     {
-        $object = new InheritanceDeepClass();
-        $this->hydrator->hydrate($this->data, $object);
+        $this->hydrator->hydrate($this->data, $this->object);
     }
 }

@@ -21,6 +21,11 @@ abstract class AbstractHydrationBench
     protected $data;
 
     /**
+     * @var mixed
+     */
+    protected $object;
+
+    /**
      * Create and set the hydrator
      *
      * @param string $class
