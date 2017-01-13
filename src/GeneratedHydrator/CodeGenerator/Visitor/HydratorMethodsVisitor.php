@@ -30,7 +30,6 @@ use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use ReflectionClass;
-use ReflectionProperty;
 
 /**
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
