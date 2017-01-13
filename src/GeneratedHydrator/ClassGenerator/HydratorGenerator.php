@@ -22,8 +22,6 @@ namespace GeneratedHydrator\ClassGenerator;
 
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
-use PhpParser\Builder\Param;
-use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
