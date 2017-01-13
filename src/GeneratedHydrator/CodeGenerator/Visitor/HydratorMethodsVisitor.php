@@ -51,13 +51,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     /**
      * @var PropertyAccessor[]
      */
-    private $propertyWriters = array();
+    private $propertyWriters = [];
 
     /**
      * @param ReflectionClass $reflectedClass
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
+        // @todo dead code?
         $this->reflectedClass       = $reflectedClass;
         $this->accessibleProperties = $this->getProtectedProperties($reflectedClass);
 
@@ -89,9 +90,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     private function replaceConstructor(ClassMethod $method)
     {
-        $method->params = array();
+        $method->params = [];
 
-        $bodyParts = array();
+        $bodyParts = [];
 
         foreach ($this->propertyWriters as $propertyWriter) {
             $accessorName     = $propertyWriter->props[0]->name;
@@ -114,10 +115,10 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     private function replaceHydrate(ClassMethod $method)
     {
-        $method->params = array(
+        $method->params = [
             new Param('data', null, 'array'),
             new Param('object'),
-        );
+        ];
 
         $body = '';
 
@@ -153,7 +154,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     {
         $parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
 
-        $method->params = array(new Param('object'));
+        $method->params = [new Param('object')];
 
         if (! $this->accessibleProperties && ! $this->propertyWriters) {
             // no properties to hydrate

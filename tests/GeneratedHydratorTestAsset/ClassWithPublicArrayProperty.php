@@ -29,5 +29,5 @@ namespace GeneratedHydratorTestAsset;
  */
 class ClassWithPublicArrayProperty
 {
-    public $arrayProperty = array();
+    public $arrayProperty = [];
 }

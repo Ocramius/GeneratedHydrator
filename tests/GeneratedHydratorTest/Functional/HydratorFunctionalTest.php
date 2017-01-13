@@ -57,8 +57,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     {
         $reflection  = new ReflectionClass($instance);
         $properties  = $reflection->getProperties();
-        $initialData = array();
-        $newData     = array();
+        $initialData = [];
+        $newData     = [];
 
         foreach ($properties as $property) {
             if ($property->isStatic()) {
@@ -77,7 +77,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         self::assertSame($initialData, $generatedClass->extract($instance));
         self::assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
-        $inspectionData = array();
+        $inspectionData = [];
 
         foreach ($properties as $property) {
             if ($property->isStatic()) {

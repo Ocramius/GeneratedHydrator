@@ -27,6 +27,9 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Factory\HydratorFactory;
 use PHPUnit_Framework_TestCase;
+use GeneratedHydratorTestAsset\BaseClass;
+use GeneratedHydratorTestAsset\EmptyClass;
+use GeneratedHydrator\Configuration;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -53,7 +56,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
     {
         $this->inflector = $this->createMock(ClassNameInflectorInterface::class);
         $this->config    = $this
-            ->getMockBuilder('GeneratedHydrator\\Configuration')
+            ->getMockBuilder(Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -81,19 +84,19 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->expects(self::any())
             ->method('getUserClassName')
             ->with($className)
-            ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
+            ->will(self::returnValue(BaseClass::class));
 
         $this
             ->inflector
             ->expects(self::once())
             ->method('getGeneratedClassName')
-            ->with('GeneratedHydratorTestAsset\\BaseClass')
-            ->will(self::returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
+            ->with(BaseClass::class)
+            ->will(self::returnValue(EmptyClass::class));
 
         $factory        = new HydratorFactory($this->config);
         $generatedClass = $factory->getHydratorClass();
 
-        self::assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', new $generatedClass);
+        self::assertInstanceOf(EmptyClass::class, new $generatedClass);
     }
 
     /**
@@ -141,7 +144,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->inflector
             ->expects(self::once())
             ->method('getGeneratedClassName')
-            ->with('GeneratedHydratorTestAsset\\BaseClass')
+            ->with(BaseClass::class)
             ->will(self::returnValue($generatedClassName));
 
         $this
@@ -149,7 +152,7 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
             ->expects(self::once())
             ->method('getUserClassName')
             ->with($className)
-            ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
+            ->will(self::returnValue(BaseClass::class));
 
         $factory        = new HydratorFactory($this->config);
         /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */

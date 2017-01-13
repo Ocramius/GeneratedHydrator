@@ -23,6 +23,7 @@ namespace GeneratedHydratorTest\ClassGenerator\Hydrator\PropertyGenerator;
 use GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor;
 use PHPUnit_Framework_TestCase;
 use ReflectionProperty;
+use GeneratedHydratorTestAsset\BaseClass;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\Hydrator\PropertyGenerator\PropertyAccessor}
@@ -41,7 +42,7 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
      */
     protected function createProperty()
     {
-        $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
+        $property = new ReflectionProperty(BaseClass::class, 'publicProperty');
 
         $accessor1 = new PropertyAccessor($property, 'foo');
         $accessor2 = new PropertyAccessor($property, 'foo');
@@ -55,7 +56,7 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
      */
     public function testGetOriginalProperty()
     {
-        $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
+        $property = new ReflectionProperty(BaseClass::class, 'publicProperty');
 
         $accessor = new PropertyAccessor($property, 'foo');
 
@@ -67,7 +68,7 @@ class PropertyAccessorTest extends PHPUnit_Framework_TestCase
      */
     public function testHasCorrectName()
     {
-        $property = new ReflectionProperty('GeneratedHydratorTestAsset\\BaseClass', 'publicProperty');
+        $property = new ReflectionProperty(BaseClass::class, 'publicProperty');
 
         $accessor = new PropertyAccessor($property, 'Foo');
 

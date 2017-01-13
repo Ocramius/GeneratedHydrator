@@ -52,7 +52,7 @@ class PropertyAccessor extends Property
 
         parent::__construct(
             Class_::MODIFIER_PRIVATE,
-            array(new PropertyProperty($name))
+            [new PropertyProperty($name)]
         );
     }
 

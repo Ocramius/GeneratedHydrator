@@ -26,6 +26,7 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use PHPUnit_Framework_TestCase;
 use GeneratedHydrator\Configuration;
+use GeneratedHydrator\Factory\HydratorFactory;
 
 /**
  * Tests for {@see \GeneratedHydrator\Configuration}
@@ -66,7 +67,7 @@ class ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateFactory()
     {
-        self::assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
+        self::assertInstanceOf(HydratorFactory::class, $this->configuration->createFactory());
     }
 
     /**
