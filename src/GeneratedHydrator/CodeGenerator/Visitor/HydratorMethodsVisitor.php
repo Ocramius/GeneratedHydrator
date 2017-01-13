@@ -34,6 +34,9 @@ use ReflectionClass;
 /**
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
  *
+ * @todo as per https://github.com/Ocramius/GeneratedHydrator/pull/59, using a visitor for this is ineffective.
+ * @todo Instead, we can just create a code generator, since we are not modifying code, but creating it.
+ *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @author Pierre Rineau <pierre.rineau@processus.org>
  * @license MIT
