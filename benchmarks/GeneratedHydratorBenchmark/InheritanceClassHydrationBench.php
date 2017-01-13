@@ -3,6 +3,8 @@
 namespace GeneratedHydratorBenchmark;
 
 /**
+ * Benchmark class that contains mixed inherited properties hydration
+ *
  * @BeforeMethods({"setUp"})
  */
 class InheritanceClassHydrationBench extends AbstractHydrationBench

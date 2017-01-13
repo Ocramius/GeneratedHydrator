@@ -2,6 +2,9 @@
 
 namespace GeneratedHydratorBenchmark;
 
+/**
+ * Class that contains only public properties
+ */
 class AllPublicClass
 {
     public $foo;

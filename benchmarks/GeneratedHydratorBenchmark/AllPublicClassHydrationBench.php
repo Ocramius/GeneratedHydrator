@@ -3,6 +3,8 @@
 namespace GeneratedHydratorBenchmark;
 
 /**
+ * Benchmark class that contains only public properties hydration
+ *
  * @BeforeMethods({"setUp"})
  */
 class AllPublicClassHydrationBench extends AbstractHydrationBench

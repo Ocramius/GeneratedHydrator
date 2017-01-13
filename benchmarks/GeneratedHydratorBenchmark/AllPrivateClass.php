@@ -2,6 +2,9 @@
 
 namespace GeneratedHydratorBenchmark;
 
+/**
+ * Class that contains only private properties
+ */
 class AllPrivateClass
 {
     private $foo;

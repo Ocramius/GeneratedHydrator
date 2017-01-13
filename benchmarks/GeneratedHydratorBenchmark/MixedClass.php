@@ -2,6 +2,9 @@
 
 namespace GeneratedHydratorBenchmark;
 
+/**
+ * Class that contains public, protected and private properties
+ */
 class MixedClass
 {
     private $foo;

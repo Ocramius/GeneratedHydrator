@@ -2,6 +2,9 @@
 
 namespace GeneratedHydratorBenchmark;
 
+/**
+ * Class that contains mixed inherited properties
+ */
 class InheritanceClass extends MixedClass
 {
     private $foo1;

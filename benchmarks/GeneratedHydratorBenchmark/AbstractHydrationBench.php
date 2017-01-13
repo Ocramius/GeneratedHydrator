@@ -3,12 +3,28 @@
 namespace GeneratedHydratorBenchmark;
 
 use GeneratedHydrator\Configuration;
+use Zend\Hydrator\HydratorInterface;
 
+/**
+ * Default base class for hydration benchmarks
+ */
 abstract class AbstractHydrationBench
 {
+    /**
+     * @var HydratorInterface
+     */
     protected $hydrator;
+
+    /**
+     * @var mixed[]
+     */
     protected $data;
 
+    /**
+     * Create and set the hydrator
+     *
+     * @param string $class
+     */
     protected function createHydrator($class)
     {
         $config        = new Configuration($class);
@@ -17,6 +33,9 @@ abstract class AbstractHydrationBench
         $this->hydrator = new $hydratorClass();
     }
 
+    /**
+     * Populate test data array
+     */
     protected function createData()
     {
         $this->data = [

@@ -2,6 +2,9 @@
 
 namespace GeneratedHydratorBenchmark;
 
+/**
+ * Class that contains only protected properties
+ */
 class AllProtectedClass
 {
     protected $foo;

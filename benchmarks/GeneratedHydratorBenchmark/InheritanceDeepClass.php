@@ -2,6 +2,9 @@
 
 namespace GeneratedHydratorBenchmark;
 
+/**
+ * Class that contains mixed deeply inherited properties
+ */
 class InheritanceDeepClass extends InheritanceClass
 {
     private $foo2;
