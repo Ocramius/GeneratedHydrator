@@ -98,22 +98,21 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return \ReflectionProperty[]
      */
-    private function recursiveFindNonStaticProperties(\ReflectionClass $class)
+    private function recursiveFindNonStaticProperties(?\ReflectionClass $class)
     {
-        $ret = [];
-
-        if ($parentClass = $class->getParentClass()) {
-            $ret = $this->recursiveFindNonStaticProperties($parentClass);
+        if (! $class) {
+            return [];
         }
 
-        // We cannot filter with NOT static
-        foreach ($class->getProperties() as $property) {
-            if (!$property->isStatic()) {
-                $ret[] = $property;
-            }
-        }
-
-        return $ret;
+        return array_values(array_merge(
+            $this->recursiveFindNonStaticProperties($class->getParentClass() ?: null), // of course PHP is shit.
+            array_values(array_filter(
+                $class->getProperties(),
+                function (\ReflectionProperty $property) : bool {
+                    return ! $property->isStatic();
+                }
+            ))
+        ));
     }
 
     /**
