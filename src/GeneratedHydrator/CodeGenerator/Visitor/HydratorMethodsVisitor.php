@@ -170,7 +170,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts = array();
         foreach ($this->visiblePropertyMap as $propertyName) {
-            $bodyParts[] = "\$object->" . $propertyName . " = \$data['" . $propertyName . "'];";
+            $bodyParts[] = "if (isset(\$data['" . $propertyName . "'])) {";
+            $bodyParts[] = "    \$object->" . $propertyName . " = \$data['" . $propertyName . "'];";
+            $bodyParts[] = "}";
         }
         $index = 0;
         foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
