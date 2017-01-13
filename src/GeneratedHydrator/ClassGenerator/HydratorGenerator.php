@@ -52,11 +52,10 @@ class HydratorGenerator implements HydratorGeneratorInterface
      */
     public function generate(ReflectionClass $originalClass) : array
     {
-        $class = new Class_($originalClass->getShortName());
+        $ast = [new Class_($originalClass->getShortName())];
 
-        $ast = array($class);
         if ($namespace = $originalClass->getNamespaceName()) {
-            $ast = array(new Namespace_(new Name(explode('\\', $namespace)), $ast));
+            $ast = [new Namespace_(new Name(explode('\\', $namespace)), $ast)];
         }
 
         $implementor = new NodeTraverser();
