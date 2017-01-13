@@ -64,7 +64,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $this->reflectedClass = $reflectedClass;
 
         foreach ($this->recursiveFindNonStaticProperties($reflectedClass) as $property) {
-
             $className = $property->getDeclaringClass()->getName();
 
             if ($property->isPrivate() || $property->isProtected()) {
