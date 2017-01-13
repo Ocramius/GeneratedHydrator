@@ -27,7 +27,9 @@
     "require-dev": {
         "phpunit/phpunit":           "~5.0",
         "squizlabs/php_codesniffer": "~2.0",
-        "phpbench/phpbench":         "^0.13.0"
+        "phpbench/phpbench":         "^0.13.0",
+        "zendframework/zend-filter": "^2.7",
+        "zendframework/zend-servicemanager": "^3.2"
     },
     "autoload": {
         "psr-0": {
