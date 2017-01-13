@@ -56,7 +56,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
-        foreach ($this->recursiveFindNonStaticProperties($reflectedClass) as $property) {
+        foreach ($this->findAllInstanceProperties($reflectedClass) as $property) {
             $className = $property->getDeclaringClass()->getName();
 
             if ($property->isPrivate() || $property->isProtected()) {
@@ -98,14 +98,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return \ReflectionProperty[]
      */
-    private function recursiveFindNonStaticProperties(?\ReflectionClass $class)
+    private function findAllInstanceProperties(?\ReflectionClass $class)
     {
         if (! $class) {
             return [];
         }
 
         return array_values(array_merge(
-            $this->recursiveFindNonStaticProperties($class->getParentClass() ?: null), // of course PHP is shit.
+            $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
             array_values(array_filter(
                 $class->getProperties(),
                 function (\ReflectionProperty $property) : bool {
