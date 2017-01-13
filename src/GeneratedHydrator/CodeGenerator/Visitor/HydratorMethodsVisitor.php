@@ -213,6 +213,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      * @param string                    $name  name of the method
      *
      * @return ClassMethod
+     *
+     * @deprecated not needed if we move away from code replacement
      */
     private function findOrCreateMethod(Class_ $class, string $name) : ClassMethod
     {
