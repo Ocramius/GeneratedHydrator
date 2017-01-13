@@ -42,11 +42,6 @@ use ReflectionProperty;
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
     /**
-     * @var ReflectionClass
-     */
-    private $reflectedClass;
-
-    /**
      * @var string[]
      */
     private $visiblePropertyMap = array();
@@ -61,8 +56,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
-        $this->reflectedClass = $reflectedClass;
-
         foreach ($this->recursiveFindNonStaticProperties($reflectedClass) as $property) {
             $className = $property->getDeclaringClass()->getName();
 
@@ -81,7 +74,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        if (!$node instanceof Class_) {
+        if (! $node instanceof Class_) {
             return null;
         }
 
