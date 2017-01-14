@@ -30,10 +30,12 @@ use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use ReflectionClass;
-use ReflectionProperty;
 
 /**
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
+ *
+ * @todo as per https://github.com/Ocramius/GeneratedHydrator/pull/59, using a visitor for this is ineffective.
+ * @todo Instead, we can just create a code generator, since we are not modifying code, but creating it.
  *
  * @author Marco Pivetta <ocramius@gmail.com>
  * @author Pierre Rineau <pierre.rineau@processus.org>
@@ -41,11 +43,6 @@ use ReflectionProperty;
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var ReflectionClass
-     */
-    private $reflectedClass;
-
     /**
      * @var string[]
      */
@@ -61,9 +58,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function __construct(ReflectionClass $reflectedClass)
     {
-        $this->reflectedClass = $reflectedClass;
-
-        foreach ($this->recursiveFindNonStaticProperties($reflectedClass) as $property) {
+        foreach ($this->findAllInstanceProperties($reflectedClass) as $property) {
             $className = $property->getDeclaringClass()->getName();
 
             if ($property->isPrivate() || $property->isProtected()) {
@@ -81,7 +76,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        if (!$node instanceof Class_) {
+        if (! $node instanceof Class_) {
             return null;
         }
 
@@ -105,22 +100,21 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return \ReflectionProperty[]
      */
-    private function recursiveFindNonStaticProperties(\ReflectionClass $class)
+    private function findAllInstanceProperties(?\ReflectionClass $class)
     {
-        $ret = [];
-
-        if ($parentClass = $class->getParentClass()) {
-            $ret = $this->recursiveFindNonStaticProperties($parentClass);
+        if (! $class) {
+            return [];
         }
 
-        // We cannot filter with NOT static
-        foreach ($class->getProperties() as $property) {
-            if (!$property->isStatic()) {
-                $ret[] = $property;
-            }
-        }
-
-        return $ret;
+        return array_values(array_merge(
+            $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
+            array_values(array_filter(
+                $class->getProperties(),
+                function (\ReflectionProperty $property) : bool {
+                    return ! $property->isStatic();
+                }
+            ))
+        ));
     }
 
     /**
@@ -219,6 +213,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      * @param string                    $name  name of the method
      *
      * @return ClassMethod
+     *
+     * @deprecated not needed if we move away from code replacement
      */
     private function findOrCreateMethod(Class_ $class, string $name) : ClassMethod
     {
