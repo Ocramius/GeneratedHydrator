@@ -100,7 +100,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return \ReflectionProperty[]
      */
-    private function findAllInstanceProperties(?\ReflectionClass $class)
+    private function findAllInstanceProperties(\ReflectionClass $class = null)
     {
         if (! $class) {
             return [];
