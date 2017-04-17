@@ -187,7 +187,7 @@ class Configuration
             $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
-        return $this->generatedClassesTargetDir;
+        return (string) $this->generatedClassesTargetDir;
     }
 
     /**
