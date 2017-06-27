@@ -4,13 +4,18 @@ php:
   - 7.0
   - hhvm
 
+env:
+  matrix:
+    - DEPENDENCIES="high"
+    - DEPENDENCIES="low"
+
 matrix:
   allow_failures:
     - php: hhvm
 
 before_script:
-  - composer self-update
-  - composer update --prefer-source --dev
+  - if [ "$DEPENDENCIES" = "high" ]; then composer --prefer-source update; fi;
+  - if [ "$DEPENDENCIES" = "low" ]; then composer --prefer-lowest --prefer-source update; fi;
 
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/logs/clover.xml --exclude-group Functional
