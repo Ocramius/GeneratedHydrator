@@ -137,24 +137,24 @@ class HydratorFactoryTest extends PHPUnit_Framework_TestCase
                 return true;
             });
 
-        $this
+            $this
             ->inflector
             ->expects(self::once())
             ->method('getGeneratedClassName')
             ->with('GeneratedHydratorTestAsset\\BaseClass')
             ->will(self::returnValue($generatedClassName));
 
-        $this
+            $this
             ->inflector
             ->expects(self::once())
             ->method('getUserClassName')
             ->with($className)
             ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
-        $factory        = new HydratorFactory($this->config);
+            $factory        = new HydratorFactory($this->config);
         /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */
-        $generatedClass = $factory->getHydratorClass();
+            $generatedClass = $factory->getHydratorClass();
 
-        self::assertInstanceOf($generatedClassName, new $generatedClass);
+            self::assertInstanceOf($generatedClassName, new $generatedClass);
     }
 }
