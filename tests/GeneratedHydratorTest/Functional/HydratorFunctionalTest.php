@@ -84,6 +84,17 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         self::assertSame($inspectionData, $extracted);
     }
 
+    public function testHydratingNull()
+    {
+        $instance = new ClassWithPrivateProperties();
+
+        self::assertSame('property0', $instance->getProperty0());
+
+        $this->generateHydrator($instance)->hydrate(['property0' => null], $instance);
+
+        self::assertSame(null, $instance->getProperty0());
+    }
+
     /**
      * @return array
      */
