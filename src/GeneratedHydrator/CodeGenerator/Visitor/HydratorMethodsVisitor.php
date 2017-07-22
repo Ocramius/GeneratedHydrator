@@ -133,7 +133,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             // Hydrate closures
             $bodyParts[] = "\$this->hydrateCallbacks[] = \\Closure::bind(function (\$object, \$values) {";
             foreach ($propertyNames as $propertyName) {
-                $bodyParts[] = "    if (isset(\$values['" . $propertyName . "'])) {";
+                $bodyParts[] = "    if (isset(\$values['" . $propertyName . "']) || ".
+                "\$object->" . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$values)) {";
                 $bodyParts[] = "        \$object->" . $propertyName . " = \$values['" . $propertyName . "'];";
                 $bodyParts[] = "    }";
             }
@@ -164,7 +165,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts = array();
         foreach ($this->visiblePropertyMap as $propertyName) {
-            $bodyParts[] = "if (isset(\$data['" . $propertyName . "'])) {";
+            $bodyParts[] = "if (isset(\$data['" . $propertyName . "']) || ".
+            "\$object->" . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$data)) {";
             $bodyParts[] = "    \$object->" . $propertyName . " = \$data['" . $propertyName . "'];";
             $bodyParts[] = "}";
         }
