@@ -12,8 +12,8 @@ use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
+use PHPUnit\Framework\TestCase;
 use PhpParser\NodeTraverser;
-use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Zend\Hydrator\HydratorInterface;
 
@@ -25,7 +25,7 @@ use Zend\Hydrator\HydratorInterface;
  *
  * @covers \GeneratedHydrator\ClassGenerator\HydratorGenerator
  */
-class HydratorGeneratorTest extends PHPUnit_Framework_TestCase
+class HydratorGeneratorTest extends TestCase
 {
     /**
      * @dataProvider getTestedImplementations

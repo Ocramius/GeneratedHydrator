@@ -11,7 +11,7 @@ use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\ParserFactory;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionClass;
 
@@ -23,7 +23,7 @@ use ReflectionClass;
  *
  * @covers \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor
  */
-class HydratorMethodsVisitorTest extends PHPUnit_Framework_TestCase
+class HydratorMethodsVisitorTest extends TestCase
 {
     /**
      * @dataProvider classAstProvider

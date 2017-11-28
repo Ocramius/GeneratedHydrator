@@ -10,7 +10,7 @@ use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
@@ -21,7 +21,7 @@ use ReflectionClass;
  *
  * @group Functional
  */
-class HydratorFactoryFunctionalTest extends PHPUnit_Framework_TestCase
+class HydratorFactoryFunctionalTest extends TestCase
 {
     /**
      * @var \GeneratedHydrator\Configuration

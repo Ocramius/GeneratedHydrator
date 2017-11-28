@@ -10,7 +10,7 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Factory\HydratorFactory;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -18,7 +18,7 @@ use PHPUnit_Framework_TestCase;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class HydratorFactoryTest extends PHPUnit_Framework_TestCase
+class HydratorFactoryTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

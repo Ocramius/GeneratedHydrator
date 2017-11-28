@@ -17,7 +17,7 @@ use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
 use Zend\Hydrator\HydratorInterface;
@@ -31,7 +31,7 @@ use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
  *
  * @group Functional
  */
-class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
+class HydratorFunctionalTest extends TestCase
 {
     /**
      * @dataProvider getHydratorClasses

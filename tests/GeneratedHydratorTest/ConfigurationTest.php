@@ -8,7 +8,7 @@ use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use GeneratedHydrator\Configuration;
 
 /**
@@ -17,7 +17,7 @@ use GeneratedHydrator\Configuration;
  * @author Marco Pivetta <ocramius@gmail.com>
  * @license MIT
  */
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     /**
      * @var \GeneratedHydrator\Configuration
