@@ -35,5 +35,5 @@ interface HydratorGeneratorInterface
      *
      * @return \PhpParser\Node[]
      */
-    public function generate(ReflectionClass $originalClass);
+    public function generate(ReflectionClass $originalClass) : array;
 }

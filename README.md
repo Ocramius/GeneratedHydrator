@@ -45,12 +45,12 @@ $hydratorClass = $config->createFactory()->getHydratorClass();
 $hydrator      = new $hydratorClass();
 $object        = new Example();
 
-var_dump($hydrator->extract($object)); // array('foo' => 1, 'bar' => 2, 'baz' => 3)
+var_dump($hydrator->extract($object)); // ['foo' => 1, 'bar' => 2, 'baz' => 3]
 $hydrator->hydrate(
-    array('foo' => 4, 'bar' => 5, 'baz' => 6),
+    ['foo' => 4, 'bar' => 5, 'baz' => 6],
     $object
 );
-var_dump($hydrator->extract($object)); // array('foo' => 4, 'bar' => 5, 'baz' => 6)
+var_dump($hydrator->extract($object)); // ['foo' => 4, 'bar' => 5, 'baz' => 6]
 ```
 
 ## Performance comparison

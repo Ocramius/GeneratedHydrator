@@ -184,7 +184,7 @@ class Configuration
     public function getGeneratedClassesTargetDir()
     {
         if (null === $this->generatedClassesTargetDir) {
-            $this->generatedClassesTargetDir = sys_get_temp_dir();
+            $this->generatedClassesTargetDir = \sys_get_temp_dir();
         }
 
         return $this->generatedClassesTargetDir;

@@ -33,7 +33,7 @@ class ClassWithMagicMethods
      */
     public function __set($name, $value)
     {
-        return array($name => $value);
+        return [$name => $value];
     }
 
     /**

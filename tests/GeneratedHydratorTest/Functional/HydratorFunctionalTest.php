@@ -57,8 +57,8 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
     public function testHydrator($instance)
     {
         $reflection  = new ReflectionClass($instance);
-        $initialData = array();
-        $newData     = array();
+        $initialData = [];
+        $newData     = [];
 
         $this->recursiveFindInitialData($reflection, $instance, $initialData, $newData);
 
@@ -74,7 +74,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
         self::assertSame($instance, $generatedClass->hydrate($newData, $instance));
 
         // Same as upper applies
-        $inspectionData = array();
+        $inspectionData = [];
         $this->recursiveFindInspectionData($reflection, $instance, $inspectionData);
         ksort($inspectionData);
         $extracted = $generatedClass->extract($instance);
@@ -92,7 +92,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
 
         $this->generateHydrator($instance)->hydrate(['property0' => null], $instance);
 
-        self::assertSame(null, $instance->getProperty0());
+        self::assertNull($instance->getProperty0());
     }
 
     /**
@@ -185,7 +185,7 @@ class HydratorFunctionalTest extends PHPUnit_Framework_TestCase
      */
     private function generateHydrator($instance) : HydratorInterface
     {
-        $parentClassName    = get_class($instance);
+        $parentClassName    = \get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
         /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
