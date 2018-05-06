@@ -90,7 +90,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             return [];
         }
 
-        return array_values(array_merge(
+        return \array_values(\array_merge(
             $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
             \array_values(\array_filter(
                 $class->getProperties(),
