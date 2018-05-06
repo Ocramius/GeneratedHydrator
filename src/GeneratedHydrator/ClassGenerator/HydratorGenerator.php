@@ -38,7 +38,7 @@ class HydratorGenerator implements HydratorGeneratorInterface
         $ast = [new Class_($originalClass->getShortName())];
 
         if ($namespace = $originalClass->getNamespaceName()) {
-            $ast = [new Namespace_(new Name(explode('\\', $namespace)), $ast)];
+            $ast = [new Namespace_(new Name(\explode('\\', $namespace)), $ast)];
         }
 
         $implementor = new NodeTraverser();
