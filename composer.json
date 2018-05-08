@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php":                           "~7.0",
+        "php":                           "~7.1",
         "nikic/php-parser":              "~2.0|~3.0",
         "ocramius/code-generator-utils": "~0.4",
         "zendframework/zend-hydrator":   "^2.0"
