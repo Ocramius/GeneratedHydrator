@@ -9,19 +9,13 @@ namespace GeneratedHydratorTestAsset;
  */
 class HydratedObject
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $foo = 1;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $bar = 2;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $baz = 3;
 
     /**

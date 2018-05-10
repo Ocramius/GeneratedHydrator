@@ -9,19 +9,13 @@ namespace GeneratedHydratorTestAsset;
  */
 class BaseClass implements BaseInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $publicProperty = 'publicPropertyDefault';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $protectedProperty = 'protectedPropertyDefault';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $privateProperty = 'privatePropertyDefault';
 
     /**

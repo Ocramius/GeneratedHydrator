@@ -23,14 +23,10 @@ use ReflectionClass;
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private $visiblePropertyMap = [];
 
-    /**
-     * @var string[][]
-     */
+    /** @var string[][] */
     private $hiddenPropertyMap = [];
 
     public function __construct(ReflectionClass $reflectedClass)

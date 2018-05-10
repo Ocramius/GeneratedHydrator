@@ -9,13 +9,9 @@ namespace GeneratedHydratorTestAsset\ClassGenerator\LazyLoading\MethodGenerator;
  */
 class ClassWithTwoPublicProperties
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $bar;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $baz;
 }

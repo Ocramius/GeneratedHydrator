@@ -16,9 +16,7 @@ use GeneratedHydrator\Configuration;
  */
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @var \GeneratedHydrator\Configuration
-     */
+    /** @var \GeneratedHydrator\Configuration */
     protected $configuration;
 
     /**

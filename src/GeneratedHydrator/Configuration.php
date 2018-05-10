@@ -22,44 +22,28 @@ class Configuration
 {
     const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $hydratedClassName;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $autoGenerateProxies = true;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     protected $generatedClassesTargetDir;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
-    /**
-     * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null
-     */
+    /** @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null */
     protected $generatorStrategy;
 
-    /**
-     * @var callable|null
-     */
+    /** @var callable|null */
     protected $generatedClassesAutoloader;
 
-    /**
-     * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
-     */
+    /** @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null */
     protected $classNameInflector;
 
-    /**
-     * @var \GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface|null
-     */
+    /** @var \GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface|null */
     protected $hydratorGenerator;
 
     public function __construct(string $hydratedClassName)

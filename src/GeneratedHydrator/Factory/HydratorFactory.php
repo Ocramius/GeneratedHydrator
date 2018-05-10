@@ -14,9 +14,7 @@ use ReflectionClass;
  */
 class HydratorFactory
 {
-    /**
-     * @var \GeneratedHydrator\Configuration
-     */
+    /** @var \GeneratedHydrator\Configuration */
     private $configuration;
 
     public function __construct(Configuration $configuration)

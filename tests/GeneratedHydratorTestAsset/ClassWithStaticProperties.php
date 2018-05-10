@@ -9,34 +9,22 @@ namespace GeneratedHydratorTestAsset;
  */
 class ClassWithStaticProperties
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private static $privateStatic;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected static $protectedStatic;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public static $publicStatic;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $private;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $protected;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $public;
 
     public function getStaticProperties()

@@ -9,9 +9,7 @@ namespace GeneratedHydratorTestAsset;
  */
 class LazyLoadingMock
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $initializer;
 
     /**

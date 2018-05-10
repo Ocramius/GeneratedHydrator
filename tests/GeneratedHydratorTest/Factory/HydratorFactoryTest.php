@@ -17,14 +17,10 @@ use PHPUnit\Framework\TestCase;
  */
 class HydratorFactoryTest extends TestCase
 {
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $inflector;
 
-    /**
-     * @var \GeneratedHydrator\Configuration|\PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var \GeneratedHydrator\Configuration|\PHPUnit_Framework_MockObject_MockObject */
     protected $config;
 
     /**
