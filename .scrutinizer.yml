@@ -9,7 +9,7 @@ tools:
     php_code_sniffer:
         enabled: true
         config:
-            standard: PSR2
+            standard: Doctrine
         filter:
             paths: ["src/*", "tests/*"]
     php_cpd:
