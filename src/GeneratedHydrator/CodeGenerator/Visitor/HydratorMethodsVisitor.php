@@ -33,9 +33,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     private $hiddenPropertyMap = [];
 
-    /**
-     * @param ReflectionClass $reflectedClass
-     */
     public function __construct(ReflectionClass $reflectedClass)
     {
         foreach ($this->findAllInstanceProperties($reflectedClass) as $property) {
@@ -97,9 +94,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ));
     }
 
-    /**
-     * @param ClassMethod $method
-     */
     private function replaceConstructor(ClassMethod $method)
     {
         $method->params = [];
@@ -133,9 +127,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ->parse('<?php ' . \implode("\n", $bodyParts));
     }
 
-    /**
-     * @param ClassMethod $method
-     */
     private function replaceHydrate(ClassMethod $method)
     {
         $method->params = [

@@ -62,65 +62,42 @@ class Configuration
      */
     protected $hydratorGenerator;
 
-    /**
-     * @param string $hydratedClassName
-     */
     public function __construct(string $hydratedClassName)
     {
         $this->setHydratedClassName($hydratedClassName);
     }
 
-    /**
-     * @return \GeneratedHydrator\Factory\HydratorFactory
-     */
     public function createFactory() : HydratorFactory
     {
         return new HydratorFactory($this);
     }
 
-    /**
-     * @param string $hydratedClassName
-     */
     public function setHydratedClassName(string $hydratedClassName)
     {
         $this->hydratedClassName = $hydratedClassName;
     }
 
-    /**
-     * @return string
-     */
     public function getHydratedClassName() : string
     {
         return $this->hydratedClassName;
     }
 
-    /**
-     * @param bool $autoGenerateProxies
-     */
     public function setAutoGenerateProxies(bool $autoGenerateProxies)
     {
         $this->autoGenerateProxies = $autoGenerateProxies;
     }
 
-    /**
-     * @return bool
-     */
     public function doesAutoGenerateProxies() : bool
     {
         return $this->autoGenerateProxies;
     }
 
-    /**
-     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $generatedClassesAutoloader
-     */
     public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader)
     {
         $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
 
     /**
-     * @return \CodeGenerationUtils\Autoloader\AutoloaderInterface
-     *
      * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratedClassAutoloader() : AutoloaderInterface
@@ -135,25 +112,16 @@ class Configuration
         return $this->generatedClassesAutoloader;
     }
 
-    /**
-     * @param string $generatedClassesNamespace
-     */
     public function setGeneratedClassesNamespace(string $generatedClassesNamespace)
     {
         $this->generatedClassesNamespace = $generatedClassesNamespace;
     }
 
-    /**
-     * @return string
-     */
     public function getGeneratedClassesNamespace() : string
     {
         return $this->generatedClassesNamespace;
     }
 
-    /**
-     * @param string $generatedClassesTargetDir
-     */
     public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir)
     {
         $this->generatedClassesTargetDir = $generatedClassesTargetDir;
@@ -171,9 +139,6 @@ class Configuration
         return $this->generatedClassesTargetDir;
     }
 
-    /**
-     * @param \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface $generatorStrategy
-     */
     public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy)
     {
         $this->generatorStrategy = $generatorStrategy;
@@ -195,17 +160,11 @@ class Configuration
         return $this->generatorStrategy;
     }
 
-    /**
-     * @param \CodeGenerationUtils\Inflector\ClassNameInflectorInterface $classNameInflector
-     */
     public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector)
     {
         $this->classNameInflector = $classNameInflector;
     }
 
-    /**
-     * @return \CodeGenerationUtils\Inflector\ClassNameInflectorInterface
-     */
     public function getClassNameInflector() : ClassNameInflectorInterface
     {
         if (null === $this->classNameInflector) {
@@ -215,9 +174,6 @@ class Configuration
         return $this->classNameInflector;
     }
 
-    /**
-     * @param HydratorGeneratorInterface $hydratorGenerator
-     */
     public function setHydratorGenerator(HydratorGeneratorInterface $hydratorGenerator)
     {
         $this->hydratorGenerator = $hydratorGenerator;

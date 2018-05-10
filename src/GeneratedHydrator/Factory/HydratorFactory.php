@@ -19,9 +19,6 @@ class HydratorFactory
      */
     private $configuration;
 
-    /**
-     * @param \GeneratedHydrator\Configuration $configuration
-     */
     public function __construct(Configuration $configuration)
     {
         $this->configuration = clone $configuration;

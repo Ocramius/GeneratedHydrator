@@ -11,11 +11,6 @@ use BadMethodCallException;
  */
 class DisabledMethodException extends BadMethodCallException implements ExceptionInterface
 {
-    /**
-     * @param string $method
-     *
-     * @return self
-     */
     public static function disabledMethod(string $method) : self
     {
         return new self(sprintf('Method "%s" is forcefully disabled', $method));
