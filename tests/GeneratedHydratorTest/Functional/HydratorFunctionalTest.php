@@ -12,6 +12,7 @@ use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParent;
+use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
@@ -21,7 +22,6 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
 use Zend\Hydrator\HydratorInterface;
-use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 use function get_class;
 use function ksort;
 

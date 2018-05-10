@@ -9,8 +9,8 @@ use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
-use function get_class;
 use function class_exists;
+use function get_class;
 
 /**
  * Factory responsible of producing hydrators

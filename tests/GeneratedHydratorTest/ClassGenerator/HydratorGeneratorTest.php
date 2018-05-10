@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTest\ClassGenerator;
 
+use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
-use PHPUnit\Framework\TestCase;
 use PhpParser\NodeTraverser;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Zend\Hydrator\HydratorInterface;
 

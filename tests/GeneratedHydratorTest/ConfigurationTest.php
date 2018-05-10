@@ -8,8 +8,8 @@ use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
-use PHPUnit\Framework\TestCase;
 use GeneratedHydrator\Configuration;
+use PHPUnit\Framework\TestCase;
 use function is_dir;
 
 /**

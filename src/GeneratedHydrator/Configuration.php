@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator;
 
-use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
-use GeneratedHydrator\Factory\HydratorFactory;
-use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\Autoloader\Autoloader;
+use CodeGenerationUtils\Autoloader\AutoloaderInterface;
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use CodeGenerationUtils\FileLocator\FileLocator;
 use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
-use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
+use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
+use GeneratedHydrator\Factory\HydratorFactory;
 use function sys_get_temp_dir;
 
 /**
