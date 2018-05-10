@@ -16,7 +16,9 @@ class BaseClass implements BaseInterface
     protected $protectedProperty = 'protectedPropertyDefault';
 
     /** @var string */
+//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
     private $privateProperty = 'privatePropertyDefault';
+//phpcs:enable
 
     /**
      * @return string
@@ -37,8 +39,10 @@ class BaseClass implements BaseInterface
     /**
      * @return string
      */
+//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
     private function privateMethod()
     {
+//phpcs:enable
         return 'privateMethodDefault';
     }
 
