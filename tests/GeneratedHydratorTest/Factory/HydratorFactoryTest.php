@@ -129,7 +129,7 @@ class HydratorFactoryTest extends TestCase
             ->with($className)
             ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
-            $factory        = new HydratorFactory($this->config);
+            $factory = new HydratorFactory($this->config);
         /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */
             $generatedClass = $factory->getHydratorClass();
 

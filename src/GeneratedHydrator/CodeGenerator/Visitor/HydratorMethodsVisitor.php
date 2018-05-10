@@ -164,7 +164,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     {
         $method->params = [new Param('object')];
 
-        $bodyParts = [];
+        $bodyParts   = [];
         $bodyParts[] = '$ret = array();';
         foreach ($this->visiblePropertyMap as $propertyName) {
             $bodyParts[] = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';

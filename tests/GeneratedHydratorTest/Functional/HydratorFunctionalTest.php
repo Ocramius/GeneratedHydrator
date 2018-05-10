@@ -172,7 +172,7 @@ class HydratorFunctionalTest extends TestCase
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
         /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $inflector          = $this->createMock(ClassNameInflectorInterface::class);
+        $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $inflector
             ->expects(self::any())
