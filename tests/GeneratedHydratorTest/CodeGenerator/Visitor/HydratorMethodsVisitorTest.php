@@ -7,8 +7,6 @@ namespace GeneratedHydratorTest\CodeGenerator\Visitor;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
 use PhpParser\Node;
-use PhpParser\Node\Expr\Assign;
-use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\ParserFactory;
