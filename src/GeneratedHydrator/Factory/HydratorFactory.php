@@ -11,9 +11,6 @@ use ReflectionClass;
 
 /**
  * Factory responsible of producing hydrators
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class HydratorFactory
 {

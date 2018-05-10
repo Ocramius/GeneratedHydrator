@@ -6,9 +6,6 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Base test class to play around with mixed visibility properties
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class ClassWithMixedProperties
 {

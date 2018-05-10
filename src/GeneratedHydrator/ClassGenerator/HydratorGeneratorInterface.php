@@ -6,9 +6,6 @@ use ReflectionClass;
 
 /**
  * Interface for the hydrator generator
- *
- * @author Magnus Nordlander <magnus@fervo.se>
- * @license MIT
  */
 interface HydratorGeneratorInterface
 {

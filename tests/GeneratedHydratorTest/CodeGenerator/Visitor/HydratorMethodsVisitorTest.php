@@ -18,9 +18,6 @@ use ReflectionClass;
 /**
  * Tests for {@see \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor}
  *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
- *
  * @covers \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor
  */
 class HydratorMethodsVisitorTest extends TestCase

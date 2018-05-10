@@ -18,10 +18,6 @@ use Zend\Hydrator\HydratorInterface;
  * for objects
  *
  * {@inheritDoc}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @author Pierre Rineau <pierre.rineau@makina-corpus.com>
- * @license MIT
  */
 class HydratorGenerator implements HydratorGeneratorInterface
 {

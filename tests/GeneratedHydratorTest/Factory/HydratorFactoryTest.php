@@ -14,9 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class HydratorFactoryTest extends TestCase
 {

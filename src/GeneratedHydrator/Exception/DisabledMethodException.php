@@ -8,9 +8,6 @@ use BadMethodCallException;
 
 /**
  * Exception for forcefully disabled methods
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class DisabledMethodException extends BadMethodCallException implements ExceptionInterface
 {

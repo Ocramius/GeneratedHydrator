@@ -6,10 +6,6 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Base test class to play around with parent class private properties
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @author Pierre Rineau <pierre.rineau@makina-corpus.com>
- * @license MIT
  */
 class ClassWithPrivatePropertiesAndParent extends ClassWithPrivateProperties
 {

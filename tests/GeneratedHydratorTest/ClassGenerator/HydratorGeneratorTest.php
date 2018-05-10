@@ -20,9 +20,6 @@ use Zend\Hydrator\HydratorInterface;
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}
  *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
- *
  * @covers \GeneratedHydrator\ClassGenerator\HydratorGenerator
  */
 class HydratorGeneratorTest extends TestCase

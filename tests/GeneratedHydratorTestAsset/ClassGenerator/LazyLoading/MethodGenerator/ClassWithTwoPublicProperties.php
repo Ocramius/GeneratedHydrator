@@ -6,9 +6,6 @@ namespace GeneratedHydratorTestAsset\ClassGenerator\LazyLoading\MethodGenerator;
 
 /**
  * Test asset with 2 public properties
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class ClassWithTwoPublicProperties
 {

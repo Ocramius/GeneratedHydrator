@@ -6,9 +6,6 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Base test class with various intercepted properties
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class BaseClass implements BaseInterface
 {

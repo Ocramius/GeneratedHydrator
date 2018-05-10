@@ -9,9 +9,6 @@ use GeneratedHydrator\Exception\DisabledMethodException;
 
 /**
  * Tests for {@see \GeneratedHydrator\Exception\DisabledMethodException}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class DisabledMethodExceptionTest extends TestCase
 {

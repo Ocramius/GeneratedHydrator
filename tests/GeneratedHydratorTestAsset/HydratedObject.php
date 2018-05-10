@@ -6,9 +6,6 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Test object to be hydrated
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class HydratedObject
 {

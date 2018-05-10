@@ -17,9 +17,6 @@ use CodeGenerationUtils\Inflector\ClassNameInflector;
 
 /**
  * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class Configuration
 {

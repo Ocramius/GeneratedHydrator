@@ -13,9 +13,6 @@ use GeneratedHydrator\Configuration;
 
 /**
  * Tests for {@see \GeneratedHydrator\Configuration}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class ConfigurationTest extends TestCase
 {

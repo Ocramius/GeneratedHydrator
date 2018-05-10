@@ -16,9 +16,6 @@ use ReflectionClass;
 /**
  * Integration tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
  *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
- *
  * @group Functional
  */
 class HydratorFactoryFunctionalTest extends TestCase

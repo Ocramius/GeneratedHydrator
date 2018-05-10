@@ -26,9 +26,6 @@ use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
  *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
- *
  * @group Functional
  */
 class HydratorFunctionalTest extends TestCase
