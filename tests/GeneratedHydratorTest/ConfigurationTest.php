@@ -10,13 +10,14 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use PHPUnit\Framework\TestCase;
 use GeneratedHydrator\Configuration;
+use function is_dir;
 
 /**
  * Tests for {@see \GeneratedHydrator\Configuration}
  */
 class ConfigurationTest extends TestCase
 {
-    /** @var \GeneratedHydrator\Configuration */
+    /** @var Configuration */
     protected $configuration;
 
     /**

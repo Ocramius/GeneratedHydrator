@@ -2,6 +2,7 @@
 
 namespace GeneratedHydrator\ClassGenerator;
 
+use PhpParser\Node;
 use ReflectionClass;
 
 /**
@@ -12,9 +13,9 @@ interface HydratorGeneratorInterface
     /**
      * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
      *
-     * @param \ReflectionClass $originalClass
+     * @param ReflectionClass $originalClass
      *
-     * @return \PhpParser\Node[]
+     * @return Node[]
      */
     public function generate(ReflectionClass $originalClass) : array;
 }

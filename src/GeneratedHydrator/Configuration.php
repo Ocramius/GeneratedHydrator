@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator;
 
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use GeneratedHydrator\Factory\HydratorFactory;
@@ -14,6 +15,7 @@ use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
+use function sys_get_temp_dir;
 
 /**
  * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
@@ -34,16 +36,16 @@ class Configuration
     /** @var string */
     protected $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
-    /** @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null */
+    /** @var GeneratorStrategyInterface|null */
     protected $generatorStrategy;
 
     /** @var callable|null */
     protected $generatedClassesAutoloader;
 
-    /** @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null */
+    /** @var ClassNameInflectorInterface|null */
     protected $classNameInflector;
 
-    /** @var \GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface|null */
+    /** @var HydratorGeneratorInterface|null */
     protected $hydratorGenerator;
 
     public function __construct(string $hydratedClassName)
@@ -82,7 +84,7 @@ class Configuration
     }
 
     /**
-     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratedClassAutoloader() : AutoloaderInterface
     {
@@ -117,7 +119,7 @@ class Configuration
     public function getGeneratedClassesTargetDir()
     {
         if (null === $this->generatedClassesTargetDir) {
-            $this->generatedClassesTargetDir = \sys_get_temp_dir();
+            $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
         return $this->generatedClassesTargetDir;
@@ -129,9 +131,9 @@ class Configuration
     }
 
     /**
-     * @return \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface
+     * @return GeneratorStrategyInterface
      *
-     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratorStrategy() : GeneratorStrategyInterface
     {

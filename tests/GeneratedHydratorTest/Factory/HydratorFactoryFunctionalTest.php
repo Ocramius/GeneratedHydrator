@@ -20,7 +20,7 @@ use ReflectionClass;
  */
 class HydratorFactoryFunctionalTest extends TestCase
 {
-    /** @var \GeneratedHydrator\Configuration */
+    /** @var Configuration */
     protected $config;
 
     /** @var string */

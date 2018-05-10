@@ -9,6 +9,7 @@ use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,7 @@ class HydratorFactoryTest extends TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $inflector;
 
-    /** @var \GeneratedHydrator\Configuration|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var Configuration|\PHPUnit_Framework_MockObject_MockObject */
     protected $config;
 
     /**

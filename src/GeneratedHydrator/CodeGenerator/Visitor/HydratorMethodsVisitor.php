@@ -14,6 +14,12 @@ use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use ReflectionClass;
+use function array_filter;
+use function array_merge;
+use function array_values;
+use function implode;
+use function reset;
+use function var_export;
 
 /**
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
@@ -81,7 +87,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         return array_values(array_merge(
             $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
-            \array_values(\array_filter(
+            array_values(array_filter(
                 $class->getProperties(),
                 function (\ReflectionProperty $property) : bool {
                     return ! $property->isStatic();
@@ -108,19 +114,19 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 $bodyParts[] = '        $object->' . $propertyName . " = \$values['" . $propertyName . "'];";
                 $bodyParts[] = '    }';
             }
-            $bodyParts[] = '}, null, ' . \var_export($className, true) . ');' . "\n";
+            $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
             // Extract closures
             $bodyParts[] = "\$this->extractCallbacks[] = \\Closure::bind(function (\$object, &\$values) {";
             foreach ($propertyNames as $propertyName) {
                 $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
-            $bodyParts[] = '}, null, ' . \var_export($className, true) . ');' . "\n";
+            $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }
 
         $method->stmts = (new ParserFactory)
             ->create(ParserFactory::ONLY_PHP7)
-            ->parse('<?php ' . \implode("\n", $bodyParts));
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     private function replaceHydrate(ClassMethod $method)
@@ -146,7 +152,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $method->stmts = (new ParserFactory())
             ->create(ParserFactory::ONLY_PHP7)
-            ->parse('<?php ' . \implode("\n", $bodyParts));
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**
@@ -172,7 +178,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $method->stmts = (new ParserFactory())
             ->create(ParserFactory::ONLY_PHP7)
-            ->parse('<?php ' . \implode("\n", $bodyParts));
+            ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
     /**
@@ -187,14 +193,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     private function findOrCreateMethod(Class_ $class, string $name) : ClassMethod
     {
-        $foundMethods = \array_filter(
+        $foundMethods = array_filter(
             $class->getMethods(),
             function (ClassMethod $method) use ($name) : bool {
                 return $name === $method->name;
             }
         );
 
-        $method = \reset($foundMethods);
+        $method = reset($foundMethods);
 
         if (!$method) {
             $class->stmts[] = $method = new ClassMethod($name);

@@ -6,12 +6,14 @@ namespace GeneratedHydrator\ClassGenerator;
 
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
+use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use ReflectionClass;
 use Zend\Hydrator\HydratorInterface;
+use function explode;
 
 /**
  * Generator for highly performing {@see \Zend\Hydrator\HydratorInterface}
@@ -25,9 +27,9 @@ class HydratorGenerator implements HydratorGeneratorInterface
      * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
      * and a map of properties to be used to
      *
-     * @param \ReflectionClass $originalClass
+     * @param ReflectionClass $originalClass
      *
-     * @return \PhpParser\Node[]
+     * @return Node[]
      */
     public function generate(ReflectionClass $originalClass) : array
     {

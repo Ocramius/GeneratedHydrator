@@ -14,6 +14,7 @@ use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionClass;
+use function array_filter;
 
 /**
  * Tests for {@see \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor}
@@ -64,7 +65,7 @@ class HydratorMethodsVisitorTest extends TestCase
     }
 
     /**
-     * @return \PhpParser\Node[][]
+     * @return Node[]
      */
     public function classAstProvider() : array
     {

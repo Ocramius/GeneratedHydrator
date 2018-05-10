@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator\Factory;
 
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
+use function get_class;
+use function class_exists;
 
 /**
  * Factory responsible of producing hydrators
  */
 class HydratorFactory
 {
-    /** @var \GeneratedHydrator\Configuration */
+    /** @var Configuration */
     private $configuration;
 
     public function __construct(Configuration $configuration)
@@ -27,15 +30,15 @@ class HydratorFactory
      *
      * @return string
      *
-     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getHydratorClass() : string
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
-        $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => \get_class($this)]);
+        $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => get_class($this)]);
 
-        if (! \class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
+        if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = $this->configuration->getHydratorGenerator();
             $originalClass = new ReflectionClass($realClassName);
             $generatedAst   = $generator->generate($originalClass);

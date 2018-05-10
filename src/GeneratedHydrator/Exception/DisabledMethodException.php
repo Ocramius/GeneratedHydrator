@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GeneratedHydrator\Exception;
 
 use BadMethodCallException;
+use function sprintf;
 
 /**
  * Exception for forcefully disabled methods
