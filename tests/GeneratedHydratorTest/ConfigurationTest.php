@@ -101,7 +101,6 @@ class ConfigurationTest extends TestCase
      */
     public function testSetGetGeneratorStrategy()
     {
-
         self::assertInstanceOf(GeneratorStrategyInterface::class, $this->configuration->getGeneratorStrategy());
 
         /* @var $strategy GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject */

@@ -107,9 +107,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         // then be called in order in the hydrate() and extract() methods.
         foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
             // Hydrate closures
-            $bodyParts[] = "\$this->hydrateCallbacks[] = \\Closure::bind(function (\$object, \$values) {";
+            $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(function ($object, $values) {';
             foreach ($propertyNames as $propertyName) {
-                $bodyParts[] = "    if (isset(\$values['" . $propertyName . "']) || ".
+                $bodyParts[] = "    if (isset(\$values['" . $propertyName . "']) || " .
                 '$object->' . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$values)) {";
                 $bodyParts[] = '        $object->' . $propertyName . " = \$values['" . $propertyName . "'];";
                 $bodyParts[] = '    }';
@@ -117,7 +117,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
             // Extract closures
-            $bodyParts[] = "\$this->extractCallbacks[] = \\Closure::bind(function (\$object, &\$values) {";
+            $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(function ($object, &$values) {';
             foreach ($propertyNames as $propertyName) {
                 $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
@@ -138,7 +138,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts = [];
         foreach ($this->visiblePropertyMap as $propertyName) {
-            $bodyParts[] = "if (isset(\$data['" . $propertyName . "']) || ".
+            $bodyParts[] = "if (isset(\$data['" . $propertyName . "']) || " .
             '$object->' . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$data)) {";
             $bodyParts[] = '    $object->' . $propertyName . " = \$data['" . $propertyName . "'];";
             $bodyParts[] = '}';
@@ -202,7 +202,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $method = reset($foundMethods);
 
-        if (!$method) {
+        if (! $method) {
             $class->stmts[] = $method = new ClassMethod($name);
         }
 
