@@ -124,7 +124,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }
 
-        $method->stmts = (new ParserFactory)
+        $method->stmts = (new ParserFactory())
             ->create(ParserFactory::ONLY_PHP7)
             ->parse('<?php ' . implode("\n", $bodyParts));
     }

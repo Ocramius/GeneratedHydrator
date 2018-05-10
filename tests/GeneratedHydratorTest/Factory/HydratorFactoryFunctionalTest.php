@@ -57,6 +57,6 @@ class HydratorFactoryFunctionalTest extends TestCase
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-        self::assertInstanceOf('Zend\\Hydrator\\HydratorInterface', new $generatedClass);
+        self::assertInstanceOf('Zend\\Hydrator\\HydratorInterface', new $generatedClass());
     }
 }

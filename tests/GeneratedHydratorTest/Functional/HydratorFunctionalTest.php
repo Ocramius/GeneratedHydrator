@@ -189,6 +189,6 @@ class HydratorFunctionalTest extends TestCase
 
         $generatedClass = $config->createFactory()->getHydratorClass();
 
-        return new $generatedClass;
+        return new $generatedClass();
     }
 }
