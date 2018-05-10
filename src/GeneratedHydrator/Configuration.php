@@ -88,7 +88,7 @@ class Configuration
      */
     public function getGeneratedClassAutoloader() : AutoloaderInterface
     {
-        if (null === $this->generatedClassesAutoloader) {
+        if ($this->generatedClassesAutoloader === null) {
             $this->generatedClassesAutoloader = new Autoloader(
                 new FileLocator($this->getGeneratedClassesTargetDir()),
                 $this->getClassNameInflector()
@@ -118,7 +118,7 @@ class Configuration
      */
     public function getGeneratedClassesTargetDir()
     {
-        if (null === $this->generatedClassesTargetDir) {
+        if ($this->generatedClassesTargetDir === null) {
             $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
@@ -137,7 +137,7 @@ class Configuration
      */
     public function getGeneratorStrategy() : GeneratorStrategyInterface
     {
-        if (null === $this->generatorStrategy) {
+        if ($this->generatorStrategy === null) {
             $this->generatorStrategy = new FileWriterGeneratorStrategy(
                 new FileLocator($this->getGeneratedClassesTargetDir())
             );
@@ -153,7 +153,7 @@ class Configuration
 
     public function getClassNameInflector() : ClassNameInflectorInterface
     {
-        if (null === $this->classNameInflector) {
+        if ($this->classNameInflector === null) {
             $this->classNameInflector = new ClassNameInflector($this->getGeneratedClassesNamespace());
         }
 
@@ -170,7 +170,7 @@ class Configuration
      */
     public function getHydratorGenerator()
     {
-        if (null === $this->hydratorGenerator) {
+        if ($this->hydratorGenerator === null) {
             $this->hydratorGenerator = new HydratorGenerator();
         }
 
