@@ -185,7 +185,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      * Finds or creates a class method (and eventually attaches it to the class itself)
      *
      * @param Class_ $class
-     * @param string                    $name  name of the method
+     * @param string $name  name of the method
      *
      * @return ClassMethod
      *

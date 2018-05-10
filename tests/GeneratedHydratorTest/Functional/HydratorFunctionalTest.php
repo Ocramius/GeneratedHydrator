@@ -106,9 +106,9 @@ class HydratorFunctionalTest extends TestCase
      * dropped from the populated arrays
      *
      * @param \ReflectionClass $class
-     * @param object $instance
-     * @param array $initialData
-     * @param array $newData
+     * @param object           $instance
+     * @param array            $initialData
+     * @param array            $newData
      */
     private function recursiveFindInitialData(\ReflectionClass $class, $instance, array &$initialData, array &$newData)
     {
@@ -137,9 +137,8 @@ class HydratorFunctionalTest extends TestCase
      * dropped from the populated arrays
      *
      * @param \ReflectionClass $class
-     * @param object $instance
-     * @param array $initialData
-     * @param array $newData
+     * @param object           $instance
+     * @param array            $initialData
      */
     private function recursiveFindInspectionData(\ReflectionClass $class, $instance, array &$inspectionData)
     {
