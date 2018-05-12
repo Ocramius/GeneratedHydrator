@@ -10,7 +10,7 @@ use function sprintf;
 /**
  * Exception for forcefully disabled methods
  */
-class DisabledMethodException extends BadMethodCallException implements ExceptionInterface
+class DisabledMethodException extends BadMethodCallException implements Exception
 {
     public static function disabledMethod(string $method) : self
     {
