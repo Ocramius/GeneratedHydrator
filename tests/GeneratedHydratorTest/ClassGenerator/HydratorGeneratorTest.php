@@ -29,7 +29,7 @@ class HydratorGeneratorTest extends TestCase
      *
      * Verifies that generated code is valid and implements expected interfaces
      */
-    public function testGeneratesValidCode(string $className)
+    public function testGeneratesValidCode(string $className) : void
     {
         $generator          = new HydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');

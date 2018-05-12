@@ -26,7 +26,7 @@ class HydratorMethodsVisitorTest extends TestCase
      *
      * @param string[] $properties
      */
-    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties)
+    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties) : void
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
@@ -41,7 +41,7 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * Verifies that a method was correctly added to by the visitor
      */
-    private function assertMethodExistence(string $methodName, Class_ $class)
+    private function assertMethodExistence(string $methodName, Class_ $class) : void
     {
         $members = $class->stmts;
 

@@ -48,10 +48,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
     }
 
-    /**
-     * @return null|Class_
-     */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node) : ?Class_
     {
         if (! $node instanceof Class_) {
             return null;
@@ -75,7 +72,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return \ReflectionProperty[]
      */
-    private function findAllInstanceProperties(\ReflectionClass $class = null) : array
+    private function findAllInstanceProperties(?\ReflectionClass $class = null) : array
     {
         if (! $class) {
             return [];
@@ -92,7 +89,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ));
     }
 
-    private function replaceConstructor(ClassMethod $method)
+    private function replaceConstructor(ClassMethod $method) : void
     {
         $method->params = [];
 
@@ -125,7 +122,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
-    private function replaceHydrate(ClassMethod $method)
+    private function replaceHydrate(ClassMethod $method) : void
     {
         $method->params = [
             new Param('data', null, 'array'),
@@ -151,7 +148,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
-    private function replaceExtract(ClassMethod $method)
+    private function replaceExtract(ClassMethod $method) : void
     {
         $method->params = [new Param('object')];
 

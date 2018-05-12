@@ -15,7 +15,7 @@ class DisabledMethodExceptionTest extends TestCase
     /**
      * @covers \GeneratedHydrator\Exception\DisabledMethodException::disabledMethod
      */
-    public function testDisabledMethod()
+    public function testDisabledMethod() : void
     {
         $exception = DisabledMethodException::disabledMethod('foo::bar');
 

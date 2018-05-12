@@ -11,7 +11,7 @@ namespace GeneratedHydratorBenchmark;
  */
 class InheritanceDeepClassHydrationBench extends AbstractHydrationBench
 {
-    protected function createData()
+    protected function createData() : void
     {
         parent::createData();
 
@@ -31,7 +31,7 @@ class InheritanceDeepClassHydrationBench extends AbstractHydrationBench
         ];
     }
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->createHydrator(InheritanceDeepClass::class);
         $this->createData();
@@ -42,7 +42,7 @@ class InheritanceDeepClassHydrationBench extends AbstractHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchConsume()
+    public function benchConsume() : void
     {
         $this->hydrator->hydrate($this->data, $this->object);
     }

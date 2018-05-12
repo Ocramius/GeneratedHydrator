@@ -23,7 +23,7 @@ class HydratedObject
     /**
      * Method to be disabled
      */
-    public function doFoo()
+    public function doFoo() : void
     {
     }
 

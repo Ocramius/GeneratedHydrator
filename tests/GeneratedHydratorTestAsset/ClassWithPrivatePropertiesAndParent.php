@@ -24,7 +24,7 @@ class ClassWithPrivatePropertiesAndParent extends ClassWithPrivateProperties
     /** @var string */
     public $property22 = 'property22';
 
-    public function setProperty0(string $property0)
+    public function setProperty0(string $property0) : void
     {
         $this->property0 = $property0;
     }
@@ -34,7 +34,7 @@ class ClassWithPrivatePropertiesAndParent extends ClassWithPrivateProperties
         return $this->property0;
     }
 
-    public function setProperty1(string $property1)
+    public function setProperty1(string $property1) : void
     {
         $this->property1 = $property1;
     }
@@ -44,7 +44,7 @@ class ClassWithPrivatePropertiesAndParent extends ClassWithPrivateProperties
         return $this->property1;
     }
 
-    public function setProperty20(string $property20)
+    public function setProperty20(string $property20) : void
     {
         $this->property20 = $property20;
     }
@@ -54,7 +54,7 @@ class ClassWithPrivatePropertiesAndParent extends ClassWithPrivateProperties
         return $this->property20;
     }
 
-    public function setProperty21(string $property21)
+    public function setProperty21(string $property21) : void
     {
         $this->property21 = $property21;
     }
@@ -64,7 +64,7 @@ class ClassWithPrivatePropertiesAndParent extends ClassWithPrivateProperties
         return $this->property21;
     }
 
-    public function setProperty22(string $property22)
+    public function setProperty22(string $property22) : void
     {
         $this->property22 = $property22;
     }

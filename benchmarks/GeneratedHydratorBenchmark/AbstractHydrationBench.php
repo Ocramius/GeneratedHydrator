@@ -24,7 +24,7 @@ abstract class AbstractHydrationBench
     /**
      * Create and set the hydrator
      */
-    protected function createHydrator(string $class)
+    protected function createHydrator(string $class) : void
     {
         $config        = new Configuration($class);
         $hydratorClass = $config->createFactory()->getHydratorClass();
@@ -35,7 +35,7 @@ abstract class AbstractHydrationBench
     /**
      * Populate test data array
      */
-    protected function createData()
+    protected function createData() : void
     {
         $this->data = [
             'foo' => 'some foo string',

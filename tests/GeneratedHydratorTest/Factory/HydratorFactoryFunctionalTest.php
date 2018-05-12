@@ -53,7 +53,7 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillGenerateValidClass()
+    public function testWillGenerateValidClass() : void
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 

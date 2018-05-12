@@ -39,7 +39,7 @@ class ClassWithPublicProperties
     /** @var string */
     public $property9 = 'property9';
 
-    public function setProperty0(string $property0)
+    public function setProperty0(string $property0) : void
     {
         $this->property0 = $property0;
     }
@@ -49,7 +49,7 @@ class ClassWithPublicProperties
         return $this->property0;
     }
 
-    public function setProperty1(string $property1)
+    public function setProperty1(string $property1) : void
     {
         $this->property1 = $property1;
     }
@@ -59,7 +59,7 @@ class ClassWithPublicProperties
         return $this->property1;
     }
 
-    public function setProperty2(string $property2)
+    public function setProperty2(string $property2) : void
     {
         $this->property2 = $property2;
     }
@@ -69,7 +69,7 @@ class ClassWithPublicProperties
         return $this->property2;
     }
 
-    public function setProperty3(string $property3)
+    public function setProperty3(string $property3) : void
     {
         $this->property3 = $property3;
     }
@@ -79,7 +79,7 @@ class ClassWithPublicProperties
         return $this->property3;
     }
 
-    public function setProperty4(string $property4)
+    public function setProperty4(string $property4) : void
     {
         $this->property4 = $property4;
     }
@@ -89,7 +89,7 @@ class ClassWithPublicProperties
         return $this->property4;
     }
 
-    public function setProperty5(string $property5)
+    public function setProperty5(string $property5) : void
     {
         $this->property5 = $property5;
     }
@@ -99,7 +99,7 @@ class ClassWithPublicProperties
         return $this->property5;
     }
 
-    public function setProperty6(string $property6)
+    public function setProperty6(string $property6) : void
     {
         $this->property6 = $property6;
     }
@@ -109,7 +109,7 @@ class ClassWithPublicProperties
         return $this->property6;
     }
 
-    public function setProperty7(string $property7)
+    public function setProperty7(string $property7) : void
     {
         $this->property7 = $property7;
     }
@@ -119,7 +119,7 @@ class ClassWithPublicProperties
         return $this->property7;
     }
 
-    public function setProperty8(string $property8)
+    public function setProperty8(string $property8) : void
     {
         $this->property8 = $property8;
     }
@@ -129,7 +129,7 @@ class ClassWithPublicProperties
         return $this->property8;
     }
 
-    public function setProperty9(string $property9)
+    public function setProperty9(string $property9) : void
     {
         $this->property9 = $property9;
     }

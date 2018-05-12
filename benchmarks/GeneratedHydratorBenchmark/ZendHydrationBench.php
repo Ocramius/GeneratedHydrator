@@ -37,7 +37,7 @@ class ZendHydrationBench
     /** @var object */
     private $object6;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->classMethodHydrator = new ClassMethods();
         $this->reflectionHydrator  = new Reflection();
@@ -55,7 +55,7 @@ class ZendHydrationBench
     /**
      * Populate test data array
      */
-    private function createData()
+    private function createData() : void
     {
         $this->data = [
             'foo' => 'some foo string',
@@ -83,7 +83,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodAllPrivate()
+    public function benchMethodAllPrivate() : void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object1);
     }
@@ -92,7 +92,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodAllProtected()
+    public function benchMethodAllProtected() : void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object2);
     }
@@ -101,7 +101,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodAllPublic()
+    public function benchMethodAllPublic() : void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object3);
     }
@@ -110,7 +110,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodInheritance()
+    public function benchMethodInheritance() : void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object4);
     }
@@ -119,7 +119,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodInheritanceDeep()
+    public function benchMethodInheritanceDeep() : void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object5);
     }
@@ -128,7 +128,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodMixed()
+    public function benchMethodMixed() : void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object6);
     }
@@ -137,7 +137,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionAllPrivate()
+    public function benchReflectionAllPrivate() : void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object1);
     }
@@ -146,7 +146,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionAllProtected()
+    public function benchReflectionAllProtected() : void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object2);
     }
@@ -155,7 +155,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionAllPublic()
+    public function benchReflectionAllPublic() : void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object3);
     }
@@ -164,7 +164,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionInheritance()
+    public function benchReflectionInheritance() : void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object4);
     }
@@ -173,7 +173,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionInheritanceDeep()
+    public function benchReflectionInheritanceDeep() : void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object5);
     }
@@ -182,7 +182,7 @@ class ZendHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionMixed()
+    public function benchReflectionMixed() : void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object6);
     }

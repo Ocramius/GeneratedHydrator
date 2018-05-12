@@ -22,7 +22,7 @@ use function sys_get_temp_dir;
  */
 class Configuration
 {
-    const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
+    public const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
 
     /** @var string */
     protected $hydratedClassName;
@@ -58,7 +58,7 @@ class Configuration
         return new HydratorFactory($this);
     }
 
-    public function setHydratedClassName(string $hydratedClassName)
+    public function setHydratedClassName(string $hydratedClassName) : void
     {
         $this->hydratedClassName = $hydratedClassName;
     }
@@ -68,7 +68,7 @@ class Configuration
         return $this->hydratedClassName;
     }
 
-    public function setAutoGenerateProxies(bool $autoGenerateProxies)
+    public function setAutoGenerateProxies(bool $autoGenerateProxies) : void
     {
         $this->autoGenerateProxies = $autoGenerateProxies;
     }
@@ -78,7 +78,7 @@ class Configuration
         return $this->autoGenerateProxies;
     }
 
-    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader)
+    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader) : void
     {
         $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
@@ -98,7 +98,7 @@ class Configuration
         return $this->generatedClassesAutoloader;
     }
 
-    public function setGeneratedClassesNamespace(string $generatedClassesNamespace)
+    public function setGeneratedClassesNamespace(string $generatedClassesNamespace) : void
     {
         $this->generatedClassesNamespace = $generatedClassesNamespace;
     }
@@ -108,7 +108,7 @@ class Configuration
         return $this->generatedClassesNamespace;
     }
 
-    public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir)
+    public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir) : void
     {
         $this->generatedClassesTargetDir = $generatedClassesTargetDir;
     }
@@ -122,7 +122,7 @@ class Configuration
         return $this->generatedClassesTargetDir;
     }
 
-    public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy)
+    public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy) : void
     {
         $this->generatorStrategy = $generatorStrategy;
     }
@@ -141,7 +141,7 @@ class Configuration
         return $this->generatorStrategy;
     }
 
-    public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector)
+    public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector) : void
     {
         $this->classNameInflector = $classNameInflector;
     }
@@ -155,7 +155,7 @@ class Configuration
         return $this->classNameInflector;
     }
 
-    public function setHydratorGenerator(HydratorGeneratorInterface $hydratorGenerator)
+    public function setHydratorGenerator(HydratorGeneratorInterface $hydratorGenerator) : void
     {
         $this->hydratorGenerator = $hydratorGenerator;
     }
