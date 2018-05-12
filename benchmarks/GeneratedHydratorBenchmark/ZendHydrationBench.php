@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorBenchmark;
 
+use Zend\Hydrator\ClassMethods;
 use Zend\Hydrator\HydratorInterface;
+use Zend\Hydrator\Reflection;
 
 /**
  * Benchmark class that contains all benchmarks for zend code
@@ -11,32 +15,32 @@ use Zend\Hydrator\HydratorInterface;
  */
 class ZendHydrationBench
 {
-    /**
-     * @var HydratorInterface
-     */
+    /** @var HydratorInterface */
     private $classMethodHydrator;
 
-    /**
-     * @var HydratorInterface
-     */
+    /** @var HydratorInterface */
     private $reflectionHydrator;
 
-    /**
-     * @var array
-     */
+    /** @var mixed[] */
     private $data;
 
+    /** @var object */
     private $object1;
+    /** @var object */
     private $object2;
+    /** @var object */
     private $object3;
+    /** @var object */
     private $object4;
+    /** @var object */
     private $object5;
+    /** @var object */
     private $object6;
 
     public function setUp()
     {
-        $this->classMethodHydrator = new \Zend\Hydrator\ClassMethods();
-        $this->reflectionHydrator = new \Zend\Hydrator\Reflection();
+        $this->classMethodHydrator = new ClassMethods();
+        $this->reflectionHydrator  = new Reflection();
 
         $this->object1 = new AllPrivateClass();
         $this->object2 = new AllProtectedClass();
@@ -57,19 +61,19 @@ class ZendHydrationBench
             'foo' => 'some foo string',
             'bar' => 42,
             'baz' => new \DateTime(),
-            'someFooProperty' => array(12, 13, 14),
+            'someFooProperty' => [12, 13, 14],
             'someBarProperty' => 12354.4578,
             'someBazProperty' => new \stdClass(),
             'foo1' => 'some foo string',
             'bar1' => 42,
             'baz1' => new \DateTime(),
-            'someFooProperty1' => array(12, 13, 14),
+            'someFooProperty1' => [12, 13, 14],
             'someBarProperty1' => 12354.4578,
             'someBazProperty1' => new \stdClass(),
             'foo2' => 'some foo string',
             'bar2' => 42,
             'baz2' => new \DateTime(),
-            'someFooProperty2' => array(12, 13, 14),
+            'someFooProperty2' => [12, 13, 14],
             'someBarProperty2' => 12354.4578,
             'someBazProperty2' => new \stdClass(),
         ];
