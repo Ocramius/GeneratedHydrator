@@ -34,7 +34,6 @@ class HydratorFunctionalTest extends TestCase
 {
     /**
      * @dataProvider getHydratorClasses
-     *
      */
     public function testHydrator(object $instance) : void
     {
@@ -107,8 +106,12 @@ class HydratorFunctionalTest extends TestCase
      * @param mixed[] $initialData
      * @param mixed[] $newData
      */
-    private function recursiveFindInitialData(\ReflectionClass $class, object $instance, array &$initialData, array &$newData) : void
-    {
+    private function recursiveFindInitialData(
+        ReflectionClass $class,
+        object $instance,
+        array &$initialData,
+        array &$newData
+    ) : void {
         $parentClass = $class->getParentClass();
         if ($parentClass) {
             $this->recursiveFindInitialData($parentClass, $instance, $initialData, $newData);
@@ -136,8 +139,11 @@ class HydratorFunctionalTest extends TestCase
      *
      * @param mixed[] $inspectionData
      */
-    private function recursiveFindInspectionData(\ReflectionClass $class, object $instance, array &$inspectionData) : void
-    {
+    private function recursiveFindInspectionData(
+        ReflectionClass $class,
+        object $instance,
+        array &$inspectionData
+    ) : void {
         $parentClass = $class->getParentClass();
         if ($parentClass) {
             $this->recursiveFindInspectionData($parentClass, $instance, $inspectionData);
