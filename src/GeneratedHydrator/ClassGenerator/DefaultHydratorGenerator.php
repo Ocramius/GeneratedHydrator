@@ -21,7 +21,7 @@ use function explode;
  *
  * {@inheritDoc}
  */
-class HydratorGenerator implements HydratorGeneratorInterface
+class DefaultHydratorGenerator implements HydratorGenerator
 {
     /**
      * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class

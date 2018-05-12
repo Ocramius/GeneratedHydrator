@@ -10,7 +10,7 @@ use Zend\Hydrator\HydratorInterface;
 /**
  * Default base class for hydration benchmarks
  */
-abstract class AbstractHydrationBench
+abstract class HydrationBench
 {
     /** @var HydratorInterface */
     protected $hydrator;

@@ -8,7 +8,7 @@ use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
 use PHPUnit\Framework\TestCase;
@@ -92,7 +92,7 @@ class HydratorFactoryTest extends TestCase
         $this->config->expects(self::any())->method('getHydratedClassName')->will(self::returnValue($className));
         $this->config->expects(self::any())->method('doesAutoGenerateProxies')->will(self::returnValue(true));
         $this->config->expects(self::any())->method('getGeneratorStrategy')->will(self::returnValue($generator));
-        $this->config->expects(self::any())->method('getHydratorGenerator')->willReturn(new HydratorGenerator());
+        $this->config->expects(self::any())->method('getHydratorGenerator')->willReturn(new DefaultHydratorGenerator());
         $this
             ->config
             ->expects(self::any())

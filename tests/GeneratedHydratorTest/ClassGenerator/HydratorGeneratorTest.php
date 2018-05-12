@@ -7,7 +7,7 @@ namespace GeneratedHydratorTest\ClassGenerator;
 use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMagicMethods;
@@ -20,7 +20,7 @@ use Zend\Hydrator\HydratorInterface;
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}
  *
- * @covers \GeneratedHydrator\ClassGenerator\HydratorGenerator
+ * @covers \GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator
  */
 class HydratorGeneratorTest extends TestCase
 {
@@ -31,7 +31,7 @@ class HydratorGeneratorTest extends TestCase
      */
     public function testGeneratesValidCode(string $className) : void
     {
-        $generator          = new HydratorGenerator();
+        $generator          = new DefaultHydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();

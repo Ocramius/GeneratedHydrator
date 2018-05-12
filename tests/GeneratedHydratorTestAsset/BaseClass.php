@@ -7,7 +7,7 @@ namespace GeneratedHydratorTestAsset;
 /**
  * Base test class with various intercepted properties
  */
-class BaseClass implements BaseInterface
+class BaseClass implements Base
 {
     /** @var string */
     public $publicProperty = 'publicPropertyDefault';

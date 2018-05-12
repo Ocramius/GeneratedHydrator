@@ -7,6 +7,6 @@ namespace GeneratedHydrator\Exception;
 /**
  * Base exception class for the generated hydrator manager
  */
-interface ExceptionInterface
+interface Exception
 {
 }

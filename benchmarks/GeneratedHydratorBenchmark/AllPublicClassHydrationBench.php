@@ -9,7 +9,7 @@ namespace GeneratedHydratorBenchmark;
  *
  * @BeforeMethods({"setUp"})
  */
-class AllPublicClassHydrationBench extends AbstractHydrationBench
+class AllPublicClassHydrationBench extends HydrationBench
 {
     public function setUp() : void
     {

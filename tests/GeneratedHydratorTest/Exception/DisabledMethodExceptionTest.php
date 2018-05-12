@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTest\Exception;
 
-use GeneratedHydrator\Exception\DisabledMethodException;
+use GeneratedHydrator\Exception\DisabledMethod;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,11 +13,11 @@ use PHPUnit\Framework\TestCase;
 class DisabledMethodExceptionTest extends TestCase
 {
     /**
-     * @covers \GeneratedHydrator\Exception\DisabledMethodException::disabledMethod
+     * @covers \GeneratedHydrator\Exception\DisabledMethod::create
      */
     public function testDisabledMethod() : void
     {
-        $exception = DisabledMethodException::disabledMethod('foo::bar');
+        $exception = DisabledMethod::create('foo::bar');
 
         self::assertSame('Method "foo::bar" is forcefully disabled', $exception->getMessage());
     }

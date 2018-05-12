@@ -7,7 +7,7 @@ namespace GeneratedHydratorTest;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Configuration;
 use PHPUnit\Framework\TestCase;
 use function is_dir;
@@ -143,10 +143,10 @@ class ConfigurationTest extends TestCase
      */
     public function testSetGetHydratorGenerator() : void
     {
-        self::assertInstanceOf(HydratorGeneratorInterface::class, $this->configuration->getHydratorGenerator());
+        self::assertInstanceOf(HydratorGenerator::class, $this->configuration->getHydratorGenerator());
 
-        /* @var $generator HydratorGeneratorInterface */
-        $generator = $this->createMock(HydratorGeneratorInterface::class);
+        /* @var $generator HydratorGenerator */
+        $generator = $this->createMock(HydratorGenerator::class);
 
         $this->configuration->setHydratorGenerator($generator);
         self::assertSame($generator, $this->configuration->getHydratorGenerator());

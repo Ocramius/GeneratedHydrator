@@ -7,7 +7,7 @@ namespace GeneratedHydratorTestAsset;
 /**
  * Base interface used to verify that the class generators can actually work with interfaces
  */
-interface BaseInterface
+interface Base
 {
     /**
      * @return mixed

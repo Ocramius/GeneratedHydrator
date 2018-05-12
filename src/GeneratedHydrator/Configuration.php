@@ -12,8 +12,8 @@ use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
+use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
 use GeneratedHydrator\Factory\HydratorFactory;
 use function sys_get_temp_dir;
 
@@ -45,7 +45,7 @@ class Configuration
     /** @var ClassNameInflectorInterface|null */
     protected $classNameInflector;
 
-    /** @var HydratorGeneratorInterface|null */
+    /** @var HydratorGenerator|null */
     protected $hydratorGenerator;
 
     public function __construct(string $hydratedClassName)
@@ -155,15 +155,15 @@ class Configuration
         return $this->classNameInflector;
     }
 
-    public function setHydratorGenerator(HydratorGeneratorInterface $hydratorGenerator) : void
+    public function setHydratorGenerator(HydratorGenerator $hydratorGenerator) : void
     {
         $this->hydratorGenerator = $hydratorGenerator;
     }
 
-    public function getHydratorGenerator() : HydratorGeneratorInterface
+    public function getHydratorGenerator() : HydratorGenerator
     {
         if ($this->hydratorGenerator === null) {
-            $this->hydratorGenerator = new HydratorGenerator();
+            $this->hydratorGenerator = new DefaultHydratorGenerator();
         }
 
         return $this->hydratorGenerator;
