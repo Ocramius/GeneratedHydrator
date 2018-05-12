@@ -79,7 +79,7 @@ class HydratorFunctionalTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getHydratorClasses() : array
     {
@@ -105,10 +105,9 @@ class HydratorFunctionalTest extends TestCase
      * Private properties from parent class that are hidden by children will be
      * dropped from the populated arrays
      *
-     * @param \ReflectionClass $class
-     * @param object           $instance
-     * @param array            $initialData
-     * @param array            $newData
+     * @param object  $instance
+     * @param mixed[] $initialData
+     * @param mixed[] $newData
      */
     private function recursiveFindInitialData(\ReflectionClass $class, $instance, array &$initialData, array &$newData)
     {
@@ -137,9 +136,8 @@ class HydratorFunctionalTest extends TestCase
      * Private properties from parent class that are hidden by children will be
      * dropped from the populated arrays
      *
-     * @param \ReflectionClass $class
-     * @param object           $instance
-     * @param array            $initialData
+     * @param object  $instance
+     * @param mixed[] $inspectionData
      */
     private function recursiveFindInspectionData(\ReflectionClass $class, $instance, array &$inspectionData)
     {
@@ -164,8 +162,6 @@ class HydratorFunctionalTest extends TestCase
      * Generates a hydrator for the given class name, and retrieves its class name
      *
      * @param object $instance
-     *
-     * @return HydratorInterface
      */
     private function generateHydrator($instance) : HydratorInterface
     {

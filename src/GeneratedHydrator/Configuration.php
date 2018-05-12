@@ -113,10 +113,7 @@ class Configuration
         $this->generatedClassesTargetDir = $generatedClassesTargetDir;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getGeneratedClassesTargetDir()
+    public function getGeneratedClassesTargetDir() : string
     {
         if ($this->generatedClassesTargetDir === null) {
             $this->generatedClassesTargetDir = sys_get_temp_dir();
@@ -131,8 +128,6 @@ class Configuration
     }
 
     /**
-     * @return GeneratorStrategyInterface
-     *
      * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratorStrategy() : GeneratorStrategyInterface
@@ -165,10 +160,7 @@ class Configuration
         $this->hydratorGenerator = $hydratorGenerator;
     }
 
-    /**
-     * @return HydratorGeneratorInterface
-     */
-    public function getHydratorGenerator()
+    public function getHydratorGenerator() : HydratorGeneratorInterface
     {
         if ($this->hydratorGenerator === null) {
             $this->hydratorGenerator = new HydratorGenerator();

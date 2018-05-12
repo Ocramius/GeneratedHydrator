@@ -24,8 +24,6 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * @dataProvider classAstProvider
      *
-     * @param string   $className
-     * @param Class_   $classNode
      * @param string[] $properties
      */
     public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties)
@@ -42,9 +40,6 @@ class HydratorMethodsVisitorTest extends TestCase
 
     /**
      * Verifies that a method was correctly added to by the visitor
-     *
-     * @param string $methodName
-     * @param Class_ $class
      */
     private function assertMethodExistence(string $methodName, Class_ $class)
     {

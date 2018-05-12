@@ -10,12 +10,7 @@ namespace GeneratedHydratorTestAsset;
  */
 class CallableTypeHintClass
 {
-    /**
-     * @param callable $parameter
-     *
-     * @return callable
-     */
-    public function callableTypeHintMethod(callable $parameter)
+    public function callableTypeHintMethod(callable $parameter) : callable
     {
         return $parameter;
     }

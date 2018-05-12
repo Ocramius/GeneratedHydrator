@@ -27,8 +27,6 @@ class HydratorGenerator implements HydratorGeneratorInterface
      * Generates an AST of {@see \PhpParser\Node[]} out of a given reflection class
      * and a map of properties to be used to
      *
-     * @param ReflectionClass $originalClass
-     *
      * @return Node[]
      */
     public function generate(ReflectionClass $originalClass) : array

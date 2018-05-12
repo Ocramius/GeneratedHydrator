@@ -15,8 +15,8 @@ class HydratedObject
     /** @var mixed */
     protected $bar = 2;
 
-    /** @var mixed */
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
+    /** @var mixed */
     private $baz = 3;
 //phpcs:enable
 
@@ -28,11 +28,9 @@ class HydratedObject
     }
 
     /**
-     * @param string $name
-     *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->$name;
     }

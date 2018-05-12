@@ -49,8 +49,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param Node $node
-     *
      * @return null|Class_
      */
     public function leaveNode(Node $node)
@@ -74,8 +72,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     /**
      * Find all class properties recursively using class hierarchy without
      * removing name redefinitions
-     *
-     * @param \ReflectionClass $class
      *
      * @return \ReflectionProperty[]
      */
@@ -155,11 +151,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
-    /**
-     * @param ClassMethod $method
-     *
-     * @return void
-     */
     private function replaceExtract(ClassMethod $method)
     {
         $method->params = [new Param('object')];
@@ -183,11 +174,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
     /**
      * Finds or creates a class method (and eventually attaches it to the class itself)
-     *
-     * @param Class_ $class
-     * @param string $name  name of the method
-     *
-     * @return ClassMethod
      *
      * @deprecated not needed if we move away from code replacement
      */

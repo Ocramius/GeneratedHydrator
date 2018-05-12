@@ -28,8 +28,6 @@ class HydratorGeneratorTest extends TestCase
      * @dataProvider getTestedImplementations
      *
      * Verifies that generated code is valid and implements expected interfaces
-     *
-     * @param string $className
      */
     public function testGeneratesValidCode(string $className)
     {
@@ -52,7 +50,7 @@ class HydratorGeneratorTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTestedImplementations() : array
     {

@@ -9,164 +9,119 @@ namespace GeneratedHydratorTestAsset;
  */
 class ClassWithMixedProperties
 {
+    /** @var string */
     public $publicProperty0 = 'publicProperty0';
 
+    /** @var string */
     public $publicProperty1 = 'publicProperty1';
 
+    /** @var string */
     public $publicProperty2 = 'publicProperty2';
 
+    /** @var string */
     protected $protectedProperty0 = 'protectedProperty0';
 
+    /** @var string */
     protected $protectedProperty1 = 'protectedProperty1';
 
+    /** @var string */
     protected $protectedProperty2 = 'protectedProperty2';
 
+    /** @var string */
     private $privateProperty0 = 'privateProperty0';
 
+    /** @var string */
     private $privateProperty1 = 'privateProperty1';
 
+    /** @var string */
     private $privateProperty2 = 'privateProperty2';
 
-    /**
-     * @param string $privateProperty0
-     */
-    public function setPrivateProperty0($privateProperty0)
+    public function setPrivateProperty0(string $privateProperty0)
     {
         $this->privateProperty0 = $privateProperty0;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrivateProperty0()
+    public function getPrivateProperty0() : string
     {
         return $this->privateProperty0;
     }
 
-    /**
-     * @param string $privateProperty1
-     */
-    public function setPrivateProperty1($privateProperty1)
+    public function setPrivateProperty1(string $privateProperty1)
     {
         $this->privateProperty1 = $privateProperty1;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrivateProperty1()
+    public function getPrivateProperty1() : string
     {
         return $this->privateProperty1;
     }
 
-    /**
-     * @param string $privateProperty2
-     */
-    public function setPrivateProperty2($privateProperty2)
+    public function setPrivateProperty2(string $privateProperty2)
     {
         $this->privateProperty2 = $privateProperty2;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrivateProperty2()
+    public function getPrivateProperty2() : string
     {
         return $this->privateProperty2;
     }
 
-    /**
-     * @param string $protectedProperty0
-     */
-    public function setProtectedProperty0($protectedProperty0)
+    public function setProtectedProperty0(string $protectedProperty0)
     {
         $this->protectedProperty0 = $protectedProperty0;
     }
 
-    /**
-     * @return string
-     */
-    public function getProtectedProperty0()
+    public function getProtectedProperty0() : string
     {
         return $this->protectedProperty0;
     }
 
-    /**
-     * @param string $protectedProperty1
-     */
-    public function setProtectedProperty1($protectedProperty1)
+    public function setProtectedProperty1(string $protectedProperty1)
     {
         $this->protectedProperty1 = $protectedProperty1;
     }
 
-    /**
-     * @return string
-     */
-    public function getProtectedProperty1()
+    public function getProtectedProperty1() : string
     {
         return $this->protectedProperty1;
     }
 
-    /**
-     * @param string $protectedProperty2
-     */
-    public function setProtectedProperty2($protectedProperty2)
+    public function setProtectedProperty2(string $protectedProperty2)
     {
         $this->protectedProperty2 = $protectedProperty2;
     }
 
-    /**
-     * @return string
-     */
-    public function getProtectedProperty2()
+    public function getProtectedProperty2() : string
     {
         return $this->protectedProperty2;
     }
 
-    /**
-     * @param string $publicProperty0
-     */
-    public function setPublicProperty0($publicProperty0)
+    public function setPublicProperty0(string $publicProperty0)
     {
         $this->publicProperty0 = $publicProperty0;
     }
 
-    /**
-     * @return string
-     */
-    public function getPublicProperty0()
+    public function getPublicProperty0() : string
     {
         return $this->publicProperty0;
     }
 
-    /**
-     * @param string $publicProperty1
-     */
-    public function setPublicProperty1($publicProperty1)
+    public function setPublicProperty1(string $publicProperty1)
     {
         $this->publicProperty1 = $publicProperty1;
     }
 
-    /**
-     * @return string
-     */
-    public function getPublicProperty1()
+    public function getPublicProperty1() : string
     {
         return $this->publicProperty1;
     }
 
-    /**
-     * @param string $publicProperty2
-     */
-    public function setPublicProperty2($publicProperty2)
+    public function setPublicProperty2(string $publicProperty2)
     {
         $this->publicProperty2 = $publicProperty2;
     }
 
-    /**
-     * @return string
-     */
-    public function getPublicProperty2()
+    public function getPublicProperty2() : string
     {
         return $this->publicProperty2;
     }
