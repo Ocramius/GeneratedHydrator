@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneratedHydrator\ClassGenerator;
 
 use PhpParser\Node;
