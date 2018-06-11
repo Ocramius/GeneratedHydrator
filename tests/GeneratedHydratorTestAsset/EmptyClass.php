@@ -6,9 +6,6 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Base test asset
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class EmptyClass
 {

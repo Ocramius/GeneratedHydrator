@@ -16,21 +16,14 @@ use ReflectionClass;
 /**
  * Integration tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
  *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
- *
  * @group Functional
  */
 class HydratorFactoryFunctionalTest extends TestCase
 {
-    /**
-     * @var \GeneratedHydrator\Configuration
-     */
+    /** @var Configuration */
     protected $config;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $generatedClassName;
 
     /**
@@ -60,10 +53,10 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillGenerateValidClass()
+    public function testWillGenerateValidClass() : void
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-        self::assertInstanceOf('Zend\\Hydrator\\HydratorInterface', new $generatedClass);
+        self::assertInstanceOf('Zend\\Hydrator\\HydratorInterface', new $generatedClass());
     }
 }

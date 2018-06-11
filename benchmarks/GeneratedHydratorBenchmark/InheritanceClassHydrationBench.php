@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorBenchmark;
 
 /**
@@ -7,9 +9,9 @@ namespace GeneratedHydratorBenchmark;
  *
  * @BeforeMethods({"setUp"})
  */
-class InheritanceClassHydrationBench extends AbstractHydrationBench
+class InheritanceClassHydrationBench extends HydrationBench
 {
-    protected function createData()
+    protected function createData() : void
     {
         parent::createData();
 
@@ -17,13 +19,13 @@ class InheritanceClassHydrationBench extends AbstractHydrationBench
             'foo1' => 'some foo string',
             'bar1' => 42,
             'baz1' => new \DateTime(),
-            'someFooProperty1' => array(12, 13, 14),
+            'someFooProperty1' => [12, 13, 14],
             'someBarProperty1' => 12354.4578,
             'someBazProperty1' => new \stdClass(),
         ];
     }
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->createHydrator(InheritanceClass::class);
         $this->createData();
@@ -34,7 +36,7 @@ class InheritanceClassHydrationBench extends AbstractHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchConsume()
+    public function benchConsume() : void
     {
         $this->hydrator->hydrate($this->data, $this->object);
     }

@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php":                           "~7.1",
+        "php":                           "~7.2",
         "nikic/php-parser":              "~2.0|~3.0",
         "ocramius/code-generator-utils": "~0.4",
         "zendframework/zend-hydrator":   "^2.0"
@@ -30,7 +30,8 @@
         "phpbench/phpbench":                 "^0.13.0",
         "zendframework/zend-filter":         "^2.7",
         "zendframework/zend-servicemanager": "^3.2",
-        "zendframework/zend-stdlib":         "^3.1"
+        "zendframework/zend-stdlib":         "^3.1",
+        "doctrine/coding-standard": "^4.0"
     },
     "autoload": {
         "psr-0": {

@@ -6,75 +6,51 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Base test class with various intercepted properties
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
-class BaseClass implements BaseInterface
+class BaseClass implements Base
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     public $publicProperty = 'publicPropertyDefault';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $protectedProperty = 'protectedPropertyDefault';
 
-    /**
-     * @var string
-     */
+//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
+    /** @var string */
     private $privateProperty = 'privatePropertyDefault';
+//phpcs:enable
 
-    /**
-     * @return string
-     */
-    public function publicMethod()
+    public function publicMethod() : string
     {
         return 'publicMethodDefault';
     }
 
-    /**
-     * @return string
-     */
-    protected function protectedMethod()
+    protected function protectedMethod() : string
     {
         return 'protectedMethodDefault';
     }
 
-    /**
-     * @return string
-     */
-    private function privateMethod()
+//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
+    private function privateMethod() : string
     {
+//phpcs:enable
         return 'privateMethodDefault';
     }
 
-    /**
-     * @param \stdClass $param
-     *
-     * @return string
-     */
-    public function publicTypeHintedMethod(\stdClass $param)
+    public function publicTypeHintedMethod(\stdClass $param) : string
     {
         return 'publicTypeHintedMethodDefault';
     }
 
     /**
-     * @param array $param
-     *
-     * @return string
+     * @param mixed[] $param
      */
-    public function publicArrayHintedMethod(array $param)
+    public function publicArrayHintedMethod(array $param) : string
     {
         return 'publicArrayHintedMethodDefault';
     }
 
-    /**
-     * @return string
-     */
-    public function & publicByReferenceMethod()
+    public function & publicByReferenceMethod() : string
     {
         $returnValue = 'publicByReferenceMethodDefault';
 
@@ -84,10 +60,8 @@ class BaseClass implements BaseInterface
     /**
      * @param mixed $param
      * @param mixed $byRefParam
-     *
-     * @return string
      */
-    public function publicByReferenceParameterMethod($param, & $byRefParam)
+    public function publicByReferenceParameterMethod($param, & $byRefParam) : string
     {
         return 'publicByReferenceParameterMethodDefault';
     }

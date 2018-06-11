@@ -6,15 +6,10 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Base test class to catch instantiations of lazy loading objects
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class LazyLoadingMock
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $initializer;
 
     /**

@@ -6,9 +6,6 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Test class used to verify that the generated hydrator respects magic getters with a by-ref return value
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class ClassWithByRefMagicMethods
 {

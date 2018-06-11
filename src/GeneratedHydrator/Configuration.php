@@ -4,131 +4,91 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator;
 
-use GeneratedHydrator\ClassGenerator\HydratorGenerator;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
-use GeneratedHydrator\Factory\HydratorFactory;
-use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\Autoloader\Autoloader;
+use CodeGenerationUtils\Autoloader\AutoloaderInterface;
+use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use CodeGenerationUtils\FileLocator\FileLocator;
 use CodeGenerationUtils\GeneratorStrategy\FileWriterGeneratorStrategy;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
-use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflector;
+use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
+use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
+use GeneratedHydrator\Factory\HydratorFactory;
+use function sys_get_temp_dir;
 
 /**
  * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class Configuration
 {
-    const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
+    public const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $hydratedClassName;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $autoGenerateProxies = true;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     protected $generatedClassesTargetDir;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
-    /**
-     * @var \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface|null
-     */
+    /** @var GeneratorStrategyInterface|null */
     protected $generatorStrategy;
 
-    /**
-     * @var callable|null
-     */
+    /** @var callable|null */
     protected $generatedClassesAutoloader;
 
-    /**
-     * @var \CodeGenerationUtils\Inflector\ClassNameInflectorInterface|null
-     */
+    /** @var ClassNameInflectorInterface|null */
     protected $classNameInflector;
 
-    /**
-     * @var \GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface|null
-     */
+    /** @var HydratorGenerator|null */
     protected $hydratorGenerator;
 
-    /**
-     * @param string $hydratedClassName
-     */
     public function __construct(string $hydratedClassName)
     {
         $this->setHydratedClassName($hydratedClassName);
     }
 
-    /**
-     * @return \GeneratedHydrator\Factory\HydratorFactory
-     */
     public function createFactory() : HydratorFactory
     {
         return new HydratorFactory($this);
     }
 
-    /**
-     * @param string $hydratedClassName
-     */
-    public function setHydratedClassName(string $hydratedClassName)
+    public function setHydratedClassName(string $hydratedClassName) : void
     {
         $this->hydratedClassName = $hydratedClassName;
     }
 
-    /**
-     * @return string
-     */
     public function getHydratedClassName() : string
     {
         return $this->hydratedClassName;
     }
 
-    /**
-     * @param bool $autoGenerateProxies
-     */
-    public function setAutoGenerateProxies(bool $autoGenerateProxies)
+    public function setAutoGenerateProxies(bool $autoGenerateProxies) : void
     {
         $this->autoGenerateProxies = $autoGenerateProxies;
     }
 
-    /**
-     * @return bool
-     */
     public function doesAutoGenerateProxies() : bool
     {
         return $this->autoGenerateProxies;
     }
 
-    /**
-     * @param \CodeGenerationUtils\Autoloader\AutoloaderInterface $generatedClassesAutoloader
-     */
-    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader)
+    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader) : void
     {
         $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
 
     /**
-     * @return \CodeGenerationUtils\Autoloader\AutoloaderInterface
-     *
-     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratedClassAutoloader() : AutoloaderInterface
     {
-        if (null === $this->generatedClassesAutoloader) {
+        if ($this->generatedClassesAutoloader === null) {
             $this->generatedClassesAutoloader = new Autoloader(
                 new FileLocator($this->getGeneratedClassesTargetDir()),
                 $this->getClassNameInflector()
@@ -138,58 +98,41 @@ class Configuration
         return $this->generatedClassesAutoloader;
     }
 
-    /**
-     * @param string $generatedClassesNamespace
-     */
-    public function setGeneratedClassesNamespace(string $generatedClassesNamespace)
+    public function setGeneratedClassesNamespace(string $generatedClassesNamespace) : void
     {
         $this->generatedClassesNamespace = $generatedClassesNamespace;
     }
 
-    /**
-     * @return string
-     */
     public function getGeneratedClassesNamespace() : string
     {
         return $this->generatedClassesNamespace;
     }
 
-    /**
-     * @param string $generatedClassesTargetDir
-     */
-    public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir)
+    public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir) : void
     {
         $this->generatedClassesTargetDir = $generatedClassesTargetDir;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getGeneratedClassesTargetDir()
+    public function getGeneratedClassesTargetDir() : string
     {
-        if (null === $this->generatedClassesTargetDir) {
-            $this->generatedClassesTargetDir = \sys_get_temp_dir();
+        if ($this->generatedClassesTargetDir === null) {
+            $this->generatedClassesTargetDir = sys_get_temp_dir();
         }
 
         return $this->generatedClassesTargetDir;
     }
 
-    /**
-     * @param \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface $generatorStrategy
-     */
-    public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy)
+    public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy) : void
     {
         $this->generatorStrategy = $generatorStrategy;
     }
 
     /**
-     * @return \CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface
-     *
-     * @throws \CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getGeneratorStrategy() : GeneratorStrategyInterface
     {
-        if (null === $this->generatorStrategy) {
+        if ($this->generatorStrategy === null) {
             $this->generatorStrategy = new FileWriterGeneratorStrategy(
                 new FileLocator($this->getGeneratedClassesTargetDir())
             );
@@ -198,41 +141,29 @@ class Configuration
         return $this->generatorStrategy;
     }
 
-    /**
-     * @param \CodeGenerationUtils\Inflector\ClassNameInflectorInterface $classNameInflector
-     */
-    public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector)
+    public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector) : void
     {
         $this->classNameInflector = $classNameInflector;
     }
 
-    /**
-     * @return \CodeGenerationUtils\Inflector\ClassNameInflectorInterface
-     */
     public function getClassNameInflector() : ClassNameInflectorInterface
     {
-        if (null === $this->classNameInflector) {
+        if ($this->classNameInflector === null) {
             $this->classNameInflector = new ClassNameInflector($this->getGeneratedClassesNamespace());
         }
 
         return $this->classNameInflector;
     }
 
-    /**
-     * @param HydratorGeneratorInterface $hydratorGenerator
-     */
-    public function setHydratorGenerator(HydratorGeneratorInterface $hydratorGenerator)
+    public function setHydratorGenerator(HydratorGenerator $hydratorGenerator) : void
     {
         $this->hydratorGenerator = $hydratorGenerator;
     }
 
-    /**
-     * @return HydratorGeneratorInterface
-     */
-    public function getHydratorGenerator()
+    public function getHydratorGenerator() : HydratorGenerator
     {
-        if (null === $this->hydratorGenerator) {
-            $this->hydratorGenerator = new HydratorGenerator();
+        if ($this->hydratorGenerator === null) {
+            $this->hydratorGenerator = new DefaultHydratorGenerator();
         }
 
         return $this->hydratorGenerator;

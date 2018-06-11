@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneratedHydratorBenchmark;
 
 /**
@@ -7,9 +9,9 @@ namespace GeneratedHydratorBenchmark;
  *
  * @BeforeMethods({"setUp"})
  */
-class AllPrivateClassHydrationBench extends AbstractHydrationBench
+class AllPrivateClassHydrationBench extends HydrationBench
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->createHydrator(AllPrivateClass::class);
         $this->createData();
@@ -20,7 +22,7 @@ class AllPrivateClassHydrationBench extends AbstractHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchConsume()
+    public function benchConsume() : void
     {
         $this->hydrator->hydrate($this->data, $this->object);
     }

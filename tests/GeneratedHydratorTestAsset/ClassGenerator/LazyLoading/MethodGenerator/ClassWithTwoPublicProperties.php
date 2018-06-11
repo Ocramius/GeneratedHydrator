@@ -6,19 +6,12 @@ namespace GeneratedHydratorTestAsset\ClassGenerator\LazyLoading\MethodGenerator;
 
 /**
  * Test asset with 2 public properties
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class ClassWithTwoPublicProperties
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $bar;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $baz;
 }

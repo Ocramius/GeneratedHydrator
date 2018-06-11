@@ -7,21 +7,17 @@ namespace GeneratedHydratorTest;
 use CodeGenerationUtils\Autoloader\AutoloaderInterface;
 use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
-use GeneratedHydrator\ClassGenerator\HydratorGeneratorInterface;
-use PHPUnit\Framework\TestCase;
+use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Configuration;
+use PHPUnit\Framework\TestCase;
+use function is_dir;
 
 /**
  * Tests for {@see \GeneratedHydrator\Configuration}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @var \GeneratedHydrator\Configuration
-     */
+    /** @var Configuration */
     protected $configuration;
 
     /**
@@ -38,7 +34,7 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::setHydratedClassName
      * @covers \GeneratedHydrator\Configuration::getHydratedClassName
      */
-    public function testGetSetHydratedClassName()
+    public function testGetSetHydratedClassName() : void
     {
         self::assertSame('test', $this->configuration->getHydratedClassName());
         $this->configuration->setHydratedClassName('bar');
@@ -48,7 +44,7 @@ class ConfigurationTest extends TestCase
     /**
      * @covers \GeneratedHydrator\Configuration::createFactory
      */
-    public function testCreateFactory()
+    public function testCreateFactory() : void
     {
         self::assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
     }
@@ -57,7 +53,7 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::doesAutoGenerateProxies
      * @covers \GeneratedHydrator\Configuration::setAutoGenerateProxies
      */
-    public function testGetSetAutoGenerateProxies()
+    public function testGetSetAutoGenerateProxies() : void
     {
         self::assertTrue($this->configuration->doesAutoGenerateProxies(), 'Default setting check for BC');
 
@@ -72,7 +68,7 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::getGeneratedClassesNamespace
      * @covers \GeneratedHydrator\Configuration::setGeneratedClassesNamespace
      */
-    public function testGetSetProxiesNamespace()
+    public function testGetSetProxiesNamespace() : void
     {
         self::assertSame(
             'GeneratedHydratorGeneratedClass',
@@ -88,11 +84,11 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::getClassNameInflector
      * @covers \GeneratedHydrator\Configuration::setClassNameInflector
      */
-    public function testSetGetClassNameInflector()
+    public function testSetGetClassNameInflector() : void
     {
         self::assertInstanceOf(ClassNameInflectorInterface::class, $this->configuration->getClassNameInflector());
 
-        /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject $inflector */
         $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $this->configuration->setClassNameInflector($inflector);
@@ -103,12 +99,11 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::getGeneratorStrategy
      * @covers \GeneratedHydrator\Configuration::setGeneratorStrategy
      */
-    public function testSetGetGeneratorStrategy()
+    public function testSetGetGeneratorStrategy() : void
     {
-
         self::assertInstanceOf(GeneratorStrategyInterface::class, $this->configuration->getGeneratorStrategy());
 
-        /* @var $strategy GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject $strategy */
         $strategy = $this->createMock(GeneratorStrategyInterface::class);
 
         $this->configuration->setGeneratorStrategy($strategy);
@@ -119,7 +114,7 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::getGeneratedClassesTargetDir
      * @covers \GeneratedHydrator\Configuration::setGeneratedClassesTargetDir
      */
-    public function testSetGetProxiesTargetDir()
+    public function testSetGetProxiesTargetDir() : void
     {
         self::assertTrue(is_dir($this->configuration->getGeneratedClassesTargetDir()));
 
@@ -131,11 +126,11 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::getGeneratedClassAutoloader
      * @covers \GeneratedHydrator\Configuration::setGeneratedClassAutoloader
      */
-    public function testSetGetGeneratedClassAutoloader()
+    public function testSetGetGeneratedClassAutoloader() : void
     {
         self::assertInstanceOf(AutoloaderInterface::class, $this->configuration->getGeneratedClassAutoloader());
 
-        /* @var $autoloader AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject $autoloader */
         $autoloader = $this->createMock(AutoloaderInterface::class);
 
         $this->configuration->setGeneratedClassAutoloader($autoloader);
@@ -146,12 +141,12 @@ class ConfigurationTest extends TestCase
      * @covers \GeneratedHydrator\Configuration::getHydratorGenerator
      * @covers \GeneratedHydrator\Configuration::setHydratorGenerator
      */
-    public function testSetGetHydratorGenerator()
+    public function testSetGetHydratorGenerator() : void
     {
-        self::assertInstanceOf(HydratorGeneratorInterface::class, $this->configuration->getHydratorGenerator());
+        self::assertInstanceOf(HydratorGenerator::class, $this->configuration->getHydratorGenerator());
 
-        /* @var $generator HydratorGeneratorInterface */
-        $generator = $this->createMock(HydratorGeneratorInterface::class);
+        /** @var HydratorGenerator $generator*/
+        $generator = $this->createMock(HydratorGenerator::class);
 
         $this->configuration->setHydratorGenerator($generator);
         self::assertSame($generator, $this->configuration->getHydratorGenerator());

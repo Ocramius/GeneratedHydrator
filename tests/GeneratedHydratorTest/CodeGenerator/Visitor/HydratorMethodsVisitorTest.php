@@ -4,22 +4,18 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTest\CodeGenerator\Visitor;
 
+use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
 use PhpParser\Node;
-use PhpParser\Node\Expr\Assign;
-use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
-use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use ReflectionClass;
+use function array_filter;
 
 /**
  * Tests for {@see \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  *
  * @covers \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor
  */
@@ -28,15 +24,13 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * @dataProvider classAstProvider
      *
-     * @param string   $className
-     * @param Class_   $classNode
      * @param string[] $properties
      */
-    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties)
+    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties) : void
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
-        /* @var $modifiedAst Class_ */
+        /** @var Class_ $modifiedAst */
         $modifiedNode = $visitor->leaveNode($classNode);
 
         self::assertMethodExistence('hydrate', $modifiedNode);
@@ -46,11 +40,8 @@ class HydratorMethodsVisitorTest extends TestCase
 
     /**
      * Verifies that a method was correctly added to by the visitor
-     *
-     * @param string $methodName
-     * @param Class_ $class
      */
-    private function assertMethodExistence(string $methodName, Class_ $class)
+    private function assertMethodExistence(string $methodName, Class_ $class) : void
     {
         $members = $class->stmts;
 
@@ -67,7 +58,7 @@ class HydratorMethodsVisitorTest extends TestCase
     }
 
     /**
-     * @return \PhpParser\Node[][]
+     * @return Node[]
      */
     public function classAstProvider() : array
     {

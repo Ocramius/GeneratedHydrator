@@ -6,40 +6,31 @@ namespace GeneratedHydratorTestAsset;
 
 /**
  * Test object to be hydrated
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  */
 class HydratedObject
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     public $foo = 1;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $bar = 2;
 
-    /**
-     * @var mixed
-     */
+//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
+    /** @var mixed */
     private $baz = 3;
+//phpcs:enable
 
     /**
      * Method to be disabled
      */
-    public function doFoo()
+    public function doFoo() : void
     {
     }
 
     /**
-     * @param string $name
-     *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->$name;
     }

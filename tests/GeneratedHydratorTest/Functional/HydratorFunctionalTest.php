@@ -12,6 +12,7 @@ use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParent;
+use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
@@ -21,13 +22,11 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
 use Zend\Hydrator\HydratorInterface;
-use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
+use function get_class;
+use function ksort;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator} produced objects
- *
- * @author Marco Pivetta <ocramius@gmail.com>
- * @license MIT
  *
  * @group Functional
  */
@@ -35,10 +34,8 @@ class HydratorFunctionalTest extends TestCase
 {
     /**
      * @dataProvider getHydratorClasses
-     *
-     * @param object $instance
      */
-    public function testHydrator($instance)
+    public function testHydrator(object $instance) : void
     {
         $reflection  = new ReflectionClass($instance);
         $initialData = [];
@@ -68,7 +65,7 @@ class HydratorFunctionalTest extends TestCase
         self::assertSame($inspectionData, $extracted);
     }
 
-    public function testHydratingNull()
+    public function testHydratingNull() : void
     {
         $instance = new ClassWithPrivateProperties();
 
@@ -80,7 +77,7 @@ class HydratorFunctionalTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getHydratorClasses() : array
     {
@@ -106,14 +103,17 @@ class HydratorFunctionalTest extends TestCase
      * Private properties from parent class that are hidden by children will be
      * dropped from the populated arrays
      *
-     * @param \ReflectionClass $class
-     * @param object $instance
-     * @param array $initialData
-     * @param array $newData
+     * @param mixed[] $initialData
+     * @param mixed[] $newData
      */
-    private function recursiveFindInitialData(\ReflectionClass $class, $instance, array &$initialData, array &$newData)
-    {
-        if ($parentClass = $class->getParentClass()) {
+    private function recursiveFindInitialData(
+        ReflectionClass $class,
+        object $instance,
+        array &$initialData,
+        array &$newData
+    ) : void {
+        $parentClass = $class->getParentClass();
+        if ($parentClass) {
             $this->recursiveFindInitialData($parentClass, $instance, $initialData, $newData);
         }
 
@@ -137,14 +137,15 @@ class HydratorFunctionalTest extends TestCase
      * Private properties from parent class that are hidden by children will be
      * dropped from the populated arrays
      *
-     * @param \ReflectionClass $class
-     * @param object $instance
-     * @param array $initialData
-     * @param array $newData
+     * @param mixed[] $inspectionData
      */
-    private function recursiveFindInspectionData(\ReflectionClass $class, $instance, array &$inspectionData)
-    {
-        if ($parentClass = $class->getParentClass()) {
+    private function recursiveFindInspectionData(
+        ReflectionClass $class,
+        object $instance,
+        array &$inspectionData
+    ) : void {
+        $parentClass = $class->getParentClass();
+        if ($parentClass) {
             $this->recursiveFindInspectionData($parentClass, $instance, $inspectionData);
         }
 
@@ -163,17 +164,14 @@ class HydratorFunctionalTest extends TestCase
     /**
      * Generates a hydrator for the given class name, and retrieves its class name
      *
-     * @param object $instance
-     *
-     * @return HydratorInterface
      */
-    private function generateHydrator($instance) : HydratorInterface
+    private function generateHydrator(object $instance) : HydratorInterface
     {
-        $parentClassName    = \get_class($instance);
+        $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
-        /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $inflector          = $this->createMock(ClassNameInflectorInterface::class);
+        /** @var ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject $inflector*/
+        $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $inflector
             ->expects(self::any())
@@ -191,6 +189,6 @@ class HydratorFunctionalTest extends TestCase
 
         $generatedClass = $config->createFactory()->getHydratorClass();
 
-        return new $generatedClass;
+        return new $generatedClass();
     }
 }
