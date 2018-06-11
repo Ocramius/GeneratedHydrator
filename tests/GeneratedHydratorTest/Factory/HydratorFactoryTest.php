@@ -11,6 +11,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
+use GeneratedHydratorTestAsset\LazyLoadingMock;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -130,7 +131,7 @@ class HydratorFactoryTest extends TestCase
             ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
 
             $factory = new HydratorFactory($this->config);
-        /* @var $generatedClass \GeneratedHydratorTestAsset\LazyLoadingMock */
+        /** @var LazyLoadingMock $generatedClass */
             $generatedClass = $factory->getHydratorClass();
 
             self::assertInstanceOf($generatedClassName, new $generatedClass());

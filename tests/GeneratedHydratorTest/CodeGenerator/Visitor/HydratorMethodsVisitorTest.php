@@ -30,7 +30,7 @@ class HydratorMethodsVisitorTest extends TestCase
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
-        /* @var $modifiedAst Class_ */
+        /** @var Class_ $modifiedAst */
         $modifiedNode = $visitor->leaveNode($classNode);
 
         self::assertMethodExistence('hydrate', $modifiedNode);

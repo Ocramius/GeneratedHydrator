@@ -88,7 +88,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(ClassNameInflectorInterface::class, $this->configuration->getClassNameInflector());
 
-        /* @var $inflector ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject $inflector */
         $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $this->configuration->setClassNameInflector($inflector);
@@ -103,7 +103,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(GeneratorStrategyInterface::class, $this->configuration->getGeneratorStrategy());
 
-        /* @var $strategy GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject $strategy */
         $strategy = $this->createMock(GeneratorStrategyInterface::class);
 
         $this->configuration->setGeneratorStrategy($strategy);
@@ -130,7 +130,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(AutoloaderInterface::class, $this->configuration->getGeneratedClassAutoloader());
 
-        /* @var $autoloader AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject */
+        /** @var AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject $autoloader */
         $autoloader = $this->createMock(AutoloaderInterface::class);
 
         $this->configuration->setGeneratedClassAutoloader($autoloader);
@@ -145,7 +145,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(HydratorGenerator::class, $this->configuration->getHydratorGenerator());
 
-        /* @var $generator HydratorGenerator */
+        /** @var HydratorGenerator $generator*/
         $generator = $this->createMock(HydratorGenerator::class);
 
         $this->configuration->setHydratorGenerator($generator);
