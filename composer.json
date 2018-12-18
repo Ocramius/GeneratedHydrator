@@ -34,15 +34,15 @@
         "doctrine/coding-standard": "^4.0"
     },
     "autoload": {
-        "psr-0": {
-            "GeneratedHydrator\\": "src"
+        "psr-4": {
+            "GeneratedHydrator\\": "src/GeneratedHydrator"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "GeneratedHydratorBenchmark\\": "benchmarks",
-            "GeneratedHydratorTest\\":      "tests",
-            "GeneratedHydratorTestAsset\\": "tests"
+        "psr-4": {
+            "GeneratedHydratorBenchmark\\": "benchmarks/GeneratedHydratorBenchmark",
+            "GeneratedHydratorTest\\":      "tests/GeneratedHydratorTest",
+            "GeneratedHydratorTestAsset\\": "tests/GeneratedHydratorTestAsset"
         }
     },
     "extra": {
