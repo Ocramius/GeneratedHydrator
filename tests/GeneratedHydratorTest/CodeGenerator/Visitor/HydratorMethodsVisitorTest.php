@@ -51,7 +51,7 @@ class HydratorMethodsVisitorTest extends TestCase
                 $members,
                 function (Node $node) use ($methodName) : bool {
                     return $node instanceof ClassMethod
-                        && $methodName === $node->name;
+                        && $methodName === $node->name->name;
                 }
             )
         );
