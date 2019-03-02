@@ -125,8 +125,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     private function replaceHydrate(ClassMethod $method) : void
     {
         $method->params = [
-            new Param('data', null, 'array'),
-            new Param('object'),
+            new Param(new Node\Expr\Variable('data'), null, 'array'),
+            new Param(new Node\Expr\Variable('object')),
         ];
 
         $bodyParts = [];
@@ -150,7 +150,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
     private function replaceExtract(ClassMethod $method) : void
     {
-        $method->params = [new Param('object')];
+        $method->params = [new Param(new Node\Expr\Variable('object'))];
 
         $bodyParts   = [];
         $bodyParts[] = '$ret = array();';
