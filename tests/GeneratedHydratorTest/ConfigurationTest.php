@@ -9,6 +9,7 @@ use CodeGenerationUtils\GeneratorStrategy\GeneratorStrategyInterface;
 use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Configuration;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function is_dir;
 
@@ -46,7 +47,7 @@ class ConfigurationTest extends TestCase
      */
     public function testCreateFactory() : void
     {
-        self::assertInstanceOf('GeneratedHydrator\\Factory\\HydratorFactory', $this->configuration->createFactory());
+        self::assertInstanceOf('GeneratedHydrator\Factory\HydratorFactory', $this->configuration->createFactory());
     }
 
     /**
@@ -88,7 +89,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(ClassNameInflectorInterface::class, $this->configuration->getClassNameInflector());
 
-        /** @var ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject $inflector */
+        /** @var ClassNameInflectorInterface|MockObject $inflector */
         $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $this->configuration->setClassNameInflector($inflector);
@@ -103,7 +104,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(GeneratorStrategyInterface::class, $this->configuration->getGeneratorStrategy());
 
-        /** @var GeneratorStrategyInterface|\PHPUnit_Framework_MockObject_MockObject $strategy */
+        /** @var GeneratorStrategyInterface|MockObject $strategy */
         $strategy = $this->createMock(GeneratorStrategyInterface::class);
 
         $this->configuration->setGeneratorStrategy($strategy);
@@ -130,7 +131,7 @@ class ConfigurationTest extends TestCase
     {
         self::assertInstanceOf(AutoloaderInterface::class, $this->configuration->getGeneratedClassAutoloader());
 
-        /** @var AutoloaderInterface|\PHPUnit_Framework_MockObject_MockObject $autoloader */
+        /** @var AutoloaderInterface|MockObject $autoloader */
         $autoloader = $this->createMock(AutoloaderInterface::class);
 
         $this->configuration->setGeneratedClassAutoloader($autoloader);

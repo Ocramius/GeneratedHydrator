@@ -34,7 +34,7 @@ class HydratorFactoryFunctionalTest extends TestCase
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
-        $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\\ClassWithMixedProperties');
+        $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\ClassWithMixedProperties');
         $generator                = new ClassBuilder();
         $traverser                = new NodeTraverser();
         $renamer                  = new ClassRenamerVisitor($reflection, $this->generatedClassName);
@@ -57,6 +57,6 @@ class HydratorFactoryFunctionalTest extends TestCase
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-        self::assertInstanceOf('Zend\\Hydrator\\HydratorInterface', new $generatedClass());
+        self::assertInstanceOf('Zend\Hydrator\HydratorInterface', new $generatedClass());
     }
 }

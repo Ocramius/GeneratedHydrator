@@ -12,6 +12,7 @@ use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\LazyLoadingMock;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,10 +20,10 @@ use PHPUnit\Framework\TestCase;
  */
 class HydratorFactoryTest extends TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var MockObject */
     protected $inflector;
 
-    /** @var Configuration|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var Configuration|MockObject */
     protected $config;
 
     /**
@@ -32,7 +33,7 @@ class HydratorFactoryTest extends TestCase
     {
         $this->inflector = $this->createMock(ClassNameInflectorInterface::class);
         $this->config    = $this
-            ->getMockBuilder('GeneratedHydrator\\Configuration')
+            ->getMockBuilder('GeneratedHydrator\Configuration')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -60,19 +61,19 @@ class HydratorFactoryTest extends TestCase
             ->expects(self::any())
             ->method('getUserClassName')
             ->with($className)
-            ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
+            ->will(self::returnValue('GeneratedHydratorTestAsset\BaseClass'));
 
         $this
             ->inflector
             ->expects(self::once())
             ->method('getGeneratedClassName')
-            ->with('GeneratedHydratorTestAsset\\BaseClass')
-            ->will(self::returnValue('GeneratedHydratorTestAsset\\EmptyClass'));
+            ->with('GeneratedHydratorTestAsset\BaseClass')
+            ->will(self::returnValue('GeneratedHydratorTestAsset\EmptyClass'));
 
         $factory        = new HydratorFactory($this->config);
         $generatedClass = $factory->getHydratorClass();
 
-        self::assertInstanceOf('GeneratedHydratorTestAsset\\EmptyClass', new $generatedClass());
+        self::assertInstanceOf('GeneratedHydratorTestAsset\EmptyClass', new $generatedClass());
     }
 
     /**
@@ -110,7 +111,7 @@ class HydratorFactoryTest extends TestCase
             ->expects(self::once())
             ->method('__invoke')
             ->with($generatedClassName)
-            ->willReturnCallback(function () use ($generatedClassName) : bool {
+            ->willReturnCallback(static function () use ($generatedClassName) : bool {
                 eval('class ' . $generatedClassName . ' {}');
 
                 return true;
@@ -120,7 +121,7 @@ class HydratorFactoryTest extends TestCase
             ->inflector
             ->expects(self::once())
             ->method('getGeneratedClassName')
-            ->with('GeneratedHydratorTestAsset\\BaseClass')
+            ->with('GeneratedHydratorTestAsset\BaseClass')
             ->will(self::returnValue($generatedClassName));
 
             $this
@@ -128,7 +129,7 @@ class HydratorFactoryTest extends TestCase
             ->expects(self::once())
             ->method('getUserClassName')
             ->with($className)
-            ->will(self::returnValue('GeneratedHydratorTestAsset\\BaseClass'));
+            ->will(self::returnValue('GeneratedHydratorTestAsset\BaseClass'));
 
             $factory = new HydratorFactory($this->config);
         /** @var LazyLoadingMock $generatedClass */

@@ -18,6 +18,7 @@ use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
@@ -163,14 +164,13 @@ class HydratorFunctionalTest extends TestCase
 
     /**
      * Generates a hydrator for the given class name, and retrieves its class name
-     *
      */
     private function generateHydrator(object $instance) : HydratorInterface
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
-        /** @var ClassNameInflectorInterface|\PHPUnit_Framework_MockObject_MockObject $inflector*/
+        /** @var ClassNameInflectorInterface|MockObject $inflector*/
         $inflector = $this->createMock(ClassNameInflectorInterface::class);
 
         $inflector
