@@ -10,7 +10,6 @@ use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
 use function class_exists;
-use function get_class;
 
 /**
  * Factory responsible of producing hydrators
@@ -34,7 +33,7 @@ class HydratorFactory
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
-        $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => get_class($this)]);
+        $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => static::class]);
 
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
             $generator     = $this->configuration->getHydratorGenerator();

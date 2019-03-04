@@ -14,6 +14,7 @@ use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use ReflectionClass;
+use ReflectionProperty;
 use function array_filter;
 use function array_merge;
 use function array_values;
@@ -70,9 +71,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      * Find all class properties recursively using class hierarchy without
      * removing name redefinitions
      *
-     * @return \ReflectionProperty[]
+     * @return ReflectionProperty[]
      */
-    private function findAllInstanceProperties(?\ReflectionClass $class = null) : array
+    private function findAllInstanceProperties(?ReflectionClass $class = null) : array
     {
         if (! $class) {
             return [];
@@ -82,7 +83,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
             array_values(array_filter(
                 $class->getProperties(),
-                function (\ReflectionProperty $property) : bool {
+                static function (ReflectionProperty $property) : bool {
                     return ! $property->isStatic();
                 }
             ))
@@ -178,7 +179,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     {
         $foundMethods = array_filter(
             $class->getMethods(),
-            function (ClassMethod $method) use ($name) : bool {
+            static function (ClassMethod $method) use ($name) : bool {
                 return $name === $method->name;
             }
         );

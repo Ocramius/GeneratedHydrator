@@ -22,9 +22,9 @@ use function array_filter;
 class HydratorMethodsVisitorTest extends TestCase
 {
     /**
-     * @dataProvider classAstProvider
-     *
      * @param string[] $properties
+     *
+     * @dataProvider classAstProvider
      */
     public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties) : void
     {
@@ -49,7 +49,7 @@ class HydratorMethodsVisitorTest extends TestCase
             1,
             array_filter(
                 $members,
-                function (Node $node) use ($methodName) : bool {
+                static function (Node $node) use ($methodName) : bool {
                     return $node instanceof ClassMethod
                         && $methodName === $node->name->name;
                 }

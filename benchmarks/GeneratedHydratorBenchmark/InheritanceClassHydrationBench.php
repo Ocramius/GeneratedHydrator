@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorBenchmark;
 
+use DateTime;
+use stdClass;
+
 /**
  * Benchmark class that contains mixed inherited properties hydration
  *
@@ -18,10 +21,10 @@ class InheritanceClassHydrationBench extends HydrationBench
         $this->data += [
             'foo1' => 'some foo string',
             'bar1' => 42,
-            'baz1' => new \DateTime(),
+            'baz1' => new DateTime(),
             'someFooProperty1' => [12, 13, 14],
             'someBarProperty1' => 12354.4578,
-            'someBazProperty1' => new \stdClass(),
+            'someBazProperty1' => new stdClass(),
         ];
     }
 

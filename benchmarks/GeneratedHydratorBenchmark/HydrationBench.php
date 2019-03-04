@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorBenchmark;
 
+use DateTime;
 use GeneratedHydrator\Configuration;
+use stdClass;
 use Zend\Hydrator\HydratorInterface;
 
 /**
@@ -40,10 +42,10 @@ abstract class HydrationBench
         $this->data = [
             'foo' => 'some foo string',
             'bar' => 42,
-            'baz' => new \DateTime(),
+            'baz' => new DateTime(),
             'someFooProperty' => [12, 13, 14],
             'someBarProperty' => 12354.4578,
-            'someBazProperty' => new \stdClass(),
+            'someBazProperty' => new stdClass(),
         ];
     }
 }

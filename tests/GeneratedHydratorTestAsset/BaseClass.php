@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTestAsset;
 
+use stdClass;
+
 /**
  * Base test class with various intercepted properties
  */
@@ -37,7 +39,7 @@ class BaseClass implements Base
         return 'privateMethodDefault';
     }
 
-    public function publicTypeHintedMethod(\stdClass $param) : string
+    public function publicTypeHintedMethod(stdClass $param) : string
     {
         return 'publicTypeHintedMethodDefault';
     }
@@ -52,9 +54,7 @@ class BaseClass implements Base
 
     public function & publicByReferenceMethod() : string
     {
-        $returnValue = 'publicByReferenceMethodDefault';
-
-        return $returnValue;
+        return 'publicByReferenceMethodDefault';
     }
 
     /**

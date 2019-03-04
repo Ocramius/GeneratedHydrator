@@ -1,7 +1,8 @@
 language: php
 
 php:
-  - 7.2
+  - 7.3
+  - 7.4snapshot
 
 env:
   matrix:
@@ -9,12 +10,17 @@ env:
     - DEPENDENCIES="low"
 
 before_script:
-  - if [ "$DEPENDENCIES" = "high" ]; then composer --prefer-source update; fi;
-  - if [ "$DEPENDENCIES" = "low" ]; then composer --prefer-lowest --prefer-source update; fi;
+  - if [ "$DEPENDENCIES" = "high" ]; then composer update; fi;
+  - if [ "$DEPENDENCIES" = "low" ]; then composer --prefer-lowest update; fi;
 
 script:
-  - ./vendor/bin/phpunit --coverage-clover ./build/logs/clover.xml --exclude-group Functional
-  - ./vendor/bin/phpunit --group=Functional
+  - ./vendor/bin/phpunit
+  - ulimit -n 4096 && phpdbg -qrr ./vendor/bin/infection --min-msi=98 --min-covered-msi=98
   - php -n ./vendor/bin/phpbench run --report=aggregate --revs=500 --iterations=50 --warmup=3
   # Only run the code standards with the latest package
-  - if [ "$DEPENDENCIES" = "high" ]; then ./vendor/bin/phpcs --standard=Doctrine ./src/ ./tests/ ./benchmarks; fi;
+  - ./vendor/bin/phpcs
+  - ./vendor/bin/roave-backward-compatibility-check
+
+matrix:
+  allow_failures:
+    - php: 7.4snapshot
