@@ -101,7 +101,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         // then be called in order in the hydrate() and extract() methods.
         foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
             // Hydrate closures
-            $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(function ($object, $values) {';
+            $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(static function ($object, $values) {';
             foreach ($propertyNames as $propertyName) {
                 $bodyParts[] = "    if (isset(\$values['" . $propertyName . "']) || " .
                 '$object->' . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$values)) {";
@@ -111,7 +111,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
             // Extract closures
-            $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(function ($object, &$values) {';
+            $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($propertyNames as $propertyName) {
                 $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
