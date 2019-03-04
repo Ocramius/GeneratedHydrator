@@ -8,7 +8,6 @@
 >
     <testsuite name="GeneratedHydrator tests">
         <directory>./tests/GeneratedHydratorTest</directory>
-        <directory>./tests/CodeGenerationUtilsTest</directory>
     </testsuite>
     <filter>
         <whitelist>
