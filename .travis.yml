@@ -10,8 +10,8 @@ env:
     - DEPENDENCIES="low"
 
 before_script:
-  - if [ "$DEPENDENCIES" = "high" ]; then composer --prefer-source update; fi;
-  - if [ "$DEPENDENCIES" = "low" ]; then composer --prefer-lowest --prefer-source update; fi;
+  - if [ "$DEPENDENCIES" = "high" ]; then composer update; fi;
+  - if [ "$DEPENDENCIES" = "low" ]; then composer --prefer-lowest update; fi;
 
 script:
   - ./vendor/bin/phpunit
