@@ -44,10 +44,5 @@
             "GeneratedHydratorTest\\":      "tests/GeneratedHydratorTest",
             "GeneratedHydratorTestAsset\\": "tests/GeneratedHydratorTestAsset"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.2.x-dev"
-        }
     }
 }
