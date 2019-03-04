@@ -20,3 +20,7 @@ script:
   # Only run the code standards with the latest package
   - ./vendor/bin/phpcs
   - ./vendor/bin/roave-backward-compatibility-check
+
+matrix:
+  allow_failures:
+    - php: 7.4snapshot
