@@ -29,7 +29,7 @@ class HydratorFactoryFunctionalTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);

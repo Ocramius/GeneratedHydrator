@@ -25,7 +25,7 @@ class ConfigurationTest extends TestCase
      *
      * @covers \GeneratedHydrator\Configuration::__construct
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->configuration = new Configuration('test');
     }

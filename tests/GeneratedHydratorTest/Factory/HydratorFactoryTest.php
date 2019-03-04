@@ -28,7 +28,7 @@ class HydratorFactoryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->inflector = $this->createMock(ClassNameInflectorInterface::class);
         $this->config    = $this
