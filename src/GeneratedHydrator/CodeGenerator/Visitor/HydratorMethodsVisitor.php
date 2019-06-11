@@ -84,7 +84,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             array_values(array_filter(
                 $class->getProperties(),
                 static function (ReflectionProperty $property) use ($class) : bool {
-                    return ! ($property->isStatic() || $property->class !== $class->name);
+                    return ! ($property->isStatic() || $property->getDeclaringClass()->getName() !== $class->getName());
                 }
             ))
         ));
