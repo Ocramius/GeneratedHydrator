@@ -9,6 +9,7 @@ use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
+use Zend\Hydrator\HydratorInterface;
 use function class_exists;
 
 /**
@@ -48,5 +49,17 @@ class HydratorFactory
         }
 
         return $hydratorClassName;
+    }
+
+    /**
+     * Instantiates the generated hydrator class
+     *
+     * @return HydratorInterface
+     * @throws InvalidGeneratedClassesDirectoryException
+     */
+    public function getHydrator(): HydratorInterface
+    {
+        $hydratorClass = $this->getHydratorClass();
+        return new $hydratorClass();
     }
 }
