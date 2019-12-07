@@ -54,12 +54,12 @@ class HydratorFactory
     /**
      * Instantiates the generated hydrator class
      *
-     * @return HydratorInterface
      * @throws InvalidGeneratedClassesDirectoryException
      */
-    public function getHydrator(): HydratorInterface
+    public function getHydrator() : HydratorInterface
     {
         $hydratorClass = $this->getHydratorClass();
+
         return new $hydratorClass();
     }
 }

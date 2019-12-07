@@ -8,3 +8,4 @@ phpunit.xml
 phpmd.xml
 phpdox.xml
 phpcs.xml
+_storage

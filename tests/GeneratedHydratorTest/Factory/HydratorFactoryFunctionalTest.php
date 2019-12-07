@@ -64,11 +64,11 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydrator
      */
-    public function testWillInstantiateValidHydrator(): void
+    public function testWillInstantiateValidHydrator() : void
     {
-        $factory = $this->config->createFactory();
+        $factory       = $this->config->createFactory();
         $hydratorClass = $factory->getHydratorClass();
-        $hydrator = $factory->getHydrator();
+        $hydrator      = $factory->getHydrator();
 
         self::assertEquals(new $hydratorClass(), $hydrator);
     }
