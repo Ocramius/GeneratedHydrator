@@ -2,9 +2,15 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\ZendHydrator;
 
 use DateTime;
+use GeneratedHydratorBenchmark\Data\AllPrivateClass;
+use GeneratedHydratorBenchmark\Data\AllProtectedClass;
+use GeneratedHydratorBenchmark\Data\AllPublicClass;
+use GeneratedHydratorBenchmark\Data\InheritanceClass;
+use GeneratedHydratorBenchmark\Data\InheritanceDeepClass;
+use GeneratedHydratorBenchmark\Data\MixedClass;
 use stdClass;
 use Zend\Hydrator\ClassMethods;
 use Zend\Hydrator\HydratorInterface;
@@ -15,7 +21,7 @@ use Zend\Hydrator\Reflection;
  *
  * @BeforeMethods({"setUp"})
  */
-class ZendHydrationBench
+class HydrationBench
 {
     /** @var HydratorInterface */
     private $classMethodHydrator;

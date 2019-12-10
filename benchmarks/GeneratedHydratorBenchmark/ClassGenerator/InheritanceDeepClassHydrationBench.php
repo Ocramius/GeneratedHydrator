@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\ClassGenerator;
 
 use DateTime;
+use GeneratedHydratorBenchmark\Data\InheritanceDeepClass;
+use GeneratedHydratorBenchmark\HydrationBench;
 use stdClass;
 
 /**

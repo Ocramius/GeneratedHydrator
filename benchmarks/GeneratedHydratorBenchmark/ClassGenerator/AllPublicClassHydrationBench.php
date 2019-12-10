@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\ClassGenerator;
+
+use GeneratedHydratorBenchmark\Data\AllPublicClass;
+use GeneratedHydratorBenchmark\HydrationBench;
 
 /**
  * Benchmark class that contains only public properties hydration

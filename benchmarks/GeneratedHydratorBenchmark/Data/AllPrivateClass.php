@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\Data;
 
 /**
- * Class that contains public, protected and private properties
+ * Class that contains only private properties
  */
-class MixedClass
+class AllPrivateClass
 {
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
     /** @var mixed */
     private $foo;
     /** @var mixed */
-    protected $bar;
+    private $bar;
     /** @var mixed */
-    public $baz;
+    private $baz;
     /** @var mixed */
     private $someFooProperty;
     /** @var mixed */
-    protected $someBarProperty;
+    private $someBarProperty;
     /** @var mixed */
-    public $someBazProperty;
+    private $someBazProperty;
 //phpcs:enable
 }
