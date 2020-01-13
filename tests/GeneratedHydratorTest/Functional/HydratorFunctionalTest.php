@@ -119,7 +119,7 @@ class HydratorFunctionalTest extends TestCase
             'property0' => 11,
             'property1' => null, // Ensure explicit set null works as expected.
             'property2' => 13,
-            'property3' => 17,
+            'property3' => null, // Different use case (unrequired value with no default value).
             'property4' => 19,
         ];
 
