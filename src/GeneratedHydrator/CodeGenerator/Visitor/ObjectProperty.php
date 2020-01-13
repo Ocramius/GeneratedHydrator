@@ -18,7 +18,7 @@ final class ObjectProperty
     /** @var bool */
     public $hasDefault = false;
 
-    /** @var ?string */
+    /** @var bool */
     public $required = false;
 
     /** @var string  */
