@@ -21,7 +21,6 @@ use function array_values;
 use function implode;
 use function reset;
 use function var_export;
-use function version_compare;
 
 /**
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
@@ -31,7 +30,7 @@ use function version_compare;
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
-    /** @var ObjectProperty[] */
+    /** @var list<ObjectProperty> */
     private $visiblePropertyMap = [];
 
     /** @var array<string, array<int, ObjectProperty>> */
@@ -91,7 +90,10 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ));
     }
 
-    private function generatePropertyHydrateCall(ObjectProperty $property, string $input): array
+    /**
+     * @return list<string>
+     */
+    private function generatePropertyHydrateCall(ObjectProperty $property, string $input) : array
     {
         $ret = [];
 

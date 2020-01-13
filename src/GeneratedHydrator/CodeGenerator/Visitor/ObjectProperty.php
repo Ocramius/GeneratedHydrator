@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
+use function version_compare;
+
 /**
  * @internal
  * @psalm-immutable
@@ -33,7 +35,7 @@ final class ObjectProperty
     /**
      * Create instance from reflection object
      */
-    public static function fromReflection(\ReflectionProperty $property)
+    public static function fromReflection(\ReflectionProperty $property): self
     {
         $propertyName = $property->getName();
 
