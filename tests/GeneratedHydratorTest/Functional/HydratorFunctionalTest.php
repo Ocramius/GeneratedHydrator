@@ -16,6 +16,7 @@ use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
+use GeneratedHydratorTestAsset\ClassWithTypedProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -75,6 +76,37 @@ class HydratorFunctionalTest extends TestCase
         $this->generateHydrator($instance)->hydrate(['property0' => null], $instance);
 
         self::assertNull($instance->getProperty0());
+    }
+
+    /**
+     * Ensures that the hydrator will not attempt to read unitialized PHP >= 7.4
+     * typed property, which would cause "Uncaught Error: Typed property Foo::$a
+     * must not be accessed before initialization" PHP engine errors.
+     */
+    public function testHydratorWillNotRaisedUnitiliazedTypedPropertyAccessError() : void
+    {
+        if (0 > \version_compare(PHP_VERSION, '7.4.0')) {
+            self::markTestSkipped("This test requires PHP >= 7.4.0");
+        }
+
+        $instance = new ClassWithTypedProperties();
+        $hydrator = $this->generateHydrator($instance);
+
+        $hydrator->hydrate([
+            // 'property0' has a default value, it should keep it.
+            // 'property1' has a default value, it should keep it.
+            'property2' => 3,
+            // 'property3' is not required, it should remain null.
+            // 'property4' default value is null, it should remain null.
+        ], $instance);
+
+        self::assertSame([
+            'property0' => 1,
+            'property1' => 2,
+            'property2' => 3,
+            'property3' => null,
+            'property4' => null,
+        ], $hydrator->extract($instance));
     }
 
     /**
