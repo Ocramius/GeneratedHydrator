@@ -21,6 +21,7 @@ use function array_values;
 use function implode;
 use function reset;
 use function var_export;
+use function version_compare;
 
 /**
  * Replaces methods `__construct`, `hydrate` and `extract` in the classes of the given AST
@@ -30,10 +31,10 @@ use function var_export;
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
-    /** @var string[] */
+    /** @var ObjectProperty[] */
     private $visiblePropertyMap = [];
 
-    /** @var string[][] */
+    /** @var array<string, array<int, ObjectProperty>> */
     private $hiddenPropertyMap = [];
 
     public function __construct(ReflectionClass $reflectedClass)
@@ -95,14 +96,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $ret = [];
 
         $propertyName = $property->name;
-        $escapedName = \addslashes($propertyName);
+        $escapedName = var_export($propertyName, true);
 
         if ($property->type && !$property->required && !$property->hasDefault) {
-            $ret[] = "\$object->{$propertyName} = {$input}['{$escapedName}'] ?? null;";
+            $ret[] = "\$object->{$propertyName} = {$input}[{$escapedName}] ?? null;";
         } else {
-            $ret[] = "if (isset(\$values['{$escapedName}']) || \$object->{$propertyName} !== null "
-                . "&& \\array_key_exists('{$escapedName}', {$input})) {";
-            $ret[] = "    \$object->{$propertyName} = {$input}['{$escapedName}'];";
+            $ret[] = "if (isset({$input}[{$escapedName}]) || \$object->{$propertyName} !== null "
+                . "&& \\array_key_exists({$escapedName}, {$input})) {";
+            $ret[] = "    \$object->{$propertyName} = {$input}[{$escapedName}];";
             $ret[] = '}';
         }
 
@@ -122,15 +123,13 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             // Hydrate closures
             $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(static function ($object, $values) {';
             foreach ($properties as $property) {
-                \assert($property instanceof ObjectProperty);
-                $bodyParts = \array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values'));
+                $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values'));
             }
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
             // Extract closures
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
-                \assert($property instanceof ObjectProperty);
                 $propertyName = $property->name;
                 $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
@@ -151,8 +150,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts = [];
         foreach ($this->visiblePropertyMap as $property) {
-            \assert($property instanceof ObjectProperty);
-            $bodyParts = \array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$data'));
+            $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$data'));
         }
         $index = 0;
         foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
@@ -173,7 +171,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $bodyParts   = [];
         $bodyParts[] = '$ret = array();';
         foreach ($this->visiblePropertyMap as $property) {
-            \assert($property instanceof ObjectProperty);
             $propertyName = $property->name;
             $bodyParts[] = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
         }
@@ -210,55 +207,5 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
 
         return $method;
-    }
-}
-
-/**
- * @internal
- */
-final class ObjectProperty
-{
-    /** @var ?string */
-    public $type = null;
-
-    /** @var bool */
-    public $hasDefault = false;
-
-    /** @var ?string */
-    public $required = false;
-
-    /** @var string  */
-    public $name;
-
-    private function __construct(string $name, ?string $type = null, bool $required = false, bool $hasDefault = false)
-    {
-        $this->name = $name;
-        $this->type = $type;
-        $this->required = $required;
-        $this->hasDefault = $hasDefault;
-    }
-
-    /**
-     * Create instance from reflection object
-     */
-    public static function fromReflection(\ReflectionProperty $property)
-    {
-        $propertyName = $property->getName();
-
-        if (0 <= \version_compare(PHP_VERSION, '7.4.0') && ($type = $property->getType())) {
-            // Check if property have a default value. It seems there is no
-            // other way, it probably will create a confusion between properties
-            // defaulting to null and those who will remain unitilialized.
-            $defaults = $property->getDeclaringClass()->getDefaultProperties();
-
-            return new self(
-                $propertyName,
-                $type->getName(),
-                !$type->allowsNull(),
-                isset($defaults[$propertyName])
-            );
-        }
-
-        return new self($propertyName);
     }
 }
