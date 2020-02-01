@@ -28,7 +28,7 @@
         "doctrine/coding-standard":           "^6.0.0",
         "infection/infection":                "^0.12.2",
         "phpunit/phpunit":                    "^8.5.2",
-        "phpbench/phpbench":                  "^0.16.10",
+        "phpbench/phpbench":                  "^0.17.0",
         "roave/backward-compatibility-check": "^4.0.0",
         "squizlabs/php_codesniffer":          "^3.5.3",
         "zendframework/zend-filter":          "^2.9.2",
