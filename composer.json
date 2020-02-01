@@ -26,7 +26,7 @@
     },
     "require-dev": {
         "doctrine/coding-standard":           "^6.0.0",
-        "infection/infection":                "^0.12.2",
+        "infection/infection":                "^0.15.0",
         "phpunit/phpunit":                    "^8.5.2",
         "phpbench/phpbench":                  "^0.17.0",
         "roave/backward-compatibility-check": "^4.2.0",
