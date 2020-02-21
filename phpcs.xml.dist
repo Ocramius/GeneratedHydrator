@@ -14,9 +14,8 @@
     <file>./src</file>
     <file>./tests</file>
 
-    <rule ref="Doctrine"/>
-<!--        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix"/>-->
-<!--        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming.SuperfluousSuffix"/>-->
-<!--        <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix"/>-->
-<!--    </rule>-->
+    <rule ref="Doctrine">
+        <!-- test assets contain private unused properties -->
+        <exclude name="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty"/>
+    </rule>
 </ruleset>
