@@ -16,6 +16,7 @@ use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
+use GeneratedHydratorTestAsset\ClassWithTypedProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -75,6 +76,54 @@ class HydratorFunctionalTest extends TestCase
         $this->generateHydrator($instance)->hydrate(['property0' => null], $instance);
 
         self::assertNull($instance->getProperty0());
+    }
+
+    /**
+     * Ensures that the hydrator will not attempt to read unitialized PHP >= 7.4
+     * typed property, which would cause "Uncaught Error: Typed property Foo::$a
+     * must not be accessed before initialization" PHP engine errors.
+     *
+     * @requires PHP >= 7.4
+     */
+    public function testHydratorWillNotRaisedUnitiliazedTypedPropertyAccessError() : void
+    {
+        $instance = new ClassWithTypedProperties();
+        $hydrator = $this->generateHydrator($instance);
+
+        $hydrator->hydrate(['property2' => 3], $instance);
+
+        self::assertSame([
+            'property0' => 1, // 'property0' has a default value, it should keep it.
+            'property1' => 2, // 'property1' has a default value, it should keep it.
+            'property2' => 3,
+            'property3' => null, // 'property3' is not required, it should remain null.
+            'property4' => null, // 'property4' default value is null, it should remain null.
+            'untyped0' => null, // 'untyped0' is null by default
+            'untyped1' => null, // 'untyped1' is null by default
+        ], $hydrator->extract($instance));
+    }
+
+    /**
+     * @requires PHP >= 7.4
+     */
+    public function testHydratorWillSetAllTypedProperties() : void
+    {
+        $instance = new ClassWithTypedProperties();
+        $hydrator = $this->generateHydrator($instance);
+
+        $reference = [
+            'property0' => 11,
+            'property1' => null, // Ensure explicit set null works as expected.
+            'property2' => 13,
+            'property3' => null, // Different use case (unrequired value with no default value).
+            'property4' => 19,
+            'untyped0' => null, // 'untyped0' is null by default
+            'untyped1' => null, // 'untyped1' is null by default
+        ];
+
+        $hydrator->hydrate($reference, $instance);
+
+        self::assertSame($reference, $hydrator->extract($instance));
     }
 
     /**

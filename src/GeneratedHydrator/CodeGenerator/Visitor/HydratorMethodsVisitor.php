@@ -30,10 +30,16 @@ use function var_export;
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
-    /** @var string[] */
+    /**
+     * @var ObjectProperty[]
+     * @psalm-var list<ObjectProperty>
+     */
     private $visiblePropertyMap = [];
 
-    /** @var string[][] */
+    /**
+     * @var array<string, array<int, ObjectProperty>>
+     * @psalm-var array<string, list<ObjectProperty>>
+     */
     private $hiddenPropertyMap = [];
 
     public function __construct(ReflectionClass $reflectedClass)
@@ -42,9 +48,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $className = $property->getDeclaringClass()->getName();
 
             if ($property->isPrivate() || $property->isProtected()) {
-                $this->hiddenPropertyMap[$className][] = $property->getName();
+                $this->hiddenPropertyMap[$className][] = ObjectProperty::fromReflection($property);
             } else {
-                $this->visiblePropertyMap[] = $property->getName();
+                $this->visiblePropertyMap[] = ObjectProperty::fromReflection($property);
             }
         }
     }
@@ -90,6 +96,29 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ));
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return list<string>
+     */
+    private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName) : array
+    {
+        $propertyName = $property->name;
+        $escapedName  = var_export($propertyName, true);
+
+        if ($property->allowsNull && ! $property->hasDefault) {
+            return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
+        }
+
+        return [
+            'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
+            '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')',
+            ') {',
+            '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
+            '}',
+        ];
+    }
+
     private function replaceConstructor(ClassMethod $method) : void
     {
         $method->params = [];
@@ -99,21 +128,19 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         // Create a set of closures that will be called to hydrate the object.
         // Array of closures in a naturally indexed array, ordered, which will
         // then be called in order in the hydrate() and extract() methods.
-        foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
+        foreach ($this->hiddenPropertyMap as $className => $properties) {
             // Hydrate closures
             $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(static function ($object, $values) {';
-            foreach ($propertyNames as $propertyName) {
-                $bodyParts[] = "    if (isset(\$values['" . $propertyName . "']) || " .
-                '$object->' . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$values)) {";
-                $bodyParts[] = '        $object->' . $propertyName . " = \$values['" . $propertyName . "'];";
-                $bodyParts[] = '    }';
+            foreach ($properties as $property) {
+                $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values'));
             }
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
             // Extract closures
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
-            foreach ($propertyNames as $propertyName) {
-                $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+            foreach ($properties as $property) {
+                $propertyName = $property->name;
+                $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }
@@ -131,11 +158,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ];
 
         $bodyParts = [];
-        foreach ($this->visiblePropertyMap as $propertyName) {
-            $bodyParts[] = "if (isset(\$data['" . $propertyName . "']) || " .
-            '$object->' . $propertyName . " !== null && \\array_key_exists('" . $propertyName . "', \$data)) {";
-            $bodyParts[] = '    $object->' . $propertyName . " = \$data['" . $propertyName . "'];";
-            $bodyParts[] = '}';
+        foreach ($this->visiblePropertyMap as $property) {
+            $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$data'));
         }
         $index = 0;
         foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
@@ -155,11 +179,12 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
         $bodyParts   = [];
         $bodyParts[] = '$ret = array();';
-        foreach ($this->visiblePropertyMap as $propertyName) {
-            $bodyParts[] = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+        foreach ($this->visiblePropertyMap as $property) {
+            $propertyName = $property->name;
+            $bodyParts[]  = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
         }
         $index = 0;
-        foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
+        foreach ($this->hiddenPropertyMap as $className => $property) {
             $bodyParts[] = '$this->extractCallbacks[' . ($index++) . ']->__invoke($object, $ret);';
         }
 
