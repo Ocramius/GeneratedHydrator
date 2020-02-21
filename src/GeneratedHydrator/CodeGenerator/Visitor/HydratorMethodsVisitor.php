@@ -106,7 +106,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $propertyName = $property->name;
         $escapedName  = var_export($propertyName, true);
 
-        if ($property->type !== null && ! $property->required && ! $property->hasDefault) {
+        if ($property->allowsNull && ! $property->hasDefault) {
             return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
         }
 

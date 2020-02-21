@@ -98,6 +98,8 @@ class HydratorFunctionalTest extends TestCase
             'property2' => 3,
             'property3' => null, // 'property3' is not required, it should remain null.
             'property4' => null, // 'property4' default value is null, it should remain null.
+            'untyped0' => null, // 'untyped0' is null by default
+            'untyped1' => null, // 'untyped1' is null by default
         ], $hydrator->extract($instance));
     }
 
@@ -115,6 +117,8 @@ class HydratorFunctionalTest extends TestCase
             'property2' => 13,
             'property3' => null, // Different use case (unrequired value with no default value).
             'property4' => 19,
+            'untyped0' => null, // 'untyped0' is null by default
+            'untyped1' => null, // 'untyped1' is null by default
         ];
 
         $hydrator->hydrate($reference, $instance);

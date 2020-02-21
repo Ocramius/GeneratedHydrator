@@ -14,4 +14,6 @@ final class ClassWithTypedProperties
     private int $property2;
     private ?int $property3;
     private ?int $property4 = null;
+    private $untyped0;
+    private $untyped1 = null;
 }

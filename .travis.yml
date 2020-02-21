@@ -14,7 +14,7 @@ before_script:
 
 script:
   - ./vendor/bin/phpunit
-  - ulimit -n 4096 && phpdbg -qrr ./vendor/bin/infection --min-msi=98 --min-covered-msi=98
+  - ulimit -n 4096 && phpdbg -qrr ./vendor/bin/infection --min-msi=100 --min-covered-msi=100
   - php -n ./vendor/bin/phpbench run --report=aggregate --revs=500 --iterations=50 --warmup=3
   # Only run the code standards with the latest package
   - ./vendor/bin/phpcs
