@@ -9,7 +9,7 @@ namespace GeneratedHydratorTestAsset;
  */
 final class ClassWithTypedProperties
 {
-    private int $property0 = 1;
+    private int $property0  = 1;
     private ?int $property1 = 2;
     private int $property2;
     private ?int $property3;

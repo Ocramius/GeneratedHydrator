@@ -30,10 +30,16 @@ use function var_export;
  */
 class HydratorMethodsVisitor extends NodeVisitorAbstract
 {
-    /** @var list<ObjectProperty> */
+    /**
+     * @var ObjectProperty[]
+     * @psalm-var list<ObjectProperty>
+     */
     private $visiblePropertyMap = [];
 
-    /** @var array<string, array<int, ObjectProperty>> */
+    /**
+     * @var array<string, array<int, ObjectProperty>>
+     * @psalm-var array<string, list<ObjectProperty>>
+     */
     private $hiddenPropertyMap = [];
 
     public function __construct(ReflectionClass $reflectedClass)
@@ -91,25 +97,26 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @return list<string>
+     * @return string[]
+     *
+     * @psalm-return list<string>
      */
-    private function generatePropertyHydrateCall(ObjectProperty $property, string $input) : array
+    private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName) : array
     {
-        $ret = [];
-
         $propertyName = $property->name;
-        $escapedName = var_export($propertyName, true);
+        $escapedName  = var_export($propertyName, true);
 
-        if ($property->type !== null && !$property->required && !$property->hasDefault) {
-            $ret[] = "\$object->{$propertyName} = {$input}[{$escapedName}] ?? null;";
-        } else {
-            $ret[] = "if (isset({$input}[{$escapedName}]) || \$object->{$propertyName} !== null "
-                . "&& \\array_key_exists({$escapedName}, {$input})) {";
-            $ret[] = "    \$object->{$propertyName} = {$input}[{$escapedName}];";
-            $ret[] = '}';
+        if ($property->type !== null && ! $property->required && ! $property->hasDefault) {
+            return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
         }
 
-        return $ret;
+        return [
+            'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
+            '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')',
+            ') {',
+            '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
+            '}',
+        ];
     }
 
     private function replaceConstructor(ClassMethod $method) : void
@@ -133,7 +140,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
                 $propertyName = $property->name;
-                $bodyParts[] = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+                $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }
@@ -174,7 +181,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $bodyParts[] = '$ret = array();';
         foreach ($this->visiblePropertyMap as $property) {
             $propertyName = $property->name;
-            $bodyParts[] = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+            $bodyParts[]  = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
         }
         $index = 0;
         foreach ($this->hiddenPropertyMap as $className => $property) {

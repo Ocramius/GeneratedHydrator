@@ -90,20 +90,14 @@ class HydratorFunctionalTest extends TestCase
         $instance = new ClassWithTypedProperties();
         $hydrator = $this->generateHydrator($instance);
 
-        $hydrator->hydrate([
-            // 'property0' has a default value, it should keep it.
-            // 'property1' has a default value, it should keep it.
-            'property2' => 3,
-            // 'property3' is not required, it should remain null.
-            // 'property4' default value is null, it should remain null.
-        ], $instance);
+        $hydrator->hydrate(['property2' => 3], $instance);
 
         self::assertSame([
-            'property0' => 1,
-            'property1' => 2,
+            'property0' => 1, // 'property0' has a default value, it should keep it.
+            'property1' => 2, // 'property1' has a default value, it should keep it.
             'property2' => 3,
-            'property3' => null,
-            'property4' => null,
+            'property3' => null, // 'property3' is not required, it should remain null.
+            'property4' => null, // 'property4' default value is null, it should remain null.
         ], $hydrator->extract($instance));
     }
 
