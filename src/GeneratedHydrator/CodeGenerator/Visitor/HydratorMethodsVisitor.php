@@ -149,7 +149,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                     $bodyParts[] = '    $pref->setAccessible(true);';
                     $bodyParts[]  = '}';
 
-                    $bodyParts[]  = 'if ($pref->isInitialized($object)) {';
+                    $bodyParts[]  = 'if (isset($object->' . $propertyName . ') || $pref->isInitialized($object)) {';
                     $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
                     $bodyParts[]  = '}';
                 } else {
