@@ -140,7 +140,21 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
                 $propertyName = $property->name;
-                $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+                if ($property->hasType && !$property->hasDefault) {
+                    $escapedName = var_export($propertyName, true);
+
+                    $bodyParts[]  = 'static $pref;';
+                    $bodyParts[]  = 'if ($pref === null) {';
+                    $bodyParts[] = '    $pref = new \ReflectionProperty($object, ' . $escapedName . ');';
+                    $bodyParts[] = '    $pref->setAccessible(true);';
+                    $bodyParts[]  = '}';
+
+                    $bodyParts[]  = 'if ($pref->isInitialized($object)) {';
+                    $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+                    $bodyParts[]  = '}';
+                } else {
+                    $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+                }
             }
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }

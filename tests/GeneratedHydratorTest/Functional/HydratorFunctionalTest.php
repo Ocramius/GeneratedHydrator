@@ -127,6 +127,27 @@ class HydratorFunctionalTest extends TestCase
     }
 
     /**
+     * @requires PHP >= 7.4
+     */
+    public function testExtractSkipsNonSetValues() : void
+    {
+        $instance = new ClassWithTypedProperties();
+        $hydrator = $this->generateHydrator($instance);
+
+        $reference =  $hydrator->extract($instance);
+
+        self::assertSame([
+            'property0' => 1,
+            'property1' => 2,
+            // $property2 skipped as it does not exists
+            // $property3 skipped as it does not exists
+            'property4' => null,
+            'untyped0' => null, // 'untyped0' is null by default
+            'untyped1' => null, // 'untyped1' is null by default
+        ], $reference);
+    }
+
+    /**
      * @return mixed[]
      */
     public function getHydratorClasses() : array
