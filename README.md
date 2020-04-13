@@ -22,6 +22,13 @@ of the object to be handled by the hydrator.
 
 Also, a hydrator of GeneratedHydrator implements `Zend\Hydrator\HydratorInterface`.
 
+## Installation
+To install GeneratedHydrator, install [Composer](https://getcomposer.org/download/) and issue the following command:
+
+```bash
+$ composer require ocramius/generated-hydrator
+```
+
 ## Usage
 
 Here's an example of how you can create and use a hydrator created by GeneratedHydrator:
