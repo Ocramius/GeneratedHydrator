@@ -25,7 +25,7 @@
         "zendframework/zend-hydrator":   "^2.4.1"
     },
     "require-dev": {
-        "doctrine/coding-standard":           "^6.0.0",
+        "doctrine/coding-standard":           "^7.0.2",
         "infection/infection":                "^0.12.2",
         "phpunit/phpunit":                    "^8.5.5",
         "phpbench/phpbench":                  "^0.17.0",
