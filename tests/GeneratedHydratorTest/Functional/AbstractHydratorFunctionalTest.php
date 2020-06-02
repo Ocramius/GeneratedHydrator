@@ -13,6 +13,7 @@ use GeneratedHydrator\Strategy\RecursiveHydrationStrategy;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithObjectProperty;
+use GeneratedHydratorTestAsset\ClassWithPrivateObjectProperty;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParent;
 use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
@@ -248,6 +249,63 @@ class AbstractHydratorFunctionalTest extends TestCase
                 'property9' => 'Prop9',
             ],
             'publicPropertiesCollection' => [
+                [
+                    'property0' => 'Prop10',
+                    'property1' => 'Prop11',
+                    'property2' => 'Prop12',
+                    'property3' => 'Prop13',
+                    'property4' => 'Prop14',
+                    'property5' => 'Prop15',
+                    'property6' => 'Prop16',
+                    'property7' => 'Prop17',
+                    'property8' => 'Prop18',
+                    'property9' => 'Prop19',
+                ],
+                [
+                    'property0' => 'Prop20',
+                    'property1' => 'Prop21',
+                    'property2' => 'Prop22',
+                    'property3' => 'Prop23',
+                    'property4' => 'Prop24',
+                    'property5' => 'Prop25',
+                    'property6' => 'Prop26',
+                    'property7' => 'Prop27',
+                    'property8' => 'Prop28',
+                    'property9' => 'Prop29',
+                ]
+            ],
+        ];
+
+        $hydrator->hydrate($reference, $instance);
+
+        self::assertSame($reference, $hydrator->extract($instance));
+    }
+
+    public function testHydratorWillHydratePrivatePropertiesWithStrategies(): void
+    {
+        $instance = new ClassWithPrivateObjectProperty();
+
+        $nestedHydrator = $this->generateHydrator(new ClassWithPrivateProperties());
+
+        /** @var AbstractHydrator $hydrator */
+        $hydrator = $this->generateHydrator($instance);
+        $hydrator->addStrategy('privateProperties', new RecursiveHydrationStrategy($nestedHydrator, ClassWithPrivateProperties::class));
+        $hydrator->addStrategy('privatePropertiesCollection', new RecursiveHydrationStrategy($nestedHydrator, ClassWithPrivateProperties::class, true));
+
+        $reference = [
+            'privateProperties' => [
+                'property0' => 'Prop0',
+                'property1' => 'Prop1',
+                'property2' => 'Prop2',
+                'property3' => 'Prop3',
+                'property4' => 'Prop4',
+                'property5' => 'Prop5',
+                'property6' => 'Prop6',
+                'property7' => 'Prop7',
+                'property8' => 'Prop8',
+                'property9' => 'Prop9',
+            ],
+            'privatePropertiesCollection' => [
                 [
                     'property0' => 'Prop10',
                     'property1' => 'Prop11',

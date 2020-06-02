@@ -95,38 +95,21 @@ class AbstractHydratorMethodsVisitor extends NodeVisitorAbstract
         ));
     }
 
-    private function generateExtractValueCall(ObjectProperty $property, string $inputArrayName): array
+    private function generateHydrateValueCall(ObjectProperty $property, string $inputArrayName, bool $inClosure = false): array
     {
         $propertyName = $property->name;
         $escapedName  = var_export($propertyName, true);
+        $self = $inClosure ? '$that' : '$this';
 
         if ($property->allowsNull && ! $property->hasDefault) {
-            return ['$object->' . $propertyName . ' = $that->extractValue(' . $escapedName . ', ' . $inputArrayName . '[' . $escapedName . '] ?? null, $object) ?? null;'];
+            return ['$object->' . $propertyName . ' = ' . $self . '->hydrateValue(' . $escapedName . ', ' . $inputArrayName . '[' . $escapedName . '] ?? null, $object) ?? null;'];
         }
 
         return [
             'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
             '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')',
             ') {',
-            '    $object->' . $propertyName . ' = $that->extractValue(' . $escapedName . ', ' . $inputArrayName . '[' . $escapedName . '], $object);',
-            '}',
-        ];
-    }
-
-    private function generateHydrateValueCall(ObjectProperty $property, string $inputArrayName): array
-    {
-        $propertyName = $property->name;
-        $escapedName  = var_export($propertyName, true);
-
-        if ($property->allowsNull && ! $property->hasDefault) {
-            return ['$object->' . $propertyName . ' = $this->hydrateValue(' . $escapedName . ', ' . $inputArrayName . '[' . $escapedName . '] ?? null, $object) ?? null;'];
-        }
-
-        return [
-            'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
-            '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')',
-            ') {',
-            '    $object->' . $propertyName . ' = $this->hydrateValue(' . $escapedName . ', ' . $inputArrayName . '[' . $escapedName . '], $object);',
+            '    $object->' . $propertyName . ' = ' . $self . '->hydrateValue(' . $escapedName . ', ' . $inputArrayName . '[' . $escapedName . '], $object);',
             '}',
         ];
     }
@@ -143,7 +126,7 @@ class AbstractHydratorMethodsVisitor extends NodeVisitorAbstract
             // Hydrate closures
             $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(static function ($object, $values, $that) {';
             foreach ($properties as $property) {
-                $bodyParts = array_merge($bodyParts, $this->generateExtractValueCall($property, '$values'));
+                $bodyParts = array_merge($bodyParts, $this->generateHydrateValueCall($property, '$values', true));
             }
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
