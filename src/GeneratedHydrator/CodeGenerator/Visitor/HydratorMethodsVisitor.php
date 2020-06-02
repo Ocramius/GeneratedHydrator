@@ -89,8 +89,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
             array_values(array_filter(
                 $class->getProperties(),
-                static function (ReflectionProperty $property) : bool {
-                    return ! $property->isStatic();
+                static function (ReflectionProperty $property) use ($class) : bool {
+                    return ! ($property->isStatic() || $property->getDeclaringClass()->getName() !== $class->getName());
                 }
             ))
         ));
