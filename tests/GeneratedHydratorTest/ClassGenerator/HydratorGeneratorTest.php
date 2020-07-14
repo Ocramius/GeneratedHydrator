@@ -15,7 +15,7 @@ use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Zend\Hydrator\HydratorInterface;
+use Laminas\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}

@@ -6,16 +6,16 @@ namespace GeneratedHydratorBenchmark;
 
 use DateTime;
 use stdClass;
-use Zend\Hydrator\ClassMethods;
-use Zend\Hydrator\HydratorInterface;
-use Zend\Hydrator\Reflection;
+use Laminas\Hydrator\ClassMethods;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\Hydrator\Reflection;
 
 /**
- * Benchmark class that contains all benchmarks for zend code
+ * Benchmark class that contains all benchmarks for Laminas code
  *
  * @BeforeMethods({"setUp"})
  */
-class ZendHydrationBench
+class LaminasHydrationBench
 {
     /** @var HydratorInterface */
     private $classMethodHydrator;

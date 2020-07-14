@@ -7,7 +7,7 @@ namespace GeneratedHydratorBenchmark;
 use DateTime;
 use GeneratedHydrator\Configuration;
 use stdClass;
-use Zend\Hydrator\HydratorInterface;
+use Laminas\Hydrator\HydratorInterface;
 
 /**
  * Default base class for hydration benchmarks

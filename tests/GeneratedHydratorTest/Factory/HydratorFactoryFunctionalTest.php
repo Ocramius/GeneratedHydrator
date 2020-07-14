@@ -9,6 +9,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
+use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -57,7 +58,7 @@ class HydratorFactoryFunctionalTest extends TestCase
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
-        self::assertInstanceOf('Zend\Hydrator\HydratorInterface', new $generatedClass());
+        self::assertInstanceOf(HydratorInterface::class, new $generatedClass());
     }
 
     /**
