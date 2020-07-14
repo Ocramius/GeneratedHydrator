@@ -9,7 +9,7 @@ use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
-use Zend\Hydrator\HydratorInterface;
+use Laminas\Hydrator\HydratorInterface;
 use function class_exists;
 
 /**
