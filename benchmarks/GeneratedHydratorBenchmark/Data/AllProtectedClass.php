@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\Data;
 
 /**
  * Class that contains only protected properties

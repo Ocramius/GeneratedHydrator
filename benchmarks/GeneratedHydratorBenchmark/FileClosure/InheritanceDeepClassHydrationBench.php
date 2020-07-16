@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\RuntimeClosure;
 
 use DateTime;
+use GeneratedHydratorBenchmark\Data\InheritanceDeepClass;
 use stdClass;
 
 /**
- * Benchmark class that contains mixed inherited properties hydration
+ * Benchmark class that contains mixed deeply inherited properties hydration
  *
  * @BeforeMethods({"setUp"})
  */
-class InheritanceClassHydrationBench extends HydrationBench
+class InheritanceDeepClassHydrationBench extends HydrationBench
 {
     protected function createData() : void
     {
@@ -25,14 +26,20 @@ class InheritanceClassHydrationBench extends HydrationBench
             'someFooProperty1' => [12, 13, 14],
             'someBarProperty1' => 12354.4578,
             'someBazProperty1' => new stdClass(),
+            'foo2' => 'some foo string',
+            'bar2' => 42,
+            'baz2' => new DateTime(),
+            'someFooProperty2' => [12, 13, 14],
+            'someBarProperty2' => 12354.4578,
+            'someBazProperty2' => new stdClass(),
         ];
     }
 
     public function setUp() : void
     {
-        $this->createHydrator(InheritanceClass::class);
+        $this->createHydrator(InheritanceDeepClass::class);
         $this->createData();
-        $this->object = new InheritanceClass();
+        $this->object = new InheritanceDeepClass();
     }
 
     /**
@@ -41,6 +48,6 @@ class InheritanceClassHydrationBench extends HydrationBench
      */
     public function benchConsume() : void
     {
-        $this->hydrator->hydrate($this->data, $this->object);
+        ($this->hydrator)($this->data, $this->object);
     }
 }

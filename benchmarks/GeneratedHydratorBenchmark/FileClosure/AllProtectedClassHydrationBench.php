@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace GeneratedHydratorBenchmark;
+namespace GeneratedHydratorBenchmark\FileClosure;
+
+use GeneratedHydratorBenchmark\Data\AllProtectedClass;
 
 /**
  * Benchmark class that contains only protected properties hydration
@@ -24,6 +26,6 @@ class AllProtectedClassHydrationBench extends HydrationBench
      */
     public function benchConsume() : void
     {
-        $this->hydrator->hydrate($this->data, $this->object);
+        ($this->hydrator)($this->data, $this->object);
     }
 }
