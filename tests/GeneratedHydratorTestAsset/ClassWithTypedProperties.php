@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GeneratedHydratorTestAsset;
 
+use GeneratedHydrator\Annotation\MappedFrom;
+
 /**
  * Test PHP 7.4 hydration and dehydration.
  */
@@ -18,4 +20,6 @@ final class ClassWithTypedProperties
     private $untyped0;
     /** @var mixed */
     private $untyped1 = null;
+    /** @MappedFrom(name="property_5") */
+    private string $property5 = 'test';
 }

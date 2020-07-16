@@ -9,6 +9,7 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use GeneratedHydrator\Configuration;
 use GeneratedHydratorTestAsset\BaseClass;
+use GeneratedHydratorTestAsset\ClassWithMappedProperties;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivateProperties;
 use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParent;
@@ -99,8 +100,27 @@ class HydratorFunctionalTest extends TestCase
             'property3' => null, // 'property3' is not required, it should remain null.
             'property4' => null, // 'property4' default value is null, it should remain null.
             'untyped0' => null, // 'untyped0' is null by default
-            'untyped1' => null, // 'untyped1' is null by default
+            'untyped1' => null, // 'untyped1' is null by default,
+            'property5' => 'test'
         ], $hydrator->extract($instance));
+    }
+
+    public function testHydratorWithMappedFromAnnotation() : void
+    {
+        $instance = new ClassWithMappedProperties();
+        $hydrator = $this->generateHydrator($instance);
+
+        $hydratedInstance = $hydrator->hydrate([
+            'test0' => 9,
+            'test1' => 8,
+            'test2' => 7,
+            'test3' => 6,
+        ], $instance);
+
+        self::assertSame(9, $hydratedInstance->property0);
+        self::assertSame(8, $hydratedInstance->property1);
+        self::assertSame(7, $hydratedInstance->property2);
+        self::assertSame(6, $hydratedInstance->property3);
     }
 
     /**
@@ -119,6 +139,7 @@ class HydratorFunctionalTest extends TestCase
             'property4' => 19,
             'untyped0' => null, // 'untyped0' is null by default
             'untyped1' => null, // 'untyped1' is null by default
+            'property5' => 'test'
         ];
 
         $hydrator->hydrate($reference, $instance);

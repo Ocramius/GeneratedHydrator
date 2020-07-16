@@ -104,7 +104,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName) : array
     {
         $propertyName = $property->name;
-        $escapedName  = var_export($propertyName, true);
+        $escapedName  = var_export($property->mappedFrom, true);
 
         if ($property->allowsNull && ! $property->hasDefault) {
             return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];

@@ -19,6 +19,7 @@ class ObjectPropertyTest extends TestCase
         $property2 = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'property2'));
         $property3 = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'property3'));
         $property4 = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'property4'));
+        $property5 = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'property5'));
         $untyped0  = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'untyped0'));
         $untyped1  = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'untyped1'));
 
@@ -27,8 +28,17 @@ class ObjectPropertyTest extends TestCase
         self::assertSame('property2', $property2->name);
         self::assertSame('property3', $property3->name);
         self::assertSame('property4', $property4->name);
+        self::assertSame('property5', $property5->name);
         self::assertSame('untyped0', $untyped0->name);
         self::assertSame('untyped1', $untyped1->name);
+
+        self::assertSame('property0', $property0->mappedFrom);
+        self::assertSame('property1', $property1->mappedFrom);
+        self::assertSame('property2', $property2->mappedFrom);
+        self::assertSame('property3', $property3->mappedFrom);
+        self::assertSame('property4', $property4->mappedFrom);
+        self::assertSame('untyped0', $untyped0->mappedFrom);
+        self::assertSame('untyped1', $untyped1->mappedFrom);
 
         self::assertTrue($property0->hasType);
         self::assertTrue($property1->hasType);

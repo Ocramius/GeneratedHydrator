@@ -19,10 +19,11 @@
         }
     ],
     "require": {
-        "php":                           "^7.4",
-        "nikic/php-parser":              "^4.6.0",
-        "ocramius/code-generator-utils": "^1.0.0",
-        "laminas/laminas-hydrator":      "^2.4.1"
+        "php": "^7.4",
+        "doctrine/annotations": "^1.10",
+        "laminas/laminas-hydrator": "^2.4.1",
+        "nikic/php-parser": "^4.6.0",
+        "ocramius/code-generator-utils": "^1.0.0"
     },
     "require-dev": {
         "doctrine/coding-standard":           "^7.0.2",
@@ -34,6 +35,9 @@
         "laminas/laminas-filter":                "^2.9.2",
         "laminas/laminas-servicemanager":     "^3.4.0",
         "laminas/laminas-stdlib":             "^3.2.1"
+    },
+    "suggest": {
+        "doctrine/annotations": "Needed to support the 'MappedFrom' annotation."
     },
     "autoload": {
         "psr-4": {
