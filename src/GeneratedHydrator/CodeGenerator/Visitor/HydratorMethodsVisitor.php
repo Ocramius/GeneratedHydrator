@@ -203,7 +203,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     /**
      * Finds or creates a class method (and eventually attaches it to the class itself)
      *
-     * @deprecated not needed if we move away from code replacement
+     * Note: not needed if we move away from code replacement
      */
     private function findOrCreateMethod(Class_ $class, string $name): ClassMethod
     {
