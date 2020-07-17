@@ -18,7 +18,6 @@ use ReflectionProperty;
 
 use function array_filter;
 use function array_merge;
-use function array_values;
 use function implode;
 use function reset;
 use function var_export;
@@ -86,15 +85,15 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             return [];
         }
 
-        return array_values(array_merge(
+        return array_merge(
             $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
-            array_values(array_filter(
+            array_filter(
                 $class->getProperties(),
                 static function (ReflectionProperty $property): bool {
                     return ! $property->isStatic();
                 }
-            ))
-        ));
+            )
+        );
     }
 
     /**
