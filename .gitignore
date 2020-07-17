@@ -1,6 +1,5 @@
 .phpunit.result.cache
 vendor
-composer.lock
 composer.phar
 infection.json
 infection.log
