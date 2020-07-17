@@ -25,15 +25,16 @@
         "laminas/laminas-hydrator":      "^2.4.2"
     },
     "require-dev": {
-        "doctrine/coding-standard":           "^8.1.0",
-        "infection/infection":                "^0.16.4",
-        "phpunit/phpunit":                    "^9.2.6",
-        "phpbench/phpbench":                  "^0.17.1",
+        "doctrine/coding-standard": "^8.1.0",
+        "infection/infection": "^0.16.4",
+        "laminas/laminas-filter": "^2.9.4",
+        "laminas/laminas-servicemanager": "^3.4.1",
+        "laminas/laminas-stdlib": "^3.2.1",
+        "phpbench/phpbench": "^0.17.1",
+        "phpunit/phpunit": "^9.2.6",
         "roave/backward-compatibility-check": "^5.0.0",
-        "squizlabs/php_codesniffer":          "^3.5.5",
-        "laminas/laminas-filter":             "^2.9.4",
-        "laminas/laminas-servicemanager":     "^3.4.1",
-        "laminas/laminas-stdlib":             "^3.2.1"
+        "squizlabs/php_codesniffer": "^3.5.5",
+        "vimeo/psalm": "^3.12"
     },
     "autoload": {
         "psr-4": {

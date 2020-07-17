@@ -12,6 +12,7 @@ use GeneratedHydrator\Configuration;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+use stdClass;
 use function assert;
 use function is_dir;
 
@@ -29,7 +30,7 @@ class ConfigurationTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->configuration = new Configuration('test');
+        $this->configuration = new Configuration(stdClass::class);
     }
 
     /**
@@ -38,9 +39,9 @@ class ConfigurationTest extends TestCase
      */
     public function testGetSetHydratedClassName(): void
     {
-        self::assertSame('test', $this->configuration->getHydratedClassName());
-        $this->configuration->setHydratedClassName('bar');
-        self::assertSame('bar', $this->configuration->getHydratedClassName());
+        self::assertSame(stdClass::class, $this->configuration->getHydratedClassName());
+        $this->configuration->setHydratedClassName(__CLASS__);
+        self::assertSame(__CLASS__, $this->configuration->getHydratedClassName());
     }
 
     /**

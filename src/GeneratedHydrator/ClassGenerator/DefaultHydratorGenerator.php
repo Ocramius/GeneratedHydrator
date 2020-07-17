@@ -6,7 +6,7 @@ namespace GeneratedHydrator\ClassGenerator;
 
 use CodeGenerationUtils\Visitor\ClassImplementorVisitor;
 use GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor;
-use Laminas\Hydrator\HydratorInterface;
+use GeneratedHydrator\GeneratedHydrator;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
@@ -41,7 +41,7 @@ class DefaultHydratorGenerator implements HydratorGenerator
 
         $implementor = new NodeTraverser();
         $implementor->addVisitor(new HydratorMethodsVisitor($originalClass));
-        $implementor->addVisitor(new ClassImplementorVisitor($originalClass->getName(), [HydratorInterface::class]));
+        $implementor->addVisitor(new ClassImplementorVisitor($originalClass->getName(), [GeneratedHydrator::class]));
 
         return $implementor->traverse($ast);
     }

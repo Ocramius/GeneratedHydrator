@@ -131,7 +131,6 @@ class HydratorFactoryTest extends TestCase
 
             $factory        = new HydratorFactory($this->config);
             $generatedClass = $factory->getHydratorClass();
-        assert($generatedClass instanceof LazyLoadingMock);
 
             self::assertInstanceOf($generatedClassName, new $generatedClass());
     }

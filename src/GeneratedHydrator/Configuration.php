@@ -20,11 +20,14 @@ use function sys_get_temp_dir;
 
 /**
  * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
+ *
+ * @template HydratedClass of object
  */
 class Configuration
 {
     public const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
 
+    /** @psalm-var class-string<HydratedClass> $hydratedClassName */
     protected string $hydratedClassName;
 
     protected bool $autoGenerateProxies = true;
@@ -42,21 +45,32 @@ class Configuration
 
     protected ?HydratorGenerator $hydratorGenerator = null;
 
+    /** @psalm-param class-string<HydratedClass> $hydratedClassName */
     public function __construct(string $hydratedClassName)
     {
         $this->setHydratedClassName($hydratedClassName);
     }
 
+    /** @psalm-return HydratorFactory<HydratedClass> */
     public function createFactory(): HydratorFactory
     {
         return new HydratorFactory($this);
     }
 
+    /**
+     * @psalm-param class-string<HydratedClass> $hydratedClassName
+     *
+     * @deprecated setting the hydrated class name **after** configuration is set is not really
+     *             supported anymore, since it changes the underlying templated type of this
+     *             object at runtime, which is not something we want. This method will be removed
+     *             in a future release of this library.
+     */
     public function setHydratedClassName(string $hydratedClassName): void
     {
         $this->hydratedClassName = $hydratedClassName;
     }
 
+    /** @psalm-return class-string<HydratedClass> */
     public function getHydratedClassName(): string
     {
         return $this->hydratedClassName;
