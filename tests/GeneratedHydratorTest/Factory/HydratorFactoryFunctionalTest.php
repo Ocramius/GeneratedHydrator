@@ -9,6 +9,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
+use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
@@ -23,14 +24,16 @@ class HydratorFactoryFunctionalTest extends TestCase
 {
     protected Configuration $config;
 
+    /** @psalm-var class-string */
     protected string $generatedClassName;
 
     public function setUp(): void
     {
+        /** @psalm-var class-string $this->generatedClassName */
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
-        $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\ClassWithMixedProperties');
+        $reflection               = new ReflectionClass(ClassWithMixedProperties::class);
         $generator                = new ClassBuilder();
         $traverser                = new NodeTraverser();
         $renamer                  = new ClassRenamerVisitor($reflection, $this->generatedClassName);

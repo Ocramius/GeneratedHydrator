@@ -222,15 +222,12 @@ class HydratorFunctionalTest extends TestCase
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
         $inflector          = $this->createMock(ClassNameInflectorInterface::class);
-        assert($inflector instanceof ClassNameInflectorInterface || $inflector instanceof MockObject);
 
         $inflector
-            ->expects(self::any())
             ->method('getGeneratedClassName')
             ->with($parentClassName)
             ->will(self::returnValue($generatedClassName));
         $inflector
-            ->expects(self::any())
             ->method('getUserClassName')
             ->with($parentClassName)
             ->will(self::returnValue($parentClassName));

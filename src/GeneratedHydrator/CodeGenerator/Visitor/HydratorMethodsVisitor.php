@@ -210,7 +210,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $foundMethods = array_filter(
             $class->getMethods(),
             static function (ClassMethod $method) use ($name): bool {
-                return $name === $method->name;
+                return $name === (string) $method->name;
             }
         );
 

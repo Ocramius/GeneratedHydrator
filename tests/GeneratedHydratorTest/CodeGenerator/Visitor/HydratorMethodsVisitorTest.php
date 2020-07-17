@@ -14,6 +14,8 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 use function array_filter;
+use function assert;
+use function class_exists;
 
 /**
  * Tests for {@see \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor}
@@ -25,6 +27,8 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * @param string[] $properties
      *
+     * @psalm-param class-string $className
+     *
      * @dataProvider classAstProvider
      */
     public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties): void
@@ -33,6 +37,7 @@ class HydratorMethodsVisitorTest extends TestCase
 
         $modifiedNode = $visitor->leaveNode($classNode);
 
+        self::assertNotNull($modifiedNode);
         self::assertMethodExistence('hydrate', $modifiedNode);
         self::assertMethodExistence('extract', $modifiedNode);
         self::assertMethodExistence('__construct', $modifiedNode);
@@ -58,7 +63,11 @@ class HydratorMethodsVisitorTest extends TestCase
     }
 
     /**
-     * @return Node[]
+     * @psalm-return non-empty-list<array{
+     *   class-string,
+     *   Class_,
+     *   non-empty-list<non-empty-string>
+     * }>
      */
     public function classAstProvider(): array
     {
@@ -70,15 +79,26 @@ class HydratorMethodsVisitorTest extends TestCase
 
         eval($classCode);
 
+        /** @var class-string $staticClassName */
         $staticClassName = UniqueIdentifierGenerator::getIdentifier('Foo');
         $staticClassCode = 'class ' . $staticClassName . ' { private static $bar; '
             . 'protected static $baz; public static $tab; private $taz; }';
 
         eval($staticClassCode);
 
+        $parsedClassCode = $parser->parse('<?php ' . $classCode);
+        $parsedStaticClassCode = $parser->parse('<?php ' . $staticClassCode);
+
+        assert(class_exists($className, false));
+        assert(class_exists($staticClassCode, false));
+        assert(!empty($parsedClassCode));
+        assert(!empty($parsedStaticClassCode));
+        assert($parsedClassCode[0] instanceof Class_);
+        assert($parsedStaticClassCode[0] instanceof Class_);
+
         return [
-            [$className, $parser->parse('<?php ' . $classCode)[0], ['bar', 'baz', 'tab', 'tar', 'taw', 'tam']],
-            [$staticClassName, $parser->parse('<?php ' . $staticClassCode)[0], ['taz']],
+            [$className, $parsedClassCode[0], ['bar', 'baz', 'tab', 'tar', 'taw', 'tam']],
+            [$staticClassName, $parsedStaticClassCode[0], ['taz']],
         ];
     }
 }

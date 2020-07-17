@@ -8,6 +8,7 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
+use GeneratedHydrator\GeneratedHydrator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMagicMethods;
@@ -27,11 +28,14 @@ class HydratorGeneratorTest extends TestCase
     /**
      * @dataProvider getTestedImplementations
      *
+     * @psalm-param class-string $className
+     *
      * Verifies that generated code is valid and implements expected interfaces
      */
     public function testGeneratesValidCode(string $className): void
     {
         $generator          = new DefaultHydratorGenerator();
+        /** @psalm-var class-string $generatedClassName */
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
@@ -50,7 +54,9 @@ class HydratorGeneratorTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
+     *
+     * @psalm-return non-empty-list<array{class-string}>
      */
     public function getTestedImplementations(): array
     {
@@ -62,11 +68,12 @@ class HydratorGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** @psalm-return non-empty-list<class-string> */
     protected function getExpectedImplementedInterfaces(): array
     {
-        return [HydratorInterface::class];
+        return [
+            GeneratedHydrator::class,
+            HydratorInterface::class,
+        ];
     }
 }

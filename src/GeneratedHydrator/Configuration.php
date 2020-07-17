@@ -38,8 +38,7 @@ class Configuration
 
     protected ?GeneratorStrategyInterface $generatorStrategy = null;
 
-    /** @var callable|null */
-    protected $generatedClassesAutoloader;
+    protected ?AutoloaderInterface $generatedClassesAutoloader = null;
 
     protected ?ClassNameInflectorInterface $classNameInflector = null;
 

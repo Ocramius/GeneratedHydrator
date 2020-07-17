@@ -12,6 +12,7 @@ use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
 
+use function assert;
 use function class_exists;
 
 /**
@@ -39,7 +40,9 @@ class HydratorFactory
     public function getHydratorClass(): string
     {
         $inflector         = $this->configuration->getClassNameInflector();
+        /** @psalm-var class-string $realClassName */
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
+        /** @psalm-var class-string<GeneratedHydrator<HydratedObject>> $hydratorClassName */
         $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => static::class]);
 
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
