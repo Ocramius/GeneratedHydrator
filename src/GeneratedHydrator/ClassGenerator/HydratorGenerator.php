@@ -17,5 +17,5 @@ interface HydratorGenerator
      *
      * @return Node[]
      */
-    public function generate(ReflectionClass $originalClass) : array;
+    public function generate(ReflectionClass $originalClass): array;
 }

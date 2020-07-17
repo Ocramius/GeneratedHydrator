@@ -12,10 +12,10 @@ use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
+use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Laminas\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}
@@ -29,7 +29,7 @@ class HydratorGeneratorTest extends TestCase
      *
      * Verifies that generated code is valid and implements expected interfaces
      */
-    public function testGeneratesValidCode(string $className) : void
+    public function testGeneratesValidCode(string $className): void
     {
         $generator          = new DefaultHydratorGenerator();
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
@@ -52,7 +52,7 @@ class HydratorGeneratorTest extends TestCase
     /**
      * @return string[]
      */
-    public function getTestedImplementations() : array
+    public function getTestedImplementations(): array
     {
         return [
             [BaseClass::class],
@@ -65,7 +65,7 @@ class HydratorGeneratorTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    protected function getExpectedImplementedInterfaces() : array
+    protected function getExpectedImplementedInterfaces(): array
     {
         return [HydratorInterface::class];
     }

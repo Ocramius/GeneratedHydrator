@@ -12,6 +12,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+
 use function array_filter;
 
 /**
@@ -26,11 +27,10 @@ class HydratorMethodsVisitorTest extends TestCase
      *
      * @dataProvider classAstProvider
      */
-    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties) : void
+    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties): void
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
-        /** @var Class_ $modifiedAst */
         $modifiedNode = $visitor->leaveNode($classNode);
 
         self::assertMethodExistence('hydrate', $modifiedNode);
@@ -41,7 +41,7 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * Verifies that a method was correctly added to by the visitor
      */
-    private function assertMethodExistence(string $methodName, Class_ $class) : void
+    private function assertMethodExistence(string $methodName, Class_ $class): void
     {
         $members = $class->stmts;
 
@@ -49,7 +49,7 @@ class HydratorMethodsVisitorTest extends TestCase
             1,
             array_filter(
                 $members,
-                static function (Node $node) use ($methodName) : bool {
+                static function (Node $node) use ($methodName): bool {
                     return $node instanceof ClassMethod
                         && $methodName === $node->name->name;
                 }
@@ -60,7 +60,7 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * @return Node[]
      */
-    public function classAstProvider() : array
+    public function classAstProvider(): array
     {
         $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 

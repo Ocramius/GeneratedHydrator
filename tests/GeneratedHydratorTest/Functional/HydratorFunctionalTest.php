@@ -19,11 +19,13 @@ use GeneratedHydratorTestAsset\ClassWithStaticProperties;
 use GeneratedHydratorTestAsset\ClassWithTypedProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
+use Laminas\Hydrator\HydratorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
-use Laminas\Hydrator\HydratorInterface;
+
+use function assert;
 use function get_class;
 use function ksort;
 
@@ -37,7 +39,7 @@ class HydratorFunctionalTest extends TestCase
     /**
      * @dataProvider getHydratorClasses
      */
-    public function testHydrator(object $instance) : void
+    public function testHydrator(object $instance): void
     {
         $reflection  = new ReflectionClass($instance);
         $initialData = [];
@@ -67,7 +69,7 @@ class HydratorFunctionalTest extends TestCase
         self::assertSame($inspectionData, $extracted);
     }
 
-    public function testHydratingNull() : void
+    public function testHydratingNull(): void
     {
         $instance = new ClassWithPrivateProperties();
 
@@ -85,7 +87,7 @@ class HydratorFunctionalTest extends TestCase
      *
      * @requires PHP >= 7.4
      */
-    public function testHydratorWillNotRaisedUnitiliazedTypedPropertyAccessError() : void
+    public function testHydratorWillNotRaisedUnitiliazedTypedPropertyAccessError(): void
     {
         $instance = new ClassWithTypedProperties();
         $hydrator = $this->generateHydrator($instance);
@@ -106,7 +108,7 @@ class HydratorFunctionalTest extends TestCase
     /**
      * @requires PHP >= 7.4
      */
-    public function testHydratorWillSetAllTypedProperties() : void
+    public function testHydratorWillSetAllTypedProperties(): void
     {
         $instance = new ClassWithTypedProperties();
         $hydrator = $this->generateHydrator($instance);
@@ -129,7 +131,7 @@ class HydratorFunctionalTest extends TestCase
     /**
      * @return mixed[]
      */
-    public function getHydratorClasses() : array
+    public function getHydratorClasses(): array
     {
         return [
             [new stdClass()],
@@ -161,7 +163,7 @@ class HydratorFunctionalTest extends TestCase
         object $instance,
         array &$initialData,
         array &$newData
-    ) : void {
+    ): void {
         $parentClass = $class->getParentClass();
         if ($parentClass) {
             $this->recursiveFindInitialData($parentClass, $instance, $initialData, $newData);
@@ -193,7 +195,7 @@ class HydratorFunctionalTest extends TestCase
         ReflectionClass $class,
         object $instance,
         array &$inspectionData
-    ) : void {
+    ): void {
         $parentClass = $class->getParentClass();
         if ($parentClass) {
             $this->recursiveFindInspectionData($parentClass, $instance, $inspectionData);
@@ -214,13 +216,13 @@ class HydratorFunctionalTest extends TestCase
     /**
      * Generates a hydrator for the given class name, and retrieves its class name
      */
-    private function generateHydrator(object $instance) : HydratorInterface
+    private function generateHydrator(object $instance): HydratorInterface
     {
         $parentClassName    = get_class($instance);
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
-        /** @var ClassNameInflectorInterface|MockObject $inflector*/
-        $inflector = $this->createMock(ClassNameInflectorInterface::class);
+        $inflector          = $this->createMock(ClassNameInflectorInterface::class);
+        assert($inflector instanceof ClassNameInflectorInterface || $inflector instanceof MockObject);
 
         $inflector
             ->expects(self::any())

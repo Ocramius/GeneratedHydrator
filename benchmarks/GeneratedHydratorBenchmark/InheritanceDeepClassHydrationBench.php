@@ -14,7 +14,7 @@ use stdClass;
  */
 class InheritanceDeepClassHydrationBench extends HydrationBench
 {
-    protected function createData() : void
+    protected function createData(): void
     {
         parent::createData();
 
@@ -34,7 +34,7 @@ class InheritanceDeepClassHydrationBench extends HydrationBench
         ];
     }
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->createHydrator(InheritanceDeepClass::class);
         $this->createData();
@@ -45,7 +45,7 @@ class InheritanceDeepClassHydrationBench extends HydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchConsume() : void
+    public function benchConsume(): void
     {
         $this->hydrator->hydrate($this->data, $this->object);
     }

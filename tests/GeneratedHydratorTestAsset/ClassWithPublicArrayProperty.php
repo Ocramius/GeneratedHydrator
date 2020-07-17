@@ -11,5 +11,5 @@ namespace GeneratedHydratorTestAsset;
 class ClassWithPublicArrayProperty
 {
     /** @var mixed[] */
-    public $arrayProperty = [];
+    public array $arrayProperty = [];
 }

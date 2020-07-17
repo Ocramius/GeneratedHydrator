@@ -7,9 +7,10 @@ namespace GeneratedHydrator\Factory;
 use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
+use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
-use Laminas\Hydrator\HydratorInterface;
+
 use function class_exists;
 
 /**
@@ -17,8 +18,7 @@ use function class_exists;
  */
 class HydratorFactory
 {
-    /** @var Configuration */
-    private $configuration;
+    private Configuration $configuration;
 
     public function __construct(Configuration $configuration)
     {
@@ -30,7 +30,7 @@ class HydratorFactory
      *
      * @throws InvalidGeneratedClassesDirectoryException
      */
-    public function getHydratorClass() : string
+    public function getHydratorClass(): string
     {
         $inflector         = $this->configuration->getClassNameInflector();
         $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
@@ -56,7 +56,7 @@ class HydratorFactory
      *
      * @throws InvalidGeneratedClassesDirectoryException
      */
-    public function getHydrator() : HydratorInterface
+    public function getHydrator(): HydratorInterface
     {
         $hydratorClass = $this->getHydratorClass();
 

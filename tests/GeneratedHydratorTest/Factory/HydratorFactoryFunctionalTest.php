@@ -21,16 +21,11 @@ use ReflectionClass;
  */
 class HydratorFactoryFunctionalTest extends TestCase
 {
-    /** @var Configuration */
-    protected $config;
+    protected Configuration $config;
 
-    /** @var string */
-    protected $generatedClassName;
+    protected string $generatedClassName;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);
@@ -54,7 +49,7 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillGenerateValidClass() : void
+    public function testWillGenerateValidClass(): void
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
@@ -65,7 +60,7 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydrator
      */
-    public function testWillInstantiateValidHydrator() : void
+    public function testWillInstantiateValidHydrator(): void
     {
         $factory       = $this->config->createFactory();
         $hydratorClass = $factory->getHydratorClass();

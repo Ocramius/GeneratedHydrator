@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace GeneratedHydratorBenchmark;
 
 use DateTime;
-use stdClass;
 use Laminas\Hydrator\ClassMethods;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\Hydrator\Reflection;
+use stdClass;
 
 /**
  * Benchmark class that contains all benchmarks for Laminas code
@@ -17,29 +17,21 @@ use Laminas\Hydrator\Reflection;
  */
 class LaminasHydrationBench
 {
-    /** @var HydratorInterface */
-    private $classMethodHydrator;
+    private HydratorInterface $classMethodHydrator;
 
-    /** @var HydratorInterface */
-    private $reflectionHydrator;
+    private HydratorInterface $reflectionHydrator;
 
     /** @var mixed[] */
-    private $data;
+    private array $data;
 
-    /** @var object */
-    private $object1;
-    /** @var object */
-    private $object2;
-    /** @var object */
-    private $object3;
-    /** @var object */
-    private $object4;
-    /** @var object */
-    private $object5;
-    /** @var object */
-    private $object6;
+    private object $object1;
+    private object $object2;
+    private object $object3;
+    private object $object4;
+    private object $object5;
+    private object $object6;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->classMethodHydrator = new ClassMethods();
         $this->reflectionHydrator  = new Reflection();
@@ -57,7 +49,7 @@ class LaminasHydrationBench
     /**
      * Populate test data array
      */
-    private function createData() : void
+    private function createData(): void
     {
         $this->data = [
             'foo' => 'some foo string',
@@ -85,7 +77,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodAllPrivate() : void
+    public function benchMethodAllPrivate(): void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object1);
     }
@@ -94,7 +86,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodAllProtected() : void
+    public function benchMethodAllProtected(): void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object2);
     }
@@ -103,7 +95,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodAllPublic() : void
+    public function benchMethodAllPublic(): void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object3);
     }
@@ -112,7 +104,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodInheritance() : void
+    public function benchMethodInheritance(): void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object4);
     }
@@ -121,7 +113,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodInheritanceDeep() : void
+    public function benchMethodInheritanceDeep(): void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object5);
     }
@@ -130,7 +122,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchMethodMixed() : void
+    public function benchMethodMixed(): void
     {
         $this->classMethodHydrator->hydrate($this->data, $this->object6);
     }
@@ -139,7 +131,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionAllPrivate() : void
+    public function benchReflectionAllPrivate(): void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object1);
     }
@@ -148,7 +140,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionAllProtected() : void
+    public function benchReflectionAllProtected(): void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object2);
     }
@@ -157,7 +149,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionAllPublic() : void
+    public function benchReflectionAllPublic(): void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object3);
     }
@@ -166,7 +158,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionInheritance() : void
+    public function benchReflectionInheritance(): void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object4);
     }
@@ -175,7 +167,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionInheritanceDeep() : void
+    public function benchReflectionInheritanceDeep(): void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object5);
     }
@@ -184,7 +176,7 @@ class LaminasHydrationBench
      * @Revs(100)
      * @Iterations(200)
      */
-    public function benchReflectionMixed() : void
+    public function benchReflectionMixed(): void
     {
         $this->reflectionHydrator->hydrate($this->data, $this->object6);
     }

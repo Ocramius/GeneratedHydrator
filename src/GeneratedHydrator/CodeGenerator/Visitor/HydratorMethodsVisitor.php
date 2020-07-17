@@ -15,6 +15,7 @@ use PhpParser\NodeVisitorAbstract;
 use PhpParser\ParserFactory;
 use ReflectionClass;
 use ReflectionProperty;
+
 use function array_filter;
 use function array_merge;
 use function array_values;
@@ -34,13 +35,13 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      * @var ObjectProperty[]
      * @psalm-var list<ObjectProperty>
      */
-    private $visiblePropertyMap = [];
+    private array $visiblePropertyMap = [];
 
     /**
      * @var array<string, array<int, ObjectProperty>>
      * @psalm-var array<string, list<ObjectProperty>>
      */
-    private $hiddenPropertyMap = [];
+    private array $hiddenPropertyMap = [];
 
     public function __construct(ReflectionClass $reflectedClass)
     {
@@ -55,7 +56,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
     }
 
-    public function leaveNode(Node $node) : ?Class_
+    public function leaveNode(Node $node): ?Class_
     {
         if (! $node instanceof Class_) {
             return null;
@@ -79,7 +80,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ReflectionProperty[]
      */
-    private function findAllInstanceProperties(?ReflectionClass $class = null) : array
+    private function findAllInstanceProperties(?ReflectionClass $class = null): array
     {
         if (! $class) {
             return [];
@@ -89,7 +90,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $this->findAllInstanceProperties($class->getParentClass() ?: null), // of course PHP is shit.
             array_values(array_filter(
                 $class->getProperties(),
-                static function (ReflectionProperty $property) : bool {
+                static function (ReflectionProperty $property): bool {
                     return ! $property->isStatic();
                 }
             ))
@@ -101,7 +102,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @psalm-return list<string>
      */
-    private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName) : array
+    private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName): array
     {
         $propertyName = $property->name;
         $escapedName  = var_export($propertyName, true);
@@ -119,7 +120,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ];
     }
 
-    private function replaceConstructor(ClassMethod $method) : void
+    private function replaceConstructor(ClassMethod $method): void
     {
         $method->params = [];
 
@@ -134,6 +135,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             foreach ($properties as $property) {
                 $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values'));
             }
+
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
 
             // Extract closures
@@ -142,6 +144,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 $propertyName = $property->name;
                 $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
             }
+
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
         }
 
@@ -150,7 +153,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
-    private function replaceHydrate(ClassMethod $method) : void
+    private function replaceHydrate(ClassMethod $method): void
     {
         $method->params = [
             new Param(new Node\Expr\Variable('data'), null, 'array'),
@@ -161,6 +164,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         foreach ($this->visiblePropertyMap as $property) {
             $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$data'));
         }
+
         $index = 0;
         foreach ($this->hiddenPropertyMap as $className => $propertyNames) {
             $bodyParts[] = '$this->hydrateCallbacks[' . ($index++) . ']->__invoke($object, $data);';
@@ -173,7 +177,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ->parse('<?php ' . implode("\n", $bodyParts));
     }
 
-    private function replaceExtract(ClassMethod $method) : void
+    private function replaceExtract(ClassMethod $method): void
     {
         $method->params = [new Param(new Node\Expr\Variable('object'))];
 
@@ -183,6 +187,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $propertyName = $property->name;
             $bodyParts[]  = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
         }
+
         $index = 0;
         foreach ($this->hiddenPropertyMap as $className => $property) {
             $bodyParts[] = '$this->extractCallbacks[' . ($index++) . ']->__invoke($object, $ret);';
@@ -200,11 +205,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @deprecated not needed if we move away from code replacement
      */
-    private function findOrCreateMethod(Class_ $class, string $name) : ClassMethod
+    private function findOrCreateMethod(Class_ $class, string $name): ClassMethod
     {
         $foundMethods = array_filter(
             $class->getMethods(),
-            static function (ClassMethod $method) use ($name) : bool {
+            static function (ClassMethod $method) use ($name): bool {
                 return $name === $method->name;
             }
         );

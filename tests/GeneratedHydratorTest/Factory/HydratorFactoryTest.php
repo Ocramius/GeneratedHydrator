@@ -15,21 +15,19 @@ use GeneratedHydratorTestAsset\LazyLoadingMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
+
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
  */
 class HydratorFactoryTest extends TestCase
 {
-    /** @var MockObject */
-    protected $inflector;
+    protected MockObject $inflector;
 
     /** @var Configuration|MockObject */
     protected $config;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->inflector = $this->createMock(ClassNameInflectorInterface::class);
         $this->config    = $this
@@ -111,7 +109,7 @@ class HydratorFactoryTest extends TestCase
             ->expects(self::once())
             ->method('__invoke')
             ->with($generatedClassName)
-            ->willReturnCallback(static function () use ($generatedClassName) : bool {
+            ->willReturnCallback(static function () use ($generatedClassName): bool {
                 eval('class ' . $generatedClassName . ' {}');
 
                 return true;
@@ -131,9 +129,9 @@ class HydratorFactoryTest extends TestCase
             ->with($className)
             ->will(self::returnValue('GeneratedHydratorTestAsset\BaseClass'));
 
-            $factory = new HydratorFactory($this->config);
-        /** @var LazyLoadingMock $generatedClass */
+            $factory        = new HydratorFactory($this->config);
             $generatedClass = $factory->getHydratorClass();
+        assert($generatedClass instanceof LazyLoadingMock);
 
             self::assertInstanceOf($generatedClassName, new $generatedClass());
     }
