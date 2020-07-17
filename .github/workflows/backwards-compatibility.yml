@@ -53,4 +53,4 @@ jobs:
         run: "composer install --no-interaction --no-progress --no-suggest"
 
       - name: "Roave Backward Compatibility Check"
-        run: "vendor/bin/roave-backward-compatibility-check"
+        run: "vendor/bin/roave-backward-compatibility-check --from=master"
