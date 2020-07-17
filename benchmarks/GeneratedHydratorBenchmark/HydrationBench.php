@@ -6,19 +6,18 @@ namespace GeneratedHydratorBenchmark;
 
 use DateTime;
 use GeneratedHydrator\Configuration;
-use stdClass;
 use Laminas\Hydrator\HydratorInterface;
+use stdClass;
 
 /**
  * Default base class for hydration benchmarks
  */
 abstract class HydrationBench
 {
-    /** @var HydratorInterface */
-    protected $hydrator;
+    protected HydratorInterface $hydrator;
 
     /** @var mixed[] */
-    protected $data;
+    protected array $data;
 
     /** @var mixed */
     protected $object;
@@ -26,7 +25,7 @@ abstract class HydrationBench
     /**
      * Create and set the hydrator
      */
-    protected function createHydrator(string $class) : void
+    protected function createHydrator(string $class): void
     {
         $config        = new Configuration($class);
         $hydratorClass = $config->createFactory()->getHydratorClass();
@@ -37,7 +36,7 @@ abstract class HydrationBench
     /**
      * Populate test data array
      */
-    protected function createData() : void
+    protected function createData(): void
     {
         $this->data = [
             'foo' => 'some foo string',

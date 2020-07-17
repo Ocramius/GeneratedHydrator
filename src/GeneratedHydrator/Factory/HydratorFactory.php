@@ -7,19 +7,22 @@ namespace GeneratedHydrator\Factory;
 use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
+use GeneratedHydrator\GeneratedHydrator;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
-use Laminas\Hydrator\HydratorInterface;
+
 use function class_exists;
 
 /**
  * Factory responsible of producing hydrators
+ *
+ * @psalm-template HydratedObject of object
  */
 class HydratorFactory
 {
-    /** @var Configuration */
-    private $configuration;
+    private Configuration $configuration;
 
+    /** @psalm-param Configuration<HydratedObject> $configuration */
     public function __construct(Configuration $configuration)
     {
         $this->configuration = clone $configuration;
@@ -29,11 +32,15 @@ class HydratorFactory
      * Retrieves the generated hydrator FQCN
      *
      * @throws InvalidGeneratedClassesDirectoryException
+     *
+     * @psalm-return class-string<GeneratedHydrator<HydratedObject>>
      */
-    public function getHydratorClass() : string
+    public function getHydratorClass(): string
     {
-        $inflector         = $this->configuration->getClassNameInflector();
-        $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
+        $inflector = $this->configuration->getClassNameInflector();
+        /** @psalm-var class-string $realClassName */
+        $realClassName = $inflector->getUserClassName($this->configuration->getHydratedClassName());
+        /** @psalm-var class-string<GeneratedHydrator<HydratedObject>> $hydratorClassName */
         $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => static::class]);
 
         if (! class_exists($hydratorClassName) && $this->configuration->doesAutoGenerateProxies()) {
@@ -55,8 +62,10 @@ class HydratorFactory
      * Instantiates the generated hydrator class
      *
      * @throws InvalidGeneratedClassesDirectoryException
+     *
+     * @psalm-return GeneratedHydrator<HydratedObject>
      */
-    public function getHydrator() : HydratorInterface
+    public function getHydrator(): GeneratedHydrator
     {
         $hydratorClass = $this->getHydratorClass();
 

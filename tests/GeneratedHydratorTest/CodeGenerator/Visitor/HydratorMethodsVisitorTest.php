@@ -12,7 +12,10 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+
 use function array_filter;
+use function assert;
+use function class_exists;
 
 /**
  * Tests for {@see \GeneratedHydrator\CodeGenerator\Visitor\HydratorMethodsVisitor}
@@ -24,15 +27,17 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * @param string[] $properties
      *
+     * @psalm-param class-string $className
+     *
      * @dataProvider classAstProvider
      */
-    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties) : void
+    public function testBasicCodeGeneration(string $className, Class_ $classNode, array $properties): void
     {
         $visitor = new HydratorMethodsVisitor(new ReflectionClass($className));
 
-        /** @var Class_ $modifiedAst */
         $modifiedNode = $visitor->leaveNode($classNode);
 
+        self::assertNotNull($modifiedNode);
         self::assertMethodExistence('hydrate', $modifiedNode);
         self::assertMethodExistence('extract', $modifiedNode);
         self::assertMethodExistence('__construct', $modifiedNode);
@@ -41,7 +46,7 @@ class HydratorMethodsVisitorTest extends TestCase
     /**
      * Verifies that a method was correctly added to by the visitor
      */
-    private function assertMethodExistence(string $methodName, Class_ $class) : void
+    private function assertMethodExistence(string $methodName, Class_ $class): void
     {
         $members = $class->stmts;
 
@@ -49,7 +54,7 @@ class HydratorMethodsVisitorTest extends TestCase
             1,
             array_filter(
                 $members,
-                static function (Node $node) use ($methodName) : bool {
+                static function (Node $node) use ($methodName): bool {
                     return $node instanceof ClassMethod
                         && $methodName === $node->name->name;
                 }
@@ -58,9 +63,13 @@ class HydratorMethodsVisitorTest extends TestCase
     }
 
     /**
-     * @return Node[]
+     * @psalm-return non-empty-list<array{
+     *   class-string,
+     *   Class_,
+     *   non-empty-list<non-empty-string>
+     * }>
      */
-    public function classAstProvider() : array
+    public function classAstProvider(): array
     {
         $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 
@@ -70,15 +79,26 @@ class HydratorMethodsVisitorTest extends TestCase
 
         eval($classCode);
 
+        /** @psalm-var class-string $staticClassName */
         $staticClassName = UniqueIdentifierGenerator::getIdentifier('Foo');
         $staticClassCode = 'class ' . $staticClassName . ' { private static $bar; '
             . 'protected static $baz; public static $tab; private $taz; }';
 
         eval($staticClassCode);
 
+        $parsedClassCode       = $parser->parse('<?php ' . $classCode);
+        $parsedStaticClassCode = $parser->parse('<?php ' . $staticClassCode);
+
+        assert(class_exists($className, false));
+        assert(class_exists($staticClassCode, false));
+        assert(! empty($parsedClassCode));
+        assert(! empty($parsedStaticClassCode));
+        assert($parsedClassCode[0] instanceof Class_);
+        assert($parsedStaticClassCode[0] instanceof Class_);
+
         return [
-            [$className, $parser->parse('<?php ' . $classCode)[0], ['bar', 'baz', 'tab', 'tar', 'taw', 'tam']],
-            [$staticClassName, $parser->parse('<?php ' . $staticClassCode)[0], ['taz']],
+            [$className, $parsedClassCode[0], ['bar', 'baz', 'tab', 'tar', 'taw', 'tam']],
+            [$staticClassName, $parsedStaticClassCode[0], ['taz']],
         ];
     }
 }

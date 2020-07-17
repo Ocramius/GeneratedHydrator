@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <directory name="tests/GeneratedHydratorTest"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <DeprecatedMethod>
+            <errorLevel type="suppress">
+                <!-- deprecation still needs reference in tests -->
+                <referencedMethod name="GeneratedHydrator\Configuration::setHydratedClassName"/>
+            </errorLevel>
+        </DeprecatedMethod>
+
+        <InternalClass>
+            <errorLevel type="suppress">
+                <!-- library internals and tests can access internal object property visitor details -->
+                <referencedClass name="GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty"/>
+            </errorLevel>
+        </InternalClass>
+
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <!-- library internals and tests can access internal object property visitor details -->
+                <referencedMethod name="GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty::fromReflection"/>
+            </errorLevel>
+        </InternalMethod>
+
+        <InternalProperty>
+            <errorLevel type="suppress">
+                <!-- library internals and tests can access internal object property visitor details -->
+                <referencedProperty name="GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty::$allowsNull"/>
+                <referencedProperty name="GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty::$hasDefault"/>
+                <referencedProperty name="GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty::$hasType"/>
+                <referencedProperty name="GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty::$name"/>
+            </errorLevel>
+        </InternalProperty>
+    </issueHandlers>
+
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
+</psalm>

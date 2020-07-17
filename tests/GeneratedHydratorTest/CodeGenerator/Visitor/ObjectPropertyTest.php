@@ -12,7 +12,7 @@ use ReflectionProperty;
 /** @covers \GeneratedHydrator\CodeGenerator\Visitor\ObjectProperty */
 class ObjectPropertyTest extends TestCase
 {
-    public function testObjectPropertyState() : void
+    public function testObjectPropertyState(): void
     {
         $property0 = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'property0'));
         $property1 = ObjectProperty::fromReflection(new ReflectionProperty(ClassWithTypedProperties::class, 'property1'));

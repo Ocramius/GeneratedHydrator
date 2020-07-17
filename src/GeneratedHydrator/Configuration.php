@@ -15,70 +15,77 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Factory\HydratorFactory;
+
 use function sys_get_temp_dir;
 
 /**
  * Base configuration class for the generated hydrator - serves as micro disposable DIC/facade
+ *
+ * @template HydratedClass of object
  */
 class Configuration
 {
     public const DEFAULT_GENERATED_CLASS_NAMESPACE = 'GeneratedHydratorGeneratedClass';
 
-    /** @var string */
-    protected $hydratedClassName;
+    /** @psalm-var class-string<HydratedClass> $hydratedClassName */
+    protected string $hydratedClassName;
 
-    /** @var bool */
-    protected $autoGenerateProxies = true;
+    protected bool $autoGenerateProxies = true;
 
-    /** @var string|null */
-    protected $generatedClassesTargetDir;
+    protected ?string $generatedClassesTargetDir = null;
 
-    /** @var string */
-    protected $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
+    protected string $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
-    /** @var GeneratorStrategyInterface|null */
-    protected $generatorStrategy;
+    protected ?GeneratorStrategyInterface $generatorStrategy = null;
 
-    /** @var callable|null */
-    protected $generatedClassesAutoloader;
+    protected ?AutoloaderInterface $generatedClassesAutoloader = null;
 
-    /** @var ClassNameInflectorInterface|null */
-    protected $classNameInflector;
+    protected ?ClassNameInflectorInterface $classNameInflector = null;
 
-    /** @var HydratorGenerator|null */
-    protected $hydratorGenerator;
+    protected ?HydratorGenerator $hydratorGenerator = null;
 
+    /** @psalm-param class-string<HydratedClass> $hydratedClassName */
     public function __construct(string $hydratedClassName)
     {
         $this->setHydratedClassName($hydratedClassName);
     }
 
-    public function createFactory() : HydratorFactory
+    /** @psalm-return HydratorFactory<HydratedClass> */
+    public function createFactory(): HydratorFactory
     {
         return new HydratorFactory($this);
     }
 
-    public function setHydratedClassName(string $hydratedClassName) : void
+    /**
+     * @deprecated setting the hydrated class name **after** configuration is set is not really
+     *             supported anymore, since it changes the underlying templated type of this
+     *             object at runtime, which is not something we want. This method will be removed
+     *             in a future release of this library.
+     *
+     * @psalm-param class-string<HydratedClass> $hydratedClassName
+     */
+    public function setHydratedClassName(string $hydratedClassName): void
     {
         $this->hydratedClassName = $hydratedClassName;
     }
 
-    public function getHydratedClassName() : string
+    /** @psalm-return class-string<HydratedClass> */
+    public function getHydratedClassName(): string
     {
         return $this->hydratedClassName;
     }
 
-    public function setAutoGenerateProxies(bool $autoGenerateProxies) : void
+    public function setAutoGenerateProxies(bool $autoGenerateProxies): void
     {
         $this->autoGenerateProxies = $autoGenerateProxies;
     }
 
-    public function doesAutoGenerateProxies() : bool
+    public function doesAutoGenerateProxies(): bool
     {
         return $this->autoGenerateProxies;
     }
 
-    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader) : void
+    public function setGeneratedClassAutoloader(AutoloaderInterface $generatedClassesAutoloader): void
     {
         $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
@@ -86,7 +93,7 @@ class Configuration
     /**
      * @throws InvalidGeneratedClassesDirectoryException
      */
-    public function getGeneratedClassAutoloader() : AutoloaderInterface
+    public function getGeneratedClassAutoloader(): AutoloaderInterface
     {
         if ($this->generatedClassesAutoloader === null) {
             $this->generatedClassesAutoloader = new Autoloader(
@@ -98,22 +105,22 @@ class Configuration
         return $this->generatedClassesAutoloader;
     }
 
-    public function setGeneratedClassesNamespace(string $generatedClassesNamespace) : void
+    public function setGeneratedClassesNamespace(string $generatedClassesNamespace): void
     {
         $this->generatedClassesNamespace = $generatedClassesNamespace;
     }
 
-    public function getGeneratedClassesNamespace() : string
+    public function getGeneratedClassesNamespace(): string
     {
         return $this->generatedClassesNamespace;
     }
 
-    public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir) : void
+    public function setGeneratedClassesTargetDir(string $generatedClassesTargetDir): void
     {
         $this->generatedClassesTargetDir = $generatedClassesTargetDir;
     }
 
-    public function getGeneratedClassesTargetDir() : string
+    public function getGeneratedClassesTargetDir(): string
     {
         if ($this->generatedClassesTargetDir === null) {
             $this->generatedClassesTargetDir = sys_get_temp_dir();
@@ -122,7 +129,7 @@ class Configuration
         return $this->generatedClassesTargetDir;
     }
 
-    public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy) : void
+    public function setGeneratorStrategy(GeneratorStrategyInterface $generatorStrategy): void
     {
         $this->generatorStrategy = $generatorStrategy;
     }
@@ -130,7 +137,7 @@ class Configuration
     /**
      * @throws InvalidGeneratedClassesDirectoryException
      */
-    public function getGeneratorStrategy() : GeneratorStrategyInterface
+    public function getGeneratorStrategy(): GeneratorStrategyInterface
     {
         if ($this->generatorStrategy === null) {
             $this->generatorStrategy = new FileWriterGeneratorStrategy(
@@ -141,12 +148,12 @@ class Configuration
         return $this->generatorStrategy;
     }
 
-    public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector) : void
+    public function setClassNameInflector(ClassNameInflectorInterface $classNameInflector): void
     {
         $this->classNameInflector = $classNameInflector;
     }
 
-    public function getClassNameInflector() : ClassNameInflectorInterface
+    public function getClassNameInflector(): ClassNameInflectorInterface
     {
         if ($this->classNameInflector === null) {
             $this->classNameInflector = new ClassNameInflector($this->getGeneratedClassesNamespace());
@@ -155,12 +162,12 @@ class Configuration
         return $this->classNameInflector;
     }
 
-    public function setHydratorGenerator(HydratorGenerator $hydratorGenerator) : void
+    public function setHydratorGenerator(HydratorGenerator $hydratorGenerator): void
     {
         $this->hydratorGenerator = $hydratorGenerator;
     }
 
-    public function getHydratorGenerator() : HydratorGenerator
+    public function getHydratorGenerator(): HydratorGenerator
     {
         if ($this->hydratorGenerator === null) {
             $this->hydratorGenerator = new DefaultHydratorGenerator();

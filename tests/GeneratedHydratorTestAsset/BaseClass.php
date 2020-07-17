@@ -11,35 +11,32 @@ use stdClass;
  */
 class BaseClass implements Base
 {
-    /** @var string */
-    public $publicProperty = 'publicPropertyDefault';
+    public string $publicProperty = 'publicPropertyDefault';
 
-    /** @var string */
-    protected $protectedProperty = 'protectedPropertyDefault';
+    protected string $protectedProperty = 'protectedPropertyDefault';
 
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
-    /** @var string */
-    private $privateProperty = 'privatePropertyDefault';
+    private string $privateProperty = 'privatePropertyDefault';
 //phpcs:enable
 
-    public function publicMethod() : string
+    public function publicMethod(): string
     {
         return 'publicMethodDefault';
     }
 
-    protected function protectedMethod() : string
+    protected function protectedMethod(): string
     {
         return 'protectedMethodDefault';
     }
 
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
-    private function privateMethod() : string
+    private function privateMethod(): string
     {
 //phpcs:enable
         return 'privateMethodDefault';
     }
 
-    public function publicTypeHintedMethod(stdClass $param) : string
+    public function publicTypeHintedMethod(stdClass $param): string
     {
         return 'publicTypeHintedMethodDefault';
     }
@@ -47,12 +44,12 @@ class BaseClass implements Base
     /**
      * @param mixed[] $param
      */
-    public function publicArrayHintedMethod(array $param) : string
+    public function publicArrayHintedMethod(array $param): string
     {
         return 'publicArrayHintedMethodDefault';
     }
 
-    public function & publicByReferenceMethod() : string
+    public function & publicByReferenceMethod(): string
     {
         return 'publicByReferenceMethodDefault';
     }
@@ -61,7 +58,7 @@ class BaseClass implements Base
      * @param mixed $param
      * @param mixed $byRefParam
      */
-    public function publicByReferenceParameterMethod($param, &$byRefParam) : string
+    public function publicByReferenceParameterMethod($param, &$byRefParam): string
     {
         return 'publicByReferenceParameterMethodDefault';
     }

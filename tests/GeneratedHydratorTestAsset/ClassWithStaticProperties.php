@@ -28,7 +28,7 @@ class ClassWithStaticProperties
     private $public;
 
     /** @return mixed[] */
-    public function getStaticProperties() : array
+    public function getStaticProperties(): array
     {
         return [
             'privateStatic'   => self::$privateStatic,

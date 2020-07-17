@@ -8,14 +8,15 @@ use CodeGenerationUtils\GeneratorStrategy\EvaluatingGeneratorStrategy;
 use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\ClassGenerator\DefaultHydratorGenerator;
+use GeneratedHydrator\GeneratedHydrator;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\ClassWithByRefMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMagicMethods;
 use GeneratedHydratorTestAsset\ClassWithMixedProperties;
+use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Laminas\Hydrator\HydratorInterface;
 
 /**
  * Tests for {@see \GeneratedHydrator\ClassGenerator\HydratorGenerator}
@@ -26,12 +27,14 @@ class HydratorGeneratorTest extends TestCase
 {
     /**
      * @dataProvider getTestedImplementations
+     * @psalm-param class-string $className
      *
      * Verifies that generated code is valid and implements expected interfaces
      */
-    public function testGeneratesValidCode(string $className) : void
+    public function testGeneratesValidCode(string $className): void
     {
-        $generator          = new DefaultHydratorGenerator();
+        $generator = new DefaultHydratorGenerator();
+        /** @psalm-var class-string $generatedClassName */
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
@@ -50,9 +53,11 @@ class HydratorGeneratorTest extends TestCase
     }
 
     /**
-     * @return string[]
+     * @return string[][]
+     *
+     * @psalm-return non-empty-list<array{class-string}>
      */
-    public function getTestedImplementations() : array
+    public function getTestedImplementations(): array
     {
         return [
             [BaseClass::class],
@@ -62,11 +67,12 @@ class HydratorGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected function getExpectedImplementedInterfaces() : array
+    /** @psalm-return non-empty-list<class-string> */
+    protected function getExpectedImplementedInterfaces(): array
     {
-        return [HydratorInterface::class];
+        return [
+            GeneratedHydrator::class,
+            HydratorInterface::class,
+        ];
     }
 }

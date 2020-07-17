@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GeneratedHydrator\CodeGenerator\Visitor;
 
 use ReflectionProperty;
+
 use function array_key_exists;
 
 /**
@@ -29,7 +30,7 @@ final class ObjectProperty
         $this->hasDefault = $hasDefault;
     }
 
-    public static function fromReflection(ReflectionProperty $property) : self
+    public static function fromReflection(ReflectionProperty $property): self
     {
         /** @psalm-var non-empty-string $propertyName */
         $propertyName  = $property->getName();

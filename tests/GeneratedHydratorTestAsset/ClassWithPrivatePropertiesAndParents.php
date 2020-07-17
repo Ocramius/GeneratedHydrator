@@ -9,67 +9,62 @@ namespace GeneratedHydratorTestAsset;
  */
 class ClassWithPrivatePropertiesAndParents extends ClassWithPrivatePropertiesAndParent
 {
-    /** @var string */
-    private $property0 = 'property0_fromChild';
+    private string $property0 = 'property0_fromChild';
 
-    /** @var string */
-    private $property20 = 'property20_fromChild';
+    private string $property20 = 'property20_fromChild';
 
-    /** @var string */
-    private $property30 = 'property30';
+    private string $property30 = 'property30';
 
-    /** @var string */
-    protected $property31 = 'property31';
+    protected string $property31 = 'property31';
 
-    /** @var string */
-    public $property32 = 'property32';
+    public string $property32 = 'property32';
 
-    public function setProperty0(string $property0) : void
+    public function setProperty0(string $property0): void
     {
         $this->property0 = $property0;
     }
 
-    public function getProperty0() : string
+    public function getProperty0(): string
     {
         return $this->property0;
     }
 
-    public function setProperty20(string $property20) : void
+    public function setProperty20(string $property20): void
     {
         $this->property20 = $property20;
     }
 
-    public function getProperty20() : string
+    public function getProperty20(): string
     {
         return $this->property20;
     }
 
-    public function setProperty30(string $property30) : void
+    public function setProperty30(string $property30): void
     {
         $this->property30 = $property30;
     }
 
-    public function getProperty30() : string
+    public function getProperty30(): string
     {
         return $this->property30;
     }
 
-    public function setProperty31(string $property31) : void
+    public function setProperty31(string $property31): void
     {
         $this->property31 = $property31;
     }
 
-    public function getProperty31() : string
+    public function getProperty31(): string
     {
         return $this->property31;
     }
 
-    public function setProperty32(string $property32) : void
+    public function setProperty32(string $property32): void
     {
         $this->property32 = $property32;
     }
 
-    public function getProperty32() : string
+    public function getProperty32(): string
     {
         return $this->property32;
     }

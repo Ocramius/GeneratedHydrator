@@ -5,7 +5,7 @@ to arrays.
 
 | Tests   | Releases   | Downloads  |
 |---|---|---|
-| [![Build Status](https://travis-ci.org/Ocramius/GeneratedHydrator.png?branch=master)](https://travis-ci.org/Ocramius/GeneratedHydrator) [![Code Coverage](https://scrutinizer-ci.com/g/Ocramius/GeneratedHydrator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Ocramius/GeneratedHydrator/?branch=master) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Ocramius/GeneratedHydrator/badges/quality-score.png?s=822ec900346db3405fc50f929de2f6ca209d9726)](https://scrutinizer-ci.com/g/Ocramius/GeneratedHydrator/)   | [![Latest Stable Version](https://poser.pugx.org/ocramius/generated-hydrator/v/stable.png)](https://packagist.org/packages/ocramius/generated-hydrator) | [![Total Downloads](https://poser.pugx.org/ocramius/generated-hydrator/downloads.png)](https://packagist.org/packages/ocramius/generated-hydrator)  |
+| [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FOcramius%2FGeneratedHydrator%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/Ocramius/GeneratedHydrator/master) [![Type Coverage](https://shepherd.dev/github/Ocramius/GeneratedHydrator/coverage.svg)](https://shepherd.dev/github/Ocramius/GeneratedHydrator)   | [![Latest Stable Version](https://poser.pugx.org/ocramius/generated-hydrator/v/stable.png)](https://packagist.org/packages/ocramius/generated-hydrator) | [![Total Downloads](https://poser.pugx.org/ocramius/generated-hydrator/downloads.png)](https://packagist.org/packages/ocramius/generated-hydrator)  |
 
 ## What does this thing do?
 

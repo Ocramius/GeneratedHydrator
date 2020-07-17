@@ -9,6 +9,7 @@ use CodeGenerationUtils\Inflector\Util\UniqueIdentifierGenerator;
 use CodeGenerationUtils\ReflectionBuilder\ClassBuilder;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
+use GeneratedHydratorTestAsset\ClassWithMixedProperties;
 use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use PHPUnit\Framework\TestCase;
@@ -21,21 +22,18 @@ use ReflectionClass;
  */
 class HydratorFactoryFunctionalTest extends TestCase
 {
-    /** @var Configuration */
-    protected $config;
+    protected Configuration $config;
 
-    /** @var string */
-    protected $generatedClassName;
+    /** @psalm-var class-string */
+    protected string $generatedClassName;
 
-    /**
-     * {@inheritDoc}
-     */
-    public function setUp() : void
+    public function setUp(): void
     {
+        /** @psalm-var class-string $this->generatedClassName */
         $this->generatedClassName = UniqueIdentifierGenerator::getIdentifier('foo');
         $this->config             = new Configuration($this->generatedClassName);
         $generatorStrategy        = new EvaluatingGeneratorStrategy();
-        $reflection               = new ReflectionClass('GeneratedHydratorTestAsset\ClassWithMixedProperties');
+        $reflection               = new ReflectionClass(ClassWithMixedProperties::class);
         $generator                = new ClassBuilder();
         $traverser                = new NodeTraverser();
         $renamer                  = new ClassRenamerVisitor($reflection, $this->generatedClassName);
@@ -54,7 +52,7 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydratorClass
      */
-    public function testWillGenerateValidClass() : void
+    public function testWillGenerateValidClass(): void
     {
         $generatedClass = $this->config->createFactory()->getHydratorClass();
 
@@ -65,7 +63,7 @@ class HydratorFactoryFunctionalTest extends TestCase
      * @covers \GeneratedHydrator\Factory\HydratorFactory::__construct
      * @covers \GeneratedHydrator\Factory\HydratorFactory::getHydrator
      */
-    public function testWillInstantiateValidHydrator() : void
+    public function testWillInstantiateValidHydrator(): void
     {
         $factory       = $this->config->createFactory();
         $hydratorClass = $factory->getHydratorClass();
