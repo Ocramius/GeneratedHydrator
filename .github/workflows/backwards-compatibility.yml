@@ -52,5 +52,5 @@ jobs:
         if: ${{ matrix.dependencies == 'locked' }}
         run: "composer install --no-interaction --no-progress --no-suggest"
 
-      - name: "Coding Standard"
+      - name: "Roave Backward Compatibility Check"
         run: "vendor/bin/roave-backward-compatibility-check"
