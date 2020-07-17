@@ -13,11 +13,8 @@ use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
 use GeneratedHydratorTestAsset\BaseClass;
 use GeneratedHydratorTestAsset\EmptyClass;
-use GeneratedHydratorTestAsset\LazyLoadingMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-
-use function assert;
 
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
@@ -79,7 +76,7 @@ class HydratorFactoryTest extends TestCase
      */
     public function testWillTryAutoGeneration(): void
     {
-        $className          = UniqueIdentifierGenerator::getIdentifier('foo');
+        $className = UniqueIdentifierGenerator::getIdentifier('foo');
         /** @psalm-var class-string $generatedClassName */
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('bar');
         $generator          = $this->createMock(GeneratorStrategyInterface::class);

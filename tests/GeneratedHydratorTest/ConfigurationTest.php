@@ -10,11 +10,9 @@ use CodeGenerationUtils\Inflector\ClassNameInflectorInterface;
 use GeneratedHydrator\ClassGenerator\HydratorGenerator;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\Factory\HydratorFactory;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-
 use stdClass;
-use function assert;
+
 use function is_dir;
 
 /**
@@ -34,8 +32,8 @@ class ConfigurationTest extends TestCase
     public function testGetSetHydratedClassName(): void
     {
         self::assertSame(stdClass::class, $this->configuration->getHydratedClassName());
-        $this->configuration->setHydratedClassName(__CLASS__);
-        self::assertSame(__CLASS__, $this->configuration->getHydratedClassName());
+        $this->configuration->setHydratedClassName(self::class);
+        self::assertSame(self::class, $this->configuration->getHydratedClassName());
     }
 
     public function testCreateFactory(): void

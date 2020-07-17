@@ -8,11 +8,9 @@ use CodeGenerationUtils\Exception\InvalidGeneratedClassesDirectoryException;
 use CodeGenerationUtils\Visitor\ClassRenamerVisitor;
 use GeneratedHydrator\Configuration;
 use GeneratedHydrator\GeneratedHydrator;
-use Laminas\Hydrator\HydratorInterface;
 use PhpParser\NodeTraverser;
 use ReflectionClass;
 
-use function assert;
 use function class_exists;
 
 /**
@@ -39,9 +37,9 @@ class HydratorFactory
      */
     public function getHydratorClass(): string
     {
-        $inflector         = $this->configuration->getClassNameInflector();
+        $inflector = $this->configuration->getClassNameInflector();
         /** @psalm-var class-string $realClassName */
-        $realClassName     = $inflector->getUserClassName($this->configuration->getHydratedClassName());
+        $realClassName = $inflector->getUserClassName($this->configuration->getHydratedClassName());
         /** @psalm-var class-string<GeneratedHydrator<HydratedObject>> $hydratorClassName */
         $hydratorClassName = $inflector->getGeneratedClassName($realClassName, ['factory' => static::class]);
 

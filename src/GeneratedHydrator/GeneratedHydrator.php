@@ -24,7 +24,6 @@ interface GeneratedHydrator extends HydratorInterface
      *
      * @psalm-param HydratedObject $object
      * @psalm-return HydratedObject
-     *
      * @psalm-suppress MoreSpecificImplementedParamType this generated hydrator can only operate on the object type
      *                                                  it has been generated for, by design.
      */
@@ -34,7 +33,6 @@ interface GeneratedHydrator extends HydratorInterface
      * {@inheritDoc}
      *
      * @psalm-param HydratedObject $object
-     *
      * @psalm-suppress MoreSpecificImplementedParamType this generated hydrator can only operate on the object type
      *                                                  it has been generated for, by design.
      */

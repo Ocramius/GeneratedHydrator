@@ -27,14 +27,13 @@ class HydratorGeneratorTest extends TestCase
 {
     /**
      * @dataProvider getTestedImplementations
-     *
      * @psalm-param class-string $className
      *
      * Verifies that generated code is valid and implements expected interfaces
      */
     public function testGeneratesValidCode(string $className): void
     {
-        $generator          = new DefaultHydratorGenerator();
+        $generator = new DefaultHydratorGenerator();
         /** @psalm-var class-string $generatedClassName */
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
         $originalClass      = new ReflectionClass($className);

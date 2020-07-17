@@ -57,12 +57,12 @@ class Configuration
     }
 
     /**
-     * @psalm-param class-string<HydratedClass> $hydratedClassName
-     *
      * @deprecated setting the hydrated class name **after** configuration is set is not really
      *             supported anymore, since it changes the underlying templated type of this
      *             object at runtime, which is not something we want. This method will be removed
      *             in a future release of this library.
+     *
+     * @psalm-param class-string<HydratedClass> $hydratedClassName
      */
     public function setHydratedClassName(string $hydratedClassName): void
     {

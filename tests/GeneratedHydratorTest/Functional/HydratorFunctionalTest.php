@@ -20,12 +20,10 @@ use GeneratedHydratorTestAsset\ClassWithTypedProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
 use GeneratedHydratorTestAsset\HydratedObject;
 use Laminas\Hydrator\HydratorInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
 
-use function assert;
 use function get_class;
 use function ksort;
 

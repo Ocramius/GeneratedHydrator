@@ -79,20 +79,20 @@ class HydratorMethodsVisitorTest extends TestCase
 
         eval($classCode);
 
-        /** @var class-string $staticClassName */
+        /** @psalm-var class-string $staticClassName */
         $staticClassName = UniqueIdentifierGenerator::getIdentifier('Foo');
         $staticClassCode = 'class ' . $staticClassName . ' { private static $bar; '
             . 'protected static $baz; public static $tab; private $taz; }';
 
         eval($staticClassCode);
 
-        $parsedClassCode = $parser->parse('<?php ' . $classCode);
+        $parsedClassCode       = $parser->parse('<?php ' . $classCode);
         $parsedStaticClassCode = $parser->parse('<?php ' . $staticClassCode);
 
         assert(class_exists($className, false));
         assert(class_exists($staticClassCode, false));
-        assert(!empty($parsedClassCode));
-        assert(!empty($parsedStaticClassCode));
+        assert(! empty($parsedClassCode));
+        assert(! empty($parsedStaticClassCode));
         assert($parsedClassCode[0] instanceof Class_);
         assert($parsedStaticClassCode[0] instanceof Class_);
 
