@@ -53,4 +53,4 @@ jobs:
         run: "composer install --no-interaction --no-progress --no-suggest"
 
       - name: "PhpBench"
-        run: "vendor/bin/phpbench run --report=aggregate --revs=500 --iterations=50 --warmup=3"
+        run: "vendor/bin/phpbench run --report=aggregate --revs=5 --iterations=5 --warmup=3"
