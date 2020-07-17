@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 0
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
@@ -53,4 +55,4 @@ jobs:
         run: "composer install --no-interaction --no-progress --no-suggest"
 
       - name: "Roave Backward Compatibility Check"
-        run: "vendor/bin/roave-backward-compatibility-check --from=master"
+        run: "vendor/bin/roave-backward-compatibility-check"
