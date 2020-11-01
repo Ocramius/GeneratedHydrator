@@ -26,7 +26,7 @@
     },
     "require-dev": {
         "doctrine/coding-standard": "^8.1.0",
-        "infection/infection": "^0.16.4",
+        "infection/infection": "^0.17.5",
         "laminas/laminas-filter": "^2.9.4",
         "laminas/laminas-servicemanager": "^3.4.1",
         "laminas/laminas-stdlib": "^3.2.1",
