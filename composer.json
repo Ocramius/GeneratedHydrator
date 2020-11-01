@@ -32,7 +32,7 @@
         "laminas/laminas-stdlib": "^3.2.1",
         "phpbench/phpbench": "^0.17.1",
         "phpunit/phpunit": "^9.2.6",
-        "psalm/plugin-phpunit": "^0.10.1",
+        "psalm/plugin-phpunit": "^0.12.2",
         "roave/backward-compatibility-check": "^5.0.0",
         "squizlabs/php_codesniffer": "^3.5.8",
         "vimeo/psalm": "^3.18"
