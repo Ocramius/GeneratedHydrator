@@ -27,7 +27,7 @@ interface GeneratedHydrator extends HydratorInterface
      * @psalm-suppress MoreSpecificImplementedParamType this generated hydrator can only operate on the object type
      *                                                  it has been generated for, by design.
      */
-    public function hydrate(array $data, $object);
+    public function hydrate(array $data, object $object): object;
 
     /**
      * {@inheritDoc}
@@ -36,5 +36,5 @@ interface GeneratedHydrator extends HydratorInterface
      * @psalm-suppress MoreSpecificImplementedParamType this generated hydrator can only operate on the object type
      *                                                  it has been generated for, by design.
      */
-    public function extract($object);
+    public function extract(object $object): array;
 }

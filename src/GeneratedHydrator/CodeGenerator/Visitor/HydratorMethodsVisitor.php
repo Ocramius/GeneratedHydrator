@@ -6,6 +6,7 @@ namespace GeneratedHydrator\CodeGenerator\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -154,10 +155,11 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
     private function replaceHydrate(ClassMethod $method): void
     {
-        $method->params = [
+        $method->params     = [
             new Param(new Node\Expr\Variable('data'), null, 'array'),
-            new Param(new Node\Expr\Variable('object')),
+            new Param(new Node\Expr\Variable('object'), null, 'object'),
         ];
+        $method->returnType = new Identifier('object');
 
         $bodyParts = [];
         foreach ($this->visiblePropertyMap as $property) {
@@ -178,7 +180,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
     private function replaceExtract(ClassMethod $method): void
     {
-        $method->params = [new Param(new Node\Expr\Variable('object'))];
+        $method->params     = [new Param(new Node\Expr\Variable('object'), null, 'object')];
+        $method->returnType = new Identifier('array');
 
         $bodyParts   = [];
         $bodyParts[] = '$ret = array();';

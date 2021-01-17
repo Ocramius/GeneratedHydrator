@@ -1935,20 +1935,20 @@
         },
         {
             "name": "lstrojny/functional-php",
-            "version": "1.12.0",
+            "version": "1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lstrojny/functional-php.git",
-                "reference": "11610f50323519dd38bd7b527d6730e524e5eb58"
+                "reference": "07940820f52820292c83419937d5c331a4ec2fb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/11610f50323519dd38bd7b527d6730e524e5eb58",
-                "reference": "11610f50323519dd38bd7b527d6730e524e5eb58",
+                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/07940820f52820292c83419937d5c331a4ec2fb3",
+                "reference": "07940820f52820292c83419937d5c331a4ec2fb3",
                 "shasum": ""
             },
             "require": {
-                "php": "~7"
+                "php": "~7|~8"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -2009,7 +2009,7 @@
                     "src/Functional/LessThanOrEqual.php",
                     "src/Functional/LexicographicCompare.php",
                     "src/Functional/Map.php",
-                    "src/Functional/Match.php",
+                    "src/Functional/Matching.php",
                     "src/Functional/Maximum.php",
                     "src/Functional/Memoize.php",
                     "src/Functional/Minimum.php",
@@ -2050,6 +2050,7 @@
                     "src/Functional/True.php",
                     "src/Functional/Truthy.php",
                     "src/Functional/Unique.php",
+                    "src/Functional/ValueToKey.php",
                     "src/Functional/With.php",
                     "src/Functional/Zip.php",
                     "src/Functional/ZipAll.php"
@@ -2063,7 +2064,7 @@
                 {
                     "name": "Lars Strojny",
                     "email": "lstrojny@php.net",
-                    "homepage": "http://usrportage.de"
+                    "homepage": "https://usrportage.de"
                 },
                 {
                     "name": "Max Beutel",
@@ -2074,7 +2075,11 @@
             "keywords": [
                 "functional"
             ],
-            "time": "2020-06-16T09:17:22+00:00"
+            "support": {
+                "issues": "https://github.com/lstrojny/functional-php/issues",
+                "source": "https://github.com/lstrojny/functional-php/tree/1.15.0"
+            },
+            "time": "2020-12-22T07:53:25+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6289,5 +6294,5 @@
         "php": "^7.4.7"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
