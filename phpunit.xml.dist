@@ -9,9 +9,9 @@
     <testsuite name="GeneratedHydrator tests">
         <directory>./tests/GeneratedHydratorTest</directory>
     </testsuite>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+    <coverage>
+        <include>
+            <directory>./src</directory>
+        </include>
+    </coverage>
 </phpunit>
