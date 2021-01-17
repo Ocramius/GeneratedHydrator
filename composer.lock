@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41c2d84f1ed509abc46d57804f53cfa1",
+    "content-hash": "b9e5231a1ba8a1c636597bc4c6469a5f",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -228,25 +228,29 @@
         },
         {
             "name": "ocramius/code-generator-utils",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/CodeGenerationUtils.git",
-                "reference": "cc2834e95036371d1668b642e68ca2b3bf316f4b"
+                "reference": "3c207127e8dc6e9a3eb4d4a1f3041f17c0171aba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/cc2834e95036371d1668b642e68ca2b3bf316f4b",
-                "reference": "cc2834e95036371d1668b642e68ca2b3bf316f4b",
+                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/3c207127e8dc6e9a3eb4d4a1f3041f17c0171aba",
+                "reference": "3c207127e8dc6e9a3eb4d4a1f3041f17c0171aba",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "~4.0",
-                "php": "^7.1"
+                "nikic/php-parser": "^4.10.4",
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.1",
-                "squizlabs/php_codesniffer": "^3.0"
+                "doctrine/coding-standard": "^8.2.0",
+                "phpunit/phpunit": "^9.5.1",
+                "psalm/plugin-phpunit": "^0.15.0",
+                "roave/infection-static-analysis-plugin": "^1.7",
+                "squizlabs/php_codesniffer": "^3.5.8",
+                "vimeo/psalm": "^4.4.1"
             },
             "type": "library",
             "extra": {
@@ -279,7 +283,13 @@
                 "php code",
                 "reflection"
             ],
-            "time": "2018-10-15T14:47:09+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/Ocramius",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-01-17T16:27:24+00:00"
         }
     ],
     "packages-dev": [
