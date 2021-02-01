@@ -2457,16 +2457,16 @@
         },
         {
             "name": "phpbench/container",
-            "version": "1.2",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/container.git",
-                "reference": "c0e3cbf1cd8f867c70b029cb6d1b0b39fe6d409d"
+                "reference": "2f2b269b3b8cb9a0053cf98f1c3a84866fe7f0e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/container/zipball/c0e3cbf1cd8f867c70b029cb6d1b0b39fe6d409d",
-                "reference": "c0e3cbf1cd8f867c70b029cb6d1b0b39fe6d409d",
+                "url": "https://api.github.com/repos/phpbench/container/zipball/2f2b269b3b8cb9a0053cf98f1c3a84866fe7f0e2",
+                "reference": "2f2b269b3b8cb9a0053cf98f1c3a84866fe7f0e2",
                 "shasum": ""
             },
             "require": {
@@ -2497,7 +2497,11 @@
                 }
             ],
             "description": "Simple, configurable, service container.",
-            "time": "2018-02-12T08:08:59+00:00"
+            "support": {
+                "issues": "https://github.com/phpbench/container/issues",
+                "source": "https://github.com/phpbench/container/tree/1.2.1"
+            },
+            "time": "2020-08-23T23:43:00+00:00"
         },
         {
             "name": "phpbench/dom",
@@ -3375,6 +3379,10 @@
                 "container-interop",
                 "psr"
             ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/master"
+            },
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
