@@ -249,6 +249,10 @@
                 "parser",
                 "php"
             ],
+            "support": {
+                "issues": "https://github.com/nikic/PHP-Parser/issues",
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.4"
+            },
             "time": "2020-12-20T10:01:03+00:00"
         },
         {
@@ -1777,6 +1781,9 @@
                 "stubs",
                 "type"
             ],
+            "support": {
+                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
+            },
             "time": "2019-12-05T16:56:26+00:00"
         },
         {
@@ -2740,6 +2747,10 @@
                 "reflection",
                 "static analysis"
             ],
+            "support": {
+                "issues": "https://github.com/phpDocumentor/ReflectionCommon/issues",
+                "source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x"
+            },
             "time": "2020-06-27T09:03:43+00:00"
         },
         {
@@ -2792,6 +2803,10 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
+            "support": {
+                "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master"
+            },
             "time": "2020-09-03T19:13:55+00:00"
         },
         {
@@ -2837,6 +2852,10 @@
                 }
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
+            "support": {
+                "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0"
+            },
             "time": "2020-09-17T18:55:26+00:00"
         },
         {
@@ -3565,33 +3584,34 @@
         },
         {
             "name": "roave/better-reflection",
-            "version": "4.9.0",
+            "version": "4.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/BetterReflection.git",
-                "reference": "6d1bd5746896996f165dc4ea47003167da965583"
+                "reference": "73c376c7245b2928837ed1e8bef446f57f1148a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/6d1bd5746896996f165dc4ea47003167da965583",
-                "reference": "6d1bd5746896996f165dc4ea47003167da965583",
+                "url": "https://api.github.com/repos/Roave/BetterReflection/zipball/73c376c7245b2928837ed1e8bef446f57f1148a0",
+                "reference": "73c376c7245b2928837ed1e8bef446f57f1148a0",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "jetbrains/phpstorm-stubs": "2019.3",
-                "nikic/php-parser": "^4.5.0",
+                "nikic/php-parser": "^4.6.0",
                 "php": ">=7.4.1,<7.5.0",
-                "phpdocumentor/reflection-docblock": "^5.1.0",
-                "phpdocumentor/type-resolver": "^1.3.0",
-                "roave/signature": "^1.0"
+                "phpdocumentor/reflection-docblock": "^5.2.2",
+                "phpdocumentor/type-resolver": "^1.4.0",
+                "roave/signature": "^1.3"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^8.0.0",
-                "infection/infection": "^0.16.4",
-                "phpstan/phpstan": "^0.12.25",
-                "phpunit/phpunit": "^9.2.5",
-                "vimeo/psalm": "3.12.1"
+                "doctrine/coding-standard": "^8.2.0",
+                "infection/infection": "^0.20.0",
+                "phpstan/phpstan": "0.12.25",
+                "phpunit/phpunit": "^9.4.4",
+                "roave/infection-static-analysis-plugin": "^1.2",
+                "vimeo/psalm": "^4.2"
             },
             "suggest": {
                 "composer/composer": "Required to use the ComposerSourceLocator"
@@ -3634,27 +3654,34 @@
                 }
             ],
             "description": "Better Reflection - an improved code reflection API",
-            "time": "2020-07-10T15:17:35+00:00"
+            "support": {
+                "issues": "https://github.com/Roave/BetterReflection/issues",
+                "source": "https://github.com/Roave/BetterReflection/tree/4.12.2"
+            },
+            "time": "2020-12-17T17:48:54+00:00"
         },
         {
             "name": "roave/signature",
-            "version": "1.0.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/Signature.git",
-                "reference": "bed4ecbdd7f312ab6bb39561ac191f520bcee386"
+                "reference": "5b5bb9499cfbcc78d9f472e03af1e97e4341ec7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/Signature/zipball/bed4ecbdd7f312ab6bb39561ac191f520bcee386",
-                "reference": "bed4ecbdd7f312ab6bb39561ac191f520bcee386",
+                "url": "https://api.github.com/repos/Roave/Signature/zipball/5b5bb9499cfbcc78d9f472e03af1e97e4341ec7c",
+                "reference": "5b5bb9499cfbcc78d9f472e03af1e97e4341ec7c",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0|^7.1"
+                "php": "7.4.*|8.0.*"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.6"
+                "doctrine/coding-standard": "^8.2",
+                "infection/infection": "^0.20.2",
+                "phpunit/phpunit": "^9.5.1",
+                "vimeo/psalm": "^4.4"
             },
             "type": "library",
             "autoload": {
@@ -3667,7 +3694,11 @@
                 "MIT"
             ],
             "description": "Sign and verify stuff",
-            "time": "2017-02-17T13:53:21+00:00"
+            "support": {
+                "issues": "https://github.com/Roave/Signature/issues",
+                "source": "https://github.com/Roave/Signature/tree/1.4.0"
+            },
+            "time": "2021-01-25T09:39:37+00:00"
         },
         {
             "name": "sanmai/pipeline",
