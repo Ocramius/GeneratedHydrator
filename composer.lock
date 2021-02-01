@@ -298,16 +298,16 @@
     "packages-dev": [
         {
             "name": "amphp/amp",
-            "version": "v2.5.0",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/amp.git",
-                "reference": "f220a51458bf4dd0dedebb171ac3457813c72bbc"
+                "reference": "efca2b32a7580087adb8aabbff6be1dc1bb924a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/amp/zipball/f220a51458bf4dd0dedebb171ac3457813c72bbc",
-                "reference": "f220a51458bf4dd0dedebb171ac3457813c72bbc",
+                "url": "https://api.github.com/repos/amphp/amp/zipball/efca2b32a7580087adb8aabbff6be1dc1bb924a9",
+                "reference": "efca2b32a7580087adb8aabbff6be1dc1bb924a9",
                 "shasum": ""
             },
             "require": {
@@ -372,13 +372,18 @@
                 "non-blocking",
                 "promise"
             ],
+            "support": {
+                "irc": "irc://irc.freenode.org/amphp",
+                "issues": "https://github.com/amphp/amp/issues",
+                "source": "https://github.com/amphp/amp/tree/v2.5.2"
+            },
             "funding": [
                 {
                     "url": "https://github.com/amphp",
                     "type": "github"
                 }
             ],
-            "time": "2020-07-14T21:47:18+00:00"
+            "time": "2021-01-10T17:06:37+00:00"
         },
         {
             "name": "amphp/byte-stream",
