@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8506f094dafacc6c9c94bb9549e860dc",
+    "content-hash": "dba14b0c3302eb80390ec1b592cd89a9",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -1995,16 +1995,16 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.6.3",
+            "version": "3.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "04a0118731d9f3ee865c7ceb5342551491adebc1"
+                "reference": "b1445e1a7077c21b0fad0974a1b7a11b9dbe0828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/04a0118731d9f3ee865c7ceb5342551491adebc1",
-                "reference": "04a0118731d9f3ee865c7ceb5342551491adebc1",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/b1445e1a7077c21b0fad0974a1b7a11b9dbe0828",
+                "reference": "b1445e1a7077c21b0fad0974a1b7a11b9dbe0828",
                 "shasum": ""
             },
             "require": {
@@ -2078,7 +2078,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-01-25T00:14:52+00:00"
+            "time": "2021-02-03T08:44:41+00:00"
         },
         {
             "name": "lstrojny/functional-php",
