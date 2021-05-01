@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dba14b0c3302eb80390ec1b592cd89a9",
+    "content-hash": "4b5d71cc2b4ac45aebbc986982fa98e7",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -1674,16 +1674,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.21.2",
+            "version": "0.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "c7d3d6ee744e8520e44a4590ac4bb2419e813f1e"
+                "reference": "d72c1f0959d7302f53580d6ed0f297d88268bc5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/c7d3d6ee744e8520e44a4590ac4bb2419e813f1e",
-                "reference": "c7d3d6ee744e8520e44a4590ac4bb2419e813f1e",
+                "url": "https://api.github.com/repos/infection/infection/zipball/d72c1f0959d7302f53580d6ed0f297d88268bc5c",
+                "reference": "d72c1f0959d7302f53580d6ed0f297d88268bc5c",
                 "shasum": ""
             },
             "require": {
@@ -1696,9 +1696,9 @@
                 "infection/include-interceptor": "^0.2.4",
                 "justinrainbow/json-schema": "^5.2",
                 "nikic/php-parser": "^4.10.3",
-                "ocramius/package-versions": "^1.2 || ^2.0",
+                "ocramius/package-versions": "^1.11.0 || ^2.0",
                 "ondram/ci-detector": "^3.3.0",
-                "php": "^7.4 || ^8.0",
+                "php": "^7.4.7 || ^8.0",
                 "sanmai/later": "^0.1.1",
                 "sanmai/pipeline": "^5.1",
                 "sebastian/diff": "^3.0.2 || ^4.0",
@@ -1783,7 +1783,7 @@
             ],
             "support": {
                 "issues": "https://github.com/infection/infection/issues",
-                "source": "https://github.com/infection/infection/tree/0.21.2"
+                "source": "https://github.com/infection/infection/tree/0.22.0"
             },
             "funding": [
                 {
@@ -1795,7 +1795,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-02-25T21:09:10+00:00"
+            "time": "2021-04-24T18:32:05+00:00"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
