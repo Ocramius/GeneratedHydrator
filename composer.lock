@@ -2094,24 +2094,24 @@
         },
         {
             "name": "lstrojny/functional-php",
-            "version": "1.15.0",
+            "version": "1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lstrojny/functional-php.git",
-                "reference": "07940820f52820292c83419937d5c331a4ec2fb3"
+                "reference": "e459d5cb307bc6e10e9e992c4e96bb71a0262506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/07940820f52820292c83419937d5c331a4ec2fb3",
-                "reference": "07940820f52820292c83419937d5c331a4ec2fb3",
+                "url": "https://api.github.com/repos/lstrojny/functional-php/zipball/e459d5cb307bc6e10e9e992c4e96bb71a0262506",
+                "reference": "e459d5cb307bc6e10e9e992c4e96bb71a0262506",
                 "shasum": ""
             },
             "require": {
-                "php": "~7|~8"
+                "php": "^7.1|~8"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.14",
-                "phpunit/phpunit": "~7",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.5",
                 "squizlabs/php_codesniffer": "~3.0"
             },
             "type": "library",
@@ -2236,9 +2236,15 @@
             ],
             "support": {
                 "issues": "https://github.com/lstrojny/functional-php/issues",
-                "source": "https://github.com/lstrojny/functional-php/tree/1.15.0"
+                "source": "https://github.com/lstrojny/functional-php/tree/1.17.0"
             },
-            "time": "2020-12-22T07:53:25+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/lstrojny",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-07T00:25:34+00:00"
         },
         {
             "name": "myclabs/deep-copy",
