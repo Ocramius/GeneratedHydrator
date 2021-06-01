@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b5a5e96e0da9d5d7359c1db43c4ce11",
+    "content-hash": "0badd7d7044dc00803d82ed3dfe5ae41",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -1931,16 +1931,16 @@
         },
         {
             "name": "laminas/laminas-filter",
-            "version": "2.11.0",
+            "version": "2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-filter.git",
-                "reference": "dd295a15f5c13d0c13d69ca0107190b1f2083d91"
+                "reference": "671724e163aa75c210e94d12b77a0f3f8240d4b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/dd295a15f5c13d0c13d69ca0107190b1f2083d91",
-                "reference": "dd295a15f5c13d0c13d69ca0107190b1f2083d91",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/671724e163aa75c210e94d12b77a0f3f8240d4b2",
+                "reference": "671724e163aa75c210e94d12b77a0f3f8240d4b2",
                 "shasum": ""
             },
             "require": {
@@ -2009,7 +2009,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-03-16T14:37:02+00:00"
+            "time": "2021-05-24T18:29:02+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
