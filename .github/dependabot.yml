@@ -1,0 +1,37 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "04:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - Ocramius
+  assignees:
+  - Ocramius
+  labels:
+  - dependencies
+  versioning-strategy: increase
+  allow:
+  - dependency-type: direct
+  - dependency-type: indirect
+  ignore:
+  - dependency-name: symfony/filesystem
+    versions:
+    - 5.2.3
+  - dependency-name: beberlei/assert
+    versions:
+    - 3.3.0
+  - dependency-name: laminas/laminas-stdlib
+    versions:
+    - 3.3.1
+  - dependency-name: symfony/deprecation-contracts
+    versions:
+    - 2.2.0
+  - dependency-name: symfony/polyfill-intl-normalizer
+    versions:
+    - 1.22.0
+  - dependency-name: symfony/polyfill-mbstring
+    versions:
+    - 1.22.0
