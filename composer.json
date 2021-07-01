@@ -30,7 +30,7 @@
         "laminas/laminas-filter": "^2.11.1",
         "laminas/laminas-servicemanager": "^3.6.4",
         "laminas/laminas-stdlib": "^3.2.1",
-        "phpbench/phpbench": "^0.17.1",
+        "phpbench/phpbench": "^1.0.2",
         "phpunit/phpunit": "^9.5.6",
         "psalm/plugin-phpunit": "^0.12.2",
         "roave/backward-compatibility-check": "^5.0.0",
