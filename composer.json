@@ -25,7 +25,7 @@
         "laminas/laminas-hydrator":      "^4.2.0"
     },
     "require-dev": {
-        "doctrine/coding-standard": "^8.2.0",
+        "doctrine/coding-standard": "^9.0.0",
         "infection/infection": "^0.22.0",
         "laminas/laminas-filter": "^2.11.1",
         "laminas/laminas-servicemanager": "^3.7.0",
