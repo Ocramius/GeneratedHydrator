@@ -20,7 +20,7 @@
     ],
     "require": {
         "php":                           "^7.4.7",
-        "nikic/php-parser":              "^4.10.5",
+        "nikic/php-parser":              "^4.12.0",
         "ocramius/code-generator-utils": "^1.1.0",
         "laminas/laminas-hydrator":      "^4.2.0"
     },
