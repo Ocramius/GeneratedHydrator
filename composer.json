@@ -28,7 +28,7 @@
         "doctrine/coding-standard": "^8.2.0",
         "infection/infection": "^0.22.0",
         "laminas/laminas-filter": "^2.11.1",
-        "laminas/laminas-servicemanager": "^3.6.4",
+        "laminas/laminas-servicemanager": "^3.7.0",
         "laminas/laminas-stdlib": "^3.2.1",
         "phpbench/phpbench": "^0.17.1",
         "phpunit/phpunit": "^9.5.8",
