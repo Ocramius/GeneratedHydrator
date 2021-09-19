@@ -10,11 +10,11 @@ namespace GeneratedHydratorBenchmark;
 class MixedClass
 {
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
-    private mixed $foo = null;
-    protected mixed $bar = null;
-    public mixed $baz = null;
-    private mixed $someFooProperty = null;
+    private mixed $foo               = null;
+    protected mixed $bar             = null;
+    public mixed $baz                = null;
+    private mixed $someFooProperty   = null;
     protected mixed $someBarProperty = null;
-    public mixed $someBazProperty = null;
+    public mixed $someBazProperty    = null;
 //phpcs:enable
 }

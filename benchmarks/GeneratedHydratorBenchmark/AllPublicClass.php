@@ -9,9 +9,9 @@ namespace GeneratedHydratorBenchmark;
  */
 class AllPublicClass
 {
-    public mixed $foo = null;
-    public mixed $bar = null;
-    public mixed $baz = null;
+    public mixed $foo             = null;
+    public mixed $bar             = null;
+    public mixed $baz             = null;
     public mixed $someFooProperty = null;
     public mixed $someBarProperty = null;
     public mixed $someBazProperty = null;
