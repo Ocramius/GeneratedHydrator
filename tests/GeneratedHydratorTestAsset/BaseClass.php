@@ -54,11 +54,7 @@ class BaseClass implements Base
         return 'publicByReferenceMethodDefault';
     }
 
-    /**
-     * @param mixed $param
-     * @param mixed $byRefParam
-     */
-    public function publicByReferenceParameterMethod($param, &$byRefParam): string
+    public function publicByReferenceParameterMethod(mixed $param, mixed &$byRefParam): string
     {
         return 'publicByReferenceParameterMethodDefault';
     }

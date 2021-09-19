@@ -9,8 +9,5 @@ namespace GeneratedHydratorTestAsset;
  */
 interface Base
 {
-    /**
-     * @return mixed
-     */
-    public function publicMethod();
+    public function publicMethod(): mixed;
 }

@@ -26,10 +26,11 @@ use ReflectionClass;
 class HydratorGeneratorTest extends TestCase
 {
     /**
-     * @dataProvider getTestedImplementations
      * @psalm-param class-string $className
      *
      * Verifies that generated code is valid and implements expected interfaces
+     *
+     * @dataProvider getTestedImplementations
      */
     public function testGeneratesValidCode(string $className): void
     {
@@ -54,7 +55,6 @@ class HydratorGeneratorTest extends TestCase
 
     /**
      * @return string[][]
-     *
      * @psalm-return non-empty-list<array{class-string}>
      */
     public function getTestedImplementations(): array

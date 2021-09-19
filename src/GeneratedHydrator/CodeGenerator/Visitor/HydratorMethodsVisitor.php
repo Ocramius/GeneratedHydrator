@@ -99,7 +99,6 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
     /**
      * @return string[]
-     *
      * @psalm-return list<string>
      */
     private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName): array

@@ -24,7 +24,6 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use stdClass;
 
-use function get_class;
 use function ksort;
 
 /**
@@ -216,7 +215,7 @@ class HydratorFunctionalTest extends TestCase
      */
     private function generateHydrator(object $instance): HydratorInterface
     {
-        $parentClassName    = get_class($instance);
+        $parentClassName    = $instance::class;
         $generatedClassName = __NAMESPACE__ . '\\' . UniqueIdentifierGenerator::getIdentifier('Foo');
         $config             = new Configuration($parentClassName);
         $inflector          = $this->createMock(ClassNameInflectorInterface::class);
