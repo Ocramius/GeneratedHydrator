@@ -43,7 +43,7 @@ jobs:
         dependencies:
           - "locked"
         php-version:
-          - "7.4"
+          - "8.0"
         operating-system:
           - "ubuntu-latest"
 
@@ -56,8 +56,6 @@ jobs:
         with:
           coverage: "pcov"
           php-version: "${{ matrix.php-version }}"
-          ini-values: memory_limit=-1
-          tools: composer:v2, cs2pr
 
       - name: "Cache dependencies"
         uses: "actions/cache@v2"
