@@ -10,17 +10,11 @@ namespace GeneratedHydratorBenchmark;
 class InheritanceClass extends MixedClass
 {
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
-    /** @var mixed */
-    private $foo1;
-    /** @var mixed */
-    protected $bar1;
-    /** @var mixed */
-    public $baz1;
-    /** @var mixed */
-    private $someFooProperty1;
-    /** @var mixed */
-    protected $someBarProperty1;
-    /** @var mixed */
-    public $someBazProperty1;
+    private mixed $foo1               = null;
+    protected mixed $bar1             = null;
+    public mixed $baz1                = null;
+    private mixed $someFooProperty1   = null;
+    protected mixed $someBarProperty1 = null;
+    public mixed $someBazProperty1    = null;
 //phpcs:enable
 }

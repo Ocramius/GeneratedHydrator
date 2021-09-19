@@ -9,15 +9,12 @@ namespace GeneratedHydratorTestAsset;
  */
 class HydratedObject
 {
-    /** @var mixed */
-    public $foo = 1;
+    public mixed $foo = 1;
 
-    /** @var mixed */
-    protected $bar = 2;
+    protected mixed $bar = 2;
 
 //phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
-    /** @var mixed */
-    private $baz = 3;
+    private mixed $baz = 3;
 //phpcs:enable
 
     /**
@@ -27,10 +24,7 @@ class HydratedObject
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         return $this->$name;
     }

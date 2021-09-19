@@ -1,23 +1,49 @@
-name: "PHPUnit tests"
+# See https://github.com/laminas/laminas-continuous-integration-action
+# Generates a job matrix based on current dependencies and supported version
+# ranges, then runs all those jobs
+name: "Continuous Integration"
 
 on:
   pull_request:
   push:
 
 jobs:
-  phpunit:
-    name: "PHPUnit tests"
+  matrix:
+    name: Generate job matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Gather CI configuration
+        id: matrix
+        uses: laminas/laminas-ci-matrix-action@1.10.0
+
+  qa:
+    name: QA Checks
+    needs: [ matrix ]
+    runs-on: ${{ matrix.operatingSystem }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    steps:
+      - name: ${{ matrix.name }}
+        uses: laminas/laminas-continuous-integration-action@1.12.0
+        env:
+          "GITHUB_TOKEN": ${{ secrets.GITHUB_TOKEN }}
+        with:
+          job: ${{ matrix.job }}
+
+  demo-scripts:
+    name: "Check Demo Scripts"
 
     runs-on: ${{ matrix.operating-system }}
 
     strategy:
       matrix:
         dependencies:
-          - "lowest"
-          - "highest"
           - "locked"
         php-version:
-          - "7.4"
+          - "8.0"
         operating-system:
           - "ubuntu-latest"
 
@@ -30,8 +56,6 @@ jobs:
         with:
           coverage: "pcov"
           php-version: "${{ matrix.php-version }}"
-          ini-values: memory_limit=-1
-          tools: composer:v2, cs2pr
 
       - name: "Cache dependencies"
         uses: "actions/cache@v2"
@@ -54,5 +78,6 @@ jobs:
         if: ${{ matrix.dependencies == 'locked' }}
         run: "composer install --no-interaction --no-progress --no-suggest"
 
-      - name: "Tests"
-        run: "vendor/bin/phpunit"
+      - name: "Check Demo Scripts"
+        run: |
+          php examples/hydrator.php

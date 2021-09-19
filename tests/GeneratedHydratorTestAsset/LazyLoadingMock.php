@@ -9,13 +9,9 @@ namespace GeneratedHydratorTestAsset;
  */
 class LazyLoadingMock
 {
-    /** @var mixed */
-    public $initializer;
+    public mixed $initializer;
 
-    /**
-     * @param mixed $initializer
-     */
-    public function __construct($initializer)
+    public function __construct(mixed $initializer)
     {
         $this->initializer = $initializer;
     }

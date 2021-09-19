@@ -23,8 +23,12 @@ interface GeneratedHydrator extends HydratorInterface
      * {@inheritDoc}
      *
      * @psalm-param HydratedObject $object
+     *
      * @psalm-return HydratedObject
+     *
      * @psalm-suppress MoreSpecificImplementedParamType this generated hydrator can only operate on the object type
+     *                                                  it has been generated for, by design.
+     * @psalm-suppress ImplementedReturnTypeMismatch this generated hydrator can only operate on the object type
      *                                                  it has been generated for, by design.
      */
     public function hydrate(array $data, object $object): object;
@@ -33,6 +37,7 @@ interface GeneratedHydrator extends HydratorInterface
      * {@inheritDoc}
      *
      * @psalm-param HydratedObject $object
+     *
      * @psalm-suppress MoreSpecificImplementedParamType this generated hydrator can only operate on the object type
      *                                                  it has been generated for, by design.
      */

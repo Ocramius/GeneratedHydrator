@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace GeneratedHydratorBenchmark;
 
 use DateTime;
-use Laminas\Hydrator\ClassMethods;
+use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\Hydrator\HydratorInterface;
-use Laminas\Hydrator\Reflection;
+use Laminas\Hydrator\ReflectionHydrator;
 use stdClass;
 
 /**
@@ -33,8 +33,8 @@ class LaminasHydrationBench
 
     public function setUp(): void
     {
-        $this->classMethodHydrator = new ClassMethods();
-        $this->reflectionHydrator  = new Reflection();
+        $this->classMethodHydrator = new ClassMethodsHydrator();
+        $this->reflectionHydrator  = new ReflectionHydrator();
 
         $this->object1 = new AllPrivateClass();
         $this->object2 = new AllProtectedClass();

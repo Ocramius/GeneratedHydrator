@@ -31,9 +31,9 @@ class HydratorFactory
     /**
      * Retrieves the generated hydrator FQCN
      *
-     * @throws InvalidGeneratedClassesDirectoryException
-     *
      * @psalm-return class-string<GeneratedHydrator<HydratedObject>>
+     *
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getHydratorClass(): string
     {
@@ -61,9 +61,9 @@ class HydratorFactory
     /**
      * Instantiates the generated hydrator class
      *
-     * @throws InvalidGeneratedClassesDirectoryException
-     *
      * @psalm-return GeneratedHydrator<HydratedObject>
+     *
+     * @throws InvalidGeneratedClassesDirectoryException
      */
     public function getHydrator(): GeneratedHydrator
     {

@@ -14,8 +14,10 @@ final class ClassWithTypedProperties
     private int $property2;
     private ?int $property3;
     private ?int $property4 = null;
+//phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     /** @var mixed */
     private $untyped0;
     /** @var mixed */
     private $untyped1 = null;
+//phpcs:enable
 }

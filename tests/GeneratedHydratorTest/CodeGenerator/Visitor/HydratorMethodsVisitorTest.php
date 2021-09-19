@@ -26,7 +26,6 @@ class HydratorMethodsVisitorTest extends TestCase
 {
     /**
      * @param string[] $properties
-     *
      * @psalm-param class-string $className
      *
      * @dataProvider classAstProvider
@@ -90,7 +89,7 @@ class HydratorMethodsVisitorTest extends TestCase
         $parsedStaticClassCode = $parser->parse('<?php ' . $staticClassCode);
 
         assert(class_exists($className, false));
-        assert(class_exists($staticClassCode, false));
+        assert(class_exists($staticClassName, false));
         assert(! empty($parsedClassCode));
         assert(! empty($parsedStaticClassCode));
         assert($parsedClassCode[0] instanceof Class_);
