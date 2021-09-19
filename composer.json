@@ -26,7 +26,6 @@
     },
     "require-dev": {
         "doctrine/coding-standard": "^9.0.0",
-        "laminas/laminas-filter": "^2.11.1",
         "laminas/laminas-servicemanager": "^3.8.0",
         "laminas/laminas-stdlib": "^3.6.0",
         "phpbench/phpbench": "^1.1.1",
