@@ -1,4 +1,14 @@
 {
-    "bootstrap": "vendor/autoload.php",
-    "path": "benchmarks"
+    "runner.bootstrap":       "vendor/autoload.php",
+    "runner.file_pattern":    "*Bench.php",
+    "runner.iterations":      10,
+    "runner.path":            "benchmarks",
+    "runner.retry_threshold": 5,
+    "runner.revs":            5,
+    "runner.warmup":          2,
+    "report.outputs":         {
+        "report": {
+            "extends": "aggregate"
+        }
+    }
 }

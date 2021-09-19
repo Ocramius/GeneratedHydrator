@@ -19,8 +19,7 @@ abstract class HydrationBench
     /** @var mixed[] */
     protected array $data;
 
-    /** @var mixed */
-    protected $object;
+    protected mixed $object;
 
     /**
      * Create and set the hydrator
