@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "585421c887c54cfec7b821e69cc4432a",
+    "content-hash": "b4306f3bd46b525dfd9e26d6720ee2fa",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -2196,27 +2196,27 @@
         },
         {
             "name": "phpbench/phpbench",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "1bb7bec67389121278a1758a593caacdf34ab4d3"
+                "reference": "b1ea39a7a3cf996065638fd416f3653bcb5a5aa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/1bb7bec67389121278a1758a593caacdf34ab4d3",
-                "reference": "1bb7bec67389121278a1758a593caacdf34ab4d3",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/b1ea39a7a3cf996065638fd416f3653bcb5a5aa3",
+                "reference": "b1ea39a7a3cf996065638fd416f3653bcb5a5aa3",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "^1.2.7",
+                "doctrine/annotations": "^1.13",
                 "ext-dom": "*",
                 "ext-json": "*",
                 "ext-pcre": "*",
                 "ext-reflection": "*",
                 "ext-spl": "*",
                 "ext-tokenizer": "*",
-                "php": "^7.2 || ^8.0",
+                "php": "^7.3 || ^8.0",
                 "phpbench/container": "^2.1",
                 "phpbench/dom": "~0.3.1",
                 "psr/log": "^1.1",
@@ -2273,7 +2273,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/1.1.1"
+                "source": "https://github.com/phpbench/phpbench/tree/1.1.2"
             },
             "funding": [
                 {
@@ -2281,7 +2281,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-08T19:08:37+00:00"
+            "time": "2021-09-25T19:02:44+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
