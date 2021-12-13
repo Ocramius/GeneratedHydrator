@@ -28,7 +28,7 @@
         "doctrine/coding-standard": "^9.0.0",
         "laminas/laminas-servicemanager": "^3.8.0",
         "laminas/laminas-stdlib": "^3.6.0",
-        "phpbench/phpbench": "^1.2.1",
+        "phpbench/phpbench": "^1.2.2",
         "phpunit/phpunit": "^9.5.10",
         "psalm/plugin-phpunit": "^0.16.1",
         "roave/infection-static-analysis-plugin": "^1.12.0",
