@@ -79,8 +79,6 @@ class HydratorFunctionalTest extends TestCase
      * Ensures that the hydrator will not attempt to read unitialized PHP >= 7.4
      * typed property, which would cause "Uncaught Error: Typed property Foo::$a
      * must not be accessed before initialization" PHP engine errors.
-     *
-     * @requires PHP >= 7.4
      */
     public function testHydratorWillNotRaisedUnitiliazedTypedPropertyAccessError(): void
     {
@@ -104,8 +102,6 @@ class HydratorFunctionalTest extends TestCase
      * Ensures that the hydrator will not attempt to read unitialized PHP >= 7.4
      * typed property, which would cause "Uncaught Error: Typed property Foo::$a
      * must not be accessed before initialization" PHP engine errors.
-     *
-     * @requires PHP >= 7.4
      */
     public function testHydratorWillNotRaisedUnitiliazedTypedPropertyAccessErrorIfPropertyIsntHydrated(): void
     {
@@ -124,7 +120,6 @@ class HydratorFunctionalTest extends TestCase
         ], $hydrator->extract($instance));
     }
 
-    /** @requires PHP >= 7.4 */
     public function testHydratorWillSetAllTypedProperties(): void
     {
         $instance = new ClassWithTypedProperties();
