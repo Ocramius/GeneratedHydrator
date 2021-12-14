@@ -110,9 +110,14 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
         }
 
+        $nullCheck = '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')';
+        if ($property->hasType) {
+            $nullCheck = '    || isset($object->' . $propertyName . ') && $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')';
+        }
+
         return [
             'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
-            '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')',
+            $nullCheck,
             ') {',
             '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
             '}',
@@ -141,7 +146,18 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
                 $propertyName = $property->name;
-                $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+                $requiresGuard = $property->hasType && !($property->hasDefault || $property->allowsNull);
+                $indent = $requiresGuard ? '        ' : '    ';
+
+                if ($requiresGuard) {
+                    $bodyParts[] = '    if (isset($object->' . $propertyName . ')) {';
+                }
+
+                $bodyParts[]  = $indent . "\$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+
+                if ($requiresGuard) {
+                    $bodyParts[] = '    }';
+                }
             }
 
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
