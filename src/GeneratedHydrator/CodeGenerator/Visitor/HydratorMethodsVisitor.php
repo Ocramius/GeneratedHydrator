@@ -145,9 +145,9 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             // Extract closures
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
-                $propertyName = $property->name;
-                $requiresGuard = $property->hasType && !($property->hasDefault || $property->allowsNull);
-                $indent = $requiresGuard ? '        ' : '    ';
+                $propertyName  = $property->name;
+                $requiresGuard = $property->hasType && ! ($property->hasDefault || $property->allowsNull);
+                $indent        = $requiresGuard ? '        ' : '    ';
 
                 if ($requiresGuard) {
                     $bodyParts[] = '    if (isset($object->' . $propertyName . ')) {';
