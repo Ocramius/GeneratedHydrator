@@ -124,6 +124,28 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         ];
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return list<string>
+     */
+    private function generatePropertyExtractCall(ObjectProperty $property): array
+    {
+        $propertyName        = $property->name;
+        $assignmentStatement = "\$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+        $requiresGuard       = $property->hasType && !($property->hasDefault || $property->allowsNull);
+
+        if (!$requiresGuard) {
+            return ['    ' . $assignmentStatement];
+        }
+
+        return [
+            '    if (isset($object->' . $propertyName . ')) {',
+            '        ' . $assignmentStatement,
+            '    }'
+        ];
+    }
+
     private function replaceConstructor(ClassMethod $method): void
     {
         $method->params = [];
@@ -145,19 +167,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             // Extract closures
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
-                $propertyName  = $property->name;
-                $requiresGuard = $property->hasType && ! ($property->hasDefault || $property->allowsNull);
-                $indent        = $requiresGuard ? '        ' : '    ';
-
-                if ($requiresGuard) {
-                    $bodyParts[] = '    if (isset($object->' . $propertyName . ')) {';
-                }
-
-                $bodyParts[]  = $indent . "\$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
-
-                if ($requiresGuard) {
-                    $bodyParts[] = '    }';
-                }
+                $bodyParts = array_merge($bodyParts, $this->generatePropertyExtractCall($property));
             }
 
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
