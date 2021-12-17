@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16217cd378836942a700aa1a5bf136ab",
+    "content-hash": "5d9643133299efd7305445783f0294f9",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -1551,16 +1551,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.25.3",
+            "version": "0.25.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "f7a1af285476eeef7e72cedcfd69fa11fbb61c71"
+                "reference": "6844063ee1347c7942734b85ead95ad6226a4a02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/f7a1af285476eeef7e72cedcfd69fa11fbb61c71",
-                "reference": "f7a1af285476eeef7e72cedcfd69fa11fbb61c71",
+                "url": "https://api.github.com/repos/infection/infection/zipball/6844063ee1347c7942734b85ead95ad6226a4a02",
+                "reference": "6844063ee1347c7942734b85ead95ad6226a4a02",
                 "shasum": ""
             },
             "require": {
@@ -1573,39 +1573,39 @@
                 "infection/extension-installer": "^0.1.0",
                 "infection/include-interceptor": "^0.2.5",
                 "justinrainbow/json-schema": "^5.2.10",
-                "nikic/php-parser": "^4.10.3",
+                "nikic/php-parser": "^4.13",
                 "ondram/ci-detector": "^3.3.0",
                 "php": "^7.4.7 || ^8.0",
                 "sanmai/later": "^0.1.1",
-                "sanmai/pipeline": "^5.1",
+                "sanmai/pipeline": "^5.1 || ^6",
                 "sebastian/diff": "^3.0.2 || ^4.0",
                 "seld/jsonlint": "^1.7",
-                "symfony/console": "^3.4.29 || ^4.1.19 || ^5.0",
-                "symfony/filesystem": "^3.4.29 || ^4.1.19 || ^5.0",
-                "symfony/finder": "^3.4.29 || ^4.1.19 || ^5.0",
-                "symfony/process": "^3.4.29 || ^4.1.19 || ^5.0",
+                "symfony/console": "^3.4.29 || ^4.1.19 || ^5.0 || ^6.0",
+                "symfony/filesystem": "^3.4.29 || ^4.1.19 || ^5.0 || ^6.0",
+                "symfony/finder": "^3.4.29 || ^4.1.19 || ^5.0 || ^6.0",
+                "symfony/process": "^3.4.29 || ^4.1.19 || ^5.0 || ^6.0",
                 "thecodingmachine/safe": "^1.1.3",
                 "webmozart/assert": "^1.3",
                 "webmozart/path-util": "^2.3"
             },
             "conflict": {
-                "phpunit/php-code-coverage": ">9 <9.1.4",
-                "symfony/console": "=4.1.5"
+                "dg/bypass-finals": "*",
+                "phpunit/php-code-coverage": ">9 <9.1.4"
             },
             "require-dev": {
                 "brianium/paratest": "^6.3",
                 "ext-simplexml": "*",
                 "helmich/phpunit-json-assert": "^3.0",
                 "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12.8",
-                "phpstan/phpstan-phpunit": "^0.12.6",
-                "phpstan/phpstan-strict-rules": "^0.12.5",
-                "phpstan/phpstan-webmozart-assert": "^0.12.2",
+                "phpstan/extension-installer": "^1.1.0",
+                "phpstan/phpstan": "^1.2.0",
+                "phpstan/phpstan-phpunit": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^1.1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0.2",
                 "phpunit/phpunit": "^9.3.11",
                 "symfony/phpunit-bridge": "^4.4.18 || ^5.1.10",
                 "symfony/yaml": "^5.0",
-                "thecodingmachine/phpstan-safe-rule": "^1.0"
+                "thecodingmachine/phpstan-safe-rule": "^1.1.0"
             },
             "bin": [
                 "bin/infection"
@@ -1661,7 +1661,7 @@
             ],
             "support": {
                 "issues": "https://github.com/infection/infection/issues",
-                "source": "https://github.com/infection/infection/tree/0.25.3"
+                "source": "https://github.com/infection/infection/tree/0.25.5"
             },
             "funding": [
                 {
@@ -1673,7 +1673,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2021-10-02T13:16:05+00:00"
+            "time": "2021-12-16T05:06:28+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -3272,28 +3272,28 @@
         },
         {
             "name": "roave/infection-static-analysis-plugin",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/infection-static-analysis-plugin.git",
-                "reference": "8390a8ab36a4b73eef8ce3c270964c21e3c831b1"
+                "reference": "ff669830c7e1288bafd371347406860f190f8caa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/infection-static-analysis-plugin/zipball/8390a8ab36a4b73eef8ce3c270964c21e3c831b1",
-                "reference": "8390a8ab36a4b73eef8ce3c270964c21e3c831b1",
+                "url": "https://api.github.com/repos/Roave/infection-static-analysis-plugin/zipball/ff669830c7e1288bafd371347406860f190f8caa",
+                "reference": "ff669830c7e1288bafd371347406860f190f8caa",
                 "shasum": ""
             },
             "require": {
-                "infection/infection": "0.25.3",
+                "infection/infection": "0.25.5",
                 "ocramius/package-versions": "^1.9.0 || ^2.0.0",
                 "php": "~7.4.7|~8.0.0|~8.1.0",
                 "sanmai/later": "^0.1.2",
-                "vimeo/psalm": "^4.13.1"
+                "vimeo/psalm": "^4.15.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0.0",
-                "phpunit/phpunit": "^9.5.9"
+                "phpunit/phpunit": "^9.5.10"
             },
             "bin": [
                 "bin/roave-infection-static-analysis-plugin"
@@ -3317,9 +3317,9 @@
             "description": "Static analysis on top of mutation testing - prevents escaped mutants from being invalid according to static analysis",
             "support": {
                 "issues": "https://github.com/Roave/infection-static-analysis-plugin/issues",
-                "source": "https://github.com/Roave/infection-static-analysis-plugin/tree/1.12.0"
+                "source": "https://github.com/Roave/infection-static-analysis-plugin/tree/1.13.0"
             },
-            "time": "2021-11-30T01:18:25+00:00"
+            "time": "2021-12-16T08:36:50+00:00"
         },
         {
             "name": "sanmai/later",
@@ -3381,16 +3381,16 @@
         },
         {
             "name": "sanmai/pipeline",
-            "version": "v5.2.1",
+            "version": "v6.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sanmai/pipeline.git",
-                "reference": "2b5509a7635143165041109eb1c393c8515724f1"
+                "reference": "d846cafe984c4c4a19fb83b9914d7d8feec08b2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/2b5509a7635143165041109eb1c393c8515724f1",
-                "reference": "2b5509a7635143165041109eb1c393c8515724f1",
+                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/d846cafe984c4c4a19fb83b9914d7d8feec08b2d",
+                "reference": "d846cafe984c4c4a19fb83b9914d7d8feec08b2d",
                 "shasum": ""
             },
             "require": {
@@ -3410,7 +3410,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "v5.x-dev"
+                    "dev-main": "v6.x-dev"
                 }
             },
             "autoload": {
@@ -3434,7 +3434,7 @@
             "description": "General-purpose collections pipeline",
             "support": {
                 "issues": "https://github.com/sanmai/pipeline/issues",
-                "source": "https://github.com/sanmai/pipeline/tree/v5.2.1"
+                "source": "https://github.com/sanmai/pipeline/tree/v6.0.1"
             },
             "funding": [
                 {
@@ -3442,7 +3442,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-01T10:09:55+00:00"
+            "time": "2021-11-27T14:44:19+00:00"
         },
         {
             "name": "sebastian/cli-parser",
