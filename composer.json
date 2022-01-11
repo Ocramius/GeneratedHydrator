@@ -31,7 +31,7 @@
         "phpbench/phpbench": "^1.2.3",
         "phpunit/phpunit": "^9.5.11",
         "psalm/plugin-phpunit": "^0.16.1",
-        "roave/infection-static-analysis-plugin": "^1.13.0",
+        "roave/infection-static-analysis-plugin": "^1.14.0",
         "vimeo/psalm": "^4.18.1"
     },
     "autoload": {

@@ -5,9 +5,9 @@
         ]
     },
     "logs": {
-        "text": "php://stderr",
-        "badge": {
-            "branch": "master"
+        "text": "php:\/\/stderr",
+        "stryker": {
+            "report": "/^\\d\\.\\d\\.x$/"
         }
     },
     "mutators": {
