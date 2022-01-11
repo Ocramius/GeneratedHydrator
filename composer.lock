@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dae8bda1c094b0b628703d86d396ce1",
+    "content-hash": "e782b62609f2a4c74e49d14e4306cbae",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -200,28 +200,28 @@
         },
         {
             "name": "ocramius/code-generator-utils",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/CodeGenerationUtils.git",
-                "reference": "2290d1b4d0f4db630919c0480bcbec9bf1e09233"
+                "reference": "766904643c1b142599d6246342f1b348b40f89b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/2290d1b4d0f4db630919c0480bcbec9bf1e09233",
-                "reference": "2290d1b4d0f4db630919c0480bcbec9bf1e09233",
+                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/766904643c1b142599d6246342f1b348b40f89b4",
+                "reference": "766904643c1b142599d6246342f1b348b40f89b4",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "^4.12.0",
+                "nikic/php-parser": "^4.13.2",
                 "php": "~8.0.0 || ~8.1.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0.0",
-                "phpunit/phpunit": "^9.5.9",
+                "phpunit/phpunit": "^9.5.11",
                 "psalm/plugin-phpunit": "^0.16.1",
-                "roave/infection-static-analysis-plugin": "^1.10.0",
-                "vimeo/psalm": "^4.10.0"
+                "roave/infection-static-analysis-plugin": "^1.14.0",
+                "vimeo/psalm": "^4.18"
             },
             "type": "library",
             "extra": {
@@ -256,7 +256,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Ocramius/CodeGenerationUtils/issues",
-                "source": "https://github.com/Ocramius/CodeGenerationUtils/tree/1.3.0"
+                "source": "https://github.com/Ocramius/CodeGenerationUtils/tree/1.4.0"
             },
             "funding": [
                 {
@@ -264,7 +264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-09-19T02:51:09+00:00"
+            "time": "2022-01-11T09:52:57+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
