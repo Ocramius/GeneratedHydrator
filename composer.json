@@ -29,7 +29,7 @@
         "laminas/laminas-servicemanager": "^3.8.0",
         "laminas/laminas-stdlib": "^3.6.0",
         "phpbench/phpbench": "^1.2.3",
-        "phpunit/phpunit": "^9.5.13",
+        "phpunit/phpunit": "^9.5.14",
         "psalm/plugin-phpunit": "^0.16.1",
         "roave/infection-static-analysis-plugin": "^1.17.0",
         "vimeo/psalm": "^4.20.0"
