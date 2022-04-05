@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbdff2e3f4f68df8cf2d275e4f90b64c",
+    "content-hash": "b92ed4573d26b170ad2bbdb70debd7f5",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -791,42 +791,6 @@
                 }
             ],
             "time": "2022-02-25T21:32:43+00:00"
-        },
-        {
-            "name": "container-interop/container-interop",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/container-interop/container-interop.git",
-                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/container-interop/container-interop/zipball/79cbf1341c22ec75643d841642dd5d6acd83bdb8",
-                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8",
-                "shasum": ""
-            },
-            "require": {
-                "psr/container": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Interop\\Container\\": "src/Interop/Container/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
-            "homepage": "https://github.com/container-interop/container-interop",
-            "support": {
-                "issues": "https://github.com/container-interop/container-interop/issues",
-                "source": "https://github.com/container-interop/container-interop/tree/master"
-            },
-            "abandoned": "psr/container",
-            "time": "2017-02-14T19:40:03+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -1689,20 +1653,19 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.10.0",
+            "version": "3.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "e52b985909e0940bf22d34f322eb3f48bbef6bd1"
+                "reference": "86b950f517814a2e6f19a6290e7d97aab18c886f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/e52b985909e0940bf22d34f322eb3f48bbef6bd1",
-                "reference": "e52b985909e0940bf22d34f322eb3f48bbef6bd1",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/86b950f517814a2e6f19a6290e7d97aab18c886f",
+                "reference": "86b950f517814a2e6f19a6290e7d97aab18c886f",
                 "shasum": ""
             },
             "require": {
-                "container-interop/container-interop": "^1.2",
                 "laminas/laminas-stdlib": "^3.2.1",
                 "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
                 "psr/container": "^1.0"
@@ -1713,13 +1676,15 @@
                 "zendframework/zend-servicemanager": "*"
             },
             "provide": {
-                "container-interop/container-interop-implementation": "^1.2",
                 "psr/container-implementation": "^1.0"
+            },
+            "replace": {
+                "container-interop/container-interop": "^1.2.0"
             },
             "require-dev": {
                 "composer/package-versions-deprecated": "^1.0",
-                "laminas/laminas-coding-standard": "~2.2.1",
-                "laminas/laminas-container-config-test": "^0.3",
+                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-container-config-test": "^0.6",
                 "laminas/laminas-dependency-plugin": "^2.1.2",
                 "mikey179/vfsstream": "^1.6.10@alpha",
                 "ocramius/proxy-manager": "^2.11",
@@ -1738,6 +1703,9 @@
             ],
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/autoload.php"
+                ],
                 "psr-4": {
                     "Laminas\\ServiceManager\\": "src/"
                 }
@@ -1771,7 +1739,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-09-18T20:19:36+00:00"
+            "time": "2022-04-04T21:47:49+00:00"
         },
         {
             "name": "myclabs/deep-copy",
