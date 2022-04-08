@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b92ed4573d26b170ad2bbdb70debd7f5",
+    "content-hash": "c314af6c994afc8a154780f81eb62818",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -1653,16 +1653,16 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.11.1",
+            "version": "3.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "86b950f517814a2e6f19a6290e7d97aab18c886f"
+                "reference": "8a1f4d53ec93b2e18174f6f186922ef44d11a75a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/86b950f517814a2e6f19a6290e7d97aab18c886f",
-                "reference": "86b950f517814a2e6f19a6290e7d97aab18c886f",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/8a1f4d53ec93b2e18174f6f186922ef44d11a75a",
+                "reference": "8a1f4d53ec93b2e18174f6f186922ef44d11a75a",
                 "shasum": ""
             },
             "require": {
@@ -1671,6 +1671,7 @@
                 "psr/container": "^1.0"
             },
             "conflict": {
+                "ext-psr": "*",
                 "laminas/laminas-code": "<3.3.1",
                 "zendframework/zend-code": "<3.3.1",
                 "zendframework/zend-servicemanager": "*"
@@ -1739,7 +1740,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-04-04T21:47:49+00:00"
+            "time": "2022-04-07T17:21:25+00:00"
         },
         {
             "name": "myclabs/deep-copy",
