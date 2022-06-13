@@ -85,16 +85,16 @@
         },
         {
             "name": "laminas/laminas-stdlib",
-            "version": "3.10.0",
+            "version": "3.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "449c0405e182bfe77702604a474668fbb63e9907"
+                "reference": "0d669074845fc80a99add0f64025192f143ef836"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/449c0405e182bfe77702604a474668fbb63e9907",
-                "reference": "449c0405e182bfe77702604a474668fbb63e9907",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/0d669074845fc80a99add0f64025192f143ef836",
+                "reference": "0d669074845fc80a99add0f64025192f143ef836",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-06-09T08:43:49+00:00"
+            "time": "2022-06-10T14:49:09+00:00"
         },
         {
             "name": "nikic/php-parser",
