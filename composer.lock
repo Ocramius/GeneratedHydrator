@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45f6fcb3cc956ad08d82a33835b05697",
+    "content-hash": "ea48f575e72482fbeead2ba30e63f225",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -1571,16 +1571,16 @@
         },
         {
             "name": "laminas/laminas-servicemanager",
-            "version": "3.11.2",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-servicemanager.git",
-                "reference": "8a1f4d53ec93b2e18174f6f186922ef44d11a75a"
+                "reference": "05ac4b1fb1fe9333313eeafced9b6c7946589487"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/8a1f4d53ec93b2e18174f6f186922ef44d11a75a",
-                "reference": "8a1f4d53ec93b2e18174f6f186922ef44d11a75a",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/05ac4b1fb1fe9333313eeafced9b6c7946589487",
+                "reference": "05ac4b1fb1fe9333313eeafced9b6c7946589487",
                 "shasum": ""
             },
             "require": {
@@ -1658,7 +1658,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-04-07T17:21:25+00:00"
+            "time": "2022-06-13T16:20:56+00:00"
         },
         {
             "name": "myclabs/deep-copy",
