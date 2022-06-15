@@ -30,7 +30,7 @@
         "laminas/laminas-stdlib": "^3.6.0",
         "phpbench/phpbench": "^1.2.5",
         "phpunit/phpunit": "^9.5.20",
-        "psalm/plugin-phpunit": "^0.16.1",
+        "psalm/plugin-phpunit": "^0.17.0",
         "roave/infection-static-analysis-plugin": "^1.20.0",
         "vimeo/psalm": "^4.23.0"
     },
