@@ -56,7 +56,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         }
     }
 
-    public function leaveNode(Node $node): ?Class_
+    public function leaveNode(Node $node): Class_|null
     {
         if (! $node instanceof Class_) {
             return null;
@@ -80,7 +80,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      *
      * @return ReflectionProperty[]
      */
-    private function findAllInstanceProperties(?ReflectionClass $class = null): array
+    private function findAllInstanceProperties(ReflectionClass|null $class = null): array
     {
         if (! $class) {
             return [];
@@ -92,8 +92,8 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 $class->getProperties(),
                 static function (ReflectionProperty $property): bool {
                     return ! $property->isStatic();
-                }
-            )
+                },
+            ),
         );
     }
 
@@ -212,7 +212,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             $class->getMethods(),
             static function (ClassMethod $method) use ($name): bool {
                 return $name === (string) $method->name;
-            }
+            },
         );
 
         $method = reset($foundMethods);

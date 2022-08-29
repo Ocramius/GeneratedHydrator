@@ -9,7 +9,7 @@ namespace GeneratedHydratorTestAsset;
  */
 class ClassWithPrivateProperties
 {
-    private ?string $property0 = 'property0';
+    private string|null $property0 = 'property0';
 
     private string $property1 = 'property1';
 
@@ -34,7 +34,7 @@ class ClassWithPrivateProperties
         $this->property0 = $property0;
     }
 
-    public function getProperty0(): ?string
+    public function getProperty0(): string|null
     {
         return $this->property0;
     }

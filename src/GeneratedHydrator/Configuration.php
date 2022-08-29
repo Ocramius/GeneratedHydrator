@@ -32,17 +32,17 @@ class Configuration
 
     protected bool $autoGenerateProxies = true;
 
-    protected ?string $generatedClassesTargetDir = null;
+    protected string|null $generatedClassesTargetDir = null;
 
     protected string $generatedClassesNamespace = self::DEFAULT_GENERATED_CLASS_NAMESPACE;
 
-    protected ?GeneratorStrategyInterface $generatorStrategy = null;
+    protected GeneratorStrategyInterface|null $generatorStrategy = null;
 
-    protected ?AutoloaderInterface $generatedClassesAutoloader = null;
+    protected AutoloaderInterface|null $generatedClassesAutoloader = null;
 
-    protected ?ClassNameInflectorInterface $classNameInflector = null;
+    protected ClassNameInflectorInterface|null $classNameInflector = null;
 
-    protected ?HydratorGenerator $hydratorGenerator = null;
+    protected HydratorGenerator|null $hydratorGenerator = null;
 
     /** @psalm-param class-string<HydratedClass> $hydratedClassName */
     public function __construct(string $hydratedClassName)
@@ -90,15 +90,13 @@ class Configuration
         $this->generatedClassesAutoloader = $generatedClassesAutoloader;
     }
 
-    /**
-     * @throws InvalidGeneratedClassesDirectoryException
-     */
+    /** @throws InvalidGeneratedClassesDirectoryException */
     public function getGeneratedClassAutoloader(): AutoloaderInterface
     {
         if ($this->generatedClassesAutoloader === null) {
             $this->generatedClassesAutoloader = new Autoloader(
                 new FileLocator($this->getGeneratedClassesTargetDir()),
-                $this->getClassNameInflector()
+                $this->getClassNameInflector(),
             );
         }
 
@@ -134,14 +132,12 @@ class Configuration
         $this->generatorStrategy = $generatorStrategy;
     }
 
-    /**
-     * @throws InvalidGeneratedClassesDirectoryException
-     */
+    /** @throws InvalidGeneratedClassesDirectoryException */
     public function getGeneratorStrategy(): GeneratorStrategyInterface
     {
         if ($this->generatorStrategy === null) {
             $this->generatorStrategy = new FileWriterGeneratorStrategy(
-                new FileLocator($this->getGeneratedClassesTargetDir())
+                new FileLocator($this->getGeneratedClassesTargetDir()),
             );
         }
 

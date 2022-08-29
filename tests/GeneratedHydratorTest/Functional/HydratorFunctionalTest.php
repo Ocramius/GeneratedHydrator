@@ -33,9 +33,7 @@ use function ksort;
  */
 class HydratorFunctionalTest extends TestCase
 {
-    /**
-     * @dataProvider getHydratorClasses
-     */
+    /** @dataProvider getHydratorClasses */
     public function testHydrator(object $instance): void
     {
         $reflection  = new ReflectionClass($instance);
@@ -102,9 +100,7 @@ class HydratorFunctionalTest extends TestCase
         ], $hydrator->extract($instance));
     }
 
-    /**
-     * @requires PHP >= 7.4
-     */
+    /** @requires PHP >= 7.4 */
     public function testHydratorWillSetAllTypedProperties(): void
     {
         $instance = new ClassWithTypedProperties();
@@ -125,9 +121,7 @@ class HydratorFunctionalTest extends TestCase
         self::assertSame($reference, $hydrator->extract($instance));
     }
 
-    /**
-     * @return mixed[]
-     */
+    /** @return mixed[] */
     public function getHydratorClasses(): array
     {
         return [
@@ -159,7 +153,7 @@ class HydratorFunctionalTest extends TestCase
         ReflectionClass $class,
         object $instance,
         array &$initialData,
-        array &$newData
+        array &$newData,
     ): void {
         $parentClass = $class->getParentClass();
         if ($parentClass) {
@@ -191,7 +185,7 @@ class HydratorFunctionalTest extends TestCase
     private function recursiveFindInspectionData(
         ReflectionClass $class,
         object $instance,
-        array &$inspectionData
+        array &$inspectionData,
     ): void {
         $parentClass = $class->getParentClass();
         if ($parentClass) {
