@@ -57,7 +57,7 @@ class ConfigurationTest extends TestCase
         self::assertSame(
             'GeneratedHydratorGeneratedClass',
             $this->configuration->getGeneratedClassesNamespace(),
-            'Default setting check for BC'
+            'Default setting check for BC',
         );
 
         $this->configuration->setGeneratedClassesNamespace('foo');

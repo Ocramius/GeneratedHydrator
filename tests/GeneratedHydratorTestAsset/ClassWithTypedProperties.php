@@ -9,11 +9,11 @@ namespace GeneratedHydratorTestAsset;
  */
 final class ClassWithTypedProperties
 {
-    private int $property0  = 1;
-    private ?int $property1 = 2;
+    private int $property0      = 1;
+    private int|null $property1 = 2;
     private int $property2;
-    private ?int $property3;
-    private ?int $property4 = null;
+    private int|null $property3;
+    private int|null $property4 = null;
 //phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     /** @var mixed */
     private $untyped0;

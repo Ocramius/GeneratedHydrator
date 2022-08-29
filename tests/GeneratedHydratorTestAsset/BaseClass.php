@@ -41,9 +41,7 @@ class BaseClass implements Base
         return 'publicTypeHintedMethodDefault';
     }
 
-    /**
-     * @param mixed[] $param
-     */
+    /** @param mixed[] $param */
     public function publicArrayHintedMethod(array $param): string
     {
         return 'publicArrayHintedMethodDefault';

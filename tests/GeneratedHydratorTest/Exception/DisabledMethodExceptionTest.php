@@ -12,9 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DisabledMethodExceptionTest extends TestCase
 {
-    /**
-     * @covers \GeneratedHydrator\Exception\DisabledMethod::create
-     */
+    /** @covers \GeneratedHydrator\Exception\DisabledMethod::create */
     public function testDisabledMethod(): void
     {
         $exception = DisabledMethod::create('foo::bar');

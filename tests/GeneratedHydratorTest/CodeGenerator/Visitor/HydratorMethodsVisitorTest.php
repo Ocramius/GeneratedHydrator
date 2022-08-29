@@ -56,8 +56,8 @@ class HydratorMethodsVisitorTest extends TestCase
                 static function (Node $node) use ($methodName): bool {
                     return $node instanceof ClassMethod
                         && $methodName === $node->name->name;
-                }
-            )
+                },
+            ),
         );
     }
 
