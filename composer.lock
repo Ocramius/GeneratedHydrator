@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31bf4c1825d09c0ed2e3c82050bbf8c5",
+    "content-hash": "84941df8b1c30e5b0a231fafb5ebc7c3",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -202,28 +202,28 @@
         },
         {
             "name": "ocramius/code-generator-utils",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/CodeGenerationUtils.git",
-                "reference": "766904643c1b142599d6246342f1b348b40f89b4"
+                "reference": "b071651c1b68237ef0ec0579a2c203c3b056c853"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/766904643c1b142599d6246342f1b348b40f89b4",
-                "reference": "766904643c1b142599d6246342f1b348b40f89b4",
+                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/b071651c1b68237ef0ec0579a2c203c3b056c853",
+                "reference": "b071651c1b68237ef0ec0579a2c203c3b056c853",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "^4.13.2",
+                "nikic/php-parser": "^4.14.0",
                 "php": "~8.0.0 || ~8.1.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^9.0.0",
-                "phpunit/phpunit": "^9.5.11",
-                "psalm/plugin-phpunit": "^0.16.1",
-                "roave/infection-static-analysis-plugin": "^1.14.0",
-                "vimeo/psalm": "^4.18"
+                "doctrine/coding-standard": "^10.0.0",
+                "phpunit/phpunit": "^9.5.23",
+                "psalm/plugin-phpunit": "^0.17.0",
+                "roave/infection-static-analysis-plugin": "^1.21.0",
+                "vimeo/psalm": "^4.26"
             },
             "type": "library",
             "extra": {
@@ -258,7 +258,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Ocramius/CodeGenerationUtils/issues",
-                "source": "https://github.com/Ocramius/CodeGenerationUtils/tree/1.4.0"
+                "source": "https://github.com/Ocramius/CodeGenerationUtils/tree/1.5.0"
             },
             "funding": [
                 {
@@ -266,7 +266,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-11T09:52:57+00:00"
+            "time": "2022-08-29T08:06:55+00:00"
         },
         {
             "name": "webmozart/assert",
