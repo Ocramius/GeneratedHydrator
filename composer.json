@@ -22,7 +22,7 @@
         "php":                           "~8.0.0 || ~8.1.0",
         "nikic/php-parser":              "^4.15.1",
         "ocramius/code-generator-utils": "^1.5.0",
-        "laminas/laminas-hydrator":      "^4.7.0"
+        "laminas/laminas-hydrator":      "^4.8.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^10.0.0",
