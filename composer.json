@@ -51,6 +51,9 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "infection/extension-installer": false
         },
+        "platform": {
+            "php": "8.0.99"
+        },
         "sort-packages": true
     }
 }
