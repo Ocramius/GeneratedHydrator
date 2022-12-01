@@ -19,12 +19,12 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests for {@see \GeneratedHydrator\Factory\HydratorFactory}
  */
-class HydratorFactoryTest extends TestCase
+final class HydratorFactoryTest extends TestCase
 {
     /** @var ClassNameInflectorInterface&MockObject */
-    protected ClassNameInflectorInterface $inflector;
+    private ClassNameInflectorInterface $inflector;
     /** @var Configuration&MockObject */
-    protected $config;
+    private Configuration $config;
 
     public function setUp(): void
     {
