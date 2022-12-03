@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40c4ab5113b9016a36a33950059fd227",
+    "content-hash": "033e3b4519f8efcca5d0faffc8c2d3a4",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -5625,16 +5625,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "5.0.0",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8"
+                "reference": "4defa177c89397c5e14737a80fe4896584130674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8",
-                "reference": "4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/4defa177c89397c5e14737a80fe4896584130674",
+                "reference": "4defa177c89397c5e14737a80fe4896584130674",
                 "shasum": ""
             },
             "require": {
@@ -5723,9 +5723,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/5.0.0"
+                "source": "https://github.com/vimeo/psalm/tree/5.1.0"
             },
-            "time": "2022-11-30T06:06:01+00:00"
+            "time": "2022-12-02T01:23:35+00:00"
         },
         {
             "name": "webmozart/glob",
