@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07924602575fc8eba68259bae56f85f2",
+    "content-hash": "1fc693d81d94cfb7fad29bb07b41f18c",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
-            "version": "4.9.0",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-hydrator.git",
-                "reference": "49ab61ee0f2352cc147569544bffe4671ca8e4de"
+                "reference": "9917c999faa8acc13da51a9b0d12e513b5d26430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-hydrator/zipball/49ab61ee0f2352cc147569544bffe4671ca8e4de",
-                "reference": "49ab61ee0f2352cc147569544bffe4671ca8e4de",
+                "url": "https://api.github.com/repos/laminas/laminas-hydrator/zipball/9917c999faa8acc13da51a9b0d12e513b5d26430",
+                "reference": "9917c999faa8acc13da51a9b0d12e513b5d26430",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-03T22:20:37+00:00"
+            "time": "2022-12-05T18:17:44+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
@@ -2899,16 +2899,16 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.18.3",
+            "version": "0.18.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/psalm-plugin-phpunit.git",
-                "reference": "057c1cdf7546c1e427f6fd83b635d0cc18c252bf"
+                "reference": "e4ab3096653d9eb6f6d0ea5f4461898d59ae4dbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/057c1cdf7546c1e427f6fd83b635d0cc18c252bf",
-                "reference": "057c1cdf7546c1e427f6fd83b635d0cc18c252bf",
+                "url": "https://api.github.com/repos/psalm/psalm-plugin-phpunit/zipball/e4ab3096653d9eb6f6d0ea5f4461898d59ae4dbc",
+                "reference": "e4ab3096653d9eb6f6d0ea5f4461898d59ae4dbc",
                 "shasum": ""
             },
             "require": {
@@ -2916,7 +2916,7 @@
                 "composer/semver": "^1.4 || ^2.0 || ^3.0",
                 "ext-simplexml": "*",
                 "php": "^7.1 || ^8.0",
-                "vimeo/psalm": "dev-master || dev-4.x || ^4.5 || ^5@beta"
+                "vimeo/psalm": "dev-master || dev-4.x || ^4.7.1 || ^5@beta || ^5.0"
             },
             "conflict": {
                 "phpunit/phpunit": "<7.5"
@@ -2953,9 +2953,9 @@
             "description": "Psalm plugin for PHPUnit",
             "support": {
                 "issues": "https://github.com/psalm/psalm-plugin-phpunit/issues",
-                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.18.3"
+                "source": "https://github.com/psalm/psalm-plugin-phpunit/tree/0.18.4"
             },
-            "time": "2022-11-03T18:17:28+00:00"
+            "time": "2022-12-03T07:47:07+00:00"
         },
         {
             "name": "psr/cache",
