@@ -13,9 +13,7 @@ class HydratedObject
 
     protected mixed $bar = 2;
 
-//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
     private mixed $baz = 3;
-//phpcs:enable
 
     /**
      * Method to be disabled
