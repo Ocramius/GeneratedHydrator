@@ -15,9 +15,7 @@ class BaseClass implements Base
 
     protected string $protectedProperty = 'protectedPropertyDefault';
 
-//phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty
     private string $privateProperty = 'privatePropertyDefault';
-//phpcs:enable
 
     public function publicMethod(): string
     {
