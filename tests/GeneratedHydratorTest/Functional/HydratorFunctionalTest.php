@@ -167,7 +167,6 @@ class HydratorFunctionalTest extends TestCase
 
             $propertyName = $property->getName();
 
-            $property->setAccessible(true);
             $initialData[$propertyName] = $property->getValue($instance);
             $newData[$propertyName]     = $property->getName() . '__new__value';
         }
@@ -199,7 +198,6 @@ class HydratorFunctionalTest extends TestCase
 
             $propertyName = $property->getName();
 
-            $property->setAccessible(true);
             $inspectionData[$propertyName] = $property->getValue($instance);
         }
     }

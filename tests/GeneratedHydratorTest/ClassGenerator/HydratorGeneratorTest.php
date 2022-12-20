@@ -35,7 +35,7 @@ class HydratorGeneratorTest extends TestCase
     public function testGeneratesValidCode(string $className): void
     {
         $generator = new DefaultHydratorGenerator();
-        /** @psalm-var class-string $generatedClassName */
+        /** @psalm-var class-string<HydratorInterface> $generatedClassName */
         $generatedClassName = UniqueIdentifierGenerator::getIdentifier('HydratorGeneratorTest');
         $originalClass      = new ReflectionClass($className);
         $generatorStrategy  = new EvaluatingGeneratorStrategy();
@@ -67,7 +67,7 @@ class HydratorGeneratorTest extends TestCase
         ];
     }
 
-    /** @psalm-return non-empty-list<class-string> */
+    /** @psalm-return non-empty-list<interface-string> */
     protected function getExpectedImplementedInterfaces(): array
     {
         return [
