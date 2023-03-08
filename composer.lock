@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f2c4bc31f7836c0d05ddfc13a834efb",
+    "content-hash": "2ab0adf2a4a91c3335deeb451425d501",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -2146,25 +2146,25 @@
         },
         {
             "name": "phpbench/dom",
-            "version": "0.3.2",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/dom.git",
-                "reference": "b013b717832ddbaadf2a40984b04bc66af9a7110"
+                "reference": "786a96db538d0def931f5b19225233ec42ec7a72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/dom/zipball/b013b717832ddbaadf2a40984b04bc66af9a7110",
-                "reference": "b013b717832ddbaadf2a40984b04bc66af9a7110",
+                "url": "https://api.github.com/repos/phpbench/dom/zipball/786a96db538d0def931f5b19225233ec42ec7a72",
+                "reference": "786a96db538d0def931f5b19225233ec42ec7a72",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
-                "php": "^7.2||^8.0"
+                "php": "^7.3||^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.18",
-                "phpstan/phpstan": "^0.12.83",
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^8.0||^9.0"
             },
             "type": "library",
@@ -2191,22 +2191,22 @@
             "description": "DOM wrapper to simplify working with the PHP DOM implementation",
             "support": {
                 "issues": "https://github.com/phpbench/dom/issues",
-                "source": "https://github.com/phpbench/dom/tree/0.3.2"
+                "source": "https://github.com/phpbench/dom/tree/0.3.3"
             },
-            "time": "2021-09-24T15:26:07+00:00"
+            "time": "2023-03-06T23:46:57+00:00"
         },
         {
             "name": "phpbench/phpbench",
-            "version": "1.2.8",
+            "version": "1.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "3f7b3c200f86727de7a14bde94adb68a88e1bafc"
+                "reference": "7aaea137809603b1c4f46d1790ba0f009be15797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/3f7b3c200f86727de7a14bde94adb68a88e1bafc",
-                "reference": "3f7b3c200f86727de7a14bde94adb68a88e1bafc",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/7aaea137809603b1c4f46d1790ba0f009be15797",
+                "reference": "7aaea137809603b1c4f46d1790ba0f009be15797",
                 "shasum": ""
             },
             "require": {
@@ -2217,9 +2217,9 @@
                 "ext-reflection": "*",
                 "ext-spl": "*",
                 "ext-tokenizer": "*",
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "phpbench/container": "^2.1",
-                "phpbench/dom": "~0.3.1",
+                "phpbench/dom": "~0.3.3",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "seld/jsonlint": "^1.1",
                 "symfony/console": "^4.2 || ^5.0  || ^6.0",
@@ -2237,7 +2237,7 @@
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^1.0",
                 "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^8.5.8 || ^9.0",
+                "phpunit/phpunit": "^9.0",
                 "symfony/error-handler": "^5.2 || ^6.0",
                 "symfony/var-dumper": "^4.0 || ^5.0 || ^6.0"
             },
@@ -2275,7 +2275,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/1.2.8"
+                "source": "https://github.com/phpbench/phpbench/tree/1.2.9"
             },
             "funding": [
                 {
@@ -2283,7 +2283,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-14T13:08:42+00:00"
+            "time": "2023-03-08T08:56:01+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
