@@ -29,7 +29,7 @@
         "phpbench/phpbench": "^1.2.10",
         "phpunit/phpunit": "^9.6.7",
         "psalm/plugin-phpunit": "^0.18.4",
-        "roave/infection-static-analysis-plugin": "^1.29.0",
+        "roave/infection-static-analysis-plugin": "^1.30.0",
         "vimeo/psalm": "^5.9.0"
     },
     "autoload": {
