@@ -30,7 +30,7 @@
         "phpunit/phpunit": "^9.6.7",
         "psalm/plugin-phpunit": "^0.18.4",
         "roave/infection-static-analysis-plugin": "^1.30.0",
-        "vimeo/psalm": "^5.10.0"
+        "vimeo/psalm": "^5.11.0"
     },
     "autoload": {
         "psr-4": {
