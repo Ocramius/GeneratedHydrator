@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4fcbf1280147bf0cd8d8d44ffb8dff9",
+    "content-hash": "c803d73c10997252a3e14c065e3da638",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -4445,16 +4445,16 @@
         },
         {
             "name": "spatie/array-to-xml",
-            "version": "3.1.5",
+            "version": "3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/array-to-xml.git",
-                "reference": "13f76acef5362d15c71ae1ac6350cc3df5e25e43"
+                "reference": "e210b98957987c755372465be105d32113f339a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/13f76acef5362d15c71ae1ac6350cc3df5e25e43",
-                "reference": "13f76acef5362d15c71ae1ac6350cc3df5e25e43",
+                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/e210b98957987c755372465be105d32113f339a4",
+                "reference": "e210b98957987c755372465be105d32113f339a4",
                 "shasum": ""
             },
             "require": {
@@ -4492,7 +4492,7 @@
                 "xml"
             ],
             "support": {
-                "source": "https://github.com/spatie/array-to-xml/tree/3.1.5"
+                "source": "https://github.com/spatie/array-to-xml/tree/3.1.6"
             },
             "funding": [
                 {
@@ -4504,7 +4504,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-24T13:43:51+00:00"
+            "time": "2023-05-11T14:04:07+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -5673,16 +5673,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "5.11.0",
+            "version": "5.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "c9b192ab8400fdaf04b2b13d110575adc879aa90"
+                "reference": "f90118cdeacd0088e7215e64c0c99ceca819e176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/c9b192ab8400fdaf04b2b13d110575adc879aa90",
-                "reference": "c9b192ab8400fdaf04b2b13d110575adc879aa90",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/f90118cdeacd0088e7215e64c0c99ceca819e176",
+                "reference": "f90118cdeacd0088e7215e64c0c99ceca819e176",
                 "shasum": ""
             },
             "require": {
@@ -5773,9 +5773,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/5.11.0"
+                "source": "https://github.com/vimeo/psalm/tree/5.12.0"
             },
-            "time": "2023-05-04T21:35:44+00:00"
+            "time": "2023-05-22T21:19:03+00:00"
         },
         {
             "name": "webmozart/glob",
