@@ -121,16 +121,15 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
 
     /**
      * @return string[]
-     *
      * @psalm-return list<string>
      */
     private function generatePropertyExtractCall(ObjectProperty $property): array
     {
         $propertyName        = $property->name;
         $assignmentStatement = sprintf('    $values[\'%s\'] = $object->%1$s;', $propertyName);
-        $requiresGuard       = $property->hasType && !($property->hasDefault || $property->allowsNull);
+        $requiresGuard       = $property->hasType && ! ($property->hasDefault || $property->allowsNull);
 
-        if (!$requiresGuard) {
+        if (! $requiresGuard) {
             return [$assignmentStatement];
         }
 

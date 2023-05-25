@@ -15,13 +15,9 @@ use function array_key_exists;
  */
 final class ObjectProperty
 {
-    /** @psalm-var non-empty-string */
-    public string $name;
-
     /** @psalm-param non-empty-string $name */
-    private function __construct(string $name, public bool $hasType, public bool $allowsNull, public bool $hasDefault)
+    private function __construct(public string $name, public bool $hasType, public bool $allowsNull, public bool $hasDefault)
     {
-        $this->name = $name;
     }
 
     public static function fromReflection(ReflectionProperty $property): self
