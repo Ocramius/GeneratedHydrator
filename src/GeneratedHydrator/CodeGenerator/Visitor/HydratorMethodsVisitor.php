@@ -21,6 +21,7 @@ use function array_filter;
 use function array_merge;
 use function implode;
 use function reset;
+use function sprintf;
 use function var_export;
 
 /**
@@ -107,19 +108,13 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $escapedName  = var_export($propertyName, true);
 
         if ($property->allowsNull && ! $property->hasDefault) {
-            return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
-        }
-
-        $nullCheck = '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')';
-        if ($property->hasType) {
-            $nullCheck = '    || isset($object->' . $propertyName . ') && $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')';
+            return [sprintf('$object->%s = %s[%s] ?? null;', $propertyName, $inputArrayName, $escapedName)];
         }
 
         return [
-            'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
-            $nullCheck,
+            sprintf('if (isset(%s[%s]) || isset($object->%s) && \\array_key_exists(%2$s, %1$s)', $inputArrayName, $escapedName, $propertyName),
             ') {',
-            '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
+            sprintf('    $object->%s = %s[%s];', $propertyName, $inputArrayName, $escapedName),
             '}',
         ];
     }
@@ -132,17 +127,17 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
     private function generatePropertyExtractCall(ObjectProperty $property): array
     {
         $propertyName        = $property->name;
-        $assignmentStatement = "\$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+        $assignmentStatement = sprintf('    $values[\'%s\'] = $object->%1$s;', $propertyName);
         $requiresGuard       = $property->hasType && !($property->hasDefault || $property->allowsNull);
 
         if (!$requiresGuard) {
-            return ['    ' . $assignmentStatement];
+            return [$assignmentStatement];
         }
 
         return [
-            '    if (isset($object->' . $propertyName . ')) {',
-            '        ' . $assignmentStatement,
-            '    }'
+            sprintf('    if (isset($object->%s)) {', $propertyName),
+            $assignmentStatement,
+            '    }',
         ];
     }
 
@@ -162,7 +157,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values'));
             }
 
-            $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
+            $bodyParts[] = sprintf("}, null, %s);\n", var_export($className, true));
 
             // Extract closures
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
@@ -170,7 +165,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
                 $bodyParts = array_merge($bodyParts, $this->generatePropertyExtractCall($property));
             }
 
-            $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
+            $bodyParts[] = sprintf("}, null, %s);\n", var_export($className, true));
         }
 
         $method->stmts = (new ParserFactory())
