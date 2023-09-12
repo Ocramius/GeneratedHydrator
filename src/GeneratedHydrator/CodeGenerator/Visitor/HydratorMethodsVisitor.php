@@ -106,8 +106,16 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $propertyName = $property->name;
         $escapedName  = var_export($propertyName, true);
 
-        if ($property->allowsNull && ! $property->hasDefault) {
-            return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
+        if (! $property->hasDefault) {
+            if ($property->allowsNull) {
+                return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
+            }
+
+            return [
+                'if (\\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')) {',
+                '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
+                '}',
+            ];
         }
 
         return [
@@ -116,6 +124,31 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             ') {',
             '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
             '}',
+        ];
+    }
+
+    /**
+     * @return string[]
+     * @psalm-return list<string>
+     */
+    private function generatePropertyExtractCall(ObjectProperty $property, string $outputArrayName): array
+    {
+        $propertyName = $property->name;
+        $escapedName  = var_export($propertyName, true);
+
+        if ($property->hasType && ! $property->hasDefault) {
+            return [
+                'try {',
+                '    ' . $outputArrayName . '[' . $escapedName . '] = $object->' . $propertyName . ';',
+                '} catch (\\Error) {',
+                // @todo Include this or not ?
+                // "    " . $outputArrayName . "[" . $escapedName . "] = null;",
+                '}',
+            ];
+        }
+
+        return [
+            $outputArrayName . '[' . $escapedName . '] = $object->' . $propertyName . ';',
         ];
     }
 
@@ -140,8 +173,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             // Extract closures
             $bodyParts[] = '$this->extractCallbacks[] = \\Closure::bind(static function ($object, &$values) {';
             foreach ($properties as $property) {
-                $propertyName = $property->name;
-                $bodyParts[]  = "    \$values['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+                $bodyParts    = array_merge($bodyParts, $this->generatePropertyExtractCall($property, '$values'));
             }
 
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";
@@ -185,8 +217,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
         $bodyParts   = [];
         $bodyParts[] = '$ret = array();';
         foreach ($this->visiblePropertyMap as $property) {
-            $propertyName = $property->name;
-            $bodyParts[]  = "\$ret['" . $propertyName . "'] = \$object->" . $propertyName . ';';
+            $bodyParts = array_merge($bodyParts, $this->generatePropertyExtractCall($property, '$ret'));
         }
 
         $index = 0;
