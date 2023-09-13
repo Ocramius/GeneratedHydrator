@@ -15,6 +15,7 @@ use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParent;
 use GeneratedHydratorTestAsset\ClassWithPrivatePropertiesAndParents;
 use GeneratedHydratorTestAsset\ClassWithProtectedProperties;
 use GeneratedHydratorTestAsset\ClassWithPublicProperties;
+use GeneratedHydratorTestAsset\ClassWithReadonlyProperties;
 use GeneratedHydratorTestAsset\ClassWithStaticProperties;
 use GeneratedHydratorTestAsset\ClassWithTypedProperties;
 use GeneratedHydratorTestAsset\EmptyClass;
@@ -98,6 +99,21 @@ class HydratorFunctionalTest extends TestCase
             'untyped0' => null, // 'untyped0' is null by default
             'untyped1' => null, // 'untyped1' is null by default
         ], $hydrator->extract($instance));
+    }
+
+    /**
+     * Ensures that readonly properties are hydrated as well without raising.
+     *
+     * @requires PHP >= 8.1
+     */
+    public function testHydratorWillNotRaisedErrorWhenHydratingReadonlyProperties(): void
+    {
+        $instance = new ClassWithReadonlyProperties();
+        $hydrator = $this->generateHydrator($instance);
+
+        $hydrator->hydrate(['readonly0' => 7], $instance);
+
+        self::assertSame(['readonly0' => 7], $hydrator->extract($instance));
     }
 
     /** @requires PHP >= 7.4 */
