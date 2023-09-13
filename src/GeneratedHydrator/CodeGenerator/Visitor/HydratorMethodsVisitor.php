@@ -43,7 +43,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      */
     private array $hiddenPropertyMap = [];
 
-    public function __construct(ReflectionClass $reflectedClass)
+    public function __construct(private ReflectionClass $reflectedClass)
     {
         foreach ($this->findAllInstanceProperties($reflectedClass) as $property) {
             $className = $property->getDeclaringClass()->getName();
@@ -101,20 +101,30 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
      * @return string[]
      * @psalm-return list<string>
      */
-    private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName): array
+    private function generatePropertyHydrateCall(ObjectProperty $property, string $inputArrayName, string|null $className = null): array
     {
-        $propertyName = $property->name;
-        $escapedName  = var_export($propertyName, true);
+        $propertyName     = $property->name;
+        $escapedName      = var_export($propertyName, true);
+        $valueAccessor    = $inputArrayName . '[' . $escapedName . ']';
+        $escapedClassName = var_export($className ?? $this->reflectedClass->getName(), true);
+
+        if ($property->isReadOnly) {
+            return [
+                'if (\\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')) {',
+                '    ($ref ?? $ref = new \ReflectionClass(' . $escapedClassName . '))->getProperty(' . $escapedName . ')->setValue($object, ' . $valueAccessor . ');',
+                '}',
+            ];
+        }
 
         if ($property->allowsNull && ! $property->hasDefault) {
-            return ['$object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '] ?? null;'];
+            return ['$object->' . $propertyName . ' = ' . $valueAccessor . ' ?? null;'];
         }
 
         return [
-            'if (isset(' . $inputArrayName . '[' . $escapedName . '])',
+            'if (isset(' . $valueAccessor . ')',
             '    || $object->' . $propertyName . ' !== null && \\array_key_exists(' . $escapedName . ', ' . $inputArrayName . ')',
             ') {',
-            '    $object->' . $propertyName . ' = ' . $inputArrayName . '[' . $escapedName . '];',
+            '    $object->' . $propertyName . ' = ' . $valueAccessor . ';',
             '}',
         ];
     }
@@ -132,7 +142,7 @@ class HydratorMethodsVisitor extends NodeVisitorAbstract
             // Hydrate closures
             $bodyParts[] = '$this->hydrateCallbacks[] = \\Closure::bind(static function ($object, $values) {';
             foreach ($properties as $property) {
-                $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values'));
+                $bodyParts = array_merge($bodyParts, $this->generatePropertyHydrateCall($property, '$values', $className));
             }
 
             $bodyParts[] = '}, null, ' . var_export($className, true) . ');' . "\n";

@@ -19,7 +19,7 @@ final class ObjectProperty
     public string $name;
 
     /** @psalm-param non-empty-string $name */
-    private function __construct(string $name, public bool $hasType, public bool $allowsNull, public bool $hasDefault)
+    private function __construct(string $name, public bool $hasType, public bool $allowsNull, public bool $hasDefault, public bool $isReadOnly)
     {
         $this->name = $name;
     }
@@ -32,7 +32,7 @@ final class ObjectProperty
         $defaultValues = $property->getDeclaringClass()->getDefaultProperties();
 
         if ($type === null) {
-            return new self($propertyName, false, true, array_key_exists($propertyName, $defaultValues));
+            return new self($propertyName, false, true, array_key_exists($propertyName, $defaultValues), $property->isReadOnly());
         }
 
         return new self(
@@ -40,6 +40,7 @@ final class ObjectProperty
             true,
             $type->allowsNull(),
             array_key_exists($propertyName, $defaultValues),
+            $property->isReadOnly(),
         );
     }
 }
