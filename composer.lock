@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4e52883d601119f9f26d4d7f0229371",
+    "content-hash": "35d106e6d7319d5ae22abc2712abb1e1",
     "packages": [
         {
             "name": "laminas/laminas-hydrator",
@@ -200,28 +200,28 @@
         },
         {
             "name": "ocramius/code-generator-utils",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/CodeGenerationUtils.git",
-                "reference": "6c12bc604278932a82138e37aa699ba57a476735"
+                "reference": "c0c780af8ec94216d2d6b8893d3589e5498ee726"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/6c12bc604278932a82138e37aa699ba57a476735",
-                "reference": "6c12bc604278932a82138e37aa699ba57a476735",
+                "url": "https://api.github.com/repos/Ocramius/CodeGenerationUtils/zipball/c0c780af8ec94216d2d6b8893d3589e5498ee726",
+                "reference": "c0c780af8ec94216d2d6b8893d3589e5498ee726",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "^4.15.2",
-                "php": "~8.1.0 || ~8.2.0"
+                "nikic/php-parser": "^4.15.3",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^10.0.0",
-                "phpunit/phpunit": "^9.5.26",
-                "psalm/plugin-phpunit": "^0.18.3",
-                "roave/infection-static-analysis-plugin": "^1.26.0",
-                "vimeo/psalm": "^5.0.0"
+                "doctrine/coding-standard": "^12.0.0",
+                "phpunit/phpunit": "^9.5.28",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "roave/infection-static-analysis-plugin": "^1.28.0",
+                "vimeo/psalm": "^5.4.0"
             },
             "type": "library",
             "extra": {
@@ -256,7 +256,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Ocramius/CodeGenerationUtils/issues",
-                "source": "https://github.com/Ocramius/CodeGenerationUtils/tree/1.6.0"
+                "source": "https://github.com/Ocramius/CodeGenerationUtils/tree/1.7.0"
             },
             "funding": [
                 {
@@ -264,7 +264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-01T14:52:22+00:00"
+            "time": "2024-01-09T06:43:01+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5830,7 +5830,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~8.1.0 || ~8.2.0"
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
     },
     "platform-dev": [],
     "platform-overrides": {
