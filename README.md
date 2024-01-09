@@ -14,8 +14,8 @@ extracting data from other objects, or filling them with data.
 
 A hydrator performs following operations:
 
- * Convert `Object` to `array`
- * Put data from an `array` into an `Object`
+* Convert `Object` to `array`
+* Put data from an `array` into an `Object`
 
 GeneratedHydrator uses proxying to instantiate very fast hydrators, since this will allow access to protected properties
 of the object to be handled by the hydrator.
@@ -23,10 +23,11 @@ of the object to be handled by the hydrator.
 Also, a hydrator of GeneratedHydrator implements `Laminas\Hydrator\HydratorInterface`.
 
 ## Installation
+
 To install GeneratedHydrator, install [Composer](https://getcomposer.org/download/) and issue the following command:
 
 ```bash
-$ composer require ocramius/generated-hydrator
+composer require ocramius/generated-hydrator
 ```
 
 ## Usage
