@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Gather CI configuration
         id: matrix
-        uses: laminas/laminas-ci-matrix-action@1.22.1
+        uses: laminas/laminas-ci-matrix-action@1.27.2
 
   qa:
     name: QA Checks
@@ -27,7 +27,7 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     steps:
       - name: ${{ matrix.name }}
-        uses: laminas/laminas-continuous-integration-action@1.32.0
+        uses: laminas/laminas-continuous-integration-action@1.40.1
         env:
           "GITHUB_TOKEN": ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -53,7 +53,7 @@ jobs:
         uses: "actions/checkout@v4"
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.31.1"
         with:
           coverage: "pcov"
           php-version: "${{ matrix.php-version }}"
