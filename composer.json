@@ -21,7 +21,7 @@
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
         "laminas/laminas-hydrator": "^4.14.0",
-        "nikic/php-parser": "^4.16.0",
+        "nikic/php-parser": "^5.3.1",
         "ocramius/code-generator-utils": "^1.7.0"
     },
     "require-dev": {
